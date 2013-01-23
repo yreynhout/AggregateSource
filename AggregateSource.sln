@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", ".\AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Tests", ".\AggregateSource.Tests\AggregateSource.Tests.csproj", "{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Tests", "AggregateSource.Tests\AggregateSource.Tests.csproj", "{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC4CC0D1-C0B4-44D7-BDA8-3DC6A430077F}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC4CC0
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.EventStorage", "AggregateSource.EventStorage\AggregateSource.EventStorage.csproj", "{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
