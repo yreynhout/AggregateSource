@@ -41,8 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
+    <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="AggregateSourceExceptionTests.cs" />
+    <Compile Include="AggregateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryTests.cs" />
+    <Compile Include="SampleUsage.cs" />
+    <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

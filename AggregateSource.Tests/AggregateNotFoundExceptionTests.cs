@@ -43,7 +43,7 @@ namespace AggregateSource.Tests {
 
     [Test]
     public void UsingTheConstructorWithMessageAggregateTypeCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null));
+      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null, "Message"));
     }
 
     [Test]
@@ -61,7 +61,7 @@ namespace AggregateSource.Tests {
 
     [Test]
     public void UsingTheConstructorWithMessageAndInnerExceptionAggregateTypeCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null));
+      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null, "Message", new Exception()));
     }
 
     [Test]
