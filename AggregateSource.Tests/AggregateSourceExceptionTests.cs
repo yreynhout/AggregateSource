@@ -34,18 +34,20 @@ namespace AggregateSource.Tests {
       var sut = new AggregateSourceException("Message", innerException);
 
       Assert.That(sut.Message, Is.EqualTo("Message"));
-      Assert.That(sut.InnerException, Is.Null);
+      Assert.That(sut.InnerException, Is.EqualTo(innerException));
     }
 
     [Test]
     public void CanBeSerialized() {
       var innerException = new Exception("InnerMessage");
       var sut = new AggregateSourceException("Message", innerException);
+
       using (var stream = new MemoryStream()) {
         var formatter = new BinaryFormatter();
         formatter.Serialize(stream, sut);
         stream.Position = 0;
         var result = (AggregateSourceException)formatter.Deserialize(stream);
+
         Assert.That(sut.Message, Is.EqualTo(result.Message));
         Assert.That(sut.InnerException.Message, Is.EqualTo(result.InnerException.Message));
       }
