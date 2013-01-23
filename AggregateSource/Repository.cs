@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace AggregateSource {
-  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     readonly Func<Guid, Aggregate> _reader;
     readonly UnitOfWork _unitOfWork;
 
@@ -39,6 +39,4 @@ namespace AggregateSource {
       _unitOfWork.Attach(new Aggregate(id, Aggregate.InitialVersion, root));
     }
   }
-
-
 }
