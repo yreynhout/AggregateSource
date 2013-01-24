@@ -42,34 +42,4 @@ namespace AggregateSource {
     protected abstract bool TryReadAggregate(Guid id, out Aggregate aggregate);
     protected abstract Aggregate CreateAggregate(Guid id, TAggregateRoot root);
   }
-
-  //public class VersionedAggregateReader<TAggregateRoot> : 
-  //  IAggregateReader<TAggregateRoot>, 
-  //  IAggregateFactory<TAggregateRoot> 
-  //  where TAggregateRoot : AggregateRootEntity{
-  //  readonly Func<TAggregateRoot> _rootFactory;
-
-  //  public VersionedAggregateReader (Func<TAggregateRoot> aggregateRootFactory) {
-  //    if (aggregateRootFactory == null) throw new ArgumentNullException("aggregateRootFactory");
-  //    _rootFactory = aggregateRootFactory;
-  //  }
-
-  //  public Aggregate Read(Guid id) {
-  //    var root = _rootFactory();
-  //    root.Initialize(...);
-  //    return new VersionedAggregate(id, version, root);
-  //  }
-
-  //  public Aggregate Create(Guid id, TAggregateRoot root) {
-  //    return new VersionedAggregate(id);
-  //  }
-  //}
-
-  //public class VersionedAggregate : Aggregate {
-  //  public static readonly int InitialVersion = 0;
-
-  //  public VersionedAggregate(Guid id, int version, AggregateRootEntity root) : base(id, version, root) {
-
-  //  }
-  //}
 }
