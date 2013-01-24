@@ -68,5 +68,32 @@ namespace AggregateSource.Properties {
                 return ResourceManager.GetString("AggregateNotFoundException_DefaultMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The unit of work could not be returned because there is no current unit of work scope..
+        /// </summary>
+        internal static string UnitOfWork_CurrentNotScoped {
+            get {
+                return ResourceManager.GetString("UnitOfWork_CurrentNotScoped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no current unit of work scope..
+        /// </summary>
+        internal static string UnitOfWorkScope_CurrentNotScoped {
+            get {
+                return ResourceManager.GetString("UnitOfWorkScope_CurrentNotScoped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The unit of work could not be scoped because there&apos;s already a unit of work scope in place. Are you nesting unit of work scopes or not properly cleaning them up using the Dispose method?.
+        /// </summary>
+        internal static string UnitOfWorkScope_PushScopeConflict {
+            get {
+                return ResourceManager.GetString("UnitOfWorkScope_PushScopeConflict", resourceCulture);
+            }
+        }
     }
 }
