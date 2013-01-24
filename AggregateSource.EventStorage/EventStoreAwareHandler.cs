@@ -26,21 +26,28 @@ namespace AggregateSource.EventStorage {
     }
 
     void StoreChangesIfAny(UnitOfWork unitOfWork) {
+      const int sliceEventCount = 500;
       if (unitOfWork.HasChanges()) {
         var aggregate = unitOfWork.GetChanges().OfType<EventStoreAggregate>().Single();
-        if (aggregate.ExpectedVersion == EventStoreAggregate.InitialVersion) {
-          _connection.CreateStream(aggregate.Stream, aggregate.Id, false, new byte[0]);
+        var eventIndex = 0;
+        var slices = from eventData in
+                       aggregate.Root.
+                                 GetChanges().
+                                 Select(change => new EventData(
+                                                    Guid.NewGuid(),
+                                                    change.GetType().AssemblyQualifiedName,
+                                                    false,
+                                                    SerializeEvent(change),
+                                                    new byte[0]))
+                     group eventData by eventIndex++%sliceEventCount
+                     into slice
+                     select slice.AsEnumerable();
+        using (var transaction = _connection.StartTransaction(aggregate.Stream, aggregate.ExpectedVersion)) {
+          foreach (var slice in slices) {
+            transaction.Write(slice);
+          }
+          transaction.Commit();
         }
-        _connection.AppendToStream(
-          aggregate.Stream,
-          aggregate.ExpectedVersion,
-          aggregate.Root.GetChanges().
-                    Select(change => new EventData(
-                                       Guid.NewGuid(),
-                                       change.GetType().AssemblyQualifiedName,
-                                       false,
-                                       SerializeEvent(change),
-                                       new byte[0])));
       }
     }
 

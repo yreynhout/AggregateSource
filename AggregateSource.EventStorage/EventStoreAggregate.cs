@@ -2,8 +2,6 @@
 
 namespace AggregateSource.EventStorage {
   public class EventStoreAggregate : Aggregate {
-    public static readonly int InitialVersion = 0;
-
     readonly int _expectedVersion;
     readonly string _stream;
 

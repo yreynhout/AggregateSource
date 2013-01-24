@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EventStore.ClientAPI;
@@ -26,19 +25,22 @@ namespace AggregateSource.EventStorage {
     }
 
     protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
+      const int sliceEventCount = 500;
       var name = new AggregateBasedStreamName(id, typeof (TAggregateRoot));
-      var slice = ReadSliceFromStoreByName(name);
-      if (slice.Status == SliceReadStatus.StreamNotFound) {
+      var slice = _connection.ReadStreamEventsForward(name, 0, sliceEventCount, false);
+      if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         aggregate = null;
         return false;
       }
       var root = _factory();
-      root.Initialize(StreamEventsIntoAggregateRootFromSlice(slice));
-      aggregate = new EventStoreAggregate(
-        id, 
-        root, 
-        slice.LastEventNumber,
-        new AggregateBasedStreamName(id, typeof (TAggregateRoot)));
+      root.Initialize(slice.Events.Skip(1).Select(resolved => DeserializeEvent(resolved.OriginalEvent.EventType, resolved.OriginalEvent.Data)));
+      var nextEventNumber = slice.NextEventNumber;
+      while (!slice.IsEndOfStream) {
+        slice = _connection.ReadStreamEventsForward(name, nextEventNumber, sliceEventCount, false);
+        root.Initialize(slice.Events.Select(resolved => DeserializeEvent(resolved.OriginalEvent.EventType, resolved.OriginalEvent.Data)));
+        nextEventNumber = slice.NextEventNumber;
+      }
+      aggregate = new EventStoreAggregate(id, root, slice.LastEventNumber, name);
       return true;
     }
 
@@ -46,20 +48,8 @@ namespace AggregateSource.EventStorage {
       return new EventStoreAggregate(
         id, 
         root, 
-        EventStoreAggregate.InitialVersion,
+        ExpectedVersion.NoStream,
         new AggregateBasedStreamName(id, typeof(TAggregateRoot)));
-    }
-
-    StreamEventsSlice ReadSliceFromStoreByName(AggregateBasedStreamName stream) {
-      return _connection.ReadStreamEventsForward(stream, 0, Int32.MaxValue, false);
-    }
-
-    IEnumerable<object> StreamEventsIntoAggregateRootFromSlice(StreamEventsSlice slice) {
-      return slice.Events.
-                   Skip(1).
-                   Select(
-                     resolvedEvent =>
-                     DeserializeEvent(resolvedEvent.Event.EventType, resolvedEvent.Event.Data));
     }
 
     static object DeserializeEvent(string typeName, byte[] data) {
