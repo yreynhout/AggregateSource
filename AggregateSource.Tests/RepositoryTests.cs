@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 
 namespace AggregateSource.Tests {
@@ -7,27 +8,31 @@ namespace AggregateSource.Tests {
     [TestFixture]
     public class Construction {
       [Test]
-      public void ReaderCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new Repository<DummyAggregateRootEntity>(null, new UnitOfWork()));
+      public void UnitOfWorkCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new NullRepository(null));
+      }
+    }
+
+    class NullRepository : Repository<DummyAggregateRootEntity> {
+      public NullRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
+      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
+        throw new NotSupportedException();
       }
 
-      [Test]
-      public void UnitOfWorkCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new Repository<DummyAggregateRootEntity>(id => null, null));
+      protected override Aggregate CreateAggregate(Guid id, DummyAggregateRootEntity root) {
+        throw new NotSupportedException();
       }
     }
 
     [TestFixture]
-    public class WithAggregateNotFoundReaderAndEmptyUnitOfWork {
+    public class WithEmptyStoreAndEmptyUnitOfWork {
       Repository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
 
       [SetUp]
       public void SetUp() {
-        _unitOfWork = Factory.EmptyUnitOfWork();
-        _sut = new Repository<DummyAggregateRootEntity>(
-          Factory.AggregateNotFoundReader(),
-          _unitOfWork);
+        _unitOfWork = new UnitOfWork();
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
       }
 
       [Test]
@@ -59,24 +64,38 @@ namespace AggregateSource.Tests {
         var result = _unitOfWork.TryGet(id, out aggregate);
         Assert.That(result, Is.True);
         Assert.That(aggregate.Id, Is.EqualTo(id));
-        Assert.That(aggregate.Version, Is.EqualTo(Aggregate.InitialVersion));
         Assert.That(aggregate.Root, Is.SameAs(root));
       }
     }
 
+    class EmptyStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+      public EmptyStoreRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
+
+      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
+        aggregate = null;
+        return false;
+      }
+
+      protected override Aggregate CreateAggregate(Guid id, TAggregateRoot root) {
+        return new Aggregate(id, root);
+      }
+    }
+
     [TestFixture]
-    public class WithAggregateNotFoundReaderAndFilledUnitOfWork {
+    public class WithEmptyStoreAndFilledUnitOfWork {
       Repository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), Aggregate.InitialVersion, new DummyAggregateRootEntity());
-        _unitOfWork = Factory.FilledUnitOfWork(new[] { _aggregate });
-        _sut = new Repository<DummyAggregateRootEntity>(
-          Factory.AggregateNotFoundReader(),
-          _unitOfWork);
+        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        var unitOfWork = new UnitOfWork();
+        foreach (var aggregate in new[] { _aggregate }) {
+          unitOfWork.Attach(aggregate);
+        }
+        _unitOfWork = unitOfWork;
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
       }
 
       [Test]
@@ -115,18 +134,16 @@ namespace AggregateSource.Tests {
     }
 
     [TestFixture]
-    public class WithAggregateReaderAndEmptyUnitOfWork {
+    public class WithFilledStore {
       Repository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), Aggregate.InitialVersion, new DummyAggregateRootEntity());
-        _unitOfWork = Factory.EmptyUnitOfWork();
-        _sut = new Repository<DummyAggregateRootEntity>(
-          Factory.AggregateReader(new[] { _aggregate }),
-          _unitOfWork);
+        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        _unitOfWork = new UnitOfWork();
+        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(_unitOfWork, new[] { _aggregate });
       }
 
       [Test]
@@ -161,32 +178,29 @@ namespace AggregateSource.Tests {
 
         Assert.That(result, Is.True);
         Assert.That(root, Is.SameAs(_aggregate.Root));
+      }
+    }
+
+    class FilledStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+      readonly Aggregate[] _storage;
+
+      public FilledStoreRepository(UnitOfWork unitOfWork, Aggregate[] storage)
+        : base(unitOfWork) {
+        if (storage == null) throw new ArgumentNullException("storage");
+        _storage = storage;
+      }
+
+      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
+        aggregate = _storage.SingleOrDefault(candidate => candidate.Id == id);
+        return aggregate != null;
+      }
+
+      protected override Aggregate CreateAggregate(Guid id, TAggregateRoot root) {
+        return new Aggregate(id, root);
       }
     }
 
     //TODO: Add tests that prove casting throws when types mismatch
-
-    static class Factory {
-      public static Func<Guid, Aggregate> AggregateNotFoundReader() {
-        return id => null;
-      }
-
-      public static Func<Guid, Aggregate> AggregateReader(Aggregate[] storage) {
-        return id => storage.SingleOrDefault(aggregate => aggregate.Id == id);
-      }
-
-      public static UnitOfWork EmptyUnitOfWork() {
-        return new UnitOfWork();
-      }
-
-      public static UnitOfWork FilledUnitOfWork(Aggregate[] aggregates) {
-        var unitOfWork = EmptyUnitOfWork();
-        foreach (var aggregate in aggregates) {
-          unitOfWork.Attach(aggregate);
-        }
-        return unitOfWork;
-      }
-    }
 
     class DummyAggregateRootEntity : AggregateRootEntity { }
   }

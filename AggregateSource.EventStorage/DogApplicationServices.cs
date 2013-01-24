@@ -2,9 +2,9 @@
 
 namespace AggregateSource.EventStorage {
   public class DogApplicationServices : IHandle<RegisterBirthOfDogCommand>, IHandle<RegisterThatTheDogGotAShot> {
-    readonly Repository<Dog> _dogRepository;
+    readonly IRepository<Dog> _dogRepository;
 
-    public DogApplicationServices(Repository<Dog> dogRepository) {
+    public DogApplicationServices(IRepository<Dog> dogRepository) {
       if (dogRepository == null) throw new ArgumentNullException("dogRepository");
       _dogRepository = dogRepository;
     }

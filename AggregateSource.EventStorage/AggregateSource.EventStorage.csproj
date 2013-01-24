@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventStoreAggregate.cs" />
+    <Compile Include="EventStoreRepository.cs" />
     <Compile Include="SampleUsage.cs" />
     <Compile Include="Dog.cs" />
     <Compile Include="DogGotAShot.cs" />
