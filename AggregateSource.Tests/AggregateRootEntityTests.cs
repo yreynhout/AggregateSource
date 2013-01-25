@@ -270,5 +270,20 @@ namespace AggregateSource.Tests {
         Initialize(null);
       }
     }
+
+    [TestFixture]
+    public class WithInstanceToWhichNullIsApplied {
+      [Test]
+      public void ApplyWithNullAsEventThrows() {
+        var sut = new WithPublicApplyAggregateRootEntity();
+        Assert.Throws<ArgumentNullException>(sut.ApplyNull);
+      }
+    }
+
+    class WithPublicApplyAggregateRootEntity : AggregateRootEntity {
+      public void ApplyNull() {
+        Apply(null);
+      }
+    }
   }
 }

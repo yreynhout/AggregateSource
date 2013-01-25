@@ -46,6 +46,7 @@ namespace AggregateSource {
     /// </summary>
     /// <param name="event">The event to apply.</param>
     protected void Apply(object @event) {
+      if (@event == null) throw new ArgumentNullException("event");
       Play(@event);
       Record(@event);
     }
