@@ -1,22 +1,17 @@
 using System;
+using AggregateSource.Ambient.Properties;
 
-namespace AggregateSource {
+namespace AggregateSource.Ambient {
   /// <summary>
   /// Base class for repositories.
   /// </summary>
   /// <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
-  public abstract class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-    readonly UnitOfWork _unitOfWork;
-    
+  public abstract class AmbientUnitOfWorkAwareRepository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
+    /// Initializes a new instance of the <see cref="AmbientUnitOfWorkAwareRepository{TAggregateRoot}"/> class.
     /// </summary>
-    /// <param name="unitOfWork">The unit of work.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="unitOfWork"/> is null.</exception>
-    protected Repository(UnitOfWork unitOfWork) {
-      if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
-      _unitOfWork = unitOfWork;
-    }
+    /// <remarks>Use this constructor if you want to use an ambient unit of work.</remarks>
+    protected AmbientUnitOfWorkAwareRepository() {}
 
     /// <summary>
     /// Gets the aggregate root entity associated with the specified aggregate id.
@@ -39,7 +34,7 @@ namespace AggregateSource {
     /// <returns><c>true</c> if the aggregate is found, otherwise <c>false</c>.</returns>
     public bool TryGet(Guid id, out TAggregateRoot root) {
       Aggregate aggregate;
-      if (_unitOfWork.TryGet(id, out aggregate)) {
+      if (AmbientUnitOfWork.TryGet(id, out aggregate)) {
         root = (TAggregateRoot)aggregate.Root;
         return true;
       }
@@ -47,7 +42,7 @@ namespace AggregateSource {
         root = null;
         return false;
       }
-      _unitOfWork.Attach(aggregate);
+      AmbientUnitOfWork.Attach(aggregate);
       root = (TAggregateRoot)aggregate.Root;
       return true;
     }
@@ -58,7 +53,17 @@ namespace AggregateSource {
     /// <param name="id">The aggregate id.</param>
     /// <param name="root">The aggregate root entity.</param>
     public void Add(Guid id, TAggregateRoot root) {
-      _unitOfWork.Attach(CreateAggregate(id, root));
+      AmbientUnitOfWork.Attach(CreateAggregate(id, root));
+    }
+
+    UnitOfWork AmbientUnitOfWork {
+      get {
+        UnitOfWorkScope scope;
+        if (!UnitOfWorkScope.TryGetCurrent(out scope)) {
+          throw new UnitOfWorkScopeException(Resources.UnitOfWorkScope_CurrentNotScoped);
+        }
+        return scope.UnitOfWork;
+      }
     }
 
     /// <summary>

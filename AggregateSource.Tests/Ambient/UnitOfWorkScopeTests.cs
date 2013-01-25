@@ -1,7 +1,8 @@
-﻿using System;
+using System;
+using AggregateSource.Ambient;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource.Tests.Ambient {
   namespace UnitOfWorkScopeTests {
     [TestFixture]
     public class Construction {
@@ -13,16 +14,6 @@ namespace AggregateSource.Tests {
 
     [TestFixture]
     public class WithoutScopedInstance {
-      [Test]
-      public void IsScopedIsFalse() {
-        Assert.IsFalse(UnitOfWorkScope.IsScoped);
-      }
-
-      [Test]
-      public void CurrentThrows() {
-        Assert.Throws<UnitOfWorkScopeException>(() => { var current = UnitOfWorkScope.Current; });
-      }
-
       [Test]
       public void TryGetCurrentReturnsFalseAndNull() {
         UnitOfWorkScope scope;
@@ -62,16 +53,6 @@ namespace AggregateSource.Tests {
       }
 
       [Test]
-      public void IsScopedIsTrue() {
-        Assert.IsTrue(UnitOfWorkScope.IsScoped);
-      }
-
-      [Test]
-      public void CurrentReturnsScope() {
-        Assert.That(UnitOfWorkScope.Current, Is.SameAs(_sut));
-      }
-
-      [Test]
       public void TryGetCurrentReturnsTrueAndScope() {
         UnitOfWorkScope scope;
         var result = UnitOfWorkScope.TryGetCurrent(out scope);
@@ -101,16 +82,6 @@ namespace AggregateSource.Tests {
         _unitOfWork = new UnitOfWork();
         _sut = new UnitOfWorkScope(_unitOfWork);
         _sut.Dispose();
-      }
-
-      [Test]
-      public void IsScopedIsFalse() {
-        Assert.IsFalse(UnitOfWorkScope.IsScoped);
-      }
-
-      [Test]
-      public void CurrentThrows() {
-        Assert.Throws<UnitOfWorkScopeException>(() => { var current = UnitOfWorkScope.Current; });
       }
 
       [Test]

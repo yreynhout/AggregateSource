@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AggregateNotFoundException_DefaultMessage" xml:space="preserve">
-    <value>The {0} aggregate with identifier {1} could not be found. Please make sure the callsite is indeed passing in an identifier for an {0} aggregate.</value>
+  <data name="UnitOfWorkScope_CurrentNotScoped" xml:space="preserve">
+    <value>There is no current unit of work scope.</value>
+  </data>
+  <data name="UnitOfWorkScope_PushScopeConflict" xml:space="preserve">
+    <value>The unit of work could not be scoped because there's already a unit of work scope in place. Are you nesting unit of work scopes or not properly cleaning them up using the Dispose method?</value>
   </data>
 </root>

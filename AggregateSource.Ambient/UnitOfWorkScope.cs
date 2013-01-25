@@ -1,7 +1,7 @@
 ﻿using System;
-using AggregateSource.Properties;
+using AggregateSource.Ambient.Properties;
 
-namespace AggregateSource {
+namespace AggregateSource.Ambient {
   /// <summary>
   /// Makes a block of code aware of an ambient <see cref="UnitOfWork"/>.
   /// </summary>
@@ -52,37 +52,11 @@ namespace AggregateSource {
       _currentScope = null;
     }
 
-    /// <summary>
-    /// Gets a value indicating whether a <see cref="UnitOfWorkScope"/> is scoped.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if a <see cref="UnitOfWorkScope"/> is scoped; otherwise, <c>false</c>.
-    /// </value>
-    public static bool IsScoped {
+    static bool IsScoped {
       get { return !ReferenceEquals(_currentScope, null); }
     }
 
-    /// <summary>
-    /// Gets the currently scoped <see cref="UnitOfWorkScope"/>.
-    /// </summary>
-    /// <value>
-    /// The currently scoped <see cref="UnitOfWorkScope"/>.
-    /// </value>
-    /// <exception cref="UnitOfWorkScopeException">Thrown when there is no currently scoped <see cref="UnitOfWorkScope"/>.</exception>
-    public static UnitOfWorkScope Current {
-      get {
-        if (!IsScoped)
-          throw new UnitOfWorkScopeException(Resources.UnitOfWorkScope_CurrentNotScoped);
-        return _currentScope;
-      }
-    }
-
-    /// <summary>
-    /// Attempts to get the currently scoped <see cref="UnitOfWorkScope"/>.
-    /// </summary>
-    /// <param name="scope">The currently scoped <see cref="UnitOfWorkScope"/>, otherwise <c>null</c>.</param>
-    /// <returns><c>true</c> if there is a scoped <see cref="UnitOfWorkScope"/>, otherwise <c>false</c>.</returns>
-    public static bool TryGetCurrent(out UnitOfWorkScope scope) {
+    internal static bool TryGetCurrent(out UnitOfWorkScope scope) {
       if (IsScoped) {
         scope = _currentScope;
         return true;

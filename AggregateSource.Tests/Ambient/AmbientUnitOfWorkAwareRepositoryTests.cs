@@ -1,26 +1,60 @@
 ﻿using System;
 using System.Linq;
+using AggregateSource.Ambient;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
-  namespace RepositoryTests {
+namespace AggregateSource.Tests.Ambient {
+  namespace AmbientUnitOfWorkAwareRepositoryTests {
     [TestFixture]
     public class Construction {
       [Test]
-      public void UnitOfWorkCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new NullRepository(null));
+      public void DefaultCtorDoesNotThrow() {
+        Assert.DoesNotThrow(() => new NullRepository());
       }
     }
 
     [TestFixture]
-    public class WithEmptyStoreAndEmptyUnitOfWork {
-      Repository<DummyAggregateRootEntity> _sut;
+    public class UsageOutsideOfUnitOfWorkScope {
+      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new NullRepository();
+      }
+
+      [Test]
+      public void GetThrows() {
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.Get(Guid.NewGuid()));
+      }
+
+      [Test]
+      public void TryGetThrows() {
+        DummyAggregateRootEntity root;
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.TryGet(Guid.NewGuid(), out root));
+      }
+
+      [Test]
+      public void AddThrows() {
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.Add(Guid.NewGuid(), new DummyAggregateRootEntity()));
+      }
+    }
+
+    [TestFixture]
+    public class WithEmptyStoreAndEmptyAmbientUnitOfWork {
+      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
+      UnitOfWorkScope _scope;
 
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
+        _scope = new UnitOfWorkScope(_unitOfWork);
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>();
+      }
+
+      [TearDown]
+      public void TearDown() {
+        if (_scope != null) _scope.Dispose();
       }
 
       [Test]
@@ -57,10 +91,11 @@ namespace AggregateSource.Tests {
     }
 
     [TestFixture]
-    public class WithEmptyStoreAndFilledUnitOfWork {
-      Repository<DummyAggregateRootEntity> _sut;
+    public class WithEmptyStoreAndFilledAmbientUnitOfWork {
+      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
+      UnitOfWorkScope _scope;
 
       [SetUp]
       public void SetUp() {
@@ -69,7 +104,13 @@ namespace AggregateSource.Tests {
         foreach (var aggregate in new[] { _aggregate }) {
           _unitOfWork.Attach(aggregate);
         }
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
+        _scope = new UnitOfWorkScope(_unitOfWork);
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>();
+      }
+
+      [TearDown]
+      public void TearDown() {
+        if (_scope != null) _scope.Dispose();
       }
 
       [Test]
@@ -109,15 +150,22 @@ namespace AggregateSource.Tests {
 
     [TestFixture]
     public class WithFilledStore {
-      Repository<DummyAggregateRootEntity> _sut;
+      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
+      UnitOfWorkScope _scope;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
         _unitOfWork = new UnitOfWork();
-        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(_unitOfWork, new[] { _aggregate });
+        _scope = new UnitOfWorkScope(_unitOfWork);
+        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(new[] { _aggregate });
+      }
+
+      [TearDown]
+      public void TearDown() {
+        if (_scope != null) _scope.Dispose();
       }
 
       [Test]
@@ -155,8 +203,7 @@ namespace AggregateSource.Tests {
       }
     }
 
-    class NullRepository : Repository<DummyAggregateRootEntity> {
-      public NullRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
+    class NullRepository : AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> {
       protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
         throw new NotSupportedException();
       }
@@ -166,9 +213,7 @@ namespace AggregateSource.Tests {
       }
     }
 
-    class EmptyStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-      public EmptyStoreRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
-
+    class EmptyStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
       protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
         aggregate = null;
         return false;
@@ -179,11 +224,10 @@ namespace AggregateSource.Tests {
       }
     }
 
-    class FilledStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+    class FilledStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
       readonly Aggregate[] _storage;
 
-      public FilledStoreRepository(UnitOfWork unitOfWork, Aggregate[] storage)
-        : base(unitOfWork) {
+      public FilledStoreRepository(Aggregate[] storage) {
         if (storage == null) throw new ArgumentNullException("storage");
         _storage = storage;
       }
@@ -197,8 +241,6 @@ namespace AggregateSource.Tests {
         return new Aggregate(id, root);
       }
     }
-
-    //TODO: Add tests that prove casting throws when types mismatch
 
     class DummyAggregateRootEntity : AggregateRootEntity { }
   }

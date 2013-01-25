@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using AggregateSource.Ambient;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource.Tests.Ambient {
   [TestFixture]
   public class UnitOfWorkScopeExceptionTests {
     [Test]

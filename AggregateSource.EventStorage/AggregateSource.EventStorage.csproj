@@ -66,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AggregateSource.Ambient\AggregateSource.Ambient.csproj">
+      <Project>{d2eb35d3-f2a8-49f4-bce5-bc38c4948301}</Project>
+      <Name>AggregateSource.Ambient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource</Name>

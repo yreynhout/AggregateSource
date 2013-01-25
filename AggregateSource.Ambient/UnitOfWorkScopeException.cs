@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace AggregateSource {
+namespace AggregateSource.Ambient {
   /// <summary>
   /// Exception thrown when there's a problem related to a <see cref="UnitOfWorkScope"/>.
   /// </summary>

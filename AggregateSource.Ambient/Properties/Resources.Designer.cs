@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AggregateSource.Properties {
+namespace AggregateSource.Ambient.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AggregateSource.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AggregateSource.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AggregateSource.Ambient.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace AggregateSource.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} aggregate with identifier {1} could not be found. Please make sure the callsite is indeed passing in an identifier for an {0} aggregate..
+        ///   Looks up a localized string similar to There is no current unit of work scope..
         /// </summary>
-        internal static string AggregateNotFoundException_DefaultMessage {
+        internal static string UnitOfWorkScope_CurrentNotScoped {
             get {
-                return ResourceManager.GetString("AggregateNotFoundException_DefaultMessage", resourceCulture);
+                return ResourceManager.GetString("UnitOfWorkScope_CurrentNotScoped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The unit of work could not be scoped because there&apos;s already a unit of work scope in place. Are you nesting unit of work scopes or not properly cleaning them up using the Dispose method?.
+        /// </summary>
+        internal static string UnitOfWorkScope_PushScopeConflict {
+            get {
+                return ResourceManager.GetString("UnitOfWorkScope_PushScopeConflict", resourceCulture);
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AggregateSource.Properties;
 
 namespace AggregateSource {
   /// <summary>
@@ -53,51 +52,6 @@ namespace AggregateSource {
     /// <returns>An enumeration of <see cref="Aggregate"/>.</returns>
     public IEnumerable<Aggregate> GetChanges() {
       return _aggregates.Values.Where(aggregate => aggregate.Root.HasChanges());
-    }
-
-    /// <summary>
-    /// Gets the current thread static unit of work.
-    /// </summary>
-    /// <value>
-    /// The current thread static unit of work.
-    /// </value>
-    /// <exception cref="UnitOfWorkScopeException">Thrown when there is no current unit of work scope.</exception>
-    public static UnitOfWork Current {
-      get {
-        UnitOfWorkScope scope;
-        if (!UnitOfWorkScope.TryGetCurrent(out scope)) {
-          throw new UnitOfWorkScopeException(Resources.UnitOfWork_CurrentNotScoped);
-        }
-        return scope.UnitOfWork;
-      }
-    }
-
-    /// <summary>
-    /// Gets the current thread static unit of work or null.
-    /// </summary>
-    /// <value>
-    /// The current thread static unit of work or null.
-    /// </value>
-    public static UnitOfWork CurrentOrNull {
-      get {
-        UnitOfWorkScope scope;
-        return !UnitOfWorkScope.TryGetCurrent(out scope) ? null : scope.UnitOfWork;
-      }
-    }
-
-    /// <summary>
-    /// Attempts to get the current thread static unit of work.
-    /// </summary>
-    /// <param name="unitOfWork">The unit of work if found, otherwise <c>null</c>.</param>
-    /// <returns><c>true</c> if found, otherwise <c>false</c>.</returns>
-    public static bool TryGetCurrent(out UnitOfWork unitOfWork) {
-      UnitOfWorkScope scope;
-      if (!UnitOfWorkScope.TryGetCurrent(out scope)) {
-        unitOfWork = null;
-        return false;
-      }
-      unitOfWork = scope.UnitOfWork;
-      return true;
     }
   }
 }

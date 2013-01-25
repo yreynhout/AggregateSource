@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using AggregateSource.Ambient;
 using EventStore.ClientAPI;
 using ProtoBuf;
 

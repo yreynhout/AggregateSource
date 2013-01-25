@@ -1,21 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using AggregateSource.Ambient;
 using EventStore.ClientAPI;
 using ProtoBuf;
 
 namespace AggregateSource.EventStorage {
-  public class EventStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class EventStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     readonly Func<TAggregateRoot> _factory;
     readonly EventStoreConnection _connection;
-
-    public EventStoreRepository(Func<TAggregateRoot> factory, EventStoreConnection connection, UnitOfWork unitOfWork) 
-      : base(unitOfWork) {
-      if (factory == null) throw new ArgumentNullException("factory");
-      if (connection == null) throw new ArgumentNullException("connection");
-      _factory = factory;
-      _connection = connection;
-    }
 
     public EventStoreRepository(Func<TAggregateRoot> factory, EventStoreConnection connection) {
       if (factory == null) throw new ArgumentNullException("factory");
