@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using AggregateSource.Ambient;
 using EventStore.ClientAPI;
 using NUnit.Framework;
 
@@ -12,7 +13,8 @@ namespace AggregateSource.EventStorage {
         connection.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1113));
         
         //Dependencies
-        var dogRepository = new EventStoreRepository<Dog>(Dog.Factory, connection);
+        var store = new CallContextUnitOfWorkStore();
+        var dogRepository = new EventStoreRepository<Dog>(Dog.Factory, connection, store);
         var dogApplicationServices = new DogApplicationServices(dogRepository);
 
         //Aggregate identifier
@@ -24,7 +26,7 @@ namespace AggregateSource.EventStorage {
           "Sparky",
           DateTime.Today.AddYears(-1));
         var registerBirthOfDogHandler = 
-          new EventStoreAwareHandler<RegisterBirthOfDogCommand>(connection, dogApplicationServices);
+          new EventStoreAwareHandler<RegisterBirthOfDogCommand>(connection, dogApplicationServices, store);
         registerBirthOfDogHandler.Handle(registerBirthOfDog);
 
         //Second command - reads a stream and appends to it
@@ -33,7 +35,7 @@ namespace AggregateSource.EventStorage {
           "Cocaine", 
           DateTime.Today);
         var registerThatTheDogGotAShotHandler =
-          new EventStoreAwareHandler<RegisterThatTheDogGotAShot>(connection, dogApplicationServices);
+          new EventStoreAwareHandler<RegisterThatTheDogGotAShot>(connection, dogApplicationServices, store);
         registerThatTheDogGotAShotHandler.Handle(registerThatTheDogGotAShot);  
       }
     }

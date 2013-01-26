@@ -9,20 +9,24 @@ namespace AggregateSource.EventStorage {
   public class EventStoreAwareHandler<TMessage> : IHandle<TMessage> {
     readonly EventStoreConnection _connection;
     readonly IHandle<TMessage> _handler;
+    readonly IAmbientUnitOfWorkStore _store;
 
-    public EventStoreAwareHandler(EventStoreConnection connection, IHandle<TMessage> handler) {
+    public EventStoreAwareHandler(EventStoreConnection connection, IHandle<TMessage> handler, IAmbientUnitOfWorkStore store) {
       if (connection == null) throw new ArgumentNullException("connection");
       if (handler == null) throw new ArgumentNullException("handler");
+      if (store == null) throw new ArgumentNullException("store");
       _connection = connection;
       _handler = handler;
+      _store = store;
     }
 
     public void Handle(TMessage message) {
-      using (var scope = new UnitOfWorkScope(new UnitOfWork())) {
-        
+      var unitOfWork = new UnitOfWork();
+
+      using (new UnitOfWorkScope(unitOfWork, _store)) {
         _handler.Handle(message);
 
-        StoreChangesIfAny(scope.UnitOfWork);
+        StoreChangesIfAny(unitOfWork);
       }
     }
 

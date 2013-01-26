@@ -6,12 +6,18 @@ namespace AggregateSource.Ambient {
   /// Base class for repositories.
   /// </summary>
   /// <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
-  public abstract class AmbientUnitOfWorkAwareRepository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public abstract class AmbientRepository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+    readonly IAmbientUnitOfWorkStore _store;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="AmbientUnitOfWorkAwareRepository{TAggregateRoot}"/> class.
+    /// Initializes a new instance of the <see cref="AmbientRepository{TAggregateRoot}"/> class.
     /// </summary>
+    /// <param name="store">The local store of the unit of work.</param>
     /// <remarks>Use this constructor if you want to use an ambient unit of work.</remarks>
-    protected AmbientUnitOfWorkAwareRepository() {}
+    protected AmbientRepository(IAmbientUnitOfWorkStore store) {
+      if (store == null) throw new ArgumentNullException("store");
+      _store = store;
+    }
 
     /// <summary>
     /// Gets the aggregate root entity associated with the specified aggregate id.
@@ -58,11 +64,10 @@ namespace AggregateSource.Ambient {
 
     UnitOfWork AmbientUnitOfWork {
       get {
-        UnitOfWorkScope scope;
-        if (!UnitOfWorkScope.TryGetCurrent(out scope)) {
-          throw new UnitOfWorkScopeException(Resources.UnitOfWorkScope_CurrentNotScoped);
-        }
-        return scope.UnitOfWork;
+        UnitOfWork unitOfWork;
+        if(!_store.TryGet(out unitOfWork))
+          throw new UnitOfWorkScopeException(Resources.Repository_NoAmbientUnitOfWork);
+        return unitOfWork;
       }
     }
 

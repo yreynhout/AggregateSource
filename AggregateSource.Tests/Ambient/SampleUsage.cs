@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using AggregateSource.Ambient;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource.Tests.Ambient {
   // ReSharper disable MemberCanBePrivate.Local
   // ReSharper disable LocalizableElement
   [TestFixture]
@@ -11,21 +12,24 @@ namespace AggregateSource.Tests {
     public void Show() {
       //Somewhere in an application service wrapper
       var unitOfWork = new UnitOfWork();
+      var store = new ThreadStaticUnitOfWorkStore();
       //Dependency of a domain service or application service
-      var dogRepository = new MemoryRepository<Dog>(unitOfWork);
+      var dogRepository = new MemoryRepository<Dog>(store);
       //Application service handler code
-      var dog = new Dog(Guid.NewGuid(), "Sparky", DateTime.Today.AddYears(-1));
-      dog.AdministerShotOf("Anti Diarrhea Medicine", DateTime.Today);
-      dogRepository.Add(dog.DogId, dog);
+      using (new UnitOfWorkScope(unitOfWork, store)) {
+        var dog = new Dog(Guid.NewGuid(), "Sparky", DateTime.Today.AddYears(-1));
+        dog.AdministerShotOf("Anti Diarrhea Medicine", DateTime.Today);
+        dogRepository.Add(dog.DogId, dog);
+      }
       //Back in the application service wrapper
-      Console.WriteLine("[Regular]We observed that:");
+      Console.WriteLine("[Ambient]We observed that:");
       foreach (var change in unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges())) {
         Console.WriteLine(change);
       }
     }
 
-    class MemoryRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-      public MemoryRepository(UnitOfWork unitOfWork) : base(unitOfWork) {}
+    class MemoryRepository<TAggregateRoot> : AmbientRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+      public MemoryRepository(IAmbientUnitOfWorkStore store) : base(store) { }
       protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
         aggregate = null;
         return false;

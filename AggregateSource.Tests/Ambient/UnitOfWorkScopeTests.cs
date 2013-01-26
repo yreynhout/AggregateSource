@@ -8,25 +8,21 @@ namespace AggregateSource.Tests.Ambient {
     public class Construction {
       [Test]
       public void UnitOfWorkCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new UnitOfWorkScope(null));
+        Assert.Throws<ArgumentNullException>(() => new UnitOfWorkScope(null, new ThreadStaticUnitOfWorkStore()));
+      }
+
+      [Test]
+      public void StoreCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new UnitOfWorkScope(new UnitOfWork(), null));
       }
     }
 
     [TestFixture]
     public class WithoutScopedInstance {
       [Test]
-      public void TryGetCurrentReturnsFalseAndNull() {
-        UnitOfWorkScope scope;
-        var result = UnitOfWorkScope.TryGetCurrent(out scope);
-
-        Assert.That(result, Is.False);
-        Assert.That(scope, Is.Null);
-      }
-
-      [Test]
       public void UseOfConstructorDoesNotThrow() {
         Assert.DoesNotThrow(() => {
-          using(new UnitOfWorkScope(new UnitOfWork())){}
+          using (new UnitOfWorkScope(new UnitOfWork(), new ThreadStaticUnitOfWorkStore())) { }
         });
       }
     }
@@ -39,31 +35,17 @@ namespace AggregateSource.Tests.Ambient {
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _sut = new UnitOfWorkScope(_unitOfWork);
+        _sut = new UnitOfWorkScope(_unitOfWork, new ThreadStaticUnitOfWorkStore());
       }
 
       [TearDown]
       public void TearDown() {
-        if(_sut != null) _sut.Dispose();
-      }
-
-      [Test]
-      public void UnitOfWorkReturnsScopedUnitOfWork() {
-        Assert.That(_sut.UnitOfWork, Is.SameAs(_unitOfWork));
-      }
-
-      [Test]
-      public void TryGetCurrentReturnsTrueAndScope() {
-        UnitOfWorkScope scope;
-        var result = UnitOfWorkScope.TryGetCurrent(out scope);
-
-        Assert.That(result, Is.True);
-        Assert.That(scope, Is.SameAs(_sut));
+        if (_sut != null) _sut.Dispose();
       }
 
       [Test]
       public void UseOfConstructorThrows() {
-        Assert.Throws<UnitOfWorkScopeException>(() => new UnitOfWorkScope(new UnitOfWork()));
+        Assert.Throws<UnitOfWorkScopeException>(() => new UnitOfWorkScope(new UnitOfWork(), new ThreadStaticUnitOfWorkStore()));
       }
 
       [Test]
@@ -80,23 +62,14 @@ namespace AggregateSource.Tests.Ambient {
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _sut = new UnitOfWorkScope(_unitOfWork);
+        _sut = new UnitOfWorkScope(_unitOfWork, new ThreadStaticUnitOfWorkStore());
         _sut.Dispose();
-      }
-
-      [Test]
-      public void TryGetCurrentReturnsFalseAndNull() {
-        UnitOfWorkScope scope;
-        var result = UnitOfWorkScope.TryGetCurrent(out scope);
-
-        Assert.That(result, Is.False);
-        Assert.That(scope, Is.Null);
       }
 
       [Test]
       public void UseOfConstructorDoesNotThrow() {
         Assert.DoesNotThrow(() => {
-          using (new UnitOfWorkScope(new UnitOfWork())) { }
+          using (new UnitOfWorkScope(new UnitOfWork(), new ThreadStaticUnitOfWorkStore())) { }
         });
       }
     }

@@ -38,13 +38,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="AggregateSourceExceptionTests.cs" />
     <Compile Include="AggregateTests.cs" />
-    <Compile Include="Ambient\AmbientUnitOfWorkAwareRepositoryTests.cs" />
+    <Compile Include="Ambient\AmbientUnitOfWorkStoreFixtures.cs" />
+    <Compile Include="Ambient\CallContextUnitOfWorkStoreTests.cs" />
+    <Compile Include="Ambient\HttpContextUnitOfWorkStoreTests.cs" />
+    <Compile Include="Ambient\RepositoryTests.cs" />
+    <Compile Include="Ambient\SampleUsage.cs" />
+    <Compile Include="Ambient\ThreadStaticUnitOfWorkStoreTests.cs" />
     <Compile Include="Ambient\UnitOfWorkScopeExceptionTests.cs" />
     <Compile Include="Ambient\UnitOfWorkScopeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

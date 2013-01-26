@@ -33,15 +33,20 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallContextUnitOfWorkStore.cs" />
+    <Compile Include="HttpContextUnitOfWorkStore.cs" />
+    <Compile Include="IAmbientUnitOfWorkStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="AmbientUnitOfWorkAwareRepository.cs" />
+    <Compile Include="AmbientRepository.cs" />
+    <Compile Include="ThreadStaticUnitOfWorkStore.cs" />
     <Compile Include="UnitOfWorkScope.cs" />
     <Compile Include="UnitOfWorkScopeException.cs" />
   </ItemGroup>

@@ -4,22 +4,55 @@ using AggregateSource.Ambient;
 using NUnit.Framework;
 
 namespace AggregateSource.Tests.Ambient {
-  namespace AmbientUnitOfWorkAwareRepositoryTests {
+  namespace AmbientRepositoryTests {
     [TestFixture]
     public class Construction {
       [Test]
-      public void DefaultCtorDoesNotThrow() {
-        Assert.DoesNotThrow(() => new NullRepository());
+      public void StoreCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new NullRepository(null));
       }
     }
 
     [TestFixture]
     public class UsageOutsideOfUnitOfWorkScope {
-      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
+      AmbientRepository<DummyAggregateRootEntity> _sut;
 
       [SetUp]
       public void SetUp() {
-        _sut = new NullRepository();
+        _sut = new NullRepository(new ThreadStaticUnitOfWorkStore());
+      }
+
+      [Test]
+      public void GetThrows() {
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.Get(Guid.NewGuid()));
+      }
+
+      [Test]
+      public void TryGetThrows() {
+        DummyAggregateRootEntity root;
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.TryGet(Guid.NewGuid(), out root));
+      }
+
+      [Test]
+      public void AddThrows() {
+        Assert.Throws<UnitOfWorkScopeException>(() => _sut.Add(Guid.NewGuid(), new DummyAggregateRootEntity()));
+      }
+    }
+
+    [TestFixture]
+    public class UsageWithWrongAmbientUnitOfWorkStore {
+      AmbientRepository<DummyAggregateRootEntity> _sut;
+      UnitOfWorkScope _scope;
+
+      [SetUp]
+      public void SetUp() {
+        _scope = new UnitOfWorkScope(new UnitOfWork(), new CallContextUnitOfWorkStore());
+        _sut = new NullRepository(new ThreadStaticUnitOfWorkStore());
+      }
+
+      [TearDown]
+      public void TearDown() {
+        if (_scope != null) _scope.Dispose();
       }
 
       [Test]
@@ -41,15 +74,16 @@ namespace AggregateSource.Tests.Ambient {
 
     [TestFixture]
     public class WithEmptyStoreAndEmptyAmbientUnitOfWork {
-      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
+      AmbientRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       UnitOfWorkScope _scope;
 
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _scope = new UnitOfWorkScope(_unitOfWork);
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>();
+        var store = new ThreadStaticUnitOfWorkStore();
+        _scope = new UnitOfWorkScope(_unitOfWork, store);
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(store);
       }
 
       [TearDown]
@@ -92,7 +126,7 @@ namespace AggregateSource.Tests.Ambient {
 
     [TestFixture]
     public class WithEmptyStoreAndFilledAmbientUnitOfWork {
-      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
+      AmbientRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
       UnitOfWorkScope _scope;
@@ -104,8 +138,9 @@ namespace AggregateSource.Tests.Ambient {
         foreach (var aggregate in new[] { _aggregate }) {
           _unitOfWork.Attach(aggregate);
         }
-        _scope = new UnitOfWorkScope(_unitOfWork);
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>();
+        var store = new ThreadStaticUnitOfWorkStore();
+        _scope = new UnitOfWorkScope(_unitOfWork, store);
+        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(store);
       }
 
       [TearDown]
@@ -150,7 +185,7 @@ namespace AggregateSource.Tests.Ambient {
 
     [TestFixture]
     public class WithFilledStore {
-      AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> _sut;
+      AmbientRepository<DummyAggregateRootEntity> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
       UnitOfWorkScope _scope;
@@ -158,9 +193,10 @@ namespace AggregateSource.Tests.Ambient {
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _scope = new UnitOfWorkScope(_unitOfWork);
+        var store = new ThreadStaticUnitOfWorkStore();
+        _scope = new UnitOfWorkScope(_unitOfWork, store);
         _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
-        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(new[] { _aggregate });
+        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(store, new[] { _aggregate });
       }
 
       [TearDown]
@@ -203,7 +239,9 @@ namespace AggregateSource.Tests.Ambient {
       }
     }
 
-    class NullRepository : AmbientUnitOfWorkAwareRepository<DummyAggregateRootEntity> {
+    class NullRepository : AmbientRepository<DummyAggregateRootEntity> {
+      public NullRepository(IAmbientUnitOfWorkStore store) : base(store) {}
+
       protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
         throw new NotSupportedException();
       }
@@ -213,7 +251,9 @@ namespace AggregateSource.Tests.Ambient {
       }
     }
 
-    class EmptyStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+    class EmptyStoreRepository<TAggregateRoot> : AmbientRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+      public EmptyStoreRepository(IAmbientUnitOfWorkStore store) : base(store) {}
+
       protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
         aggregate = null;
         return false;
@@ -224,10 +264,10 @@ namespace AggregateSource.Tests.Ambient {
       }
     }
 
-    class FilledStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+    class FilledStoreRepository<TAggregateRoot> : AmbientRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
       readonly Aggregate[] _storage;
 
-      public FilledStoreRepository(Aggregate[] storage) {
+      public FilledStoreRepository(IAmbientUnitOfWorkStore store, Aggregate[] storage) : base(store) {
         if (storage == null) throw new ArgumentNullException("storage");
         _storage = storage;
       }

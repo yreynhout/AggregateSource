@@ -7,30 +7,21 @@ namespace AggregateSource.Ambient {
   /// </summary>
   public class UnitOfWorkScope : IDisposable {
     readonly UnitOfWork _unitOfWork;
+    readonly IAmbientUnitOfWorkStore _store;
     bool _disposed;
-
-    [ThreadStatic]
-    static UnitOfWorkScope _currentScope;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnitOfWorkScope"/> class.
     /// </summary>
     /// <param name="unitOfWork">The unit of work.</param>
+    /// <param name="store">The local storage of the unit of work.</param>
     /// <exception cref="System.ArgumentNullException">unitOfWork</exception>
-    public UnitOfWorkScope(UnitOfWork unitOfWork) {
+    public UnitOfWorkScope(UnitOfWork unitOfWork, IAmbientUnitOfWorkStore store) {
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
+      if (store == null) throw new ArgumentNullException("store");
       _unitOfWork = unitOfWork;
-      PushScope(this);
-    }
-
-    /// <summary>
-    /// Gets the unit of work that has been scoped.
-    /// </summary>
-    /// <value>
-    /// The scoped unit of work.
-    /// </value>
-    public UnitOfWork UnitOfWork {
-      get { return _unitOfWork; }
+      _store = store;
+      _store.Set(_unitOfWork);
     }
 
     /// <summary>
@@ -38,31 +29,9 @@ namespace AggregateSource.Ambient {
     /// </summary>
     public void Dispose() {
       if (!_disposed) {
+        _store.Clear();
         _disposed = true;
-        PopScope();
       }
-    }
-
-    static void PushScope(UnitOfWorkScope scope) {
-      if (IsScoped) throw new UnitOfWorkScopeException(Resources.UnitOfWorkScope_PushScopeConflict);
-      _currentScope = scope;
-    }
-
-    static void PopScope() {
-      _currentScope = null;
-    }
-
-    static bool IsScoped {
-      get { return !ReferenceEquals(_currentScope, null); }
-    }
-
-    internal static bool TryGetCurrent(out UnitOfWorkScope scope) {
-      if (IsScoped) {
-        scope = _currentScope;
-        return true;
-      }
-      scope = null;
-      return false;
     }
   }
 }

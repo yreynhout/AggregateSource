@@ -6,11 +6,11 @@ using EventStore.ClientAPI;
 using ProtoBuf;
 
 namespace AggregateSource.EventStorage {
-  public class EventStoreRepository<TAggregateRoot> : AmbientUnitOfWorkAwareRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class EventStoreRepository<TAggregateRoot> : AmbientRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     readonly Func<TAggregateRoot> _factory;
     readonly EventStoreConnection _connection;
 
-    public EventStoreRepository(Func<TAggregateRoot> factory, EventStoreConnection connection) {
+    public EventStoreRepository(Func<TAggregateRoot> factory, EventStoreConnection connection, IAmbientUnitOfWorkStore store) : base(store) {
       if (factory == null) throw new ArgumentNullException("factory");
       if (connection == null) throw new ArgumentNullException("connection");
       _factory = factory;
