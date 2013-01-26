@@ -35,7 +35,7 @@ namespace AggregateSource {
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="events"/> are null.</exception>
     public void Initialize(IEnumerable<object> events) {
       if (events == null) throw new ArgumentNullException("events");
-      ClearChanges();
+      if (HasChanges()) throw new InvalidOperationException("Initialize cannot be called on an instance with changes.");
       foreach (var @event in events) {
         Play(@event);
       }

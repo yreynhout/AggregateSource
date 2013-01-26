@@ -120,9 +120,6 @@
   <data name="Repository_NoAmbientUnitOfWork" xml:space="preserve">
     <value>There is no ambient unit of work. Possible causes are: you did not wrap this code block, either  directly or indirectly, with a UnitOfWorkScope, you are trying to access this Repository outside of a UnitOfWorkScope, you've picked a different ambient unit of work store for the UnitOfWorkScope and the Repository.</value>
   </data>
-  <data name="UnitOfWorkScope_PushScopeConflict" xml:space="preserve">
-    <value>The unit of work could not be scoped because there's already a unit of work scope in place. Are you nesting unit of work scopes or not properly cleaning them up using the Dispose method?</value>
-  </data>
   <data name="AmbientUnitOfWorkStore_ClearNotSet" xml:space="preserve">
     <value>The unit of work was not previously set.</value>
   </data>

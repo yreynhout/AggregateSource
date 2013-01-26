@@ -6,6 +6,55 @@ using NUnit.Framework;
 namespace AggregateSource.Tests {
   namespace AggregateRootEntityTests {
     [TestFixture]
+    public class WithAnyInstance {
+      [Test]
+      public void InitializeEventsCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new IntializeWithNullEventsAggregateRootEntity());
+      }
+
+      [Test]
+      public void ApplyEventCanNotBeNull() {
+        var sut = new ApplyNullEventAggregateRootEntity();
+        Assert.Throws<ArgumentNullException>(sut.ApplyNull);
+      }
+
+      [Test]
+      public void RegisterHandlerCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
+      }
+
+      [Test]
+      public void RegisterHandlerCanOnlyBeCalledOncePerEventType() {
+        Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceAggregateRootEntity());
+      }
+    }
+
+    class IntializeWithNullEventsAggregateRootEntity : AggregateRootEntity {
+      public IntializeWithNullEventsAggregateRootEntity() {
+        Initialize(null);
+      }
+    }
+
+    class ApplyNullEventAggregateRootEntity : AggregateRootEntity {
+      public void ApplyNull() {
+        Apply(null);
+      }
+    }
+
+    class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity {
+      public RegisterNullHandlerAggregateRootEntity() {
+        Register<object>(null);
+      }
+    }
+
+    class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity {
+      public RegisterSameEventHandlerTwiceAggregateRootEntity() {
+        Register<object>(o => { });
+        Register<object>(o => { });
+      }
+    }
+
+    [TestFixture]
     public class WithPristineInstance {
       AggregateRootEntity _sut;
 
@@ -27,6 +76,11 @@ namespace AggregateSource.Tests {
       [Test]
       public void GetChangesReturnsEmpty() {
         Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+      }
+
+      [Test]
+      public void InitializeDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
       }
     }
 
@@ -54,6 +108,11 @@ namespace AggregateSource.Tests {
       [Test]
       public void GetChangesReturnsEmpty() {
         Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+      }
+
+      [Test]
+      public void InitializeDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
       }
     }
     
@@ -86,6 +145,11 @@ namespace AggregateSource.Tests {
       public void GetChangesReturnsEmpty() {
         Assert.That(_sut.GetChanges(), Is.EquivalentTo(ChangedAggregateRootEntity.AppliedChanges));
       }
+
+      [Test]
+      public void InitializeThrows() {
+        Assert.Throws<InvalidOperationException>(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
+      }
     }
 
     class ChangedAggregateRootEntity : AggregateRootEntity {
@@ -98,12 +162,52 @@ namespace AggregateSource.Tests {
     }
 
     [TestFixture]
-    public class WithFirstChangedThenClearedInstance {
+    public class WithInitializedThenChangedInstance {
       AggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
-        _sut = new FirstChangedThenClearedAggregateRootEntity();
+        _sut = new InitializedThenChangedAggregateRootEntity();
+      }
+
+      [Test]
+      public void ClearChangesDoesNothing() {
+        Assert.DoesNotThrow(() => _sut.ClearChanges());
+      }
+
+      [Test]
+      public void HasChangesReturnsFalse() {
+        Assert.That(_sut.HasChanges(), Is.True);
+      }
+
+      [Test]
+      public void GetChangesReturnsEmpty() {
+        Assert.That(_sut.GetChanges(), Is.EquivalentTo(InitializedThenChangedAggregateRootEntity.AppliedChanges));
+      }
+
+      [Test]
+      public void InitializeThrows() {
+        Assert.Throws<InvalidOperationException>(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
+      }
+    }
+
+    class InitializedThenChangedAggregateRootEntity : AggregateRootEntity {
+      public static readonly object[] AppliedChanges = new[] { new object(), new object() };
+      public InitializedThenChangedAggregateRootEntity() {
+        Initialize(new[] { new object(), new object() });
+        foreach (var change in AppliedChanges) {
+          Apply(change);
+        }
+      }
+    }
+
+    [TestFixture]
+    public class WithChangedThenClearedInstance {
+      AggregateRootEntity _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new ChangedThenClearedAggregateRootEntity();
       }
 
       [Test]
@@ -120,10 +224,15 @@ namespace AggregateSource.Tests {
       public void GetChangesReturnsEmpty() {
         Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
       }
+
+      [Test]
+      public void InitializeDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
+      }
     }
 
-    class FirstChangedThenClearedAggregateRootEntity : AggregateRootEntity {
-      public FirstChangedThenClearedAggregateRootEntity() {
+    class ChangedThenClearedAggregateRootEntity : AggregateRootEntity {
+      public ChangedThenClearedAggregateRootEntity() {
         foreach (var change in new[] { new object(), new object() }) {
           Apply(change);
         }
@@ -132,12 +241,12 @@ namespace AggregateSource.Tests {
     }
 
     [TestFixture]
-    public class WithFirstChangedThenInitializedInstance {
+    public class WithInitializedThenChangedThenClearedInstance {
       AggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
-        _sut = new FirstChangedThenInitializedAggregateRootEntity();
+        _sut = new InitializedThenChangedThenClearedAggregateRootEntity();
       }
 
       [Test]
@@ -154,135 +263,93 @@ namespace AggregateSource.Tests {
       public void GetChangesReturnsEmpty() {
         Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
       }
+
+      [Test]
+      public void InitializeDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
+      }
     }
 
-    class FirstChangedThenInitializedAggregateRootEntity : AggregateRootEntity {
-      public FirstChangedThenInitializedAggregateRootEntity() {
+    class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity {
+      public InitializedThenChangedThenClearedAggregateRootEntity() {
+        Initialize(new[] { new object(), new object() });
         foreach (var change in new[] { new object(), new object() }) {
           Apply(change);
         }
-        Initialize(new[] { new object(), new object() });
+        ClearChanges();
       }
     }
 
     [TestFixture]
     public class WithInstanceWithHandlers {
+      WithHandlersAggregateRootEntity _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new WithHandlersAggregateRootEntity();
+      }
+
       [Test]
       public void InitializeCallsHandlerForEachEvent() {
-        var sut = new InitializedWithHandlerExpectedCallCountAggregateRootEntity(2);
-        Assert.That(sut.HandlerActualCallCount, Is.EqualTo(2));
+        var expectedEvents = new[] {new object(), new object()};
+        
+        _sut.Initialize(expectedEvents);
+
+        Assert.That(_sut.HandlerCallCount, Is.EqualTo(2));
+        Assert.That(_sut.PlayedEvents, Is.EquivalentTo(expectedEvents));
       }
 
       [Test]
-      public void InitializeCallsHandlerWithExpectedEvent() {
-        var expectedEvents = new [] {new object(), new object()};
-        var sut = new InitializedWithExpectedEventsAggregateRootEntity(expectedEvents);
-        Assert.That(sut.ActualEvents, Is.EquivalentTo(expectedEvents));
+      public void ApplyEventCallsEventHandler() {
+        var @event = new object();
+        
+        _sut.DoApply(@event);
+
+        Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
+        Assert.That(_sut.PlayedEvents, Is.EquivalentTo(new[] {@event}));
       }
     }
 
-    class InitializedWithHandlerExpectedCallCountAggregateRootEntity : AggregateRootEntity {
-      public int HandlerActualCallCount { get; private set; }
-
-      public InitializedWithHandlerExpectedCallCountAggregateRootEntity(int handlerExpectedCallCount) {
-        HandlerActualCallCount = 0;
-        Register<object>(@event => { HandlerActualCallCount++; });
-        var events = new object[handlerExpectedCallCount];
-        for (var index = 0; index < handlerExpectedCallCount; index++) {
-          events[index] = new object();
-        }
-        Initialize(events);
+    class WithHandlersAggregateRootEntity : AggregateRootEntity {
+      public WithHandlersAggregateRootEntity() {
+        PlayedEvents = new List<object>();
+        Register<object>(@event => {
+          HandlerCallCount++;
+          PlayedEvents.Add(@event);
+        });
       }
-    }
-    class InitializedWithExpectedEventsAggregateRootEntity : AggregateRootEntity {
-      public List<object> ActualEvents { get; private set; }
 
-      public InitializedWithExpectedEventsAggregateRootEntity(IEnumerable<object> expectedEvents) {
-        ActualEvents = new List<object>();
-        Register<object>(@event => ActualEvents.Add(@event));
-        Initialize(expectedEvents);
+      public void DoApply(object @event) {
+        Apply(@event);
       }
+
+      public int HandlerCallCount { get; private set; }
+      public List<object> PlayedEvents { get; private set; }
     }
 
     [TestFixture]
-    public class WithChangedInstanceWithHandlers {
-      [Test]
-      public void ApplyEventCallsHandlerForEachEvent() {
-        var sut = new ChangedWithHandlerExpectedCallCountAggregateRootEntity(2);
-        Assert.That(sut.HandlerActualCallCount, Is.EqualTo(2));
+    public class WithInstanceWithoutHandlers {
+      WithoutHandlersAggregateRootEntity _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new WithoutHandlersAggregateRootEntity();
       }
 
       [Test]
-      public void ApplyEventCallsHandlerWithExpectedEvent() {
-        var expectedEvents = new[] { new object(), new object() };
-        var sut = new ChangedWithExpectedEventsAggregateRootEntity(expectedEvents);
-        Assert.That(sut.ActualEvents, Is.EquivalentTo(expectedEvents));
-      }
-    }
+      public void InitializeDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object()}));
+      } 
 
-    class ChangedWithHandlerExpectedCallCountAggregateRootEntity : AggregateRootEntity {
-      public int HandlerActualCallCount { get; private set; }
-
-      public ChangedWithHandlerExpectedCallCountAggregateRootEntity(int handlerExpectedCallCount) {
-        HandlerActualCallCount = 0;
-        Register<object>(@event => { HandlerActualCallCount++; });
-        for (var index = 0; index < handlerExpectedCallCount; index++) {
-          Apply(new object());
-        }
-      }
-    }
-    class ChangedWithExpectedEventsAggregateRootEntity : AggregateRootEntity {
-      public List<object> ActualEvents { get; private set; }
-
-      public ChangedWithExpectedEventsAggregateRootEntity(IEnumerable<object> expectedEvents) {
-        ActualEvents = new List<object>();
-        Register<object>(@event => ActualEvents.Add(@event));
-        foreach (var @event in expectedEvents) {
-          Apply(@event);
-        }
-      }
-    }
-
-    [TestFixture]
-    public class WithInstanceWithNullHandler {
       [Test]
-      public void HandlerCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new NullHandlerAggregateRootEntity());
+      public void ApplyEventDoesNotThrow() {
+        Assert.DoesNotThrow(() => _sut.DoApply(new object()));
       }
     }
 
-    class NullHandlerAggregateRootEntity : AggregateRootEntity {
-      public NullHandlerAggregateRootEntity() {
-        Register<object>(null);
-      }
-    }
-
-    [TestFixture]
-    public class WithInstanceInitializedWithNullEvents {
-      [Test]
-      public void InitializeEventsCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new IntializedWithNullEventsAggregateRootEntity());
-      }
-    }
-
-    class IntializedWithNullEventsAggregateRootEntity : AggregateRootEntity {
-      public IntializedWithNullEventsAggregateRootEntity() {
-        Initialize(null);
-      }
-    }
-
-    [TestFixture]
-    public class WithInstanceToWhichNullIsApplied {
-      [Test]
-      public void ApplyWithNullAsEventThrows() {
-        var sut = new WithPublicApplyAggregateRootEntity();
-        Assert.Throws<ArgumentNullException>(sut.ApplyNull);
-      }
-    }
-
-    class WithPublicApplyAggregateRootEntity : AggregateRootEntity {
-      public void ApplyNull() {
-        Apply(null);
+    class WithoutHandlersAggregateRootEntity : AggregateRootEntity {
+      public void DoApply(object @event) {
+        Apply(@event);
       }
     }
   }
