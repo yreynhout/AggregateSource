@@ -14,7 +14,7 @@ It's well suited for those scenarios where multiple aggregates need to collabora
 * https://github.com/tyronegroves/SimpleCQRS
 
 ### AggregateRootEntity
-A base class for an aggregate root entity (abstract AggregateRootEntity class) that does the usual initialization and change tracking that people have come accustomed to when doing eventsourcing in a domain model. It's a bit opnionated, in that it
+A base class for an aggregate root entity that does the usual initialization and change tracking that people have come accustomed to when doing eventsourcing in a domain model. It's a bit opnionated, in that it
 
 * doesn't force any interfaces down your throat like IEvent, because a base class is enough coupling as it is,
 * leaves "identifier" management up to you, because everyone has a different opinion on how this should work,
