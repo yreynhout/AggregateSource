@@ -1,7 +1,7 @@
 AggregateSource
 ===============
 
-This library provides lightweight infrastructure for doing eventsourcing using aggregates. It's not a framework, and it never will be. Period.
+This library/code provides lightweight infrastructure for doing eventsourcing using aggregates. It's not a framework, and it never will be. Period.
 
 The preferred way of using it, is copying it into your project and getting rid of all the cruft you don't need.
 
@@ -23,18 +23,12 @@ A base class for an aggregate root entity that does the usual initialization and
 
 It's meant to be used in your "domain model" code.
 
-### Aggregate ( * )
+### Aggregate
 
-A separate concept for an aggregate that is mainly used as a wrapper around the aggregate root entity. It carries around meta data (if you create a custom type that is) that your preferred eventstore might fancy between reads and writes. Don't use it in your "domain model" code. It's meant for infrastructure code.
+A separate concept for an aggregate that is mainly used as a wrapper around the aggregate root entity. It carries around version information that your preferred eventstore might fancy between reads and writes to perform optimistic concurrency updates. Don't use it in your "domain model" code. It's meant for infrastructure code.
 
-### Repository ( * )
-It has a Get that throws when an aggregate was not found, a TryGet to attempt to read an aggregate when you're not sure it's there (yet), and Add, well to add an aggregate to the change tracking (i.e. the Unit of Work). This is a point of integration with an event store. Do derive from this abstract Repository, and fill in the holes (i.e. implement the template methods). This way you can choose your own aggregate root construction strategy, implement a custom Aggregate (deriving from Aggregate) and track any meta data you want to carry over from the read to write handling.
+### Repository
+It has a Get that throws when an aggregate was not found, a TryGet to attempt to read an aggregate when you're not sure it's there (yet), and Add, well to add an aggregate to the change tracking (i.e. the Unit of Work). This is a point of integration with an event store and even dedicated read models that act as secondary indexes. Sometimes it makes sense to use this implementation which takes an aggregate root entity factory and a Func&lt;Guid, Tuple&lt;Int32, IEnumerable&lt;object&gt;&gt;&gt; as an eventstream reader (returns the version the aggregate is at and the events associated with it). It also takes a unit of work that acts both as an identity map and a change tracker. Other times a fresh new implementation of IRepository&lt;&gt; that integrates with your favorite event store makes more sense. Remember, repositories don't save, your code does.
 
 ### UnitOfWork
-Oddly enough it does not commit/save/persist/yournameforithere. Its role is reduced to tracking multiple aggregates and to hand you back those that have changed. What you do with those changed aggregates, well, that's your business. Usually there's another point of integration with the event store, on the write side, that is interested in persisting the events in these changed aggregates.
-
-### Ambient ( * ) ( ** )
-You can scope a UnitOfWork using a UnitOfWorkScope. It just makes a block of code aware of the UnitOfWork in a pluggable way, i.e. you get to pick between CallContext, HttpContext, ThreadStatic or - if you choose to implement IAmbientUnitOfWorkStore - a custom way of sharing state. It has its own special AmbientRepository that integrates with this "ambient" unit of work.
-
-(*) subject to change
-(**) dragons ahead
+Oddly enough it does not commit/save/persist/yournameforithere. Its role is reduced to tracking multiple aggregates and to hand you back those that have changed. What you do with those changed aggregates, well, that's your business. Usually there's another point of integration with the event store, on the write side, that is interested in persisting the events in these changed aggregates. Use this to get them.
