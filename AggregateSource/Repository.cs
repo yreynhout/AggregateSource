@@ -16,7 +16,7 @@ namespace AggregateSource {
     /// </summary>
     /// <param name="rootFactory">The aggregate root entity factory.</param>
     /// <param name="unitOfWork">The unit of work.</param>
-    /// <param name="eventStreamReader">The event reader.</param>
+    /// <param name="eventStreamReader">The event stream reader.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or the <paramref name="unitOfWork"/> or the <paramref name="eventStreamReader"/> is null.</exception>
     public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, Func<Guid, Tuple<Int32, IEnumerable<object>>> eventStreamReader) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
