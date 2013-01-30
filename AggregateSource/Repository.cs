@@ -1,21 +1,30 @@
 using System;
+using System.Collections.Generic;
 
 namespace AggregateSource {
   /// <summary>
-  /// Base class for repositories.
+  /// Represents the default repository implementation.
   /// </summary>
   /// <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
-  public abstract class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+    readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
-    
+    readonly Func<Guid, Tuple<Int32, IEnumerable<object>>> _eventStreamReader;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
     /// </summary>
+    /// <param name="rootFactory">The aggregate root entity factory.</param>
     /// <param name="unitOfWork">The unit of work.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="unitOfWork"/> is null.</exception>
-    protected Repository(UnitOfWork unitOfWork) {
+    /// <param name="eventStreamReader">The event reader.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or the <paramref name="unitOfWork"/> or the <paramref name="eventStreamReader"/> is null.</exception>
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, Func<Guid, Tuple<Int32, IEnumerable<object>>> eventStreamReader) {
+      if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
+      if (eventStreamReader == null) throw new ArgumentNullException("eventStreamReader");
+      _rootFactory = rootFactory;
       _unitOfWork = unitOfWork;
+      _eventStreamReader = eventStreamReader;
     }
 
     /// <summary>
@@ -43,12 +52,15 @@ namespace AggregateSource {
         root = (TAggregateRoot)aggregate.Root;
         return true;
       }
-      if (!TryReadAggregate(id, out aggregate)) {
+      var eventStream = _eventStreamReader(id);
+      if (eventStream == null) {
         root = null;
         return false;
       }
+      root = _rootFactory();
+      root.Initialize(eventStream.Item2);
+      aggregate = new Aggregate(id, eventStream.Item1, root);
       _unitOfWork.Attach(aggregate);
-      root = (TAggregateRoot)aggregate.Root;
       return true;
     }
 
@@ -58,24 +70,7 @@ namespace AggregateSource {
     /// <param name="id">The aggregate id.</param>
     /// <param name="root">The aggregate root entity.</param>
     public void Add(Guid id, TAggregateRoot root) {
-      _unitOfWork.Attach(CreateAggregate(id, root));
+      _unitOfWork.Attach(new Aggregate(id, Aggregate.InitialVersion, root));
     }
-
-    /// <summary>
-    /// Attempts to read the aggregate from underlying storage.
-    /// </summary>
-    /// <param name="id">The aggregate id.</param>
-    /// <param name="aggregate">The found aggregate, or <c>null</c>.</param>
-    /// <returns><c>true</c> if the aggregate was found, otherwise <c>false</c>.</returns>
-    protected abstract bool TryReadAggregate(Guid id, out Aggregate aggregate);
-
-
-    /// <summary>
-    /// Creates an aggregate instance to be attached to the <see cref="UnitOfWork"/>.
-    /// </summary>
-    /// <param name="id">The aggregate id.</param>
-    /// <param name="root">The aggregate root entity.</param>
-    /// <returns>A new <see cref="Aggregate"/>.</returns>
-    protected abstract Aggregate CreateAggregate(Guid id, TAggregateRoot root);
   }
 }

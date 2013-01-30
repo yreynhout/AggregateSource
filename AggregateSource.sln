@@ -12,14 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC4CC0
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.EventStorage", "AggregateSource.EventStorage\AggregateSource.EventStorage.csproj", "{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A29A626-F25F-472A-858B-3492B3AA499C}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Ambient", "AggregateSource.Ambient\AggregateSource.Ambient.csproj", "{D2EB35D3-F2A8-49F4-BCE5-BC38C4948301}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +31,6 @@ Global
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BBC2001C-37E9-4B7E-BBE9-42F9B375FE45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2EB35D3-F2A8-49F4-BCE5-BC38C4948301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2EB35D3-F2A8-49F4-BCE5-BC38C4948301}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2EB35D3-F2A8-49F4-BCE5-BC38C4948301}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2EB35D3-F2A8-49F4-BCE5-BC38C4948301}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

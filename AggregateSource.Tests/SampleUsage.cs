@@ -12,27 +12,15 @@ namespace AggregateSource.Tests {
       //Somewhere in an application service wrapper
       var unitOfWork = new UnitOfWork();
       //Dependency of a domain service or application service
-      var dogRepository = new MemoryRepository<Dog>(unitOfWork);
+      var dogRepository = new Repository<Dog>(Dog.Factory, unitOfWork, id => null);
       //Application service handler code
       var dog = new Dog(Guid.NewGuid(), "Sparky", DateTime.Today.AddYears(-1));
       dog.AdministerShotOf("Anti Diarrhea Medicine", DateTime.Today);
       dogRepository.Add(dog.DogId, dog);
       //Back in the application service wrapper
-      Console.WriteLine("[Regular]We observed that:");
+      Console.WriteLine("We observed that:");
       foreach (var change in unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges())) {
         Console.WriteLine(change);
-      }
-    }
-
-    class MemoryRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-      public MemoryRepository(UnitOfWork unitOfWork) : base(unitOfWork) {}
-      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
-        aggregate = null;
-        return false;
-      }
-
-      protected override Aggregate CreateAggregate(Guid id, TAggregateRoot root) {
-        return new Aggregate(id, root);
       }
     }
 
@@ -69,6 +57,8 @@ namespace AggregateSource.Tests {
 
     public class Dog : AggregateRootEntity {
       Guid _dogId;
+
+      public static readonly Func<Dog> Factory = () => new Dog();
 
       Dog() {
         Register<DogWasBorn>(ApplyEvent);

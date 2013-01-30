@@ -20,7 +20,7 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void AttachAggregateDoesNotThrow() {
-        var aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        var aggregate = AggregateStubs.Stub1;
         Assert.DoesNotThrow(() => _sut.Attach(aggregate));
       }
 
@@ -51,7 +51,7 @@ namespace AggregateSource.Tests {
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        _aggregate = AggregateStubs.Stub1;
         _sut = new UnitOfWork();
         _sut.Attach(_aggregate);
       }
@@ -63,7 +63,7 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void AttachDoesNotThrowWithOtherAggregate() {
-        var otherAggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        var otherAggregate = AggregateStubs.Stub2;
         Assert.DoesNotThrow(() => _sut.Attach(otherAggregate));
       }
 
@@ -104,8 +104,8 @@ namespace AggregateSource.Tests {
 
       [SetUp]
       public void SetUp() {
-        _aggregate1 = new Aggregate(Guid.NewGuid(), new ChangedAggregateRootEntity());
-        _aggregate2 = new Aggregate(Guid.NewGuid(), new ChangedAggregateRootEntity());
+        _aggregate1 = AggregateStubs.Create(new ChangedAggregateRootEntityStub());
+        _aggregate2 = AggregateStubs.Create(new ChangedAggregateRootEntityStub());
         _sut = new UnitOfWork();
         _sut.Attach(_aggregate1);
         _sut.Attach(_aggregate2);
@@ -122,9 +122,8 @@ namespace AggregateSource.Tests {
       }
     }
 
-    class DummyAggregateRootEntity : AggregateRootEntity { }
-    class ChangedAggregateRootEntity : AggregateRootEntity {
-      public ChangedAggregateRootEntity() {
+    class ChangedAggregateRootEntityStub : AggregateRootEntity {
+      public ChangedAggregateRootEntityStub() {
         Apply(new object());
       }
     }

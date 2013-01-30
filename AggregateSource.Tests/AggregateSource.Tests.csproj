@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\AggregateSource\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,37 +41,26 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateStubs.cs" />
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="AggregateSourceExceptionTests.cs" />
     <Compile Include="AggregateTests.cs" />
-    <Compile Include="Ambient\AmbientUnitOfWorkStoreFixtures.cs" />
-    <Compile Include="Ambient\CallContextUnitOfWorkStoreTests.cs" />
-    <Compile Include="Ambient\HttpContextUnitOfWorkStoreTests.cs" />
-    <Compile Include="Ambient\RepositoryTests.cs" />
-    <Compile Include="Ambient\SampleUsage.cs" />
-    <Compile Include="Ambient\ThreadStaticUnitOfWorkStoreTests.cs" />
-    <Compile Include="Ambient\UnitOfWorkScopeExceptionTests.cs" />
-    <Compile Include="Ambient\UnitOfWorkScopeTests.cs" />
+    <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="SampleUsage.cs" />
     <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AggregateSource.Ambient\AggregateSource.Ambient.csproj">
-      <Project>{d2eb35d3-f2a8-49f4-bce5-bc38c4948301}</Project>
-      <Name>AggregateSource.Ambient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

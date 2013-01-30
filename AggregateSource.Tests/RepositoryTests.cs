@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -7,20 +8,30 @@ namespace AggregateSource.Tests {
     [TestFixture]
     public class Construction {
       [Test]
+      public void FactoryCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(null, new UnitOfWork(), id => null));
+      }
+
+      [Test]
       public void UnitOfWorkCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new NullRepository(null));
+        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, id => null));
+      }
+
+      [Test]
+      public void EventStreamReaderCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new UnitOfWork(), null));
       }
     }
 
     [TestFixture]
     public class WithEmptyStoreAndEmptyUnitOfWork {
-      Repository<DummyAggregateRootEntity> _sut;
+      Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
 
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
+        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, id => null);
       }
 
       [Test]
@@ -29,12 +40,12 @@ namespace AggregateSource.Tests {
         var exception =
           Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
         Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(DummyAggregateRootEntity)));
+        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
       public void TryGetReturnsFalseAndNull() {
-        DummyAggregateRootEntity root;
+        AggregateRootEntityStub root;
         var result = _sut.TryGet(Guid.NewGuid(), out root);
 
         Assert.That(result, Is.False);
@@ -44,7 +55,7 @@ namespace AggregateSource.Tests {
       [Test]
       public void AddAttachesToUnitOfWork() {
         var id = Guid.NewGuid();
-        var root = new DummyAggregateRootEntity();
+        var root = AggregateRootEntityStub.Factory();
 
         _sut.Add(id, root);
 
@@ -58,18 +69,18 @@ namespace AggregateSource.Tests {
 
     [TestFixture]
     public class WithEmptyStoreAndFilledUnitOfWork {
-      Repository<DummyAggregateRootEntity> _sut;
+      Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
       Aggregate _aggregate;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        _aggregate = AggregateStubs.Stub1;
         _unitOfWork = new UnitOfWork();
         foreach (var aggregate in new[] { _aggregate }) {
           _unitOfWork.Attach(aggregate);
         }
-        _sut = new EmptyStoreRepository<DummyAggregateRootEntity>(_unitOfWork);
+        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, id => null);
       }
 
       [Test]
@@ -78,7 +89,7 @@ namespace AggregateSource.Tests {
         var exception =
           Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
         Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(DummyAggregateRootEntity)));
+        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
@@ -90,7 +101,7 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void TryGetReturnsFalseAndNullForUnknownId() {
-        DummyAggregateRootEntity root;
+        AggregateRootEntityStub root;
         var result = _sut.TryGet(Guid.NewGuid(), out root);
 
         Assert.That(result, Is.False);
@@ -99,7 +110,7 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void TryGetReturnsTrueAndRootForKnownId() {
-        DummyAggregateRootEntity root;
+        AggregateRootEntityStub root;
         var result = _sut.TryGet(_aggregate.Id, out root);
 
         Assert.That(result, Is.True);
@@ -109,15 +120,20 @@ namespace AggregateSource.Tests {
 
     [TestFixture]
     public class WithFilledStore {
-      Repository<DummyAggregateRootEntity> _sut;
+      Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
-      Aggregate _aggregate;
+      AggregateRootEntityStub _root;
+      Guid _id;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = new Aggregate(Guid.NewGuid(), new DummyAggregateRootEntity());
+        _id = Guid.NewGuid();
+        _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new UnitOfWork();
-        _sut = new FilledStoreRepository<DummyAggregateRootEntity>(_unitOfWork, new[] { _aggregate });
+        _sut = new Repository<AggregateRootEntityStub>(
+          () => _root, 
+          _unitOfWork, 
+          id => id == _id ? new Tuple<int, IEnumerable<object>>(0, new object[0]) : null);
       }
 
       [Test]
@@ -126,19 +142,19 @@ namespace AggregateSource.Tests {
         var exception =
           Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
         Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(DummyAggregateRootEntity)));
+        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
       public void GetReturnsRootOfKnownId() {
-        var result = _sut.Get(_aggregate.Id);
+        var result = _sut.Get(_id);
 
-        Assert.That(result, Is.SameAs(_aggregate.Root));
+        Assert.That(result, Is.SameAs(_root));
       }
 
       [Test]
       public void TryGetReturnsFalseAndNullForUnknownId() {
-        DummyAggregateRootEntity root;
+        AggregateRootEntityStub root;
         var result = _sut.TryGet(Guid.NewGuid(), out root);
 
         Assert.That(result, Is.False);
@@ -147,59 +163,14 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void TryGetReturnsTrueAndRootForKnownId() {
-        DummyAggregateRootEntity root;
-        var result = _sut.TryGet(_aggregate.Id, out root);
+        AggregateRootEntityStub root;
+        var result = _sut.TryGet(_id, out root);
 
         Assert.That(result, Is.True);
-        Assert.That(root, Is.SameAs(_aggregate.Root));
-      }
-    }
-
-    class NullRepository : Repository<DummyAggregateRootEntity> {
-      public NullRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
-      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
-        throw new NotSupportedException();
-      }
-
-      protected override Aggregate CreateAggregate(Guid id, DummyAggregateRootEntity root) {
-        throw new NotSupportedException();
-      }
-    }
-
-    class EmptyStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-      public EmptyStoreRepository(UnitOfWork unitOfWork) : base(unitOfWork) { }
-
-      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
-        aggregate = null;
-        return false;
-      }
-
-      protected override Aggregate CreateAggregate(Guid id, TAggregateRoot root) {
-        return new Aggregate(id, root);
-      }
-    }
-
-    class FilledStoreRepository<TAggregateRoot> : Repository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
-      readonly Aggregate[] _storage;
-
-      public FilledStoreRepository(UnitOfWork unitOfWork, Aggregate[] storage)
-        : base(unitOfWork) {
-        if (storage == null) throw new ArgumentNullException("storage");
-        _storage = storage;
-      }
-
-      protected override bool TryReadAggregate(Guid id, out Aggregate aggregate) {
-        aggregate = _storage.SingleOrDefault(candidate => candidate.Id == id);
-        return aggregate != null;
-      }
-
-      protected override Aggregate CreateAggregate(Guid id, TAggregateRoot root) {
-        return new Aggregate(id, root);
+        Assert.That(root, Is.SameAs(_root));
       }
     }
 
     //TODO: Add tests that prove casting throws when types mismatch
-
-    class DummyAggregateRootEntity : AggregateRootEntity { }
   }
 }
