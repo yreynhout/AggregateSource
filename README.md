@@ -9,6 +9,8 @@ It's well suited for those scenarios where multiple aggregates need to collabora
 
 * https://github.com/gregoryyoung/m-r
 * https://github.com/joliver/CommonDomain
+* https://github.com/Lokad/lokad-iddd-sample
+* https://github.com/thinkbeforecoding/m-r
 * https://github.com/elliotritchie/NES
 * https://github.com/jhicks/EventSourcing
 * https://github.com/tyronegroves/SimpleCQRS
@@ -28,7 +30,7 @@ It's meant to be used in your "domain model" code.
 A separate concept for an aggregate that is mainly used as a wrapper around the aggregate root entity. It carries around version information that your preferred eventstore might fancy between reads and writes to perform optimistic concurrency updates. Don't use it in your "domain model" code. It's meant for infrastructure code.
 
 ### Repository
-It has a Get that throws when an aggregate was not found, a TryGet to attempt to read an aggregate when you're not sure it's there (yet), and Add, well to add an aggregate to the change tracking (i.e. the Unit of Work). This is a point of integration with an event store and even dedicated read models that act as secondary indexes. Sometimes it makes sense to use this implementation which takes an aggregate root entity factory and a Func&lt;Guid, Tuple&lt;Int32, IEnumerable&lt;object&gt;&gt;&gt; as an eventstream reader (returns the version the aggregate is at and the events associated with it). It also takes a unit of work that acts both as an identity map and a change tracker. Other times a fresh new implementation of IRepository&lt;&gt; that integrates with your favorite event store makes more sense. Remember, repositories don't save, your code does.
+It has a Get that throws when an aggregate was not found, a TryGet to attempt to read an aggregate when you're not sure it's there (yet), and Add, well to add an aggregate to the change tracking (i.e. the Unit of Work). This is a point of integration with an event store and even dedicated read models that act as secondary indexes. Sometimes it makes sense to use this implementation which takes an aggregate root entity factory and a Func&lt;Guid, Tuple&lt;Int32, IEnumerable&lt;object&gt;&gt;&gt; as an eventstream reader (returns the version the aggregate is at and the events associated with it). It also takes a unit of work that acts both as an identity map and a change tracker. Other times a fresh new implementation of IRepository&lt;&gt; that integrates with your favorite event store makes more sense. Remember, repositories don't save, your code does (http://codebetter.com/iancooper/2011/04/12/repository-saveupdate-is-a-smell/).
 
 ### UnitOfWork
 Oddly enough it does not commit/save/persist/yournameforithere. Its role is reduced to tracking multiple aggregates and to hand you back those that have changed. What you do with those changed aggregates, well, that's your business. Usually there's another point of integration with the event store, on the write side, that is interested in persisting the events in these changed aggregates. Use this to get them.
