@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource.EventStore {
+namespace AggregateSource.GEventStore {
   public struct StreamName {
     readonly string _value;
 

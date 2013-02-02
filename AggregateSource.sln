@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.GEventStore", "AggregateSource.GEventStore\AggregateSource.GEventStore.csproj", "{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.JEventStore", "AggregateSource.JEventStore\AggregateSource.JEventStore.csproj", "{DF62A0E3-35AB-497C-918C-63FADAB43F6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF62A0E3-35AB-497C-918C-63FADAB43F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF62A0E3-35AB-497C-918C-63FADAB43F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF62A0E3-35AB-497C-918C-63FADAB43F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF62A0E3-35AB-497C-918C-63FADAB43F6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@ using System.Linq;
 using EventStore.ClientAPI;
 using ProtoBuf;
 
-namespace AggregateSource.EventStore {
+namespace AggregateSource.GEventStore {
   public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
