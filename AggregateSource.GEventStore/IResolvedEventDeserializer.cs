@@ -1,6 +1,6 @@
 ﻿using EventStore.ClientAPI;
 
-namespace AggregateSource.EventStore {
+namespace AggregateSource.GEventStore {
   public interface IResolvedEventDeserializer {
     object Deserialize(ResolvedEvent resolvedEvent);
   }

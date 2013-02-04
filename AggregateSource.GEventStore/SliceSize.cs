@@ -1,7 +1,7 @@
 ﻿using System;
-using AggregateSource.EventStore.Properties;
+using AggregateSource.GEventStore.Properties;
 
-namespace AggregateSource.EventStore {
+namespace AggregateSource.GEventStore {
   public struct SliceSize {
     readonly int _value;
 

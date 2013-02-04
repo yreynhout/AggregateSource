@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource.EventStore {
+namespace AggregateSource.GEventStore {
   public class EventStoreReadConfiguration {
     public static readonly EventStoreReadConfiguration Default = new EventStoreReadConfiguration(new SliceSize(500), new ResolvedEventDeserializer());
 
