@@ -1,22 +1,27 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using EventStore.ClientAPI;
-using ProtoBuf;
 
 namespace AggregateSource.GEventStore {
   public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
+    readonly EventStoreReadConfiguration _configuration;
 
-    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection) {
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection)
+      : this(rootFactory, unitOfWork, connection, EventStoreReadConfiguration.Default) {
+    }
+
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");
+      if (configuration == null) throw new ArgumentNullException("configuration");
       _rootFactory = rootFactory;
       _unitOfWork = unitOfWork;
       _connection = connection;
+      _configuration = configuration;
     }
 
     public TAggregateRoot Get(Guid id) {
@@ -33,32 +38,20 @@ namespace AggregateSource.GEventStore {
         return true;
       }
       var stream = StreamName.Create<TAggregateRoot>(id);
-      const int sliceSize = 500;
-      var slice = _connection.ReadStreamEventsForward(stream, 1, sliceSize, false);
+      var slice = _connection.ReadStreamEventsForward(stream, 1, _configuration.SliceSize, false);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         root = null;
         return false;
       }
       root = _rootFactory();
-      root.Initialize(
-          slice.Events.Select(
-            resolved => DeserializeEvent(resolved.OriginalEvent.EventType, resolved.OriginalEvent.Data)));
+      root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = _connection.ReadStreamEventsForward(stream, slice.NextEventNumber, sliceSize, false);
-        root.Initialize(
-          slice.Events.Select(
-            resolved => DeserializeEvent(resolved.OriginalEvent.EventType, resolved.OriginalEvent.Data))); 
+        slice = _connection.ReadStreamEventsForward(stream, slice.NextEventNumber, _configuration.SliceSize, false);
+        root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(id, slice.LastEventNumber, root);
       _unitOfWork.Attach(aggregate);
       return true;
-    }
-
-    static object DeserializeEvent(string eventType, byte[] data) {
-      var type = Type.GetType(eventType, true);
-      using (var stream = new MemoryStream(data)) {
-        return Serializer.NonGeneric.Deserialize(type, stream);
-      }
     }
 
     public void Add(Guid id, TAggregateRoot root) {
