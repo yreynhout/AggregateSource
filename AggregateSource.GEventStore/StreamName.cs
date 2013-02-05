@@ -15,5 +15,10 @@ namespace AggregateSource.GEventStore {
     public static StreamName Create<TAggregateRoot>(Guid id) {
       return new StreamName(id, typeof(TAggregateRoot));
     }
+
+    public static StreamName Create(Guid id, Type type) {
+      if (type == null) throw new ArgumentNullException("type");
+      return new StreamName(id, type);
+    }
   }
 }
