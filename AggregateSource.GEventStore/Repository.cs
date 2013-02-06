@@ -55,7 +55,7 @@ namespace AggregateSource.GEventStore {
     }
 
     public void Add(Guid id, TAggregateRoot root) {
-      _unitOfWork.Attach(new Aggregate(id, Aggregate.InitialVersion, root));
+      _unitOfWork.Attach(new Aggregate(id, ExpectedVersion.NoStream, root));
     }
   }
 }

@@ -61,15 +61,6 @@ namespace AggregateSource.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The version must be greater than or equal to {0}..
-        /// </summary>
-        internal static string Aggregate_VersionGreaterThanOrEqualToInitialVersion {
-            get {
-                return ResourceManager.GetString("Aggregate_VersionGreaterThanOrEqualToInitialVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The {0} aggregate with identifier {1} could not be found. Please make sure the callsite is indeed passing in an identifier for an {0} aggregate..
         /// </summary>
         internal static string AggregateNotFoundException_DefaultMessage {

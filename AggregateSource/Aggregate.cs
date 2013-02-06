@@ -1,5 +1,4 @@
 ﻿using System;
-using AggregateSource.Properties;
 
 namespace AggregateSource {
   /// <summary>
@@ -13,23 +12,20 @@ namespace AggregateSource {
 
     readonly Guid _id;
     readonly AggregateRootEntity _root;
-    readonly int _version;
+    readonly int _expectedVersion;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Aggregate"/> class.
     /// </summary>
     /// <param name="id">The aggregate identifier.</param>
-    /// <param name="version">The aggregate version.</param>
+    /// <param name="expectedVersion">The expected aggregate version.</param>
     /// <param name="root">The aggregate root entity.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="root"/> is null.</exception>
-    public Aggregate(Guid id, int version, AggregateRootEntity root) {
+    public Aggregate(Guid id, int expectedVersion, AggregateRootEntity root) {
       if (root == null) 
         throw new ArgumentNullException("root");
-      if(version < InitialVersion)
-        throw new ArgumentOutOfRangeException("version", 
-          string.Format(Resources.Aggregate_VersionGreaterThanOrEqualToInitialVersion, InitialVersion));
       _id = id;
-      _version = version;
+      _expectedVersion = expectedVersion;
       _root = root;
     }
 
@@ -46,8 +42,8 @@ namespace AggregateSource {
     /// <summary>
     /// Gets the aggregate version.
     /// </summary>
-    public Int32 Version {
-      get { return _version; }
+    public Int32 ExpectedVersion {
+      get { return _expectedVersion; }
     }
 
     /// <summary>

@@ -120,7 +120,4 @@
   <data name="AggregateNotFoundException_DefaultMessage" xml:space="preserve">
     <value>The {0} aggregate with identifier {1} could not be found. Please make sure the callsite is indeed passing in an identifier for an {0} aggregate.</value>
   </data>
-  <data name="Aggregate_VersionGreaterThanOrEqualToInitialVersion" xml:space="preserve">
-    <value>The version must be greater than or equal to {0}.</value>
-  </data>
 </root>

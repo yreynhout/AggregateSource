@@ -70,7 +70,7 @@ namespace AggregateSource {
     /// <param name="id">The aggregate id.</param>
     /// <param name="root">The aggregate root entity.</param>
     public void Add(Guid id, TAggregateRoot root) {
-      _unitOfWork.Attach(new Aggregate(id, Aggregate.InitialVersion, root));
+      _unitOfWork.Attach(new Aggregate(id, -1, root));
     }
   }
 }
