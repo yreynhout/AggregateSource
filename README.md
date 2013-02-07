@@ -15,6 +15,8 @@ It's well suited for those scenarios where multiple aggregates need to collabora
 * https://github.com/jhicks/EventSourcing
 * https://github.com/tyronegroves/SimpleCQRS
 
+## Core
+
 ### AggregateRootEntity
 A base class for an aggregate root entity that does the usual initialization and change tracking that people have come accustomed to when doing eventsourcing in a domain model. It's a bit opnionated, in that it
 
@@ -34,3 +36,37 @@ It has a Get that throws when an aggregate was not found, a TryGet to attempt to
 
 ### UnitOfWork
 Oddly enough it does not commit/save/persist/yournameforithere. Its role is reduced to tracking multiple aggregates and to hand you back those that have changed. What you do with those changed aggregates, well, that's your business. Usually there's another point of integration with the event store, on the write side, that is interested in persisting the events in these changed aggregates. Use this to get them.
+
+## Testing
+
+Allows you to write command handler, application service, or domain service level tests in the following format:
+
+```csharp
+Scenario.
+  Given(RoleId,
+    new AddedRole(RoleId, RoleName),
+    new AddedPermissionToRole(RoleId, PermissionId),
+    new RolePermissionDenied(RoleId, PermissionId)).
+  When(new DenyRolePermission(RoleId, PermissionId)).
+  AssertNothingHappened();
+
+// or
+
+Scenario.
+  Given(RoleId,
+    new AddedRole(RoleId, RoleName)).
+  When(new DenyRolePermission(RoleId, UnknownPermissionId)).
+  AssertThrows(new Exception("Yo bro, the permission is not known to me."));
+
+// or
+
+Scenario.
+  Given(RoleId,
+    new AddedRole(RoleId, RoleName)).
+  When(new AddPermissionToRole(RoleId, PermissionId)).
+  Then(RoleId,
+    new AddedPermissionToRole(RoleId, PermissionId)).
+  Assert();
+```
+
+Mind that the Assert* methods are **not** in the box. You have to write that kind of unit testing framework integration yourself. Looking for an example? Swing by NAuthorize (https://github.com/yreynhout/NAuthorize)
