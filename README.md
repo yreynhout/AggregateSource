@@ -39,7 +39,7 @@ Oddly enough it does not commit/save/persist/yournameforithere. Its role is redu
 
 ## Testing
 
-Allows you to write command handler, application service, or domain service level tests in the following format:
+Allows you to write command handler, application service, domain service level or even aggregate specific tests in the following format:
 
 ```csharp
 Scenario.
@@ -70,3 +70,4 @@ Scenario.
 ```
 
 Mind that the Assert* methods are **not** in the box. You have to write that kind of unit testing framework integration yourself. Looking for an example? Swing by NAuthorize (https://github.com/yreynhout/NAuthorize)
+The principles discussed here are easily applicable to other frameworks and libraries. Feel free to steal ..
