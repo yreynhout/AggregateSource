@@ -6,6 +6,10 @@ namespace AggregateSource.Testing {
       return new TestSpecificationBuilder().Given(id, events);
     }
 
+    public static IWhenStateBuilder When(object message) {
+      return new TestSpecificationBuilder().When(message);
+    }
+
     internal static void Usage() {
       Guid A1Id = Guid.NewGuid();
       Guid A2Id = Guid.NewGuid();
