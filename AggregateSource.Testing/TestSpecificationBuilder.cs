@@ -29,8 +29,8 @@ namespace AggregateSource.Testing {
       return new TestSpecificationBuilder(_context.SetThrows(exception));
     }
 
-    public TestSpecification Build() {
-      return _context.ToSpecification();
+    public TestSpecification Build(string name = "") {
+      return _context.ToSpecification(name);
     }
   }
 }

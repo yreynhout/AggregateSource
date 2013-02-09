@@ -9,19 +9,29 @@ namespace AggregateSource.Testing {
     readonly object _when;
     readonly Tuple<Guid, object>[] _thens;
     readonly Exception _throws;
+    readonly string _name;
 
     /// <summary>
     /// Initializes a new <see cref="TestSpecification"/> instance.
     /// </summary>
+    /// <param name="name">The specification name.</param>
     /// <param name="givens">The specification givens.</param>
     /// <param name="when">The specification when.</param>
     /// <param name="thens">The specification thens.</param>
     /// <param name="throws">The specification exception thrown.</param>
-    public TestSpecification(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens, Exception throws) {
+    public TestSpecification(string name, Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens, Exception throws) {
       _givens = givens;
       _thens = thens;
       _when = when;
       _throws = throws;
+      _name = name;
+    }
+
+    /// <summary>
+    /// The name.
+    /// </summary>
+    public string Name {
+      get { return _name; }
     }
 
     /// <summary>

@@ -39,8 +39,8 @@ namespace AggregateSource.Testing {
       return new TestSpecificationBuilderContext(_givens, _when, _thens, exception);
     }
 
-    public TestSpecification ToSpecification() {
-      return new TestSpecification(_givens, _when, _thens, _throws);
+    public TestSpecification ToSpecification(string name) {
+      return new TestSpecification(name, _givens, _when, _thens, _throws);
     }
   }
 }
