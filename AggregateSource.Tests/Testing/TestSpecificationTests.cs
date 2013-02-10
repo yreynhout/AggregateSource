@@ -41,6 +41,29 @@ namespace AggregateSource.Testing {
       Assert.That(sut.Throws, Is.SameAs(throws));
     }
 
+    [Test]
+    public void DoesNotEqualNull() {
+      var sut = new TestSpecification(null, null, null, null);
+
+      Assert.That(sut.Equals(null), Is.False);
+    }
+
+    [Test]
+    public void DoesNotEqualObjectOfOtherType() {
+      var sut = new TestSpecification(null, null, null, null);
+
+      Assert.That(sut.Equals(new object()), Is.False);
+    }
+
+    [Test]
+    public void DoesEqualItself() {
+      var sut = new TestSpecification(null, null, null, null);
+
+// ReSharper disable EqualExpressionComparison
+      Assert.That(sut.Equals(sut), Is.True);
+// ReSharper restore EqualExpressionComparison
+    }
+
     [Theory]
     public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens, Exception throws) {
       Assert.That(
