@@ -12,6 +12,7 @@ namespace AggregateSource.Testing {
     /// <param name="events">The events that occurred.</param>
     /// <returns>A builder continuation.</returns>
     public static IGivenStateBuilder Given(Guid id, params object[] events) {
+      if (events == null) throw new ArgumentNullException("events");
       return new TestSpecificationBuilder().Given(id, events);
     }
 
@@ -21,6 +22,7 @@ namespace AggregateSource.Testing {
     /// <param name="message">The command message.</param>
     /// <returns>A builder continuation.</returns>
     public static IWhenStateBuilder When(object message) {
+      if (message == null) throw new ArgumentNullException("message");
       return new TestSpecificationBuilder().When(message);
     }
   }

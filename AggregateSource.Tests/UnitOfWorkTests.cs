@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource {
   namespace UnitOfWorkTests {
     [TestFixture]
     public class WithPristineInstance {

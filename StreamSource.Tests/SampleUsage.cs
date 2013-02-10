@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using AggregateSource;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace StreamSource {
   // ReSharper disable MemberCanBePrivate.Local
   // ReSharper disable LocalizableElement
   [TestFixture]

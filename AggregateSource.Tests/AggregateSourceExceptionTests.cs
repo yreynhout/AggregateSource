@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource {
   [TestFixture]
   public class AggregateSourceExceptionTests {
     [Test]

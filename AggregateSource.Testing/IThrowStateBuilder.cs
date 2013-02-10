@@ -7,6 +7,6 @@
     /// Builds the test specification thus far.
     /// </summary>
     /// <returns>The test specification.</returns>
-    TestSpecification Build(string name = "");
+    TestSpecification Build();
   }
 }

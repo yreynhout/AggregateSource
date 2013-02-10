@@ -18,24 +18,23 @@ namespace AggregateSource.JEventStore {
     }
 
     public TAggregateRoot Get(Guid id) {
-      TAggregateRoot root;
-      if (!TryGet(id, out root))
+      var result = GetOptional(id);
+      if (!result.HasValue)
         throw new AggregateNotFoundException(id, typeof(TAggregateRoot));
-      return root;
+      return result.Value;
     }
 
-    public bool TryGet(Guid id, out TAggregateRoot root) {
+    public Optional<TAggregateRoot> GetOptional(Guid id) {
       Aggregate aggregate;
       if (_unitOfWork.TryGet(id, out aggregate)) {
-        root = (TAggregateRoot) aggregate.Root;
-        return true;
+        return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
+      TAggregateRoot root;
       var version = 0;
       using (var enumerator = _commitReader.GetFrom(id, 0, Int32.MaxValue).GetEnumerator()) {
         var moved = enumerator.MoveNext();
         if (!moved) {
-          root = null;
-          return false;
+          return Optional<TAggregateRoot>.Empty;
         }
         root = _rootFactory();
         while (moved) {
@@ -46,7 +45,7 @@ namespace AggregateSource.JEventStore {
       }
       aggregate = new Aggregate(id, version, root);
       _unitOfWork.Attach(aggregate);
-      return true;
+      return new Optional<TAggregateRoot>(root);
     }
 
     public void Add(Guid id, TAggregateRoot root) {

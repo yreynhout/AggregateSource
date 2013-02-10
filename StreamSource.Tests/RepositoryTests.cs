@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using AggregateSource;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace StreamSource {
   namespace RepositoryTests {
     [TestFixture]
     public class Construction {
@@ -44,12 +44,10 @@ namespace AggregateSource.Tests {
       }
 
       [Test]
-      public void TryGetReturnsFalseAndNull() {
-        AggregateRootEntityStub root;
-        var result = _sut.TryGet(Guid.NewGuid(), out root);
+      public void GetOptionalReturnsEmpty() {
+        var result = _sut.GetOptional(Guid.NewGuid());
 
-        Assert.That(result, Is.False);
-        Assert.That(root, Is.Null);
+        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -71,15 +69,15 @@ namespace AggregateSource.Tests {
     public class WithEmptyStoreAndFilledUnitOfWork {
       Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
-      Aggregate _aggregate;
+      AggregateRootEntityStub _root;
+      Guid _id;
 
       [SetUp]
       public void SetUp() {
-        _aggregate = AggregateStubs.Stub1;
+        _id = Guid.NewGuid();
+        _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new UnitOfWork();
-        foreach (var aggregate in new[] { _aggregate }) {
-          _unitOfWork.Attach(aggregate);
-        }
+        _unitOfWork.Attach(new Aggregate(_id, 0, _root));
         _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, id => null);
       }
 
@@ -94,27 +92,23 @@ namespace AggregateSource.Tests {
 
       [Test]
       public void GetReturnsRootOfKnownId() {
-        var result = _sut.Get(_aggregate.Id);
+        var result = _sut.Get(_id);
 
-        Assert.That(result, Is.SameAs(_aggregate.Root));
+        Assert.That(result, Is.SameAs(_root));
       }
 
       [Test]
-      public void TryGetReturnsFalseAndNullForUnknownId() {
-        AggregateRootEntityStub root;
-        var result = _sut.TryGet(Guid.NewGuid(), out root);
+      public void GetOptionalReturnsEmptyForUnknownId() {
+        var result = _sut.GetOptional(Guid.NewGuid());
 
-        Assert.That(result, Is.False);
-        Assert.That(root, Is.Null);
+        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
-      public void TryGetReturnsTrueAndRootForKnownId() {
-        AggregateRootEntityStub root;
-        var result = _sut.TryGet(_aggregate.Id, out root);
+      public void GetOptionalReturnsRootForKnownId() {
+        var result = _sut.GetOptional(_id);
 
-        Assert.That(result, Is.True);
-        Assert.That(root, Is.SameAs(_aggregate.Root));
+        Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
       }
     }
 
@@ -153,21 +147,17 @@ namespace AggregateSource.Tests {
       }
 
       [Test]
-      public void TryGetReturnsFalseAndNullForUnknownId() {
-        AggregateRootEntityStub root;
-        var result = _sut.TryGet(Guid.NewGuid(), out root);
+      public void GetOptionalReturnsEmptyForUnknownId() {
+        var result = _sut.GetOptional(Guid.NewGuid());
 
-        Assert.That(result, Is.False);
-        Assert.That(root, Is.Null);
+        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
-      public void TryGetReturnsTrueAndRootForKnownId() {
-        AggregateRootEntityStub root;
-        var result = _sut.TryGet(_id, out root);
+      public void GetOptionalReturnsRootForKnownId() {
+        var result = _sut.GetOptional(_id);
 
-        Assert.That(result, Is.True);
-        Assert.That(root, Is.SameAs(_root));
+        Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
       }
     }
 

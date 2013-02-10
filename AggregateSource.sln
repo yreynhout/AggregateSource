@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.JEventStore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing", "AggregateSource.Testing\AggregateSource.Testing.csproj", "{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamSource", "StreamSource\StreamSource.csproj", "{4DFB6AF4-1748-4048-AE60-995B9801821B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamSource.Tests", "StreamSource.Tests\StreamSource.Tests.csproj", "{BA7F8F57-8120-40EA-950B-930DFE042EB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,14 @@ Global
 		{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DFB6AF4-1748-4048-AE60-995B9801821B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DFB6AF4-1748-4048-AE60-995B9801821B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DFB6AF4-1748-4048-AE60-995B9801821B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DFB6AF4-1748-4048-AE60-995B9801821B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA7F8F57-8120-40EA-950B-930DFE042EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA7F8F57-8120-40EA-950B-930DFE042EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA7F8F57-8120-40EA-950B-930DFE042EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA7F8F57-8120-40EA-950B-930DFE042EB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

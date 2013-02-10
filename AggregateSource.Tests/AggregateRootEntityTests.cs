@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource {
   namespace AggregateRootEntityTests {
     [TestFixture]
     public class WithAnyInstance {

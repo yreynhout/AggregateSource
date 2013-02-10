@@ -24,23 +24,27 @@ namespace AggregateSource.Testing {
     }
 
     public TestSpecificationBuilderContext AppendGivens(IEnumerable<Tuple<Guid, object>> events) {
+      if (events == null) throw new ArgumentNullException("events");
       return new TestSpecificationBuilderContext(_givens.Concat(events).ToArray(), _when, _thens, _throws);
     }
 
     public TestSpecificationBuilderContext SetWhen(object message) {
+      if (message == null) throw new ArgumentNullException("message");
       return new TestSpecificationBuilderContext(_givens, message, _thens, _throws);
     }
 
     public TestSpecificationBuilderContext AppendThens(IEnumerable<Tuple<Guid, object>> events) {
+      if (events == null) throw new ArgumentNullException("events");
       return new TestSpecificationBuilderContext(_givens, _when, _thens.Concat(events).ToArray(), _throws);
     }
 
     public TestSpecificationBuilderContext SetThrows(Exception exception) {
+      if (exception == null) throw new ArgumentNullException("exception");
       return new TestSpecificationBuilderContext(_givens, _when, _thens, exception);
     }
 
-    public TestSpecification ToSpecification(string name) {
-      return new TestSpecification(name, _givens, _when, _thens, _throws);
+    public TestSpecification ToSpecification() {
+      return new TestSpecification(_givens, _when, _thens, _throws);
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
+using AggregateSource;
 
-namespace AggregateSource {
+namespace StreamSource {
   public static class AggregateStubs {
     public static readonly Aggregate Stub1 =
       Create(Guid.NewGuid(), AggregateRootEntityStub.Factory());

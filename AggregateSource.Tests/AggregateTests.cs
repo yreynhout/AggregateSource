@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace AggregateSource.Tests {
+namespace AggregateSource {
   [TestFixture]
   public class AggregateTests {
     [Test, Combinatorial]

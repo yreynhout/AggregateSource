@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using AggregateSource;
 
-namespace AggregateSource {
+namespace StreamSource {
   /// <summary>
-  /// Represents the default repository implementation.
+  /// Represents a default repository implementation.
   /// </summary>
   /// <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
   public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
@@ -34,34 +35,31 @@ namespace AggregateSource {
     /// <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
     /// <exception cref="AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
     public TAggregateRoot Get(Guid id) {
-      TAggregateRoot root;
-      if (!TryGet(id, out root))
+      var result = GetOptional(id);
+      if (!result.HasValue)
         throw new AggregateNotFoundException(id, typeof(TAggregateRoot));
-      return root;
+      return result.Value;
     }
 
     /// <summary>
     /// Attempts to get the aggregate root entity associated with the aggregate id.
     /// </summary>
     /// <param name="id">The aggregate id.</param>
-    /// <param name="root">The found <typeparamref name="TAggregateRoot"/>, or <c>null</c> if not found.</param>
-    /// <returns><c>true</c> if the aggregate is found, otherwise <c>false</c>.</returns>
-    public bool TryGet(Guid id, out TAggregateRoot root) {
+    /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
+    public Optional<TAggregateRoot> GetOptional(Guid id) {
       Aggregate aggregate;
       if (_unitOfWork.TryGet(id, out aggregate)) {
-        root = (TAggregateRoot)aggregate.Root;
-        return true;
+        return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
       var eventStream = _eventStreamReader(id);
       if (eventStream == null) {
-        root = null;
-        return false;
+        return Optional<TAggregateRoot>.Empty;
       }
-      root = _rootFactory();
+      var root = _rootFactory();
       root.Initialize(eventStream.Item2);
       aggregate = new Aggregate(id, eventStream.Item1, root);
       _unitOfWork.Attach(aggregate);
-      return true;
+      return new Optional<TAggregateRoot>(root);
     }
 
     /// <summary>

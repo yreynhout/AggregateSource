@@ -6,7 +6,7 @@ namespace AggregateSource {
   /// <summary>
   /// Tracks changes of attached aggregates.
   /// </summary>
-  public class UnitOfWork {
+  public class UnitOfWork { //Going to interface you ...
     readonly Dictionary<Guid, Aggregate> _aggregates;
 
     /// <summary>

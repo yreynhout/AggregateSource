@@ -68,5 +68,14 @@ namespace AggregateSource.Properties {
                 return ResourceManager.GetString("AggregateNotFoundException_DefaultMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optional object must have a value..
+        /// </summary>
+        internal static string Optional_NoValue {
+            get {
+                return ResourceManager.GetString("Optional_NoValue", resourceCulture);
+            }
+        }
     }
 }
