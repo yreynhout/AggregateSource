@@ -51,5 +51,24 @@ namespace AggregateSource.Testing {
     public Exception Throws {
       get { return _throws; }
     }
+
+    protected bool Equals(TestSpecification other) {
+      return Equals(_givens, other._givens) && Equals(_when, other._when) && Equals(_thens, other._thens) && Equals(_throws, other._throws);
+    }
+
+    public override bool Equals(object obj) {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != GetType()) return false;
+      return Equals((TestSpecification)obj);
+    }
+
+    public override int GetHashCode() {
+      return
+        (_givens != null ? _givens.GetHashCode() : 0) ^
+        (_when != null ? _when.GetHashCode() : 0) ^
+        (_thens != null ? _thens.GetHashCode() : 0) ^
+        (_throws != null ? _throws.GetHashCode() : 0);
+    }
   }
 }
