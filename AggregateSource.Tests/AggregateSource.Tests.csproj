@@ -49,12 +49,12 @@
     <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Testing\GivenStateTests.cs" />
+    <Compile Include="Testing\GivenTests.cs" />
     <Compile Include="Testing\ScenarioTests.cs" />
     <Compile Include="Testing\TestSpecificationTests.cs" />
-    <Compile Include="Testing\ThenStateTests.cs" />
-    <Compile Include="Testing\ThrowStateTests.cs" />
-    <Compile Include="Testing\WhenStateTests.cs" />
+    <Compile Include="Testing\ThenTests.cs" />
+    <Compile Include="Testing\ThrowTests.cs" />
+    <Compile Include="Testing\WhenTests.cs" />
     <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
