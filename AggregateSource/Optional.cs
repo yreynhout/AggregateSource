@@ -50,14 +50,59 @@ namespace AggregateSource {
       }
     }
 
+    /// <summary>
+    /// Gets the enumerator.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator<T> GetEnumerator() {
       if (HasValue) {
         yield return _value;
       }
     }
 
+    /// <summary>
+    /// Returns an enumerator that iterates through a collection.
+    /// </summary>
+    /// <returns>
+    /// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+    /// </returns>
     IEnumerator IEnumerable.GetEnumerator() {
       return GetEnumerator();
+    }
+
+    /// <summary>
+    /// Determines whether the specified <see cref="Optional{T}" /> is equal to this instance.
+    /// </summary>
+    /// <param name="other">The <see cref="Optional{T}" /> to compare with this instance.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="Optional{T}" /> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
+    protected bool Equals(Optional<T> other) {
+      return _hasValue.Equals(other._hasValue) && EqualityComparer<T>.Default.Equals(_value, other._value);
+    }
+
+    /// <summary>
+    /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+    /// </summary>
+    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
+    public override bool Equals(object obj) {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != GetType()) return false;
+      return Equals((Optional<T>)obj);
+    }
+
+    /// <summary>
+    /// Returns a hash code for this instance.
+    /// </summary>
+    /// <returns>
+    /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+    /// </returns>
+    public override int GetHashCode() {
+      return _hasValue.GetHashCode() ^ EqualityComparer<T>.Default.GetHashCode(_value);
     }
   }
 }

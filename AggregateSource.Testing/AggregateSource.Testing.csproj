@@ -41,15 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventCentricTestResult.cs" />
+    <Compile Include="EventCentricTestSpecification.cs" />
+    <Compile Include="IExceptionCentricTestSpecificationWriter.cs" />
     <Compile Include="IGivenStateBuilder.cs" />
+    <Compile Include="IEventCentricTestSpecificationWriter.cs" />
     <Compile Include="IThenStateBuilder.cs" />
     <Compile Include="IThrowStateBuilder.cs" />
     <Compile Include="IWhenStateBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenario.cs" />
-    <Compile Include="TestSpecification.cs" />
     <Compile Include="TestSpecificationBuilder.cs" />
     <Compile Include="TestSpecificationBuilderContext.cs" />
+    <Compile Include="TestResultState.cs" />
+    <Compile Include="TestSpecificationTextWriter.cs" />
+    <Compile Include="ExceptionCentricTestResult.cs" />
+    <Compile Include="ExceptionCentricTestSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">

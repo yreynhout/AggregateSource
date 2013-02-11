@@ -16,6 +16,6 @@ namespace AggregateSource.Testing {
     /// Builds the test specification thus far.
     /// </summary>
     /// <returns>The test specification.</returns>
-    TestSpecification Build();
+    EventCentricTestSpecification Build();
   }
 }

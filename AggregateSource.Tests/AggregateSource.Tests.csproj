@@ -68,8 +68,10 @@
     <Compile Include="GEventStore\GEventStoreIntegrationAttribute.cs" />
     <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\ExceptionCentricTestSpecificationTests.cs" />
     <Compile Include="Testing\GivenTests.cs" />
-    <Compile Include="Testing\TestSpecificationTests.cs" />
+    <Compile Include="Testing\TestSpecifcationDataPointFixture.cs" />
+    <Compile Include="Testing\EventCentricTestSpecificationTests.cs" />
     <Compile Include="Testing\ThenTests.cs" />
     <Compile Include="Testing\ThrowTests.cs" />
     <Compile Include="Testing\WhenTests.cs" />

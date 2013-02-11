@@ -35,6 +35,43 @@ namespace AggregateSource {
 
         Assert.That(sut, Is.EquivalentTo(Enumerable.Empty<AggregateRootEntityStub>()));
       }
+
+      [Test]
+      public void DoesNotEqualNull() {
+        Assert.IsFalse(_sut.Equals(null));
+      }
+
+      [Test]
+      public void DoesNotEqualObjectOfOtherType() {
+        Assert.IsFalse(_sut.Equals(new object()));
+      }
+
+      [Test]
+      public void DoesEqualItself() {
+// ReSharper disable EqualExpressionComparison
+        Assert.IsTrue(_sut.Equals(_sut));
+// ReSharper restore EqualExpressionComparison
+      }
+
+      [Test]
+      public void TwoInstancesAreEqualIfTheyBothDoNotHaveAValueAndAreOfTheSameValueType() {
+        Assert.IsTrue(_sut.Equals(Optional<AggregateRootEntityStub>.Empty));
+      }
+
+      [Test]
+      public void TwoInstancesAreNotEqualIfTheOtherHasAValueAndIsOfTheSameValueType() {
+        Assert.IsFalse(_sut.Equals(new Optional<AggregateRootEntityStub>(AggregateRootEntityStub.Factory())));
+      }
+
+      [Test]
+      public void TwoInstanceHaveTheSameHashCodeIfTheyBothDoNotHaveAValueAndAreOfTheSameValueType() {
+        Assert.IsTrue(_sut.GetHashCode().Equals(Optional<AggregateRootEntityStub>.Empty.GetHashCode()));
+      }
+
+      [Test]
+      public void TwoInstancesDoNotHaveTheSameHashCodeIfTheOtherHasAValueAndIsOfTheSameValueType() {
+        Assert.IsFalse(_sut.GetHashCode().Equals(new Optional<AggregateRootEntityStub>(AggregateRootEntityStub.Factory()).GetHashCode()));
+      }
     }
 
     [TestFixture]
@@ -68,6 +105,53 @@ namespace AggregateSource {
         var sut = (IEnumerable)_sut;
 
         Assert.That(sut, Is.EquivalentTo(new object[] { _instance }));
+      }
+
+      [Test]
+      public void DoesNotEqualNull() {
+        Assert.IsFalse(_sut.Equals(null));
+      }
+
+      [Test]
+      public void DoesNotEqualObjectOfOtherType() {
+        Assert.IsFalse(_sut.Equals(new object()));
+      }
+
+      [Test]
+      public void DoesEqualItself() {
+// ReSharper disable EqualExpressionComparison
+        Assert.IsTrue(_sut.Equals(_sut));
+// ReSharper restore EqualExpressionComparison
+      }
+
+      [Test]
+      public void TwoInstancesAreEqualIfTheyBothHaveTheSameValue() {
+        Assert.IsTrue(_sut.Equals(new Optional<AggregateRootEntityStub>(_instance)));
+      }
+
+      [Test]
+      public void TwoInstancesAreNotEqualIfTheOtherHasNoValue() {
+        Assert.IsFalse(_sut.Equals(Optional<AggregateRootEntityStub>.Empty));
+      }
+
+      [Test]
+      public void TwoInstancesAreNotEqualIfTheOtherHasDifferentValue() {
+        Assert.IsFalse(_sut.Equals(new Optional<AggregateRootEntityStub>(AggregateRootEntityStub.Factory())));
+      }
+
+      [Test]
+      public void TwoInstancesHaveTheSameHashCodeIfTheyBothHaveTheSameValue() {
+        Assert.IsTrue(_sut.GetHashCode().Equals(new Optional<AggregateRootEntityStub>(_instance).GetHashCode()));
+      }
+
+      [Test]
+      public void TwoInstancesDoNotHaveTheSameHashCodeIfTheOtherHasNoValue() {
+        Assert.IsFalse(_sut.GetHashCode().Equals(Optional<AggregateRootEntityStub>.Empty.GetHashCode()));
+      }
+
+      [Test]
+      public void TwoInstancesDoNotHaveTheSameHashCodeIfTheOtherHasDifferentValue() {
+        Assert.IsFalse(_sut.GetHashCode().Equals(new Optional<AggregateRootEntityStub>(AggregateRootEntityStub.Factory()).GetHashCode()));
       }
     }
   }

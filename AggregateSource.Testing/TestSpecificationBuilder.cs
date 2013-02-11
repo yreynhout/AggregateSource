@@ -33,8 +33,16 @@ namespace AggregateSource.Testing {
       return new TestSpecificationBuilder(_context.SetThrows(exception));
     }
 
-    public TestSpecification Build() {
-      return _context.ToSpecification();
+    EventCentricTestSpecification IThenStateBuilder.Build() {
+      return _context.ToEventCentricSpecification();
+    }
+
+    EventCentricTestSpecification IWhenStateBuilder.Build() {
+      return _context.ToEventCentricSpecification();
+    }
+
+    ExceptionCentricTestSpecification IThrowStateBuilder.Build() {
+      return _context.ToExceptionCentricSpecification();
     }
   }
 }
