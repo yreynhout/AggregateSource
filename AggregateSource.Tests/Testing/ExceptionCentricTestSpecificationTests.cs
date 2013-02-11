@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace AggregateSource.Testing {
   [TestFixture]
-  public class ExceptionCentricTestSpecificationTests : TestSpecifcationDataPointFixture {
+  public class ExceptionCentricTestSpecificationTests : TestSpecificationDataPointFixture {
     [Test]
     public void GivensNullThrows() {
       Assert.Throws<ArgumentNullException>(() => new ExceptionCentricTestSpecification(null, Message, Exception));

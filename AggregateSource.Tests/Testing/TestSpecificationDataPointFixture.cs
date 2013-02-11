@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 namespace AggregateSource.Testing {
-  public abstract class TestSpecifcationDataPointFixture {
+  public abstract class TestSpecificationDataPointFixture {
     [Datapoint]
     public Tuple<Guid, object>[] NoEvents = new Tuple<Guid, object>[0];
 
@@ -25,6 +25,6 @@ namespace AggregateSource.Testing {
     public object Message = new object();
 
     [Datapoint]
-    public Exception Exception = new Exception();
+    public Exception Exception = new Exception("Message");
   }
 }

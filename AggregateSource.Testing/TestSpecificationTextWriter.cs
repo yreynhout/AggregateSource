@@ -47,7 +47,7 @@ namespace AggregateSource.Testing {
     }
 
     void WriteWhen(EventCentricTestSpecification specification) {
-      _writer.Write("When");
+      _writer.WriteLine("When");
       WriteMessage(specification.When);
     }
 
@@ -64,7 +64,7 @@ namespace AggregateSource.Testing {
     }
 
     void WriteWhen(ExceptionCentricTestSpecification specification) {
-      _writer.Write("When");
+      _writer.WriteLine("When");
       WriteMessage(specification.When);
     }
 

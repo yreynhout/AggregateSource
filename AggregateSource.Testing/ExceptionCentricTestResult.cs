@@ -2,7 +2,7 @@
 
 namespace AggregateSource.Testing {
   /// <summary>
-  /// 
+  /// The result of an exception centric test specification.
   /// </summary>
   public class ExceptionCentricTestResult {
     readonly ExceptionCentricTestSpecification _specification;
