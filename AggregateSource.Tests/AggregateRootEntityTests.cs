@@ -9,7 +9,7 @@ namespace AggregateSource {
     public class WithAnyInstance {
       [Test]
       public void InitializeEventsCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new IntializeWithNullEventsAggregateRootEntity());
+        Assert.Throws<ArgumentNullException>(() => new InitializeWithNullEventsAggregateRootEntity());
       }
 
       [Test]
@@ -29,8 +29,8 @@ namespace AggregateSource {
       }
     }
 
-    class IntializeWithNullEventsAggregateRootEntity : AggregateRootEntity {
-      public IntializeWithNullEventsAggregateRootEntity() {
+    class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity {
+      public InitializeWithNullEventsAggregateRootEntity() {
         Initialize(null);
       }
     }
