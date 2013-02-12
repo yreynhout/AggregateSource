@@ -6,7 +6,7 @@
     /// <summary>
     /// Writes the specified test specification.
     /// </summary>
-    /// <param name="specification">The test specification to print.</param>
+    /// <param name="specification">The test specification to write.</param>
     void Write(ExceptionCentricTestSpecification specification);
   }
 }

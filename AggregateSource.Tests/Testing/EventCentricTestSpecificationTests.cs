@@ -37,9 +37,7 @@ namespace AggregateSource.Testing {
     public void DoesEqualItself() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
-      // ReSharper disable EqualExpressionComparison
       Assert.That(sut.Equals(sut), Is.True);
-      // ReSharper restore EqualExpressionComparison
     }
 
     [Theory]
@@ -133,7 +131,7 @@ namespace AggregateSource.Testing {
     public void FailWithNullActualThrows() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
-      Assert.Throws<ArgumentNullException>(() => { var result = sut.Fail(null); });
+      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail(null); });
     }
 
     [Test]

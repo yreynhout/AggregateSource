@@ -22,7 +22,7 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Writes the specified test specification.
     /// </summary>
-    /// <param name="specification">The test specification to print.</param>
+    /// <param name="specification">The test specification to write.</param>
     public void Write(EventCentricTestSpecification specification) {
       WriteGivens(specification);
       WriteWhen(specification);
@@ -32,7 +32,7 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Writes the specified test specification.
     /// </summary>
-    /// <param name="specification">The test specification to print.</param>
+    /// <param name="specification">The test specification to write.</param>
     public void Write(ExceptionCentricTestSpecification specification) {
       WriteGivens(specification);
       WriteWhen(specification);

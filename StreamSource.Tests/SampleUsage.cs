@@ -4,8 +4,6 @@ using AggregateSource;
 using NUnit.Framework;
 
 namespace StreamSource {
-  // ReSharper disable MemberCanBePrivate.Local
-  // ReSharper disable LocalizableElement
   [TestFixture]
   public class SampleUsage {
     [Test]
@@ -83,6 +81,4 @@ namespace StreamSource {
       }
     }
   }
-  // ReSharper restore LocalizableElement
-  // ReSharper restore MemberCanBePrivate.Local
 }

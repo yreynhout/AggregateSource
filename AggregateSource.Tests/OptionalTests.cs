@@ -48,9 +48,7 @@ namespace AggregateSource {
 
       [Test]
       public void DoesEqualItself() {
-// ReSharper disable EqualExpressionComparison
         Assert.IsTrue(_sut.Equals(_sut));
-// ReSharper restore EqualExpressionComparison
       }
 
       [Test]
@@ -119,9 +117,7 @@ namespace AggregateSource {
 
       [Test]
       public void DoesEqualItself() {
-// ReSharper disable EqualExpressionComparison
         Assert.IsTrue(_sut.Equals(_sut));
-// ReSharper restore EqualExpressionComparison
       }
 
       [Test]
