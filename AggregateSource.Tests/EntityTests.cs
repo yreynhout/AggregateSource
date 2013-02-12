@@ -63,8 +63,10 @@ namespace AggregateSource {
       }
     }
 
+    [TestFixture]
     public class WithInstanceWithHandlers {}
 
+    [TestFixture]
     public class WithInstanceWithoutHandlers { }
   }
 }

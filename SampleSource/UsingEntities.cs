@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AggregateSource;
 using NUnit.Framework;
 
-
 namespace SampleSource {
   namespace UsingEntities {
     using Messaging;
