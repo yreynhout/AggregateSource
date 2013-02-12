@@ -1,3 +1,8 @@
+lib/eventstore/*
+lib/MSBuildTasks.1.4.0.56/*
+lib/eventstore-net-1.0.1.zip
+lib/GEventStoreIntegration.log
+
 #################
 ## Eclipse
 #################

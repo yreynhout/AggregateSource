@@ -13,7 +13,7 @@ namespace AggregateSource.GEventStore {
   public class EmbeddedEventStore {
     public static readonly EmbeddedEventStore Instance = new EmbeddedEventStore();
 
-    static readonly IPEndPoint TcpEndPoint = new IPEndPoint(IPAddress.Loopback, 1113);
+    static readonly IPEndPoint TcpEndPoint = new IPEndPoint(IPAddress.Loopback, 54721);
 
     SingleVNode _node;
     EventStoreConnection _connection;

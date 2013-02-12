@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Run" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Run">
+    <WebDownload 
+      FileUri="http://download.geteventstore.com/binaries/eventstore-net-1.0.1.zip" 
+      FileName="$(MSBuildProjectDirectory)\eventstore-net-1.0.1.zip" />
+    <Unzip 
+      ZipFileName="$(MSBuildProjectDirectory)\eventstore-net-1.0.1.zip" 
+      TargetDirectory="$(MSBuildProjectDirectory)"/>
+  </Target>
+</Project>
