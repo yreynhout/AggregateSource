@@ -3,7 +3,7 @@ using System.Linq;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore {
-  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
