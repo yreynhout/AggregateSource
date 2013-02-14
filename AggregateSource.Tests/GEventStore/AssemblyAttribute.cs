@@ -1,1 +1,1 @@
-﻿[assembly: AggregateSource.GEventStore.GEventStoreIntegration]
+﻿//[assembly: AggregateSource.GEventStore.GEventStoreIntegration]

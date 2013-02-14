@@ -5,7 +5,7 @@ namespace AggregateSource {
   /// <summary>
   /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
   /// </summary>
-  public abstract class AggregateRootEntity {
+  public abstract class AggregateRootEntity : IAggregateRootEntity {
     readonly List<object> _changes;
     readonly Dictionary<Type, Action<object>> _handlers;
 

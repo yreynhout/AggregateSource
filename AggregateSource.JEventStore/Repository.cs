@@ -3,7 +3,7 @@ using System.Linq;
 using EventStore;
 
 namespace AggregateSource.JEventStore {
-  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
     readonly ICommitEvents _commitReader;

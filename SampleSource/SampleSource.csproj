@@ -43,6 +43,7 @@
     <Compile Include="UsingEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsingObjectInheritance.cs" />
+    <Compile Include="UsingRoles.cs" />
     <Compile Include="UsingSelectiveObjectInheritance.cs" />
   </ItemGroup>
   <ItemGroup>

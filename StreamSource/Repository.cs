@@ -7,7 +7,7 @@ namespace StreamSource {
   /// Represents a default repository implementation.
   /// </summary>
   /// <typeparam name="TAggregateRoot">Type of the aggregate root entity.</typeparam>
-  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : AggregateRootEntity {
+  public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
     readonly Func<Guid, Tuple<Int32, IEnumerable<object>>> _eventStreamReader;
