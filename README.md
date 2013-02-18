@@ -27,6 +27,9 @@ A base class for an aggregate root entity that does the usual initialization and
 
 It's meant to be used in your "domain model" code.
 
+### Entity
+A base class for entities (not the root obviously) within an aggregate that allows them to hook into the replay and recording functionality of the aggregate root. There's no magic here, it just alleviates you from writing boring, repetitive code.
+
 ### Aggregate
 
 A separate concept for an aggregate that is mainly used as a wrapper around the aggregate root entity. It carries around version information that your preferred eventstore might fancy between reads and writes to perform optimistic concurrency updates. Don't use it in your "domain model" code. It's meant for infrastructure code.
