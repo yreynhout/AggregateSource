@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AggregateSource;
 
 namespace StreamSource {
@@ -10,7 +9,7 @@ namespace StreamSource {
   public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
-    readonly Func<Guid, Tuple<Int32, IEnumerable<object>>> _eventStreamReader;
+    readonly IEventStreamReader _eventStreamReader;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
@@ -19,7 +18,7 @@ namespace StreamSource {
     /// <param name="unitOfWork">The unit of work.</param>
     /// <param name="eventStreamReader">The event stream reader.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or the <paramref name="unitOfWork"/> or the <paramref name="eventStreamReader"/> is null.</exception>
-    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, Func<Guid, Tuple<Int32, IEnumerable<object>>> eventStreamReader) {
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, IEventStreamReader eventStreamReader) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (eventStreamReader == null) throw new ArgumentNullException("eventStreamReader");
@@ -51,13 +50,14 @@ namespace StreamSource {
       if (_unitOfWork.TryGet(id, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
-      var eventStream = _eventStreamReader(id);
-      if (eventStream == null) {
+      var result = _eventStreamReader.Read(id);
+      if (!result.HasValue) {
         return Optional<TAggregateRoot>.Empty;
       }
+      var eventStream = result.Value;
       var root = _rootFactory();
-      root.Initialize(eventStream.Item2);
-      aggregate = new Aggregate(id, eventStream.Item1, root);
+      root.Initialize(eventStream.Events);
+      aggregate = new Aggregate(id, eventStream.ExpectedVersion, root);
       _unitOfWork.Attach(aggregate);
       return new Optional<TAggregateRoot>(root);
     }

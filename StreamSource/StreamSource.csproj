@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event.cs" />
+    <Compile Include="EventStream.cs" />
+    <Compile Include="EventStreamChange.cs" />
+    <Compile Include="EventStreamChangeset.cs" />
+    <Compile Include="IEventStreamReader.cs" />
+    <Compile Include="IEventStreamWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
   </ItemGroup>

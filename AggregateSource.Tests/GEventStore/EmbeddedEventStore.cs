@@ -1,8 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using EventStore.ClientAPI;
+using EventStore.Common.Log;
 using EventStore.Core;
+using EventStore.Core.Bus;
+using EventStore.Core.Messages;
 using EventStore.Core.Services.Monitoring;
 using EventStore.Core.Settings;
 using EventStore.Core.TransactionLog.Checkpoint;
@@ -24,9 +28,15 @@ namespace AggregateSource.GEventStore {
       var db = CreateTFChunkDb();
       var settings = CreateSingleVNodeSettings();
       _node = new SingleVNode(db, settings, false);
+      var waitHandle = new ManualResetEvent(false);
+      _node.Bus.Subscribe(new AdHocHandler<SystemMessage.BecomeWorking>(m => waitHandle.Set()));
       _node.Start();
+      waitHandle.WaitOne();
       _connection = EventStoreConnection.Create();
       _connection.Connect(TcpEndPoint);
+      //var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
+      //if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
+      //LogManager.Init("embedded-es", logPath);
     }
 
     public void Stop() {
@@ -34,7 +44,10 @@ namespace AggregateSource.GEventStore {
         _connection.Close();
       }
       if (_node != null) {
+        //var waitHandle = new ManualResetEvent(false);
+        //_node.Bus.Subscribe(new AdHocHandler<SystemMessage.BecomeShuttingDown>(m => waitHandle.WaitOne()));
         _node.Stop();
+        //waitHandle.WaitOne();
       }
     }
 

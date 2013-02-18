@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AggregateSource;
 using NUnit.Framework;
 
@@ -9,17 +10,24 @@ namespace StreamSource {
     public class Construction {
       [Test]
       public void FactoryCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(null, new UnitOfWork(), id => null));
+        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(null, new UnitOfWork(), EventStreamReaderStub.Instance));
       }
 
       [Test]
       public void UnitOfWorkCanNotBeNull() {
-        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, id => null));
+        Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EventStreamReaderStub.Instance));
       }
 
       [Test]
       public void EventStreamReaderCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() => new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new UnitOfWork(), null));
+      }
+    }
+    
+    class EventStreamReaderStub : IEventStreamReader {
+      public static readonly IEventStreamReader Instance = new EventStreamReaderStub();
+      public Optional<EventStream> Read(Guid id) {
+        return Optional<EventStream>.Empty;
       }
     }
 
@@ -31,7 +39,7 @@ namespace StreamSource {
       [SetUp]
       public void SetUp() {
         _unitOfWork = new UnitOfWork();
-        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, id => null);
+        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, new EmptyEventStreamReader());
       }
 
       [Test]
@@ -78,7 +86,7 @@ namespace StreamSource {
         _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new UnitOfWork();
         _unitOfWork.Attach(new Aggregate(_id, 0, _root));
-        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, id => null);
+        _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, new EmptyEventStreamReader());
       }
 
       [Test]
@@ -125,9 +133,11 @@ namespace StreamSource {
         _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new UnitOfWork();
         _sut = new Repository<AggregateRootEntityStub>(
-          () => _root, 
-          _unitOfWork, 
-          id => id == _id ? new Tuple<int, IEnumerable<object>>(0, new object[0]) : null);
+          () => _root,
+          _unitOfWork,
+          new FilledEventStreamReader(new Dictionary<Guid, IList<object>> {
+            {_id, new List<object>()}
+          }));
       }
 
       [Test]
@@ -158,6 +168,28 @@ namespace StreamSource {
         var result = _sut.GetOptional(_id);
 
         Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
+      }
+    }
+
+    class EmptyEventStreamReader : IEventStreamReader {
+      public Optional<EventStream> Read(Guid id) {
+        return Optional<EventStream>.Empty;
+      }
+    }
+    
+    class FilledEventStreamReader : IEventStreamReader {
+      readonly Dictionary<Guid, IList<object>> _storage;
+
+      public FilledEventStreamReader(Dictionary<Guid, IList<object>> storage) {
+        if (storage == null) throw new ArgumentNullException("storage");
+        _storage = storage;
+      }
+
+      public Optional<EventStream> Read(Guid id) {
+        IList<object> events;
+        return _storage.TryGetValue(id, out events) ? 
+          new Optional<EventStream>(new EventStream(events.Count, events.ToArray())) : 
+          Optional<EventStream>.Empty;
       }
     }
 

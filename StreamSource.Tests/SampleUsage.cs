@@ -11,7 +11,7 @@ namespace StreamSource {
       //Somewhere in an application service wrapper
       var unitOfWork = new UnitOfWork();
       //Dependency of a domain service or application service
-      var dogRepository = new Repository<Dog>(Dog.Factory, unitOfWork, id => null);
+      var dogRepository = new Repository<Dog>(Dog.Factory, unitOfWork, new EmptyEventStreamReader());
       //Application service handler code
       var dog = new Dog(Guid.NewGuid(), "Sparky", DateTime.Today.AddYears(-1));
       dog.AdministerShotOf("Anti Diarrhea Medicine", DateTime.Today);
@@ -20,6 +20,12 @@ namespace StreamSource {
       Console.WriteLine("We observed that:");
       foreach (var change in unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges())) {
         Console.WriteLine(change);
+      }
+    }
+
+    class EmptyEventStreamReader : IEventStreamReader {
+      public Optional<EventStream> Read(Guid id) {
+        return Optional<EventStream>.Empty;
       }
     }
 
