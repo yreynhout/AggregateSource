@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\eventstore\EventStore.Core.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\lib\eventstore\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
