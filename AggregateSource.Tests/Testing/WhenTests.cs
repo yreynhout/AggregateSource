@@ -6,14 +6,14 @@ namespace AggregateSource.Testing {
     [TestFixture]
     public class ScenarioWhenTests : WhenFixture {
       protected override IWhenStateBuilder When(object message) {
-        return Scenario.When(message);
+        return new Scenario().When(message);
       }
     }
 
     [TestFixture]
     public class GivenStateBuilderWhenTests : WhenFixture {
       protected override IWhenStateBuilder When(object message) {
-        return Scenario.Given(Guid.Empty, new object[0]).When(message);
+        return new Scenario().Given(Guid.Empty, new object[0]).When(message);
       }
     }
 

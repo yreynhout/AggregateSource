@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace AggregateSource.Testing {
-  internal class TestSpecificationBuilder : IGivenStateBuilder, IWhenStateBuilder, IThenStateBuilder, IThrowStateBuilder {
+  class TestSpecificationBuilder : IGivenStateBuilder, IWhenStateBuilder, IThenStateBuilder, IThrowStateBuilder {
     readonly TestSpecificationBuilderContext _context;
 
     public TestSpecificationBuilder() {

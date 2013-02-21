@@ -6,14 +6,14 @@ namespace AggregateSource.Testing {
     [TestFixture]
     public class ScenarioGivenTests : GivenFixture {
       protected override IGivenStateBuilder Given(Guid id, params object[] events) {
-        return Scenario.Given(id, events);
+        return new Scenario().Given(id, events);
       }
     }
 
     [TestFixture]
     public class GivenStateBuilderGivenTests : GivenFixture {
       protected override IGivenStateBuilder Given(Guid id, params object[] events) {
-        return Scenario.Given(Guid.Empty, new object[0]).Given(id, events);
+        return new Scenario().Given(Guid.Empty, new object[0]).Given(id, events);
       }
     }
 

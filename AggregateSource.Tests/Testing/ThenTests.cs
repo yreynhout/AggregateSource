@@ -6,14 +6,14 @@ namespace AggregateSource.Testing {
     [TestFixture]
     public class WhenBuilderThenTests : ThenFixture {
       protected override IThenStateBuilder Then(Guid id, params object[] events) {
-        return Scenario.When(new object()).Then(id, events);
+        return new Scenario().When(new object()).Then(id, events);
       }
     }
 
     [TestFixture]
     public class ThenBuilderThenTests : ThenFixture {
       protected override IThenStateBuilder Then(Guid id, params object[] events) {
-        return Scenario.When(new object()).Then(Guid.Empty, new object[0]).Then(id, events);
+        return new Scenario().When(new object()).Then(Guid.Empty, new object[0]).Then(id, events);
       }
     }
 
