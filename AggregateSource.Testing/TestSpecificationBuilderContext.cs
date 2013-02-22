@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AggregateSource.Testing {
-  internal class TestSpecificationBuilderContext {
+  class TestSpecificationBuilderContext {
     readonly Tuple<Guid, object>[] _givens;
     readonly Tuple<Guid, object>[] _thens;
     readonly object _when;

@@ -6,7 +6,7 @@ using AggregateSource.Testing;
 using NUnit.Framework;
 
 namespace SampleSource.Testing {
-  namespace UsingContractBasedIdProvisioning {
+  namespace UsingIdFromIEvent {
     using Messaging;
 
     [TestFixture]
@@ -16,7 +16,6 @@ namespace SampleSource.Testing {
       [Test]
       public void when_adding_a_new_list() {
         new Scenario().
-          Given().
           When(new AddNewTodoList(TodoListId, "Things I should do when I'm a hundred years old.")).
           Then(new AddedNewTodoList(TodoListId, "Things I should do when I'm a hundred years old.")).
           Assert();
@@ -49,7 +48,7 @@ namespace SampleSource.Testing {
       }
 
       public static void Assert(this IThenStateBuilder builder) {
-        new TestSpecificationTextWriter(Console.Out).Write(builder.Build());
+        //ommitted for brevity.
       }
     }
 
@@ -173,19 +172,7 @@ namespace SampleSource.Testing {
     }
 
     namespace Messaging {
-      public interface IEvent {
-        Guid Id { get; }
-      }
-
-      public class AddNewTodoList {
-        public readonly Guid Id;
-        public readonly string Name;
-
-        public AddNewTodoList(Guid id, string name) {
-          Id = id;
-          Name = name;
-        }
-      }
+      public interface IEvent { Guid Id { get; } }
 
       public class AddedNewTodoList : IEvent {
         protected bool Equals(AddedNewTodoList other) {
@@ -263,6 +250,16 @@ namespace SampleSource.Testing {
         }
 
         public Guid Id { get; private set; }
+      }
+
+      public class AddNewTodoList {
+        public readonly Guid Id;
+        public readonly string Name;
+
+        public AddNewTodoList(Guid id, string name) {
+          Id = id;
+          Name = name;
+        }
       }
     }
   }
