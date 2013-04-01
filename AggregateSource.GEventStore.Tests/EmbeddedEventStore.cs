@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using EventStore.ClientAPI;
-using EventStore.Common.Log;
 using EventStore.Core;
 using EventStore.Core.Bus;
 using EventStore.Core.Messages;
