@@ -40,6 +40,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Testing\AggregateAsSystemUnderTest.cs" />
     <Compile Include="Testing\UsingIdFromIEvent.cs" />
     <Compile Include="UsingEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
