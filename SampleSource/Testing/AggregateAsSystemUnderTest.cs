@@ -2,11 +2,11 @@
 using AggregateSource;
 using AggregateSource.Testing;
 using NUnit.Framework;
-using SampleSource.Testing.AggregateAsSystemUnderTest.Ticketing;
 
 namespace SampleSource.Testing {
   namespace AggregateAsSystemUnderTest {
     using Messaging;
+    using Ticketing;
 
     [TestFixture]
     public class SampleUsage {
@@ -173,10 +173,10 @@ namespace SampleSource.Testing {
 
       public class TicketSale : AggregateRootEntity {
         private SeatCount _availableSeats;
-
-        public static readonly Func<TicketSale> Factory = () => new TicketSale();
         private bool _ended;
 
+        public static readonly Func<TicketSale> Factory = () => new TicketSale();
+        
         private TicketSale() {
           Register<TicketSaleStartedEvent>(When);
           Register<TicketSaleEndedEvent>(When);
