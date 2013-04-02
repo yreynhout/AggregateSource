@@ -5,7 +5,7 @@ This library/code provides lightweight infrastructure for doing eventsourcing us
 
 The preferred way of using it, is copying it into your project and getting rid of all the cruft you don't need.
 
-It's well suited for those scenarios where multiple aggregates need to collaborate and is lenient to saving multiple aggregates in one go should your underlying store allow you to do so or your problem domain require you to do so. Of course, nothing is holding you back to throw when multiple aggregates have been changed. I just think this shouldn't interfere with the programming model you use. Granted, for affecting only one aggregate, there are simpler solutions and to be honest, what I bring you here is in no way unique:
+It's well suited for those scenarios where multiple aggregates need to collaborate and is lenient to saving multiple aggregates in one go should your underlying store allow you to do so or your problem domain require you to do so. Of course, nothing is holding you back from throwing when multiple aggregates have been changed. I just think this shouldn't interfere with the programming model you use. Granted, for affecting only one aggregate, there are simpler solutions and to be honest, what I bring you here is in no way unique:
 
 * https://github.com/gregoryyoung/m-r
 * https://github.com/joliver/CommonDomain
