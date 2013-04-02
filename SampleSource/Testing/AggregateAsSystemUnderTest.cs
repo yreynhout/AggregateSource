@@ -18,7 +18,7 @@ namespace SampleSource.Testing {
         new FactoryScenarioFor<Concert>(Concert.Factory).
           Given(
             ConcertEvents.Planned(ConcertId)).
-          When(concert => concert.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
+          When(sut => sut.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
           Then(
             TicketSaleEvents.Started(TicketSaleId, ConcertId, DateTimeOffset.UtcNow.Date, 100)).
           Assert();
@@ -30,7 +30,7 @@ namespace SampleSource.Testing {
           Given(
             ConcertEvents.Planned(ConcertId),
             ConcertEvents.Cancelled(ConcertId, "Lead singer OD'ed.")).
-          When(concert => concert.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
+          When(sut => sut.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
           AssertThrows(new InvalidOperationException("Starting a ticket sale for a cancelled concert is impossible."));
       }
 
@@ -39,7 +39,7 @@ namespace SampleSource.Testing {
         new CommandScenarioFor<Concert>(Concert.Factory).
           Given(
             ConcertEvents.Planned(ConcertId)).
-          When(concert => concert.Cancel("Lead singer OD'ed.")).
+          When(sut => sut.Cancel("Lead singer OD'ed.")).
           Then(
             ConcertEvents.Cancelled(ConcertId, "Lead singer OD'ed.")).
           Assert();
@@ -51,7 +51,7 @@ namespace SampleSource.Testing {
           Given(
             ConcertEvents.Planned(ConcertId),
             ConcertEvents.Cancelled(ConcertId, "Guitars all smashed.")).
-          When(concert => concert.Cancel("Lead singer OD'ed.")).
+          When(sut => sut.Cancel("Lead singer OD'ed.")).
           AssertThrows(new InvalidOperationException("The concert has already been cancelled."));
       }
 

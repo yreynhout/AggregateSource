@@ -42,11 +42,11 @@ Oddly enough it does not commit/save/persist. Its role is reduced to tracking mu
 
 ## Testing
 
-Guides you in writing test specifications using this simple codified statechart.
+Helps you write test specifications, using a simple, codified statechart and a fluent syntax.
 
 ![Test specification - Statechart](docs/images/TestSpecificationStatechart.png)
 
-You can write either command handler or aggregate specific tests in the following formats:
+This fluent syntax comes in two flavors (for now). One is targetted at writing command handler test specifications, the other at writing aggregate specific test specifications. This begs the question: "Which one should I use?". The simple answer is: "Whichever one is more appropriate for the situation.".
 
 #### Testing Command Handlers
 
@@ -80,7 +80,7 @@ new Scenario().
 
 #### Testing Aggregates
 
-Testing aggregate (root entity) methods comes in 3 variations: ```factory```, ```command``` and ```query```. Factory methods give birth to new aggregates. This is similar in spirit to [this article](http://www.udidahan.com/2009/06/29/dont-create-aggregate-roots/ "Don't create aggregate roots"). Command methods change the state of the aggregate but do not return a value. Query methods return a value but do not change the observable state of the aggregate. Principles that reenforce this way of thinking and testing are [CQS](http://martinfowler.com/bliki/CommandQuerySeparation.html "Command and query separation") and [TDA](http://pragprog.com/articles/tell-dont-ask "Tell, don't ask").
+Testing aggregate (root entity) methods comes in 3 variations: ```factory```, ```command``` and ```query```. Factory methods give birth to new aggregates. This is similar in spirit to what is described [here](http://www.udidahan.com/2009/06/29/dont-create-aggregate-roots/ "Don't create aggregate roots"). Command methods change the state of the aggregate but do not return a value. Query methods return a value but do not change the observable state of the aggregate. Principles that reenforce this way of thinking and testing are [CQS](http://martinfowler.com/bliki/CommandQuerySeparation.html "Command and query separation") and [TDA](http://pragprog.com/articles/tell-dont-ask "Tell, don't ask").
 
 ```csharp
 
@@ -88,7 +88,7 @@ Testing aggregate (root entity) methods comes in 3 variations: ```factory```, ``
 new FactoryScenarioFor<Concert>(Concert.Factory).
   Given(
     ConcertEvents.Planned(ConcertId)).
-  When(concert => concert.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
+  When(sut => sut.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
   Then(
     TicketSaleEvents.Started(TicketSaleId, ConcertId, DateTimeOffset.UtcNow.Date, 100)).
   Assert();
@@ -97,7 +97,7 @@ new FactoryScenarioFor<Concert>(Concert.Factory).
 new CommandScenarioFor<Concert>(Concert.Factory).
   Given(
     ConcertEvents.Planned(ConcertId)).
-  When(concert => concert.Cancel("Lead singer OD'ed.")).
+  When(sut => sut.Cancel("Lead singer OD'ed.")).
   Then(
     ConcertEvents.Cancelled(ConcertId, "Lead singer OD'ed.")).
   Assert();
@@ -111,6 +111,9 @@ new QueryScenarioFor<TicketSale>(TicketSale.Factory).
   Assert();
 
 ```
+#### Asserts
 
-Mind that the Assert* methods are **not** in the box. You have to write that kind of unit testing framework integration yourself. Looking for an example? Head on over to the Testing folder of the SampleSource project (https://github.com/yreynhout/AggregateSource/blob/master/SampleSource/)
+Mind that the Assert* methods are **not** in the box. It's an integration point between the test specifications and your testing framework of choice. Leverage its asserts to execute the specification.
+
+Looking for an example? Head on over to the Testing folder of the [SampleSource](SampleSource/ "Sample source") project.
 The principles discussed here are easily applicable to other frameworks and libraries. Feel free to steal ...
