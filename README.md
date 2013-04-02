@@ -115,5 +115,5 @@ new QueryScenarioFor<TicketSale>(TicketSale.Factory).
 
 Mind that the Assert* methods are **not** in the box. It's an integration point between the test specifications and your testing framework of choice. Leverage its asserts to execute the specification.
 
-Looking for an example? Head on over to the Testing folder of the [SampleSource](SampleSource/ "Sample source") project.
+Looking for an example? Head on over to the Testing folder of the [SampleSource](src/SampleSource/ "Sample source") project.
 The principles discussed here are easily applicable to other frameworks and libraries. Feel free to steal ...
