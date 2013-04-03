@@ -1,4 +1,5 @@
 build/packages/*
+build/TestRunResult.xml
 lib/eventstore/*
 lib/packages/*
 lib/eventstore-net-1.0.1.zip
@@ -145,7 +146,6 @@ Desktop.ini
 *.egg
 *.egg-info
 dist
-build
 eggs
 parts
 bin

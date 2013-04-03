@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    <SourcePath>$(RootPath)\src</SourcePath>
+    <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Test">
+    <MSBuild Projects="$(RootPath)\build\build.proj" Targets="Build" />
+
+    <CreateItem Include="$(SourcePath)\AggregateSource.Tests\bin\Release\AggregateSource.Tests.dll;">
+      <Output TaskParameter="Include" ItemName="AssembliesToTest" />
+    </CreateItem>
+
+    <NUnit
+        Assemblies="@(AssembliesToTest)"
+        ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
+        Force32Bit="true"
+        ContinueOnError="false"
+        OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult.xml"/>
+  </Target>
+</Project>
