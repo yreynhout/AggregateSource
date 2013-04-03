@@ -3,6 +3,7 @@ build/TestRunResult.xml
 lib/eventstore/*
 lib/packages/*
 lib/eventstore-net-1.0.1.zip
+lib/eventstore_license.txt
 src/packages/*
 *.log
 

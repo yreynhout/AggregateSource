@@ -7,6 +7,9 @@
 
   <Target Name="Run">
     <WebDownload 
+      FileUri="https://raw.github.com/EventStore/EventStore/master/LICENSE" 
+      FileName="$(MSBuildProjectDirectory)\eventstore_license.txt" />
+    <WebDownload 
       FileUri="http://download.geteventstore.com/binaries/eventstore-net-1.0.1.zip" 
       FileName="$(MSBuildProjectDirectory)\eventstore-net-1.0.1.zip" />
     <Unzip 
