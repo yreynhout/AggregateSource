@@ -5,13 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "Aggregat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Tests", "AggregateSource.Tests\AggregateSource.Tests.csproj", "{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC4CC0D1-C0B4-44D7-BDA8-3DC6A430077F}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A29A626-F25F-472A-858B-3492B3AA499C}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md

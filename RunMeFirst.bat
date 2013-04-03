@@ -1,10 +1,7 @@
 cls
 echo off
-echo ----------------------------------------------------------------------
-echo Script that downloads and unzips GetEventStore in a specific directory
-echo so that the solution may compile and integration tests may run
-echo ----------------------------------------------------------------------
-
-src\.nuget\NuGet.exe install lib/packages.config -o lib
-"%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe" /v:n "lib/GEventStoreIntegration.proj" /logger:FileLogger,Microsoft.Build.Engine;LogFile=lib\GEventStoreIntegration.log
+echo ------------------------------------------------
+echo Script that prepares your working copy for usage
+echo ------------------------------------------------
+"%windir%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe" /v:n "RunMeFirst.proj" /logger:FileLogger,Microsoft.Build.Engine;LogFile=RunMeFirst.log
 pause
