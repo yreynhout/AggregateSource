@@ -124,9 +124,17 @@ See [License.txt](LICENSE.txt)
 
 ## Build
 
-A continuous integration build is available over at [http://teamcity.codebetter.com](http://teamcity.codebetter.com).
+```RunRightOffThe.bat``` provides a sanity check. It's a combination of ```RunMeFirst.bat``` and ```RunBuild.bat```. Before working with the solution it's probably best to run the ```RunMeFirst.bat```, well, first. It restores NuGet packages and downloads and unzips a version of GetEventStore. ```RunBuild.bat``` and ```RunTest.bat``` should speak for themselves.
 
-<div style="background: #00578e url('http://www.jetbrains.com/img/banners/Codebetter300x250.png') no-repeat 0 50%; margin:0;padding:0;text-decoration:none;text-indent:0;letter-spacing:-0.001em; width:300px; height:250px">
-<a href="http://www.jetbrains.com/youtrack" title="YouTrack by JetBrains" style="margin: 52px 0 0 58px;padding: 0; float: left;font-size: 14px; background-image:none;border:0;color: #acc4f9; font-family: trebuchet ms,arial,sans-serif;font-weight: normal;text-align:left;">keyboard-centric bug tracker</a>
-<a href="http://www.jetbrains.com/teamcity" title="TeamCity by JetBrains" style="margin:0 0 0 58px;padding:122px 0 0 0;font-size:14px; background-image:none;border:0;display:block; color: #acc4f9; font-family: trebuchet ms,arial,sans-serif;font-weight: normal;text-align:left;">continuous integration server</a>
-</div>
+### Continuous integration
+
+The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure.
+
+|  | Status of last build |
+| :------ | :------: |
+| **master** | [![master][3]][4] |
+ 
+ [1]: http://teamcity.codebetter.com/project.html?projectId=project666&guest=1
+ [2]: http://codebetter.com/codebetter-ci/
+ [3]: http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt666)/statusIcon
+ [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt666&guest=1
