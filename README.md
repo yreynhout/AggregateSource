@@ -128,7 +128,7 @@ Licensed using a BSD 3-Clause License. See [License.txt](LICENSE.txt) for more d
 
 ### Continuous integration
 
-The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure.
+The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure, courtesy of [JetBrains](http://www.jetbrains.com/).
 
 |  | Status of last build |
 | :------ | :------: |
@@ -138,3 +138,5 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
  [2]: http://codebetter.com/codebetter-ci/
  [3]: http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt666)/statusIcon
  [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt666&guest=1
+
+![YouTrack and TeamCity](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
