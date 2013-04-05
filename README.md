@@ -136,7 +136,7 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
  
  [1]: http://teamcity.codebetter.com/project.html?projectId=project666&guest=1
  [2]: http://codebetter.com/codebetter-ci/
- [3]: http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt666)/statusIcon
- [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt666&guest=1
+ [3]: http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt977)/statusIcon
+ [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt977&guest=1
 
 ![YouTrack and TeamCity](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
