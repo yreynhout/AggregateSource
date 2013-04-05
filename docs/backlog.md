@@ -1,8 +1,8 @@
 # Non functional issues
 
-- Fix broken build
-- Add a license
-- Build file
+- ~~Fix broken build~~
+- ~~Add a license~~
+- ~~Build file~~
 - Test build on TeamCity
 - NuSpec
 
