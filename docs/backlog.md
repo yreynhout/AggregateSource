@@ -16,8 +16,9 @@
 
 ## Features
 
-- [DESIGN] Support both Guid and String as identifier - using conditional compilation
-- [DESIGN] Support both Guid and String as identifier - using yet another abstraction
+- [DESIGN] Replace Guid by String as identifier (supersedes)
+  - [DESIGN] Support both Guid and String as identifier - using conditional compilation
+  - [DESIGN] Support both Guid and String as identifier - using yet another abstraction
 - [DESIGN] The asynchronous repository
 - [DESIGN] Snapshotting
 - [DESIGN] StreamSource - Writing to sql
