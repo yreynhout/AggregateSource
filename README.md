@@ -120,7 +120,7 @@ The principles discussed here are easily applicable to other frameworks and libr
 
 ## License
 
-See [License.txt](LICENSE.txt)
+Licensed using a BSD 3-Clause License. See [License.txt](LICENSE.txt) for more details
 
 ## Build
 
