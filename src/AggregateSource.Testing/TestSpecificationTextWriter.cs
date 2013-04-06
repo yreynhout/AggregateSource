@@ -81,7 +81,7 @@ namespace AggregateSource.Testing {
       _writer.Indent--;
     }
 
-    void WriteEvents(IEnumerable<Tuple<Guid, object>> events) {
+    void WriteEvents(IEnumerable<Tuple<string, object>> events) {
       _writer.Indent++;
       using (var enumerator = events.GetEnumerator()) {
         var moved = enumerator.MoveNext();

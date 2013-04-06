@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AggregateSource.Testing {
+﻿namespace AggregateSource.Testing {
   /// <summary>
   /// The given state within the test specification building process.
   /// </summary>
@@ -8,10 +6,10 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Given the following events occured.
     /// </summary>
-    /// <param name="id">The aggregate the events occured to.</param>
+    /// <param name="identifier">The aggregate identifier the events are to be associated with.</param>
     /// <param name="events">The events that occurred.</param>
     /// <returns>A builder continuation.</returns>
-    IGivenStateBuilder Given(Guid id, params object[] events);
+    IGivenStateBuilder Given(string identifier, params object[] events);
     /// <summary>
     /// When a command occurs.
     /// </summary>

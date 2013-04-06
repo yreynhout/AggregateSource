@@ -25,18 +25,18 @@ namespace SampleSource.Testing {
     public static class ScenarioExtensions {
       public static IGivenStateBuilder Given(this IGivenStateBuilder builder, params IEvent[] events) {
         if (events == null) throw new ArgumentNullException("events");
-        return events.Aggregate(builder, (current, @event) => current.Given(@event.Id, @event));
+        return events.Aggregate(builder, (current, @event) => current.Given(@event.Id.ToString(), @event));
       }
 
       public static IThenStateBuilder Then(this IWhenStateBuilder builder, params IEvent[] events) {
         if (events == null) throw new ArgumentNullException("events");
-        if (events.Length == 0) return builder.Then(Guid.Empty, new object[0]);
+        if (events.Length == 0) return builder.Then(Guid.Empty.ToString(), new object[0]);
 
         using (var enumerator = events.AsEnumerable().GetEnumerator()) {
           enumerator.MoveNext();
-          var continuation = builder.Then(enumerator.Current.Id, enumerator.Current);
+          var continuation = builder.Then(enumerator.Current.Id.ToString(), enumerator.Current);
           while (enumerator.MoveNext()) {
-            continuation = continuation.Then(enumerator.Current.Id, enumerator.Current);
+            continuation = continuation.Then(enumerator.Current.Id.ToString(), enumerator.Current);
           }
           return continuation;
         }
@@ -44,7 +44,7 @@ namespace SampleSource.Testing {
 
       public static IThenStateBuilder Then(this IThenStateBuilder builder, params IEvent[] events) {
         if (events == null) throw new ArgumentNullException("events");
-        return events.Aggregate(builder, (current, @event) => current.Then(@event.Id, @event));
+        return events.Aggregate(builder, (current, @event) => current.Then(@event.Id.ToString(), @event));
       }
 
       public static void Assert(this IThenStateBuilder builder) {

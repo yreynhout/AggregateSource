@@ -7,7 +7,7 @@ namespace AggregateSource.Testing {
   public class EventCentricTestResult {
     readonly EventCentricTestSpecification _specification;
     readonly TestResultState _state;
-    readonly Optional<Tuple<Guid, object>[]> _actual;
+    readonly Optional<Tuple<string, object>[]> _actual;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EventCentricTestResult"/> class.
@@ -15,10 +15,10 @@ namespace AggregateSource.Testing {
     /// <param name="specification">The specification.</param>
     /// <param name="state">The state.</param>
     /// <param name="actual">The actual.</param>
-    internal EventCentricTestResult(EventCentricTestSpecification specification, TestResultState state, Tuple<Guid, object>[] actual = null) {
+    internal EventCentricTestResult(EventCentricTestSpecification specification, TestResultState state, Tuple<string, object>[] actual = null) {
       _specification = specification;
       _state = state;
-      _actual = actual == null ? Optional<Tuple<Guid, object>[]>.Empty : new Optional<Tuple<Guid, object>[]>(actual);
+      _actual = actual == null ? Optional<Tuple<string, object>[]>.Empty : new Optional<Tuple<string, object>[]>(actual);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace AggregateSource.Testing {
     /// <value>
     /// The events.
     /// </value>
-    public Optional<Tuple<Guid, object>[]> Buts {
+    public Optional<Tuple<string, object>[]> Buts {
       get { return _actual; }
     }
   }

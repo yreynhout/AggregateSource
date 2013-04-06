@@ -8,12 +8,13 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Given the following events occured.
     /// </summary>
-    /// <param name="id">The aggregate the events occured to.</param>
+    /// <param name="identifier"></param>
     /// <param name="events">The events that occurred.</param>
     /// <returns>A builder continuation.</returns>
-    public IGivenStateBuilder Given(Guid id, params object[] events) {
+    public IGivenStateBuilder Given(string identifier, params object[] events) {
+      if (identifier == null) throw new ArgumentNullException("identifier");
       if (events == null) throw new ArgumentNullException("events");
-      return new TestSpecificationBuilder().Given(id, events);
+      return new TestSpecificationBuilder().Given(identifier, events);
     }
 
     /// <summary>

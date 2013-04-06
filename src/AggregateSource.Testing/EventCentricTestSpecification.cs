@@ -5,9 +5,9 @@ namespace AggregateSource.Testing {
   /// Represents an event centric test specification, meaning that the outcome revolves around events.
   /// </summary>
   public class EventCentricTestSpecification {
-    readonly Tuple<Guid, object>[] _givens;
+    readonly Tuple<string, object>[] _givens;
     readonly object _when;
-    readonly Tuple<Guid, object>[] _thens;
+    readonly Tuple<string, object>[] _thens;
 
     /// <summary>
     /// Initializes a new <see cref="EventCentricTestSpecification"/> instance.
@@ -15,7 +15,7 @@ namespace AggregateSource.Testing {
     /// <param name="givens">The specification givens.</param>
     /// <param name="when">The specification when.</param>
     /// <param name="thens">The specification thens.</param>
-    public EventCentricTestSpecification(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens) {
+    public EventCentricTestSpecification(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens) {
       if (givens == null) throw new ArgumentNullException("givens");
       if (when == null) throw new ArgumentNullException("when");
       if (thens == null) throw new ArgumentNullException("thens");
@@ -27,7 +27,7 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// The events to arrange.
     /// </summary>
-    public Tuple<Guid, object>[] Givens {
+    public Tuple<string, object>[] Givens {
       get { return _givens; }
     }
 
@@ -41,7 +41,7 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// The expected events to assert.
     /// </summary>
-    public  Tuple<Guid, object>[] Thens {
+    public  Tuple<string, object>[] Thens {
       get { return _thens; }
     }
 
@@ -64,9 +64,9 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Returns a test result that indicates this specification has failed because different things happened.
     /// </summary>
-    /// <param name="actual">The actual events </param>
+    /// <param name="actual">The actual events</param>
     /// <returns>A new <see cref="EventCentricTestResult"/>.</returns>
-    public EventCentricTestResult Fail(Tuple<Guid, object>[] actual) {
+    public EventCentricTestResult Fail(Tuple<string, object>[] actual) {
       if (actual == null) throw new ArgumentNullException("actual");
       return new EventCentricTestResult(this, TestResultState.Failed, actual);
     }

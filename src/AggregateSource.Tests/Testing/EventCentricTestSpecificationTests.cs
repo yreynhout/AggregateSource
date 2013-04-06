@@ -41,7 +41,7 @@ namespace AggregateSource.Testing {
     }
 
     [Theory]
-    public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens) {
+    public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens) {
       var sut = new EventCentricTestSpecification(givens, when, thens);
 
       Assert.That(sut.Givens, Is.EquivalentTo(givens));
@@ -50,59 +50,59 @@ namespace AggregateSource.Testing {
     }
 
     [Theory]
-    public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens) {
+    public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens) {
       Assert.That(
         new EventCentricTestSpecification(givens, when, thens),
         Is.EqualTo(new EventCentricTestSpecification(givens, when, thens)));
     }
 
     [Theory]
-    public void TwoInstancesAreNotEqualIfTheirGivensDiffer(object when, Tuple<Guid, object>[] thens) {
+    public void TwoInstancesAreNotEqualIfTheirGivensDiffer(object when, Tuple<string, object>[] thens) {
       Assert.That(
-        new EventCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, thens),
-        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, thens)));
+        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens),
+        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens)));
     }
 
     [Theory]
-    public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Tuple<Guid, object>[] givens, Tuple<Guid, object>[] thens) {
+    public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Tuple<string, object>[] givens, Tuple<string, object>[] thens) {
       Assert.That(
         new EventCentricTestSpecification(givens, new object(), thens),
         Is.Not.EqualTo(new EventCentricTestSpecification(givens, new object(), thens)));
     }
 
     [Theory]
-    public void TwoInstancesAreNotEqualIfTheirThensDiffer(Tuple<Guid, object>[] givens, object when) {
+    public void TwoInstancesAreNotEqualIfTheirThensDiffer(Tuple<string, object>[] givens, object when) {
       Assert.That(
-        new EventCentricTestSpecification(givens, when, new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }),
-        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) })));
+        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }),
+        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) })));
     }
 
     [Theory]
-    public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Tuple<Guid, object>[] givens, object when, Tuple<Guid, object>[] thens) {
+    public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens) {
       Assert.That(
         new EventCentricTestSpecification(givens, when, thens).GetHashCode(),
         Is.EqualTo(new EventCentricTestSpecification(givens, when, thens).GetHashCode()));
     }
 
     [Theory]
-    public void TwoInstancesHaveDifferentHashCodeIfTheirGivensDiffer(object when, Tuple<Guid, object>[] thens) {
+    public void TwoInstancesHaveDifferentHashCodeIfTheirGivensDiffer(object when, Tuple<string, object>[] thens) {
       Assert.That(
-        new EventCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, thens).GetHashCode(),
-        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, thens).GetHashCode()));
+        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens).GetHashCode(),
+        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens).GetHashCode()));
     }
 
     [Theory]
-    public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Tuple<Guid, object>[] givens, Tuple<Guid, object>[] thens, Exception throws) {
+    public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Tuple<string, object>[] givens, Tuple<string, object>[] thens, Exception throws) {
       Assert.That(
         new EventCentricTestSpecification(givens, new object(), thens).GetHashCode(),
         Is.Not.EqualTo(new EventCentricTestSpecification(givens, new object(), thens).GetHashCode()));
     }
 
     [Theory]
-    public void TwoInstancesHaveDifferentHashCodeIfTheirThensDiffer(Tuple<Guid, object>[] givens, object when) {
+    public void TwoInstancesHaveDifferentHashCodeIfTheirThensDiffer(Tuple<string, object>[] givens, object when) {
       Assert.That(
-        new EventCentricTestSpecification(givens, when, new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }).GetHashCode(),
-        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }).GetHashCode()));
+        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }).GetHashCode(),
+        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }).GetHashCode()));
     }
 
     [Test]
@@ -138,14 +138,14 @@ namespace AggregateSource.Testing {
     public void FailWithActualReturnsExpectedResult() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
-      var actual = new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) };
+      var actual = new[] { new Tuple<string, object>(Model.Identifier, new object()) };
 
       var result = sut.Fail(actual);
 
       Assert.That(result.Specification, Is.SameAs(sut));
       Assert.That(result.Passed, Is.False);
       Assert.That(result.Failed, Is.True);
-      Assert.That(result.Buts, Is.EqualTo(new Optional<Tuple<Guid, object>[]>(actual)));
+      Assert.That(result.Buts, Is.EqualTo(new Optional<Tuple<string, object>[]>(actual)));
     }
   }
 }

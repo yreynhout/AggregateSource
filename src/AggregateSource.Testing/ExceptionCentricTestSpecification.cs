@@ -5,7 +5,7 @@ namespace AggregateSource.Testing {
   /// Represents an exception centric test specification, meaning that the outcome revolves around an exception.
   /// </summary>
   public class ExceptionCentricTestSpecification {
-    readonly Tuple<Guid, object>[] _givens;
+    readonly Tuple<string, object>[] _givens;
     readonly object _when;
     readonly Exception _throws;
 
@@ -15,7 +15,7 @@ namespace AggregateSource.Testing {
     /// <param name="givens">The specification givens.</param>
     /// <param name="when">The specification when.</param>
     /// <param name="throws">The specification exception thrown.</param>
-    public ExceptionCentricTestSpecification(Tuple<Guid, object>[] givens, object when, Exception throws) {
+    public ExceptionCentricTestSpecification(Tuple<string, object>[] givens, object when, Exception throws) {
       if (givens == null) throw new ArgumentNullException("givens");
       if (when == null) throw new ArgumentNullException("when");
       if (throws == null) throw new ArgumentNullException("throws");
@@ -27,7 +27,7 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// The events to arrange.
     /// </summary>
-    public Tuple<Guid, object>[] Givens {
+    public Tuple<string, object>[] Givens {
       get { return _givens; }
     }
 

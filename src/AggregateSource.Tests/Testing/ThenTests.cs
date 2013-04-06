@@ -5,35 +5,40 @@ namespace AggregateSource.Testing {
   namespace ThenTests {
     [TestFixture]
     public class WhenBuilderThenTests : ThenFixture {
-      protected override IThenStateBuilder Then(Guid id, params object[] events) {
-        return new Scenario().When(new object()).Then(id, events);
+      protected override IThenStateBuilder Then(string identifier, params object[] events) {
+        return new Scenario().When(new object()).Then(identifier, events);
       }
     }
 
     [TestFixture]
     public class ThenBuilderThenTests : ThenFixture {
-      protected override IThenStateBuilder Then(Guid id, params object[] events) {
-        return new Scenario().When(new object()).Then(Guid.Empty, new object[0]).Then(id, events);
+      protected override IThenStateBuilder Then(string identifier, params object[] events) {
+        return new Scenario().When(new object()).Then("", new object[0]).Then(identifier, events);
       }
     }
 
     public abstract class ThenFixture {
-      protected abstract IThenStateBuilder Then(Guid id, params object[] events);
+      protected abstract IThenStateBuilder Then(string identifier, params object[] events);
+
+      [Test]
+      public void ThenThrowsWhenIdentifierIsNull() {
+        Assert.Throws<ArgumentNullException>(() => Then(null, new object[0]));
+      }
 
       [Test]
       public void ThenThrowsWhenEventsAreNull() {
-        Assert.Throws<ArgumentNullException>(() => Then(Guid.NewGuid(), null));
+        Assert.Throws<ArgumentNullException>(() => Then(Model.Identifier, null));
       }
 
       [Test]
       public void ThenDoesNotReturnNull() {
-        var result = Then(Guid.NewGuid(), new object[0]);
+        var result = Then(Model.Identifier, new object[0]);
         Assert.That(result, Is.Not.Null);
       }
 
       [Test]
       public void ThenReturnsThenBuilderContinuation() {
-        var result = Then(Guid.NewGuid(), new object[0]);
+        var result = Then(Model.Identifier, new object[0]);
         Assert.That(result, Is.InstanceOf<IThenStateBuilder>());
       }
 
@@ -41,21 +46,20 @@ namespace AggregateSource.Testing {
       [Repeat(2)]
       public void ThenReturnsNewInstanceUponEachCall() {
         Assert.That(
-          Then(Guid.NewGuid(), new object[0]),
-          Is.Not.SameAs(Then(Guid.NewGuid(), new object[0])));
+          Then(Model.Identifier, new object[0]),
+          Is.Not.SameAs(Then(Model.Identifier, new object[0])));
       }
 
       [Test]
       public void IsSetInResultingSpecification() {
-        var id = Guid.NewGuid();
         var events = new[] {new object(), new object()};
 
-        var result = Then(id, events).Build().Thens;
+        var result = Then(Model.Identifier, events).Build().Thens;
 
         Assert.That(result, Is.EquivalentTo(
           new[] {
-            new Tuple<Guid, object>(id, events[0]),
-            new Tuple<Guid, object>(id, events[1])
+            new Tuple<string, object>(Model.Identifier, events[0]),
+            new Tuple<string, object>(Model.Identifier, events[1])
           }));
       }
     }

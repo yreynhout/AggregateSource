@@ -8,10 +8,10 @@ namespace AggregateSource.Testing {
     /// <summary>
     /// Then events should have occurred.
     /// </summary>
-    /// <param name="id">The aggregate those events should have occurred to.</param>
+    /// <param name="identifier">The aggregate identifier the events belong to.</param>
     /// <param name="events">The events that should have occurred.</param>
     /// <returns>A builder continuation.</returns>
-    IThenStateBuilder Then(Guid id, params object[] events);
+    IThenStateBuilder Then(string identifier, params object[] events);
     /// <summary>
     /// Builds the test specification thus far.
     /// </summary>

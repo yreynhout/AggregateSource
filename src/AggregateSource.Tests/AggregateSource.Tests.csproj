@@ -52,6 +52,7 @@
     <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\ExceptionCentricTestSpecificationTests.cs" />
+    <Compile Include="Testing\Model.cs" />
     <Compile Include="Testing\TestSpecificationTextWriterTests.cs" />
     <Compile Include="Testing\GivenTests.cs" />
     <Compile Include="Testing\TestSpecificationDataPointFixture.cs" />

@@ -6,7 +6,7 @@ namespace AggregateSource.Testing {
     [TestFixture]
     public class WhenStateBuilderThrowTests : ThrowFixture {
       protected override IThrowStateBuilder Throw(Exception exception) {
-        return new Scenario().Given(Guid.Empty, new object[0]).When(new object()).Throws(exception);
+        return new Scenario().Given("", new object[0]).When(new object()).Throws(exception);
       }
     }
 

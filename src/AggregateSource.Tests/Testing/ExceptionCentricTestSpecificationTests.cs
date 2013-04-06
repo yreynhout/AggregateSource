@@ -41,7 +41,7 @@ namespace AggregateSource.Testing {
     }
 
     [Theory]
-    public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Tuple<Guid, object>[] givens, object when, Exception throws) {
+    public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Tuple<string, object>[] givens, object when, Exception throws) {
       var sut = new ExceptionCentricTestSpecification(givens, when, throws);
 
       Assert.That(sut.Givens, Is.EquivalentTo(givens));
@@ -50,7 +50,7 @@ namespace AggregateSource.Testing {
     }
 
     [Theory]
-    public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<Guid, object>[] givens, object when, Exception throws) {
+    public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<string, object>[] givens, object when, Exception throws) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, when, throws),
         Is.EqualTo(new ExceptionCentricTestSpecification(givens, when, throws)));
@@ -59,26 +59,26 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesAreNotEqualIfTheirGivensDiffer(object when, Exception throws) {
       Assert.That(
-        new ExceptionCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, throws),
-        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, throws)));
+        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws),
+        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws)));
     }
 
     [Theory]
-    public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Tuple<Guid, object>[] givens, Exception throws) {
+    public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Tuple<string, object>[] givens, Exception throws) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, new object(), throws),
         Is.Not.EqualTo(new ExceptionCentricTestSpecification(givens, new object(), throws)));
     }
 
     [Theory]
-    public void TwoInstancesAreNotEqualIfTheirThrowsDiffers(Tuple<Guid, object>[] givens, object when) {
+    public void TwoInstancesAreNotEqualIfTheirThrowsDiffers(Tuple<string, object>[] givens, object when) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, when, new Exception()),
         Is.Not.EqualTo(new ExceptionCentricTestSpecification(givens, when, new Exception())));
     }
 
     [Theory]
-    public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Tuple<Guid, object>[] givens, object when, Exception throws) {
+    public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Tuple<string, object>[] givens, object when, Exception throws) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, when, throws).GetHashCode(),
         Is.EqualTo(new ExceptionCentricTestSpecification(givens, when, throws).GetHashCode()));
@@ -87,19 +87,19 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesHaveDifferentHashCodeIfTheirGivensDiffer(object when, Exception throws) {
       Assert.That(
-        new ExceptionCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, throws).GetHashCode(),
-        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<Guid, object>(Guid.NewGuid(), new object()) }, when, throws).GetHashCode()));
+        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws).GetHashCode(),
+        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws).GetHashCode()));
     }
 
     [Theory]
-    public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Tuple<Guid, object>[] givens, Exception throws) {
+    public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Tuple<string, object>[] givens, Exception throws) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, new object(), throws).GetHashCode(),
         Is.Not.EqualTo(new ExceptionCentricTestSpecification(givens, new object(), throws).GetHashCode()));
     }
 
     [Theory]
-    public void TwoInstancesHaveDifferentHashCodeIfTheirThrowsDiffers(Tuple<Guid, object>[] givens, object when) {
+    public void TwoInstancesHaveDifferentHashCodeIfTheirThrowsDiffers(Tuple<string, object>[] givens, object when) {
       Assert.That(
         new ExceptionCentricTestSpecification(givens, when, new Exception()).GetHashCode(),
         Is.Not.EqualTo(new ExceptionCentricTestSpecification(givens, when, new Exception()).GetHashCode()));
