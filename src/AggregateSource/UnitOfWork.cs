@@ -7,13 +7,13 @@ namespace AggregateSource {
   /// Tracks changes of attached aggregates.
   /// </summary>
   public class UnitOfWork {
-    readonly Dictionary<Guid, Aggregate> _aggregates;
+    readonly Dictionary<string, Aggregate> _aggregates;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
     /// </summary>
     public UnitOfWork() {
-      _aggregates = new Dictionary<Guid, Aggregate>();
+      _aggregates = new Dictionary<string, Aggregate>();
     }
 
     /// <summary>
@@ -22,18 +22,19 @@ namespace AggregateSource {
     /// <param name="aggregate">The aggregate.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="aggregate"/> is null.</exception>
     public void Attach(Aggregate aggregate) {
-      if (aggregate == null) throw new ArgumentNullException("aggregate");
-      _aggregates.Add(aggregate.Id, aggregate);
+      if (aggregate == null) 
+        throw new ArgumentNullException("aggregate");
+      _aggregates.Add(aggregate.Identifier, aggregate);
     }
 
     /// <summary>
-    /// Attempts to get the <see cref="Aggregate"/> using the specified aggregate id.
+    /// Attempts to get the <see cref="Aggregate"/> using the specified aggregate identifier.
     /// </summary>
-    /// <param name="id">The aggregate id.</param>
+    /// <param name="identifier">The aggregate identifier.</param>
     /// <param name="aggregate">The aggregate if found, otherwise <c>null</c>.</param>
     /// <returns><c>true</c> if the aggregate was found, otherwise <c>false</c>.</returns>
-    public bool TryGet(Guid id, out Aggregate aggregate) {
-      return _aggregates.TryGetValue(id, out aggregate);
+    public bool TryGet(string identifier, out Aggregate aggregate) {
+      return _aggregates.TryGetValue(identifier, out aggregate);
     }
 
     /// <summary>

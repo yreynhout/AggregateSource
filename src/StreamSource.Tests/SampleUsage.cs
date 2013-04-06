@@ -15,7 +15,7 @@ namespace StreamSource {
       //Application service handler code
       var dog = new Dog(Guid.NewGuid(), "Sparky", DateTime.Today.AddYears(-1));
       dog.AdministerShotOf("Anti Diarrhea Medicine", DateTime.Today);
-      dogRepository.Add(dog.DogId, dog);
+      dogRepository.Add(dog.DogId.ToString(), dog);
       //Back in the application service wrapper
       Console.WriteLine("We observed that:");
       foreach (var change in unitOfWork.GetChanges().SelectMany(aggregate => aggregate.Root.GetChanges())) {

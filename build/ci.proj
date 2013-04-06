@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+    	<RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+  	</PropertyGroup>
+
+	<Target Name="TeamCityCodeBetter">
+		<MSBuild Projects="$(RootPath)\RunMeFirst.proj" />
+		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" />
+	</Target>
+</Project>

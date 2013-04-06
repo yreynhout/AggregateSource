@@ -6,70 +6,96 @@ using NUnit.Framework;
 namespace AggregateSource {
   [TestFixture]
   public class AggregateNotFoundExceptionTests {
+    static readonly string AggregateIdentifier = Guid.NewGuid().ToString();
+    static readonly Type AggregateType = typeof(object);
+
     [Test]
     public void IsAnAggregateSourceException() {
-      Assert.That(new AggregateNotFoundException(Guid.Empty, typeof(object)), Is.InstanceOf<AggregateSourceException>());
+      Assert.That(new AggregateNotFoundException(AggregateIdentifier, AggregateType), Is.InstanceOf<AggregateSourceException>());
     }
 
     [Test]
     public void UsingTheDefaultContstructorReturnsExceptionWithExpectedProperties() {
-      var aggregateId = Guid.NewGuid();
-      var aggregateType = typeof (Object);
-      var sut = new AggregateNotFoundException(aggregateId, aggregateType);
+      var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType);
 
-      Assert.That(sut.AggregateId, Is.EqualTo(aggregateId));
-      Assert.That(sut.AggregateType, Is.EqualTo(aggregateType));
+      Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
+      Assert.That(sut.Type, Is.EqualTo(AggregateType));
       Assert.That(sut.Message, Is.EqualTo(
-        "The Object aggregate with identifier " + aggregateId + " could not be found. Please make sure the callsite is indeed passing in an identifier for an Object aggregate."));
+        "The Object aggregate with identifier " + AggregateIdentifier + " could not be found. Please make sure the callsite is indeed passing in an identifier for an Object aggregate."));
       Assert.That(sut.InnerException, Is.Null);
     }
 
     [Test]
+    public void UsingTheDefaultContstructorAggregateIdentifierCannotBeNull() {
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(null, AggregateType)).ParamName,
+        Is.EqualTo("identifier"));
+    }
+
+    [Test]
     public void UsingTheDefaultContstructorAggregateTypeCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null));
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(AggregateIdentifier, null)).ParamName,
+        Is.EqualTo("type"));
     }
 
     [Test]
     public void UsingTheConstructorWithMessageReturnsExceptionWithExpectedProperties() {
-      var aggregateId = Guid.NewGuid();
-      var aggregateType = typeof(Object);
-      var sut = new AggregateNotFoundException(aggregateId, aggregateType, "Message");
+      var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType, "Message");
 
-      Assert.That(sut.AggregateId, Is.EqualTo(aggregateId));
-      Assert.That(sut.AggregateType, Is.EqualTo(aggregateType));
+      Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
+      Assert.That(sut.Type, Is.EqualTo(AggregateType));
       Assert.That(sut.Message, Is.EqualTo("Message"));
       Assert.That(sut.InnerException, Is.Null);
     }
 
     [Test]
+    public void UsingTheConstructorWithMessageAggregateIdentifierCannotBeNull() {
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(null, AggregateType, "Message"))
+              .ParamName,
+        Is.EqualTo("identifier"));
+    }
+
+    [Test]
     public void UsingTheConstructorWithMessageAggregateTypeCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null, "Message"));
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(AggregateIdentifier, null, "Message"))
+              .ParamName,
+        Is.EqualTo("type"));
     }
 
     [Test]
     public void UsingTheConstructorWithMessageAndInnerExceptionReturnsExceptionWithExpectedProperties() {
       var innerException = new Exception();
-      var aggregateId = Guid.NewGuid();
-      var aggregateType = typeof(Object);
-      var sut = new AggregateNotFoundException(aggregateId, aggregateType, "Message", innerException);
+      var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType, "Message", innerException);
 
-      Assert.That(sut.AggregateId, Is.EqualTo(aggregateId));
-      Assert.That(sut.AggregateType, Is.EqualTo(aggregateType));
+      Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
+      Assert.That(sut.Type, Is.EqualTo(AggregateType));
       Assert.That(sut.Message, Is.EqualTo("Message"));
       Assert.That(sut.InnerException, Is.EqualTo(innerException));
     }
 
     [Test]
+    public void UsingTheConstructorWithMessageAndInnerExceptionAggregateIdentifierCannotBeNull() {
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(
+          () => new AggregateNotFoundException(null, AggregateType, "Message", new Exception())).ParamName,
+        Is.EqualTo("identifier"));
+    }
+
+    [Test]
     public void UsingTheConstructorWithMessageAndInnerExceptionAggregateTypeCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(Guid.Empty, null, "Message", new Exception()));
+      Assert.That(
+        Assert.Throws<ArgumentNullException>(
+          () => new AggregateNotFoundException(AggregateIdentifier, null, "Message", new Exception())).ParamName,
+        Is.EqualTo("type"));
     }
 
     [Test]
     public void CanBeSerialized() {
       var innerException = new Exception("InnerMessage");
-      var aggregateId = Guid.NewGuid();
-      var aggregateType = typeof(Object);
-      var sut = new AggregateNotFoundException(aggregateId, aggregateType, "Message", innerException);
+      var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType, "Message", innerException);
 
       using (var stream = new MemoryStream()) {
         var formatter = new BinaryFormatter();
@@ -77,13 +103,13 @@ namespace AggregateSource {
         stream.Position = 0;
         var result = (AggregateNotFoundException)formatter.Deserialize(stream);
 
-        Assert.That(sut.AggregateId, Is.EqualTo(aggregateId));
-        Assert.That(sut.AggregateType, Is.EqualTo(aggregateType));
+        Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
+        Assert.That(sut.Type, Is.EqualTo(AggregateType));
         Assert.That(sut.Message, Is.EqualTo(result.Message));
         Assert.That(sut.InnerException.Message, Is.EqualTo(result.InnerException.Message));
       }
     }
 
-    //TODO: Test that AggregateType could not be resolved upon deserialization.
+    //TODO: Test that type could not be resolved upon deserialization.
   }
 }

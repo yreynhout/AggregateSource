@@ -2,19 +2,21 @@
 
 namespace AggregateSource {
   public static class AggregateStubs {
+    static Random _random = new Random();
+
     public static readonly Aggregate Stub1 =
-      Create(Guid.NewGuid(), AggregateRootEntityStub.Factory());
+      Create("Stub/123", AggregateRootEntityStub.Factory());
     public static readonly Aggregate Stub2 =
-      Create(Guid.NewGuid(), AggregateRootEntityStub.Factory());
+      Create("Stub/456", AggregateRootEntityStub.Factory());
 
     public static Aggregate Create<TAggregateRoot>(TAggregateRoot root)
       where TAggregateRoot : AggregateRootEntity {
-      return new Aggregate(Guid.NewGuid(), 0, root);
+        return new Aggregate("Stub/" + _random.Next(), 0, root);
     }
 
-    public static Aggregate Create<TAggregateRoot>(Guid id, TAggregateRoot root)
+    public static Aggregate Create<TAggregateRoot>(string identifier, TAggregateRoot root)
       where TAggregateRoot : AggregateRootEntity {
-      return new Aggregate(id, 0, root);
+      return new Aggregate(identifier, 0, root);
     }
   }
 }

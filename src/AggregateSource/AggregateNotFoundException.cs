@@ -8,49 +8,55 @@ namespace AggregateSource {
   /// </summary>
   [Serializable]
   public class AggregateNotFoundException : AggregateSourceException {
-    readonly Guid _aggregateId;
-    readonly Type _aggregateType;
+    readonly string _identifier;
+    readonly Type _type;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
     /// </summary>
-    /// <param name="aggregateId">The aggregate id.</param>
-    /// <param name="aggregateType">Type of the aggregate root entity.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="aggregateType"/> is null.</exception>
-    public AggregateNotFoundException(Guid aggregateId, Type aggregateType) 
-      : base(string.Format(Resources.AggregateNotFoundException_DefaultMessage, aggregateType != null ? aggregateType.Name : "", aggregateId) ) {
-      if (aggregateType == null) throw new ArgumentNullException("aggregateType");
-      _aggregateId = aggregateId;
-      _aggregateType = aggregateType;
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <param name="type">Type of the aggregate root entity.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
+    public AggregateNotFoundException(string identifier, Type type) 
+      : base(
+      type != null && identifier != null ? 
+        string.Format(Resources.AggregateNotFoundException_DefaultMessage, type.Name, identifier) : 
+        null) {
+      if (identifier == null) throw new ArgumentNullException("identifier");
+      if (type == null) throw new ArgumentNullException("type");
+      _identifier = identifier;
+      _type = type;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
     /// </summary>
-    /// <param name="aggregateId">The aggregate id.</param>
-    /// <param name="aggregateType">Type of the aggregate root entity.</param>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <param name="type">Type of the aggregate root entity.</param>
     /// <param name="message">The message.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="aggregateType"/> is null.</exception>
-    public AggregateNotFoundException(Guid aggregateId, Type aggregateType, string message) 
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
+    public AggregateNotFoundException(string identifier, Type type, string message) 
       : base(message) {
-      if (aggregateType == null) throw new ArgumentNullException("aggregateType");
-      _aggregateId = aggregateId;
-      _aggregateType = aggregateType;
+      if (identifier == null) throw new ArgumentNullException("identifier");
+      if (type == null) throw new ArgumentNullException("type");
+      _identifier = identifier;
+      _type = type;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
     /// </summary>
-    /// <param name="aggregateId">The aggregate id.</param>
-    /// <param name="aggregateType">Type of the aggregate root entity.</param>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <param name="type">Type of the aggregate root entity.</param>
     /// <param name="message">The message.</param>
     /// <param name="innerException">The inner exception.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="aggregateType"/> is null.</exception>
-    public AggregateNotFoundException(Guid aggregateId, Type aggregateType, string message, Exception innerException)
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
+    public AggregateNotFoundException(string identifier, Type type, string message, Exception innerException)
       : base(message, innerException) {
-      if (aggregateType == null) throw new ArgumentNullException("aggregateType");
-      _aggregateId = aggregateId;
-      _aggregateType = aggregateType;
+      if (identifier == null) throw new ArgumentNullException("identifier");
+      if (type == null) throw new ArgumentNullException("type");
+      _identifier = identifier;
+      _type = type;
     }
 
     /// <summary>
@@ -60,8 +66,8 @@ namespace AggregateSource {
     /// <param name="context">The context.</param>
     protected AggregateNotFoundException(SerializationInfo info, StreamingContext context)
       : base(info, context) {
-      _aggregateId = new Guid(info.GetString("AggregateId"));
-      _aggregateType = Type.GetType(info.GetString("AggregateType"), false);
+      _identifier = info.GetString("identifier");
+      _type = Type.GetType(info.GetString("type"), false);
     }
 
     /// <summary>
@@ -75,8 +81,8 @@ namespace AggregateSource {
     ///   </PermissionSet>
     public override void GetObjectData(SerializationInfo info, StreamingContext context) {
       base.GetObjectData(info, context);
-      info.AddValue("AggregateId", _aggregateId.ToString());
-      info.AddValue("AggregateType", _aggregateType.AssemblyQualifiedName);
+      info.AddValue("identifier", _identifier);
+      info.AddValue("type", _type.AssemblyQualifiedName);
     }
 
     /// <summary>
@@ -85,8 +91,8 @@ namespace AggregateSource {
     /// <value>
     /// The aggregate id.
     /// </value>
-    public Guid AggregateId {
-      get { return _aggregateId; }
+    public string Identifier {
+      get { return _identifier; }
     }
 
     /// <summary>
@@ -95,8 +101,8 @@ namespace AggregateSource {
     /// <value>
     /// The type of the aggregate root entity.
     /// </value>
-    public Type AggregateType {
-      get { return _aggregateType; }
+    public Type Type {
+      get { return _type; }
     }
   }
 }

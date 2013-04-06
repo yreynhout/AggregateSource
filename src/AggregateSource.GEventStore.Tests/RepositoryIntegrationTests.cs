@@ -37,41 +37,41 @@ namespace AggregateSource.GEventStore {
     public class WithEmptyStoreAndEmptyUnitOfWork {
       Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
+      Model _model;
 
       [SetUp]
       public void SetUp() {
         EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+        _model = new Model();
         _unitOfWork = new UnitOfWork();
         _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection);
       }
 
       [Test]
       public void GetThrows() {
-        var id = Guid.NewGuid();
         var exception =
-          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
-        Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
       public void GetOptionalReturnsEmpty() {
-        var result = _sut.GetOptional(Guid.NewGuid());
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
 
         Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
       public void AddAttachesToUnitOfWork() {
-        var id = Guid.NewGuid();
         var root = AggregateRootEntityStub.Factory();
 
-        _sut.Add(id, root);
+        _sut.Add(_model.KnownIdentifier, root);
 
         Aggregate aggregate;
-        var result = _unitOfWork.TryGet(id, out aggregate);
+        var result = _unitOfWork.TryGet(_model.KnownIdentifier, out aggregate);
         Assert.That(result, Is.True);
-        Assert.That(aggregate.Id, Is.EqualTo(id));
+        Assert.That(aggregate.Identifier, Is.EqualTo(_model.KnownIdentifier));
         Assert.That(aggregate.Root, Is.SameAs(root));
       }
     }
@@ -81,44 +81,43 @@ namespace AggregateSource.GEventStore {
       Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
       AggregateRootEntityStub _root;
-      Guid _id;
+      Model _model;
 
       [SetUp]
       public void SetUp() {
         EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
-        _id = Guid.NewGuid();
+        _model = new Model();
         _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new UnitOfWork();
-        _unitOfWork.Attach(new Aggregate(_id, 0, _root));
+        _unitOfWork.Attach(new Aggregate(_model.KnownIdentifier, 0, _root));
         _sut = new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection);
       }
 
       [Test]
       public void GetThrowsForUnknownId() {
-        var id = Guid.NewGuid();
         var exception =
-          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
-        Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
       public void GetReturnsRootOfKnownId() {
-        var result = _sut.Get(_id);
+        var result = _sut.Get(_model.KnownIdentifier);
 
         Assert.That(result, Is.SameAs(_root));
       }
 
       [Test]
       public void GetOptionalReturnsEmptyForUnknownId() {
-        var result = _sut.GetOptional(Guid.NewGuid());
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
 
         Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
       public void GetOptionalReturnsRootForKnownId() {
-        var result = _sut.GetOptional(_id);
+        var result = _sut.GetOptional(_model.KnownIdentifier);
 
         Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
       }
@@ -129,15 +128,15 @@ namespace AggregateSource.GEventStore {
       Repository<AggregateRootEntityStub> _sut;
       UnitOfWork _unitOfWork;
       AggregateRootEntityStub _root;
-      Guid _id;
+      Model _model;
 
       [SetUp]
       public void SetUp() {
-        _id = Guid.NewGuid();
+        _model = new Model();
         using (var stream = new MemoryStream()) {
           Serializer.Serialize(stream, new Event());
           EmbeddedEventStore.Instance.Connection.AppendToStream(
-            StreamName.Create<AggregateRootEntityStub>(_id),
+            _model.KnownIdentifier,
             ExpectedVersion.NoStream,
             new EventData(
               Guid.NewGuid(),
@@ -156,36 +155,47 @@ namespace AggregateSource.GEventStore {
 
       [Test]
       public void GetThrowsForUnknownId() {
-        var id = Guid.NewGuid();
         var exception =
-          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(id));
-        Assert.That(exception.AggregateId, Is.EqualTo(id));
-        Assert.That(exception.AggregateType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
       }
 
       [Test]
       public void GetReturnsRootOfKnownId() {
-        var result = _sut.Get(_id);
+        var result = _sut.Get(_model.KnownIdentifier);
 
         Assert.That(result, Is.SameAs(_root));
       }
 
       [Test]
       public void GetOptionalReturnsEmptyForUnknownId() {
-        var result = _sut.GetOptional(Guid.NewGuid());
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
 
         Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
       public void GetOptionalReturnsRootForKnownId() {
-        var result = _sut.GetOptional(_id);
+        var result = _sut.GetOptional(_model.KnownIdentifier);
 
         Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
       }
 
       [ProtoContract]
       class Event {}
+    }
+
+    public class Model {
+      private static readonly Random IdentifierGenerator = new Random();
+
+      public Model() {
+        KnownIdentifier = "aggregate/" + IdentifierGenerator.Next();
+        UnknownIdentifier = "aggregate/" + IdentifierGenerator.Next();
+      }
+
+      public string KnownIdentifier { get; private set; }
+      public string UnknownIdentifier { get; private set; }
     }
   }
 }

@@ -43,6 +43,7 @@
     <Compile Include="EventStream.cs" />
     <Compile Include="EventStreamChange.cs" />
     <Compile Include="EventStreamChangeset.cs" />
+    <Compile Include="ExpectedVersion.cs" />
     <Compile Include="IEventStreamReader.cs" />
     <Compile Include="IEventStreamWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

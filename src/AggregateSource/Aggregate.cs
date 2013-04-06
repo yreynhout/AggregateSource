@@ -5,21 +5,24 @@ namespace AggregateSource {
   /// Base class for tracking aggregate meta data and its <see cref="AggregateRootEntity"/>.
   /// </summary>
   public class Aggregate {
-    readonly Guid _id;
+    readonly string _identifier;
     readonly IAggregateRootEntity _root;
     readonly int _expectedVersion;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Aggregate"/> class.
     /// </summary>
-    /// <param name="id">The aggregate identifier.</param>
+    /// <param name="identifier">The aggregate identifier.</param>
     /// <param name="expectedVersion">The expected aggregate version.</param>
     /// <param name="root">The aggregate root entity.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="identifier"/> is null.</exception>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="root"/> is null.</exception>
-    public Aggregate(Guid id, int expectedVersion, IAggregateRootEntity root) {
+    public Aggregate(string identifier, int expectedVersion, IAggregateRootEntity root) {
+      if (identifier == null) 
+        throw new ArgumentNullException("identifier");
       if (root == null) 
         throw new ArgumentNullException("root");
-      _id = id;
+      _identifier = identifier;
       _expectedVersion = expectedVersion;
       _root = root;
     }
@@ -30,8 +33,8 @@ namespace AggregateSource {
     /// <value>
     /// The aggregate identifier.
     /// </value>
-    public Guid Id {
-      get { return _id; }
+    public string Identifier {
+      get { return _identifier; }
     }
 
     /// <summary>

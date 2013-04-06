@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<Project DefaultTargets="NonInteractiveBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <SourcePath>$(RootPath)\src</SourcePath>
   </PropertyGroup>
 
-  <Target Name="TeamCityCodeBetter" DependsOnTargets="NonInteractiveBuild" />
-  
   <Target Name="NonInteractiveBuild">
     <MSBuild Projects="$(RootPath)\RunMeFirst.proj" />
     <CallTarget Targets="Build" />
@@ -17,7 +15,9 @@
       Projects="
         $(SourcePath)/AggregateSource/AggregateSource.csproj;
         $(SourcePath)/AggregateSource.Testing/AggregateSource.Testing.csproj;
-        $(SourcePath)/AggregateSource.Tests/AggregateSource.Tests.csproj" 
+        $(SourcePath)/AggregateSource.Tests/AggregateSource.Tests.csproj; 
+        $(SourcePath)/AggregateSource.GEventStore/AggregateSource.GEventStore.csproj;
+        $(SourcePath)/AggregateSource.GEventStore.Tests/AggregateSource.GEventStore.Tests.csproj"
       BuildInParallel="true" 
       Properties="Configuration=Release"
       UnloadProjectsOnCompletion="true"/>

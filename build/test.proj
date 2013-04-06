@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <SourcePath>$(RootPath)\src</SourcePath>
@@ -9,9 +9,9 @@
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="Test">
-    <MSBuild Projects="$(RootPath)\build\build.proj" Targets="Build" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\build.proj" Targets="Build" />
 
-    <CreateItem Include="$(SourcePath)\AggregateSource.Tests\bin\Release\AggregateSource.Tests.dll;">
+    <CreateItem Include="$(SourcePath)\AggregateSource.Tests\bin\Release\AggregateSource.Tests.dll;$(SourcePath)\AggregateSource.GEventStore.Tests\bin\Release\AggregateSource.GEventStore.Tests.dll">
       <Output TaskParameter="Include" ItemName="AssembliesToTest" />
     </CreateItem>
 

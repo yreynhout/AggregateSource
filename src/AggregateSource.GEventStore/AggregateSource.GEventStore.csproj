@@ -45,7 +45,6 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateExtensions.cs" />
     <Compile Include="EventStoreReadConfiguration.cs" />
     <Compile Include="IResolvedEventDeserializer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -57,7 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResolvedEventDeserializer.cs" />
     <Compile Include="SliceSize.cs" />
-    <Compile Include="StreamName.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">

@@ -4,8 +4,13 @@ using NUnit.Framework;
 
 namespace AggregateSource {
   namespace UnitOfWorkTests {
+    public static class Model {
+      public static readonly string KnownIdentifier = "known/identifier";
+      public static readonly string UnknownIdentifier = "unknown/identifier";
+    }
+
     [TestFixture]
-    public class WithPristineInstance {
+    public class WithAnyInstance {
       UnitOfWork _sut;
 
       [SetUp]
@@ -19,6 +24,22 @@ namespace AggregateSource {
       }
 
       [Test]
+      public void TryGetIdentifierCanNotBeNull() {
+        Aggregate aggregate;
+        Assert.Throws<ArgumentNullException>(() => _sut.TryGet(null, out aggregate));
+      }
+    }
+
+    [TestFixture]
+    public class WithPristineInstance {
+      UnitOfWork _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new UnitOfWork();
+      }
+
+      [Test]
       public void AttachAggregateDoesNotThrow() {
         var aggregate = AggregateStubs.Stub1;
         Assert.DoesNotThrow(() => _sut.Attach(aggregate));
@@ -27,7 +48,7 @@ namespace AggregateSource {
       [Test]
       public void TryGetReturnsFalseAndNullAsAggregate() {
         Aggregate aggregate;
-        var result = _sut.TryGet(Guid.NewGuid(), out aggregate);
+        var result = _sut.TryGet(Model.UnknownIdentifier, out aggregate);
 
         Assert.That(result, Is.False);
         Assert.That(aggregate, Is.Null);
@@ -70,7 +91,7 @@ namespace AggregateSource {
       [Test]
       public void TryGetReturnsFalseAndNullAsAggregateForUnknownId() {
         Aggregate aggregate;
-        var result = _sut.TryGet(Guid.NewGuid(), out aggregate);
+        var result = _sut.TryGet(Model.UnknownIdentifier, out aggregate);
 
         Assert.That(result, Is.False);
         Assert.That(aggregate, Is.Null);
@@ -79,7 +100,7 @@ namespace AggregateSource {
       [Test]
       public void TryGetReturnsTrueAndAggregateForKnownId() {
         Aggregate aggregate;
-        var result = _sut.TryGet(_aggregate.Id, out aggregate);
+        var result = _sut.TryGet(_aggregate.Identifier, out aggregate);
 
         Assert.That(result, Is.True);
         Assert.That(aggregate, Is.SameAs(_aggregate));
