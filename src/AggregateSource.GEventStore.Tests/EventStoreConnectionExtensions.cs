@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore {
   public static class EventStoreConnectionExtensions {
-    private static readonly HashSet<String> DeletedStreams = new HashSet<string>();
-
     public static void DeleteAllStreams(this EventStoreConnection connection) {
       var slice = connection.ReadAllEventsForward(Position.Start, Int32.MaxValue, false);
       var streams = slice.
         Events.
-        Where(_ => !DeletedStreams.Contains(_.OriginalStreamId)).
-        Select(_ => _.OriginalStreamId).Distinct();
-      foreach (var stream in streams) {
+        Select(_ => _.OriginalStreamId).
+        Distinct();
+      foreach (var stream in 
+        from _ in streams 
+        let streamStatusSlice = connection.ReadStreamEventsForward(_, 0, 1, false) 
+        where streamStatusSlice.Status != SliceReadStatus.StreamDeleted && 
+              streamStatusSlice.Status != SliceReadStatus.StreamNotFound 
+        select _) {
         connection.DeleteStream(stream, ExpectedVersion.Any);
-        DeletedStreams.Add(stream);
       }
     }
   }
