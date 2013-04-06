@@ -2,7 +2,10 @@
 
 namespace AggregateSource.GEventStore {
   public class EventStoreReadConfiguration {
-    public static readonly EventStoreReadConfiguration Default = new EventStoreReadConfiguration(new SliceSize(500), new ResolvedEventDeserializer());
+    public static readonly EventStoreReadConfiguration Default = 
+      new EventStoreReadConfiguration(
+        new SliceSize(500), 
+        new ResolvedEventDeserializer());
 
     readonly SliceSize _sliceSize;
     readonly IResolvedEventDeserializer _deserializer;

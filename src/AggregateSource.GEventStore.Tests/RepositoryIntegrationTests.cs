@@ -185,17 +185,5 @@ namespace AggregateSource.GEventStore {
       [ProtoContract]
       class Event {}
     }
-
-    public class Model {
-      private static readonly Random IdentifierGenerator = new Random();
-
-      public Model() {
-        KnownIdentifier = "aggregate/" + IdentifierGenerator.Next();
-        UnknownIdentifier = "aggregate/" + IdentifierGenerator.Next();
-      }
-
-      public string KnownIdentifier { get; private set; }
-      public string UnknownIdentifier { get; private set; }
-    }
   }
 }

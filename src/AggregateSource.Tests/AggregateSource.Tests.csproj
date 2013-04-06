@@ -48,6 +48,7 @@
     <Compile Include="AggregateSourceExceptionTests.cs" />
     <Compile Include="AggregateTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
+    <Compile Include="ConcurrentUnitOfWorkTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

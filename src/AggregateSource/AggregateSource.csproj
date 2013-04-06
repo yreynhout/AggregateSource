@@ -41,10 +41,12 @@
     <Compile Include="AggregateNotFoundException.cs" />
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="AggregateSourceException.cs" />
+    <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="IAggregateChangeTracker.cs" />
     <Compile Include="IAggregateInitializer.cs" />
     <Compile Include="IAggregateRootEntity.cs" />
+    <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Optional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

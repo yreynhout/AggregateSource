@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,14 +7,14 @@ namespace AggregateSource {
   /// <summary>
   /// Tracks changes of attached aggregates.
   /// </summary>
-  public class UnitOfWork {
-    readonly Dictionary<string, Aggregate> _aggregates;
+  public class ConcurrentUnitOfWork {
+    readonly ConcurrentDictionary<string, Aggregate> _aggregates;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+    /// Initializes a new instance of the <see cref="ConcurrentUnitOfWork"/> class.
     /// </summary>
-    public UnitOfWork() {
-      _aggregates = new Dictionary<string, Aggregate>();
+    public ConcurrentUnitOfWork() {
+      _aggregates = new ConcurrentDictionary<string, Aggregate>();
     }
 
     /// <summary>
@@ -22,11 +23,10 @@ namespace AggregateSource {
     /// <param name="aggregate">The aggregate.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="aggregate"/> is null.</exception>
     public void Attach(Aggregate aggregate) {
-      if (aggregate == null) 
+      if (aggregate == null)
         throw new ArgumentNullException("aggregate");
-      if(_aggregates.ContainsKey(aggregate.Identifier))
+      if (!_aggregates.TryAdd(aggregate.Identifier, aggregate))
         throw new ArgumentException(string.Format("The aggregate of type '{0}' with identifier '{1}' was already added. This indicates could indicate there's a race condition, i.e. the same aggregate gets attached multiple times.", aggregate.Root.GetType().Name, aggregate.Identifier));
-      _aggregates.Add(aggregate.Identifier, aggregate);
     }
 
     /// <summary>

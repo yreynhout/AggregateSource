@@ -45,6 +45,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncRepository.cs" />
     <Compile Include="EventStoreReadConfiguration.cs" />
     <Compile Include="IResolvedEventDeserializer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

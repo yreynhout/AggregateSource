@@ -35,7 +35,7 @@ namespace AggregateSource.GEventStore {
       _connection.Connect(TcpEndPoint);
       //var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
       //if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-      //LogManager.Init("embedded-es", logPath);
+      //EventStore.Common.Log.LogManager.Init("embedded-es", logPath);
     }
 
     public void Stop() {
