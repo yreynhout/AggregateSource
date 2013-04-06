@@ -7,5 +7,6 @@
 	<Target Name="TeamCityCodeBetter">
 		<MSBuild Projects="$(RootPath)\RunMeFirst.proj" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" />
+		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult.xml']" />
 	</Target>
 </Project>
