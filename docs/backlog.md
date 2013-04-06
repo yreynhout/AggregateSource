@@ -3,7 +3,7 @@
 - ~~Fix broken build~~
 - ~~Add a license~~
 - ~~Build file~~
-- Test build on TeamCity
+- ~~Test build on TeamCity~~
 - NuSpec
 
 # Functional issues
