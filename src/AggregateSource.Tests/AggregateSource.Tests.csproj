@@ -54,12 +54,12 @@
     <Compile Include="Testing\ExceptionCentricTestSpecificationTests.cs" />
     <Compile Include="Testing\Model.cs" />
     <Compile Include="Testing\TestSpecificationTextWriterTests.cs" />
-    <Compile Include="Testing\GivenTests.cs" />
+    <Compile Include="Testing\GivenStateBuilderTests.cs" />
     <Compile Include="Testing\TestSpecificationDataPointFixture.cs" />
     <Compile Include="Testing\EventCentricTestSpecificationTests.cs" />
-    <Compile Include="Testing\ThenTests.cs" />
-    <Compile Include="Testing\ThrowTests.cs" />
-    <Compile Include="Testing\WhenTests.cs" />
+    <Compile Include="Testing\ThenStateBuilderTests.cs" />
+    <Compile Include="Testing\ThrowStateBuilderTests.cs" />
+    <Compile Include="Testing\WhenStateBuilderTests.cs" />
     <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>

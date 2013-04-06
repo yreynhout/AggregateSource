@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 namespace AggregateSource.Testing {
-  namespace WhenTests {
+  namespace WhenStateBuilderTests {
     [TestFixture]
     public class ScenarioWhenTests : WhenFixture {
       protected override IWhenStateBuilder When(object message) {

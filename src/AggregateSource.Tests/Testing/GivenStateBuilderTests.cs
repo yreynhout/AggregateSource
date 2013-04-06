@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 namespace AggregateSource.Testing {
-  namespace GivenTests {
+  namespace GivenStateBuilderTests {
     [TestFixture]
     public class ScenarioGivenTests : GivenFixture {
       protected override IGivenStateBuilder Given(string identifier, params object[] events) {

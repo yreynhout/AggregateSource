@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 namespace AggregateSource.Testing {
-  namespace ThenTests {
+  namespace ThenStateBuilderTests {
     [TestFixture]
     public class WhenBuilderThenTests : ThenFixture {
       protected override IThenStateBuilder Then(string identifier, params object[] events) {

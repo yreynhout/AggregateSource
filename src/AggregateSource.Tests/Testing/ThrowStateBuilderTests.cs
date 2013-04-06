@@ -2,7 +2,7 @@
 using NUnit.Framework;
 
 namespace AggregateSource.Testing {
-  namespace ThrowTests {
+  namespace ThrowStateBuilderTests {
     [TestFixture]
     public class WhenStateBuilderThrowTests : ThrowFixture {
       protected override IThrowStateBuilder Throw(Exception exception) {
