@@ -17,7 +17,7 @@ It's well suited for those scenarios where multiple aggregates need to collabora
 
 ## Core
 
-### AggregateRootEntity
+### (I)AggregateRootEntity
 A base class for an aggregate root entity that does the usual initialization and change tracking that people have come accustomed to when doing eventsourcing in a domain model. It's a bit opnionated, in that it
 
 * doesn't force any interfaces down your throat like IEvent, because a base class is enough coupling as it is,
@@ -34,7 +34,7 @@ A base class for entities (not the root obviously) within an aggregate that allo
 
 A separate concept for an aggregate that is mainly used as a wrapper around the aggregate root entity. It carries around version information that your preferred eventstore might fancy between reads and writes to perform optimistic concurrency updates. Don't use it in your "domain model" code. It's meant for infrastructure code.
 
-### IRepository
+### (I)Repository
 It has a Get that throws when an aggregate was not found, a GetOptional to attempt to read an aggregate when you're not sure it's there (yet), and Add, well to add an aggregate to the change tracking (i.e. the Unit of Work). This is a point of integration with an event store and even dedicated read models that act as secondary indexes. Implementations should also takes a unit of work that acts both as an identity map and an *indirect* change tracker. AggregateSource repositories are collection oriented and therefor don't save. Your code does (http://codebetter.com/iancooper/2011/04/12/repository-saveupdate-is-a-smell/).
 
 ### UnitOfWork
