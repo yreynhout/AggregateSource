@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <Target Name="NonInteractiveBuild">
-    <MSBuild Projects="$(RootPath)\RunMeFirst.proj" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\run_me_first.proj" />
     <CallTarget Targets="Build" />
   </Target>
 

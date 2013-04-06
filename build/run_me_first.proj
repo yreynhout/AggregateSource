@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Run" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
+  </PropertyGroup>
+
+  <Target Name="Run">
+    <ItemGroup>
+      <BuildPackageConfigs Include="$(RootPath)\build\packages.config" />
+      <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
+      <SourcePackageConfigs Include="$(RootPath)\src\**\packages.config" />
+    </ItemGroup>
+    <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\build\packages"' />
+    <Exec Command='$(NuGetExe) install %(LibPackageConfigs.Identity) -o "$(RootPath)\lib\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
+    <MSBuild Projects="$(RootPath)\lib\geteventstore_integration.proj" />
+  </Target>
+</Project>
