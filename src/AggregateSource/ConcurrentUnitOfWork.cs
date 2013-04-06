@@ -26,7 +26,7 @@ namespace AggregateSource {
       if (aggregate == null)
         throw new ArgumentNullException("aggregate");
       if (!_aggregates.TryAdd(aggregate.Identifier, aggregate))
-        throw new ArgumentException(string.Format("The aggregate of type '{0}' with identifier '{1}' was already added. This indicates could indicate there's a race condition, i.e. the same aggregate gets attached multiple times.", aggregate.Root.GetType().Name, aggregate.Identifier));
+        throw new ArgumentException(string.Format("The aggregate of type '{0}' with identifier '{1}' was already added. This could indicate there's a race condition, i.e. the same aggregate getting attached multiple times.", aggregate.Root.GetType().Name, aggregate.Identifier));
     }
 
     /// <summary>
