@@ -11,6 +11,9 @@
   </Target>
 
   <Target Name="Build">
+    <RemoveDir 
+      Condition="Exists('$(MSBuildProjectDirectory)\output')"
+      Directories="$(MSBuildProjectDirectory)\output" />
     <MSBuild 
       Projects="
         $(SourcePath)/AggregateSource/AggregateSource.csproj;
@@ -19,7 +22,7 @@
         $(SourcePath)/AggregateSource.GEventStore/AggregateSource.GEventStore.csproj;
         $(SourcePath)/AggregateSource.GEventStore.Tests/AggregateSource.GEventStore.Tests.csproj"
       BuildInParallel="true" 
-      Properties="Configuration=Release"
+      Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output"
       UnloadProjectsOnCompletion="true"/>
   </Target>
 </Project>

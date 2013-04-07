@@ -1,4 +1,5 @@
 build/packages/*
+build/output/*
 build/TestRunResult.xml
 lib/eventstore/*
 lib/packages/*
