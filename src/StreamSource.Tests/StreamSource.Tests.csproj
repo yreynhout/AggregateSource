@@ -49,9 +49,12 @@
     <Compile Include="AggregateStubs.cs" />
     <Compile Include="EventStreamTests.cs" />
     <Compile Include="ExpectedVersionTests.cs" />
+    <Compile Include="OptimisticCausationExceptionTests.cs" />
+    <Compile Include="OptimisticConcurrencyExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="SampleUsage.cs" />
+    <Compile Include="StreamSourceExceptionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

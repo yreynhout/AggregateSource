@@ -46,8 +46,11 @@
     <Compile Include="ExpectedVersion.cs" />
     <Compile Include="IEventStreamReader.cs" />
     <Compile Include="IEventStreamWriter.cs" />
+    <Compile Include="OptimisticCausationException.cs" />
+    <Compile Include="OptimisticConcurrencyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="StreamSourceException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
