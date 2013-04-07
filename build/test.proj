@@ -11,7 +11,13 @@
   <Target Name="Test">
     <MSBuild Projects="$(MSBuildProjectDirectory)\build.proj" Targets="Build" />
 
-    <CreateItem Include="$(MSBuildProjectDirectory)\output\AggregateSource.Tests.dll;$(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.dll">
+    <CreateItem 
+      Include="
+      $(MSBuildProjectDirectory)\output\AggregateSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.dll;
+      $(MSBuildProjectDirectory)\output\StreamSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\SampleSource.dll;
+      ">
       <Output TaskParameter="Include" ItemName="AssembliesToTest" />
     </CreateItem>
 

@@ -19,6 +19,9 @@
         $(SourcePath)/AggregateSource/AggregateSource.csproj;
         $(SourcePath)/AggregateSource.Testing/AggregateSource.Testing.csproj;
         $(SourcePath)/AggregateSource.Tests/AggregateSource.Tests.csproj; 
+        $(SourcePath)/StreamSource/StreamSource.csproj;
+        $(SourcePath)/StreamSource.Tests/StreamSource.Tests.csproj;
+        $(SourcePath)/SampleSource/SampleSource.csproj;
         $(SourcePath)/AggregateSource.GEventStore/AggregateSource.GEventStore.csproj;
         $(SourcePath)/AggregateSource.GEventStore.Tests/AggregateSource.GEventStore.Tests.csproj"
       BuildInParallel="true" 
