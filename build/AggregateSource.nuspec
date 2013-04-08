@@ -28,8 +28,10 @@ using this tokenized nuspec file.
   </metadata>
   <files>
     <file src="output\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
+    <file src="output\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
     <file src="output\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
     <file src="output\AggregateSource.Testing.dll" target="lib\net45\AggregateSource.Testing.dll" />
+    <file src="output\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
     <file src="output\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
   </files>
 </package>

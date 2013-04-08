@@ -3,9 +3,14 @@
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
+    <NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
   </PropertyGroup>
 
   <Target Name="Pack">
-    <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -o "$(MSBuildProjectDirectory)\output"' />
+    <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+  </Target>
+
+  <Target Name="Push">
+    <Exec Command='$(NuGetExe) push $(NuGetApiKey) "$(MSBuildProjectDirectory)\output\AggregateSource.nupkg" -NonInteractive' />
   </Target>
 </Project>

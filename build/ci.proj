@@ -2,11 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
     	<RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    	<NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
   	</PropertyGroup>
 
 	<Target Name="TeamCityCodeBetter">
 		<MSBuild Projects="$(MSBuildProjectDirectory)\run_me_first.proj" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" />
 		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult.xml']" />
+		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Pack" />
+		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Push" Properties="NuGetApiKey=$(NuGetApiKey)" Condition="$(NuGetApiKey) != ''" />
 	</Target>
 </Project>
