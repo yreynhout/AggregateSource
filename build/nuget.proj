@@ -11,6 +11,6 @@
   </Target>
 
   <Target Name="Push">
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.0.0.1.nupkg" $(NuGetApiKey) -NonInteractive' />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.0.0.2.nupkg" $(NuGetApiKey) -NonInteractive' />
   </Target>
 </Project>
