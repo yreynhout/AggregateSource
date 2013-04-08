@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
+  </PropertyGroup>
+
+  <Target Name="Pack">
+    <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -o "$(MSBuildProjectDirectory)\output"' />
+  </Target>
+</Project>

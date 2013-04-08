@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- 
+This tokenized .nuspec manifest file is targeting the latest NuGet namespace,
+which ensures you can benefit from the latest packaging features.
+
+If desired, you can change the XML-namespace and target the original XSD.
+To do so, replace the current package declaration by the following:
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+
+Run "nuget.exe pack <project>" to build a nuget package for this project
+using this tokenized nuspec file.
+
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AggregateSource</id>
+    <version>0.0.1</version>
+    <authors>Yves Reynhout</authors>
+    <owners>Yves Reynhout</owners>
+    <title>AggregateSource, an aggregate-meets-eventsourcing flavor.</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model.</description>
+    <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
+    <releaseNotes>A very early release. There's support for aggregates &amp; entities, as well as a collection based repository interface that plays nicely with a unit of work. Fluent test specifications can be written using either the Scenario class or the FactoryScenarioFor, CommandScenarioFor and QueryScenarioFor classes.</releaseNotes>
+    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <tags>eventsourcing DDDesign</tags>
+  </metadata>
+  <files>
+    <file src="output\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
+    <file src="output\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
+    <file src="output\AggregateSource.Testing.dll" target="lib\net45\AggregateSource.Testing.dll" />
+    <file src="output\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
+  </files>
+</package>
