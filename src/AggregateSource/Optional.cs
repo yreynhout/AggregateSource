@@ -8,7 +8,7 @@ namespace AggregateSource {
   /// Represents an optional value.
   /// </summary>
   /// <typeparam name="T">The type of the optional value.</typeparam>
-  public struct Optional<T> : IEnumerable<T> {
+  public class Optional<T> : IEnumerable<T>, IEquatable<Optional<T>> {
     /// <summary>
     /// The empty instance.
     /// </summary>
@@ -17,6 +17,11 @@ namespace AggregateSource {
     readonly bool _hasValue;
     readonly T _value;
    
+    Optional() {
+      _hasValue = false;
+      _value = default(T);
+    }
+
     /// <summary>
     /// Initializes a new <see cref="Optional{T}"/> instance.
     /// </summary>
@@ -66,13 +71,40 @@ namespace AggregateSource {
     }
 
     /// <summary>
+    /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+    /// </summary>
+    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
+    public override bool Equals(object obj) {
+      if (ReferenceEquals(obj, null)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (GetType() != obj.GetType()) return false;
+      return Equals((Optional<T>) obj);
+    }
+
+    /// <summary>
+    /// Determines whether the specified <see cref="Optional{T}" /> is equal to this instance.
+    /// </summary>
+    /// <param name="other">The <see cref="Optional{T}" /> to compare with this instance.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="Optional{T}" /> is equal to this instance; otherwise, <c>false</c>.
+    /// </returns>
+    public bool Equals(Optional<T> other) {
+      if (ReferenceEquals(other, null)) return false;
+      return _hasValue.Equals(other._hasValue) &&
+             EqualityComparer<T>.Default.Equals(_value, other._value);
+    }
+
+    /// <summary>
     /// Returns a hash code for this instance.
     /// </summary>
     /// <returns>
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
     /// </returns>
     public override int GetHashCode() {
-      return _hasValue.GetHashCode() ^ EqualityComparer<T>.Default.GetHashCode(_value);
+      return _hasValue.GetHashCode() ^ EqualityComparer<T>.Default.GetHashCode(_value) ^ typeof(T).GetHashCode();
     }
   }
 }
