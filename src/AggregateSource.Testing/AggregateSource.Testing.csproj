@@ -71,6 +71,8 @@
     <Compile Include="IAggregateQueryThenStateBuilder.cs" />
     <Compile Include="IAggregateQueryThrowStateBuilder.cs" />
     <Compile Include="IAggregateQueryWhenStateBuilder.cs" />
+    <Compile Include="IEventCentricTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricTestSpecificationBuilder.cs" />
     <Compile Include="IExceptionCentricTestSpecificationWriter.cs" />
     <Compile Include="IGivenStateBuilder.cs" />
     <Compile Include="IEventCentricTestSpecificationWriter.cs" />

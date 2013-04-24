@@ -4,7 +4,7 @@ namespace AggregateSource.Testing {
   /// <summary>
   /// The when state within the test specification building process.
   /// </summary>
-  public interface IWhenStateBuilder {
+  public interface IWhenStateBuilder : IEventCentricTestSpecificationBuilder {
     /// <summary>
     /// Then events should have occurred.
     /// </summary>
@@ -18,10 +18,5 @@ namespace AggregateSource.Testing {
     /// <param name="exception">The exception thrown.</param>
     /// <returns>A builder continuation.</returns>
     IThrowStateBuilder Throws(Exception exception);
-    /// <summary>
-    /// Builds the test specification thus far.
-    /// </summary>
-    /// <returns>The test specification.</returns>
-    EventCentricTestSpecification Build();
   }
 }
