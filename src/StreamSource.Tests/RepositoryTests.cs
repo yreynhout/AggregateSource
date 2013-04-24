@@ -60,7 +60,7 @@ namespace StreamSource {
       public void GetOptionalReturnsEmpty() {
         var result = _sut.GetOptional(Model.KnownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -111,7 +111,7 @@ namespace StreamSource {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(Model.UnknownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -159,7 +159,7 @@ namespace StreamSource {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(Model.UnknownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]

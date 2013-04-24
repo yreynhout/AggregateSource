@@ -8,7 +8,7 @@ namespace AggregateSource {
   /// Represents an optional value.
   /// </summary>
   /// <typeparam name="T">The type of the optional value.</typeparam>
-  public class Optional<T> : IEnumerable<T> {
+  public struct Optional<T> : IEnumerable<T> {
     /// <summary>
     /// The empty instance.
     /// </summary>
@@ -16,12 +16,7 @@ namespace AggregateSource {
 
     readonly bool _hasValue;
     readonly T _value;
-    
-    Optional() {
-      _hasValue = false;
-      _value = default(T);
-    }
-
+   
     /// <summary>
     /// Initializes a new <see cref="Optional{T}"/> instance.
     /// </summary>
@@ -68,31 +63,6 @@ namespace AggregateSource {
     /// </returns>
     IEnumerator IEnumerable.GetEnumerator() {
       return GetEnumerator();
-    }
-
-    /// <summary>
-    /// Determines whether the specified <see cref="Optional{T}" /> is equal to this instance.
-    /// </summary>
-    /// <param name="other">The <see cref="Optional{T}" /> to compare with this instance.</param>
-    /// <returns>
-    ///   <c>true</c> if the specified <see cref="Optional{T}" /> is equal to this instance; otherwise, <c>false</c>.
-    /// </returns>
-    protected bool Equals(Optional<T> other) {
-      return _hasValue.Equals(other._hasValue) && EqualityComparer<T>.Default.Equals(_value, other._value);
-    }
-
-    /// <summary>
-    /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-    /// </summary>
-    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-    /// <returns>
-    ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
-    /// </returns>
-    public override bool Equals(object obj) {
-      if (ReferenceEquals(null, obj)) return false;
-      if (ReferenceEquals(this, obj)) return true;
-      if (obj.GetType() != GetType()) return false;
-      return Equals((Optional<T>)obj);
     }
 
     /// <summary>
