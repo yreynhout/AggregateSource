@@ -59,7 +59,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalReturnsEmpty() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -112,7 +112,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -172,7 +172,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]

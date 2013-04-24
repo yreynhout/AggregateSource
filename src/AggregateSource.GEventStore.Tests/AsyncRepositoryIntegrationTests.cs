@@ -62,7 +62,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalAsyncReturnsEmpty() {
         var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -118,7 +118,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalAsyncReturnsEmptyForUnknownId() {
         var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -181,7 +181,7 @@ namespace AggregateSource.GEventStore {
       public void GetOptionalAsyncReturnsEmptyForUnknownId() {
         var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
 
-        Assert.That(result, Is.SameAs(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
 
       [Test]
