@@ -8,7 +8,7 @@ namespace AggregateSource {
   /// Represents an optional value.
   /// </summary>
   /// <typeparam name="T">The type of the optional value.</typeparam>
-  public class Optional<T> : IEnumerable<T>, IEquatable<Optional<T>> {
+  public struct Optional<T> : IEnumerable<T>, IEquatable<Optional<T>> {
     /// <summary>
     /// The empty instance.
     /// </summary>
@@ -17,11 +17,6 @@ namespace AggregateSource {
     readonly bool _hasValue;
     readonly T _value;
    
-    Optional() {
-      _hasValue = false;
-      _value = default(T);
-    }
-
     /// <summary>
     /// Initializes a new <see cref="Optional{T}"/> instance.
     /// </summary>
@@ -79,7 +74,6 @@ namespace AggregateSource {
     /// </returns>
     public override bool Equals(object obj) {
       if (ReferenceEquals(obj, null)) return false;
-      if (ReferenceEquals(this, obj)) return true;
       if (GetType() != obj.GetType()) return false;
       return Equals((Optional<T>) obj);
     }
@@ -92,7 +86,6 @@ namespace AggregateSource {
     ///   <c>true</c> if the specified <see cref="Optional{T}" /> is equal to this instance; otherwise, <c>false</c>.
     /// </returns>
     public bool Equals(Optional<T> other) {
-      if (ReferenceEquals(other, null)) return false;
       return _hasValue.Equals(other._hasValue) &&
              EqualityComparer<T>.Default.Equals(_value, other._value);
     }
