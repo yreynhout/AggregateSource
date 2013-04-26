@@ -25,7 +25,7 @@ A base class for an aggregate root entity that does the usual initialization and
 * leaves "versioning" up to you, because that's meta data that has little to do with the aggregate's behavior,
 * leaves "entity" management up to you and I promise, I'll never do this for you (beyond the Entity class below, that is).
 
-It's meant to be used in your "domain model" code.
+It's meant to be used in your "domain model" code. It has before/after apply hooks for those that want to use in-process domain events to support such things as [deferred validation](http://c2.com/ppr/checks.html).
 
 ### Entity
 A base class for entities (not the root obviously) within an aggregate that allows them to hook into the replay and recording functionality of the aggregate root. There's no magic here, it just alleviates you from writing boring, repetitive code.
