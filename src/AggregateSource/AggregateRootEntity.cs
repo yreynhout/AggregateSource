@@ -47,9 +47,24 @@ namespace AggregateSource {
     /// <param name="event">The event to apply.</param>
     protected void Apply(object @event) {
       if (@event == null) throw new ArgumentNullException("event");
+      BeforeApply(@event);
       Play(@event);
       Record(@event);
+      AfterApply(@event);
     }
+
+    /// <summary>
+    /// Called before an event is applied, exposed as a point of interception.
+    /// </summary>
+    /// <param name="event">The event that will be applied.</param>
+    protected virtual void BeforeApply(object @event) { }
+
+
+    /// <summary>
+    /// Called after an event has been applied, exposed as a point of interception.
+    /// </summary>
+    /// <param name="event">The event that has been applied.</param>
+    protected virtual void AfterApply(object @event) { }
 
     void Play(object @event) {
       Action<object> handler;

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Testing\AggregateAsSystemUnderTest.cs" />
     <Compile Include="Testing\UsingIdFromIEvent.cs" />
+    <Compile Include="UsingDomainEvents.cs" />
     <Compile Include="UsingEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsingObjectInheritance.cs" />

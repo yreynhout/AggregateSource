@@ -19,6 +19,18 @@ namespace AggregateSource {
       }
 
       [Test]
+      public void ApplyCanBeInterceptedBeforeApplication() {
+        var sut = new ApplyInterceptorAggregateRootEntity();
+        Assert.That(sut.BeforeApplyWasCalled, Is.True);
+      }
+
+      [Test]
+      public void ApplyCanBeInterceptedAfterApplication() {
+        var sut = new ApplyInterceptorAggregateRootEntity();
+        Assert.That(sut.AfterApplyWasCalled, Is.True);
+      }
+
+      [Test]
       public void RegisterHandlerCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
       }
@@ -39,6 +51,25 @@ namespace AggregateSource {
       public void ApplyNull() {
         Apply(null);
       }
+    }
+
+    class ApplyInterceptorAggregateRootEntity : AggregateRootEntity {
+      public ApplyInterceptorAggregateRootEntity() {
+        Register<object>(o => { });
+        Apply(new object());
+      }
+
+      protected override void BeforeApply(object @event) {
+        BeforeApplyWasCalled = true;
+      }
+
+      public bool BeforeApplyWasCalled { get; private set; }
+
+      protected override void AfterApply(object @event) {
+        AfterApplyWasCalled = true;
+      }
+
+      public bool AfterApplyWasCalled { get; private set; }
     }
 
     class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity {
