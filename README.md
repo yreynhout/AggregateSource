@@ -46,9 +46,9 @@ Helps you write test specifications, using a simple, codified statechart and a f
 
 ![Test specification - Statechart](docs/images/TestSpecificationStatechart.png)
 
-This fluent syntax comes in two flavors (for now). One is targetted at writing command handler test specifications, the other at writing aggregate specific test specifications. This begs the question: "Which one should I use?". The simple answer is: "Whichever one is more appropriate for the situation.".
+This fluent syntax comes in two flavors (for now). One is targetted at writing collaborating aggregate test specifications, the other at writing single aggregate test specifications. This begs the question: "Which one should I use?". The simple answer is: "Whichever one is more appropriate for the situation.".
 
-#### Testing Command Handlers
+#### Testing Collaborating Aggregates
 
 ```csharp
 new Scenario().
@@ -78,7 +78,7 @@ new Scenario().
   Assert();
 ```
 
-#### Testing Aggregates
+#### Testing Single Aggregate
 
 Testing aggregate (root entity) methods comes in 3 variations: ```factory```, ```command``` and ```query```. Factory methods give birth to new aggregates. This is similar in spirit to what is described [here](http://www.udidahan.com/2009/06/29/dont-create-aggregate-roots/ "Don't create aggregate roots"). Command methods change the state of the aggregate but do not return a value. Query methods return a value but do not change the observable state of the aggregate. Principles that reenforce this way of thinking and testing are [CQS](http://martinfowler.com/bliki/CommandQuerySeparation.html "Command and query separation") and [TDA](http://pragprog.com/articles/tell-dont-ask "Tell, don't ask").
 
