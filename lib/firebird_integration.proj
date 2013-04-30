@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Run" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\packages\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Run">
+    <WebDownload 
+      Condition="!Exists('$(MSBuildProjectDirectory)\firebird-2.5.2.26540-0_x64_embed.zip')"
+      FileUri="http://downloads.sourceforge.net/project/firebird/firebird-win64/2.5.2-Release/Firebird-2.5.2.26540-0_x64_embed.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Ffirebird%2Ffiles%2Ffirebird-win64%2F2.5.2-Release%2F&amp;ts=1367319214&amp;use_mirror=freefr" 
+      FileName="$(MSBuildProjectDirectory)\firebird-2.5.2.26540-0_x64_embed.zip" />
+    <Unzip 
+      Condition="!Exists('$(MSBuildProjectDirectory)\firebird')"
+      ZipFileName="$(MSBuildProjectDirectory)\firebird-2.5.2.26540-0_x64_embed.zip" 
+      TargetDirectory="$(MSBuildProjectDirectory)\firebird"/>
+  </Target>
+</Project>
