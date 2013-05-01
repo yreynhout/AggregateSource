@@ -34,6 +34,8 @@ namespace StreamSource {
     /// <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
     /// <exception cref="AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
     public TAggregateRoot Get(string identifier) {
+      //TODO: Add tests for ArgumentNullException
+      //TODO: Verify identifier is a Guid
       var result = GetOptional(identifier);
       if (!result.HasValue)
         throw new AggregateNotFoundException(identifier, typeof(TAggregateRoot));
@@ -46,6 +48,8 @@ namespace StreamSource {
     /// <param name="identifier">The aggregate identifier.</param>
     /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
     public Optional<TAggregateRoot> GetOptional(string identifier) {
+      //TODO: Add tests for ArgumentNullException
+      //TODO: Verify identifier is a Guid
       Aggregate aggregate;
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
