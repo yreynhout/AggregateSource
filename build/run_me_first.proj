@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <Target Name="Run">
+    <CallTarget Targets="RestorePackages" />
+    <MSBuild Projects="$(RootPath)\lib\geteventstore_integration.proj" />
+    <MSBuild Projects="$(RootPath)\lib\firebird_integration.proj" />
+  </Target>
+
+  <Target Name="RestorePackages">
     <ItemGroup>
       <BuildPackageConfigs Include="$(RootPath)\build\packages.config" />
       <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
@@ -14,9 +20,5 @@
     <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\build\packages"' />
     <Exec Command='$(NuGetExe) install %(LibPackageConfigs.Identity) -o "$(RootPath)\lib\packages"' />
     <Exec Command='$(NuGetExe) install %(SourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
-    <MSBuild Projects="$(RootPath)\lib\geteventstore_integration.proj" />
-    <MSBuild Projects="$(RootPath)\lib\firebird_integration.proj" />
   </Target>
-
-
 </Project>
