@@ -16,14 +16,16 @@
       Directories="$(MSBuildProjectDirectory)\output" />
     <MSBuild 
       Projects="
-        $(SourcePath)/AggregateSource/AggregateSource.csproj;
-        $(SourcePath)/AggregateSource.Testing/AggregateSource.Testing.csproj;
-        $(SourcePath)/AggregateSource.Tests/AggregateSource.Tests.csproj; 
-        $(SourcePath)/StreamSource/StreamSource.csproj;
-        $(SourcePath)/StreamSource.Tests/StreamSource.Tests.csproj;
-        $(SourcePath)/SampleSource/SampleSource.csproj;
-        $(SourcePath)/AggregateSource.GEventStore/AggregateSource.GEventStore.csproj;
-        $(SourcePath)/AggregateSource.GEventStore.Tests/AggregateSource.GEventStore.Tests.csproj"
+        $(SourcePath)\AggregateSource\AggregateSource.csproj;
+        $(SourcePath)\AggregateSource.Testing\AggregateSource.Testing.csproj;
+        $(SourcePath)\AggregateSource.Tests\AggregateSource.Tests.csproj; 
+        $(SourcePath)\SampleSource\SampleSource.csproj;
+        $(SourcePath)\StreamSource\StreamSource.csproj;
+        $(SourcePath)\StreamSource.Tests\StreamSource.Tests.csproj;
+        $(SourcePath)\StreamSource.FirebirdClient\StreamSource.FirebirdClient.csproj;
+        $(SourcePath)\StreamSource.FirebirdClient.Tests\StreamSource.FirebirdClient.Tests.csproj;
+        $(SourcePath)\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj;
+        $(SourcePath)\AggregateSource.GEventStore.Tests\AggregateSource.GEventStore.Tests.csproj"
       BuildInParallel="true" 
       Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output"
       UnloadProjectsOnCompletion="true"/>

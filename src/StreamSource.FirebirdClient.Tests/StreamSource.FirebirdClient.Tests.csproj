@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{92EE5898-4013-4969-8DF3-7602DC9EFD99}</ProjectGuid>
+    <ProjectGuid>{48C6BCB2-12D7-4732-8FC4-75CF76A39BDA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StreamSource.FirebirdClient</RootNamespace>
-    <AssemblyName>StreamSource.FirebirdClient</AssemblyName>
+    <RootNamespace>StreamSource.FirebirdClient.Tests</RootNamespace>
+    <AssemblyName>StreamSource.FirebirdClient.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,46 +33,32 @@
     <Reference Include="FirebirdSql.Data.FirebirdClient">
       <HintPath>..\packages\FirebirdSql.Data.FirebirdClient.3.0.2.1\lib\net45\FirebirdSql.Data.FirebirdClient.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FirebirdEventStreamReader.cs" />
-    <Compile Include="FirebirdEventStreamWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamSource\StreamSource.csproj">
-      <Project>{4dfb6af4-1748-4048-ae60-995b9801821b}</Project>
-      <Name>StreamSource</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\lib\firebird\fbembed.dll">
-      <Link>fbembed.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\lib\firebird\icudt30.dll">
-      <Link>icudt30.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\lib\firebird\icuin30.dll">
-      <Link>icuin30.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\lib\firebird\icuuc30.dll">
-      <Link>icuuc30.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\StreamSource.FirebirdClient\StreamSource.FirebirdClient.csproj">
+      <Project>{92ee5898-4013-4969-8df3-7602dc9efd99}</Project>
+      <Name>StreamSource.FirebirdClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StreamSource\StreamSource.csproj">
+      <Project>{4dfb6af4-1748-4048-ae60-995b9801821b}</Project>
+      <Name>StreamSource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

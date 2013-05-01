@@ -15,8 +15,9 @@
       Include="
       $(MSBuildProjectDirectory)\output\AggregateSource.Tests.dll;
       $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.dll;
-      $(MSBuildProjectDirectory)\output\StreamSource.Tests.dll;
       $(MSBuildProjectDirectory)\output\SampleSource.dll;
+      $(MSBuildProjectDirectory)\output\StreamSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\StreamSource.FirebirdClient.Tests.dll;
       ">
       <Output TaskParameter="Include" ItemName="AssembliesToTest" />
     </CreateItem>
