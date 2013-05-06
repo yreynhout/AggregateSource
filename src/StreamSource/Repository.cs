@@ -34,8 +34,7 @@ namespace StreamSource {
     /// <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
     /// <exception cref="AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
     public TAggregateRoot Get(string identifier) {
-      //TODO: Add tests for ArgumentNullException
-      //TODO: Verify identifier is a Guid
+      if (identifier == null) throw new ArgumentNullException("identifier");
       var result = GetOptional(identifier);
       if (!result.HasValue)
         throw new AggregateNotFoundException(identifier, typeof(TAggregateRoot));
@@ -48,13 +47,12 @@ namespace StreamSource {
     /// <param name="identifier">The aggregate identifier.</param>
     /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
     public Optional<TAggregateRoot> GetOptional(string identifier) {
-      //TODO: Add tests for ArgumentNullException
-      //TODO: Verify identifier is a Guid
+      if (identifier == null) throw new ArgumentNullException("identifier");
       Aggregate aggregate;
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
-      var result = _eventStreamReader.Read(new Guid(identifier));
+      var result = _eventStreamReader.Read(identifier);
       if (!result.HasValue) {
         return Optional<TAggregateRoot>.Empty;
       }
@@ -72,6 +70,7 @@ namespace StreamSource {
     /// <param name="identifier">The aggregate identifier.</param>
     /// <param name="root">The aggregate root entity.</param>
     public void Add(string identifier, TAggregateRoot root) {
+      if (identifier == null) throw new ArgumentNullException("identifier");
       _unitOfWork.Attach(new Aggregate(identifier, ExpectedVersion.None, root));
     }
   }

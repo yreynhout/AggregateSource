@@ -9,7 +9,7 @@ namespace StreamSource {
     /// <param name="expectedVersion">The expected version.</param>
     /// <param name="events">The events.</param>
     /// <exception cref="System.ArgumentNullException">events</exception>
-    public EventStreamChange(Guid streamId, long expectedVersion, Event[] events) {
+    public EventStreamChange(string streamId, long expectedVersion, Event[] events) {
       if (events == null) throw new ArgumentNullException("events");
       StreamId = streamId;
       ExpectedVersion = expectedVersion;
@@ -19,7 +19,7 @@ namespace StreamSource {
     /// <summary>
     /// Gets the identifier of the affected stream.
     /// </summary>
-    public Guid StreamId { get; private set; }
+    public string StreamId { get; private set; }
     /// <summary>
     /// Gets the version the affected stream is expected to be at.
     /// </summary>

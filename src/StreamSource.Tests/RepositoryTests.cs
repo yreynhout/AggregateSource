@@ -31,8 +31,33 @@ namespace StreamSource {
     class EventStreamReaderStub : IEventStreamReader {
       public static readonly IEventStreamReader Instance = new EventStreamReaderStub();
 
-      public Optional<EventStream> Read(Guid id) {
+      public Optional<EventStream> Read(string streamId) {
         return Optional<EventStream>.Empty;
+      }
+    }
+
+    [TestFixture]
+    public class AnyInstance {
+      Repository<AggregateRootEntityStub> _sut;
+
+      [SetUp]
+      public void SetUp() {
+        _sut = new Repository<AggregateRootEntityStub>(() => null, new UnitOfWork(), EventStreamReaderStub.Instance);
+      }
+
+      [Test]
+      public void GetIdentifierCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => _sut.Get(null));
+      }
+
+      [Test]
+      public void GetOptionalIdentifierCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => _sut.GetOptional(null));
+      }
+
+      [Test]
+      public void AddIdentifierCanNotBeNull() {
+        Assert.Throws<ArgumentNullException>(() => _sut.Add(null, AggregateRootEntityStub.Factory()));
       }
     }
 
@@ -135,8 +160,8 @@ namespace StreamSource {
         _sut = new Repository<AggregateRootEntityStub>(
           () => _root,
           _unitOfWork,
-          new FilledEventStreamReader(new Dictionary<Guid, IList<object>> {
-            { new Guid(Model.KnownIdentifier), new List<object>()}
+          new FilledEventStreamReader(new Dictionary<string, IList<object>> {
+            { Model.KnownIdentifier, new List<object>()}
           }));
       }
 
@@ -171,22 +196,22 @@ namespace StreamSource {
     }
 
     class EmptyEventStreamReader : IEventStreamReader {
-      public Optional<EventStream> Read(Guid id) {
+      public Optional<EventStream> Read(string streamId) {
         return Optional<EventStream>.Empty;
       }
     }
 
     class FilledEventStreamReader : IEventStreamReader {
-      readonly Dictionary<Guid, IList<object>> _storage;
+      readonly Dictionary<string, IList<object>> _storage;
 
-      public FilledEventStreamReader(Dictionary<Guid, IList<object>> storage) {
+      public FilledEventStreamReader(Dictionary<string, IList<object>> storage) {
         if (storage == null) throw new ArgumentNullException("storage");
         _storage = storage;
       }
 
-      public Optional<EventStream> Read(Guid id) {
+      public Optional<EventStream> Read(string streamId) {
         IList<object> events;
-        return _storage.TryGetValue(id, out events)
+        return _storage.TryGetValue(streamId, out events)
                  ? new Optional<EventStream>(new EventStream(events.Count, events.ToArray()))
                  : Optional<EventStream>.Empty;
       }

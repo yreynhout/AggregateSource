@@ -24,7 +24,7 @@ namespace StreamSource {
     }
 
     class EmptyEventStreamReader : IEventStreamReader {
-      public Optional<EventStream> Read(Guid id) {
+      public Optional<EventStream> Read(string id) {
         return Optional<EventStream>.Empty;
       }
     }
