@@ -4,8 +4,8 @@ build/TestRunResult.xml
 lib/eventstore/*
 lib/eventstore-net-1.0.1.zip
 lib/eventstore_license.txt
-lib/firebird/*
-lib/firebird-2.5.2.26540-0_x64_embed.zip
+lib/firebird*
+lib/firebird*.zip
 lib/packages/*
 src/packages/*
 *.log
