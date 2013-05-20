@@ -39,6 +39,12 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedVersionInfo.cs">
+      <Link>Properties\SharedVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="FirebirdEventStreamReader.cs" />
     <Compile Include="FirebirdEventStreamWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

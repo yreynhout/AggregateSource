@@ -9,6 +9,7 @@ lib/firebird*.zip
 lib/packages/*
 src/packages/*
 *.log
+src/NDependOut*
 
 #################
 ## Eclipse

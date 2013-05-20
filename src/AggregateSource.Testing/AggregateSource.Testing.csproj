@@ -37,6 +37,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedVersionInfo.cs">
+      <Link>Properties\SharedVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AggregateCommandGivenStateBuilder.cs" />
     <Compile Include="AggregateCommandThenStateBuilder.cs" />
     <Compile Include="AggregateCommandThrowStateBuilder.cs" />

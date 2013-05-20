@@ -14,6 +14,8 @@
     <RemoveDir 
       Condition="Exists('$(MSBuildProjectDirectory)\output')"
       Directories="$(MSBuildProjectDirectory)\output" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\version.proj" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\info.proj" />
     <MSBuild 
       Projects="
         $(SourcePath)\AggregateSource\AggregateSource.csproj;

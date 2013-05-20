@@ -42,6 +42,12 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedVersionInfo.cs">
+      <Link>Properties\SharedVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AggregateStubs.cs" />
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />

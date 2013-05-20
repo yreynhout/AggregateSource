@@ -15,14 +15,15 @@ using this tokenized nuspec file.
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>AggregateSource</id>
-    <version>0.0.2</version>
+    <version>0.0.0</version>
     <authors>Yves Reynhout</authors>
     <owners>Yves Reynhout</owners>
     <title>AggregateSource, an aggregate-meets-eventsourcing flavor.</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>A very early release. There's support for aggregates &amp; entities, as well as a collection based repository interface that plays nicely with a unit of work. Fluent test specifications can be written using either the Scenario class or the FactoryScenarioFor, CommandScenarioFor and QueryScenarioFor classes.</releaseNotes>
+    <releaseNotes>A very early release. There's support for aggregates &amp; entities, as well as a collection based repository interface that plays nicely with a unit of work. Fluent test specifications can be written using either the Scenario class or the FactoryScenarioFor, CommandScenarioFor and QueryScenarioFor classes. Warning! The API is still in flux.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
   </metadata>

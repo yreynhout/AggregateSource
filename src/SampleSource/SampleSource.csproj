@@ -40,6 +40,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedVersionInfo.cs">
+      <Link>Properties\SharedVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Testing\AggregateAsSystemUnderTest.cs" />
     <Compile Include="Testing\UsingIdFromIEvent.cs" />
     <Compile Include="UsingDomainEvents.cs" />

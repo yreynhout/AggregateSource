@@ -4,13 +4,37 @@
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
     <NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
+    <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="Pack">
-    <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <Version 
+      VersionFile="$(RootPath)\build\master_version.txt" 
+      MajorType="None" 
+      MinorType="None" 
+      BuildType="None" 
+      RevisionType="None">
+      <Output TaskParameter="Major" PropertyName="Major"/>
+      <Output TaskParameter="Minor" PropertyName="Minor"/>
+      <Output TaskParameter="Build" PropertyName="Build"/>
+    </Version>
+    <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
   </Target>
 
   <Target Name="Push">
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.0.0.2.nupkg" $(NuGetApiKey) -NonInteractive' />
+    <Version 
+      VersionFile="$(RootPath)\build\master_version.txt" 
+      MajorType="None" 
+      MinorType="None" 
+      BuildType="None" 
+      RevisionType="None">
+      <Output TaskParameter="Major" PropertyName="Major"/>
+      <Output TaskParameter="Minor" PropertyName="Minor"/>
+      <Output TaskParameter="Build" PropertyName="Build"/>
+    </Version>
+
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive' />
   </Target>
 </Project>
