@@ -15,8 +15,8 @@ namespace AggregateSource.Testing {
     /// </summary>
     /// <param name="specification">The specification.</param>
     /// <param name="state">The state.</param>
-    /// <param name="actualException"></param>
-    /// <param name="actualEvents"></param>
+    /// <param name="actualException">The actual exception.</param>
+    /// <param name="actualEvents">The actual events.</param>
     internal ExceptionCentricTestResult(ExceptionCentricTestSpecification specification, TestResultState state, Exception actualException = null, Tuple<string, object>[] actualEvents = null) {
       _specification = specification;
       _state = state;
