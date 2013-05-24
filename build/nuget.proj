@@ -20,7 +20,14 @@
       <Output TaskParameter="Minor" PropertyName="Minor"/>
       <Output TaskParameter="Build" PropertyName="Build"/>
     </Version>
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="AggregateSource.Testing.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency/@version"
+      Value="$(Major).$(Minor).$(Build)" />
     <Exec Command='$(NuGetExe) pack AggregateSource.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <Exec Command='$(NuGetExe) pack AggregateSource.Testing.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
   </Target>
 
   <Target Name="Push">
@@ -36,5 +43,6 @@
     </Version>
 
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive' />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive' />
   </Target>
 </Project>

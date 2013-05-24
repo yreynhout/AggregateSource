@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- 
 This tokenized .nuspec manifest file is targeting the latest NuGet namespace,
 which ensures you can benefit from the latest packaging features.
@@ -14,24 +14,29 @@ using this tokenized nuspec file.
 -->
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>AggregateSource</id>
+    <id>AggregateSource.Testing</id>
     <version>0.0.0</version>
     <authors>Yves Reynhout</authors>
     <owners>Yves Reynhout</owners>
-    <title>AggregateSource, an aggregate-meets-eventsourcing flavor.</title>
+    <title>AggregateSource.Testing, an aggregate-meets-eventsourcing test specification flavor.</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
-    <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model.</description>
+    <description>AggregateSource.Testing provides lightweight infrastructure for building eventsourced, aggregate based test specifications.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
     <releaseNotes>A very early release. There's support for aggregates &amp; entities, as well as a collection based repository interface that plays nicely with a unit of work. Fluent test specifications can be written using either the Scenario class or the FactoryScenarioFor, CommandScenarioFor and QueryScenarioFor classes. Warning! The API is still in flux.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="AggregateSource" version="0.0.16" />
+      </group>
+    </dependencies>
   </metadata>
   <files>
-    <file src="output\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
-    <file src="output\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
-    <file src="output\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
-    <file src="..\src\AggregateSource\*.cs" target="src\AggregateSource" />
-    <file src="..\src\AggregateSource\Properties\*.cs" target="src\AggregateSource\Properties" />
+    <file src="output\AggregateSource.Testing.dll" target="lib\net45\AggregateSource.Testing.dll" />
+    <file src="output\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
+    <file src="output\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
+    <file src="..\src\AggregateSource.Testing\*.cs" target="src\AggregateSource.Testing" />
+    <file src="..\src\AggregateSource.Testing\Properties\*.cs" target="src\AggregateSource.Testing\Properties" />
   </files>
 </package>
