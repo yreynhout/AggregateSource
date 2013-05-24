@@ -5,14 +5,6 @@ namespace AggregateSource.GEventStore {
   /// Represents configuration settings used during reading from the event store.
   /// </summary>
   public class EventStoreReadConfiguration {
-    /// <summary>
-    /// The default configuration settings.
-    /// </summary>
-    public static readonly EventStoreReadConfiguration Default = 
-      new EventStoreReadConfiguration(
-        new SliceSize(500), 
-        new ResolvedEventDeserializer());
-
     readonly SliceSize _sliceSize;
     readonly IResolvedEventDeserializer _deserializer;
 

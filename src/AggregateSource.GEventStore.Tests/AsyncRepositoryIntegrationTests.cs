@@ -11,19 +11,19 @@ namespace AggregateSource.GEventStore {
       [Test]
       public void FactoryCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(null, new ConcurrentUnitOfWork(), EmbeddedEventStore.Instance.Connection));
+          new AsyncRepository<AggregateRootEntityStub>(null, new ConcurrentUnitOfWork(), EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.NewInstance()));
       }
 
       [Test]
       public void ConcurrentUnitOfWorkCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EmbeddedEventStore.Instance.Connection));
+          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.NewInstance()));
       }
 
       [Test]
       public void EventStoreConnectionCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(), null));
+          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(), null, EventStoreReadConfigurationFactory.NewInstance()));
       }
 
       [Test]
@@ -44,7 +44,7 @@ namespace AggregateSource.GEventStore {
         EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
         _model = new Model();
         _unitOfWork = new ConcurrentUnitOfWork();
-        _sut = new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection);
+        _sut = new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.NewInstance());
       }
 
       [Test]
@@ -93,7 +93,7 @@ namespace AggregateSource.GEventStore {
         _root = AggregateRootEntityStub.Factory();
         _unitOfWork = new ConcurrentUnitOfWork();
         _unitOfWork.Attach(new Aggregate(_model.KnownIdentifier, 0, _root));
-        _sut = new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection);
+        _sut = new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, _unitOfWork, EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.NewInstance());
       }
 
       [Test]
@@ -140,7 +140,9 @@ namespace AggregateSource.GEventStore {
       public void SetUp() {
         _model = new Model();
         using (var stream = new MemoryStream()) {
-          Serializer.Serialize(stream, new Event());
+          using (var writer = new BinaryWriter(stream)) {
+            new Event().Write(writer);
+          }
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
             ExpectedVersion.NoStream,
@@ -156,7 +158,8 @@ namespace AggregateSource.GEventStore {
         _sut = new AsyncRepository<AggregateRootEntityStub>(
           () => _root,
           _unitOfWork,
-          EmbeddedEventStore.Instance.Connection);
+          EmbeddedEventStore.Instance.Connection,
+          EventStoreReadConfigurationFactory.NewInstance());
       }
 
       [Test]
@@ -191,8 +194,15 @@ namespace AggregateSource.GEventStore {
         Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
       }
 
-      [ProtoContract]
-      class Event { }
+      class Event : IBinarySerializer, IBinaryDeserializer {
+        public void Write(BinaryWriter writer) {
+          writer.Write(true);
+        }
+
+        public void Read(BinaryReader reader) {
+          reader.ReadBoolean();
+        }
+      }
     }
   }
 }

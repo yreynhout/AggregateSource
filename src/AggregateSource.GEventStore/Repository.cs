@@ -19,27 +19,8 @@ namespace AggregateSource.GEventStore {
     /// <param name="rootFactory">The aggregate root entity factory.</param>
     /// <param name="unitOfWork">The unit of work to interact with.</param>
     /// <param name="connection">The event store connection to use.</param>
-    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection)
-      : this(rootFactory, unitOfWork, connection, EventStoreReadConfiguration.Default) {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
-    /// </summary>
-    /// <param name="rootFactory">The aggregate root entity factory.</param>
-    /// <param name="unitOfWork">The unit of work to interact with.</param>
-    /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The event store configuration to use.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when
-    /// rootFactory
-    /// or
-    /// unitOfWork
-    /// or
-    /// connection
-    /// or
-    /// configuration
-    /// is null.
-    /// </exception>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
     public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
