@@ -128,14 +128,14 @@ namespace AggregateSource.Testing {
     }
 
     [Test]
-    public void FailWithNullActualThrows() {
+    public void FailWithNullExceptionThrows() {
       var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
 
-      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail(null); });
+      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Exception) null); });
     }
 
     [Test]
-    public void FailWithActualReturnsExpectedResult() {
+    public void FailWithActualExceptionReturnsExpectedResult() {
       var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
       var actual = new Exception();
 
@@ -146,5 +146,28 @@ namespace AggregateSource.Testing {
       Assert.That(result.Failed, Is.True);
       Assert.That(result.But, Is.EqualTo(new Optional<Exception>(actual)));
     }
+
+    [Test]
+    public void FailWithNullEventsThrows() {
+      var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
+
+      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Tuple<string, object>[])null); });
+    }
+
+    [Test]
+    public void FailWithActualEventsReturnsExpectedResult() {
+      var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
+
+      var actual = new[] { new Tuple<string, object>(Model.Identifier, new object()) };
+
+      var result = sut.Fail(actual);
+
+      Assert.That(result.Specification, Is.SameAs(sut));
+      Assert.That(result.Passed, Is.False);
+      Assert.That(result.Failed, Is.True);
+      Assert.That(result.Buts, Is.EqualTo(new Optional<Tuple<string, object>[]>(actual)));
+      Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
+    }
+
   }
 }

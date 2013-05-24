@@ -114,6 +114,7 @@ namespace AggregateSource.Testing {
       Assert.That(result.Passed, Is.True);
       Assert.That(result.Failed, Is.False);
       Assert.That(result.Buts, Is.EqualTo(Optional<Exception>.Empty));
+      Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
     }
 
     [Test]
@@ -125,17 +126,18 @@ namespace AggregateSource.Testing {
       Assert.That(result.Passed, Is.False);
       Assert.That(result.Failed, Is.True);
       Assert.That(result.Buts, Is.EqualTo(Optional<Exception>.Empty));
+      Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
     }
 
     [Test]
-    public void FailWithNullActualThrows() {
+    public void FailWithNullEventsThrows() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
-      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail(null); });
+      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Tuple<string, object>[]) null); });
     }
 
     [Test]
-    public void FailWithActualReturnsExpectedResult() {
+    public void FailWithActualEventsReturnsExpectedResult() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
       var actual = new[] { new Tuple<string, object>(Model.Identifier, new object()) };
@@ -146,6 +148,29 @@ namespace AggregateSource.Testing {
       Assert.That(result.Passed, Is.False);
       Assert.That(result.Failed, Is.True);
       Assert.That(result.Buts, Is.EqualTo(new Optional<Tuple<string, object>[]>(actual)));
+      Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
+    }
+
+    [Test]
+    public void FailWithNullExceptionThrows() {
+      var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
+
+      Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Exception)null); });
+    }
+
+    [Test]
+    public void FailWithActualExceptionReturnsExpectedResult() {
+      var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
+
+      var actual = new Exception();
+
+      var result = sut.Fail(actual);
+
+      Assert.That(result.Specification, Is.SameAs(sut));
+      Assert.That(result.Passed, Is.False);
+      Assert.That(result.Failed, Is.True);
+      Assert.That(result.Buts, Is.EqualTo(Optional<Tuple<string, object>[]>.Empty));
+      Assert.That(result.But, Is.EqualTo(new Optional<Exception>(actual)));
     }
   }
 }

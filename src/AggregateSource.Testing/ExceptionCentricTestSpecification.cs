@@ -68,7 +68,17 @@ namespace AggregateSource.Testing {
     /// <returns>A new <see cref="ExceptionCentricTestResult"/>.</returns>
     public ExceptionCentricTestResult Fail(Exception actual) {
       if (actual == null) throw new ArgumentNullException("actual");
-      return new ExceptionCentricTestResult(this, TestResultState.Failed, actual);
+      return new ExceptionCentricTestResult(this, TestResultState.Failed, actualException: actual);
+    }
+
+    /// <summary>
+    /// Returns a test result that indicates this specification has failed because different things happened.
+    /// </summary>
+    /// <param name="actual">The actual events</param>
+    /// <returns>A new <see cref="ExceptionCentricTestResult"/>.</returns>
+    public ExceptionCentricTestResult Fail(Tuple<string, object>[] actual) {
+      if (actual == null) throw new ArgumentNullException("actual");
+      return new ExceptionCentricTestResult(this, TestResultState.Failed, actualEvents: actual);
     }
 
     /// <summary>
