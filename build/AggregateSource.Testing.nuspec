@@ -18,7 +18,7 @@ using this tokenized nuspec file.
     <version>0.0.0</version>
     <authors>Yves Reynhout</authors>
     <owners>Yves Reynhout</owners>
-    <title>AggregateSource.Testing, an aggregate-meets-eventsourcing test specification flavor.</title>
+    <title>AggregateSource.Testing</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource.Testing provides lightweight infrastructure for building eventsourced, aggregate based test specifications.</description>
@@ -28,7 +28,7 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.16" />
+        <dependency id="AggregateSource" version="0.0.17" />
       </group>
     </dependencies>
   </metadata>

@@ -4,16 +4,42 @@ using System.Threading.Tasks;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore {
+  /// <summary>
+  /// Represents an asynchronous, virtual collection of <typeparamref name="TAggregateRoot"/>.
+  /// </summary>
+  /// <typeparam name="TAggregateRoot">The type of the aggregate root in this collection.</typeparam>
   public class AsyncRepository<TAggregateRoot> : IAsyncRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly ConcurrentUnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
     readonly EventStoreReadConfiguration _configuration;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AsyncRepository{TAggregateRoot}"/> class.
+    /// </summary>
+    /// <param name="rootFactory">The aggregate root entity factory.</param>
+    /// <param name="unitOfWork">The unit of work to interact with.</param>
+    /// <param name="connection">The event store connection to use.</param>
     public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection)
       : this(rootFactory, unitOfWork, connection, EventStoreReadConfiguration.Default) {
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AsyncRepository{TAggregateRoot}"/> class.
+    /// </summary>
+    /// <param name="rootFactory">The aggregate root entity factory.</param>
+    /// <param name="unitOfWork">The unit of work to interact with.</param>
+    /// <param name="connection">The event store connection to use.</param>
+    /// <param name="configuration">The event store configuration to use.</param>
+    /// <exception cref="System.ArgumentNullException">
+    /// rootFactory
+    /// or
+    /// unitOfWork
+    /// or
+    /// connection
+    /// or
+    /// configuration
+    /// </exception>
     public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
@@ -25,6 +51,12 @@ namespace AggregateSource.GEventStore {
       _configuration = configuration;
     }
 
+    /// <summary>
+    /// Gets the aggregate root entity associated with the specified aggregate identifier.
+    /// </summary>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
+    /// <exception cref="AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
     public async Task<TAggregateRoot> GetAsync(string identifier) {
       var result = await GetOptionalAsync(identifier);
       if (!result.HasValue)
@@ -32,6 +64,11 @@ namespace AggregateSource.GEventStore {
       return result.Value;
     }
 
+    /// <summary>
+    /// Attempts to get the aggregate root entity associated with the aggregate identifier.
+    /// </summary>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
     public async Task<Optional<TAggregateRoot>> GetOptionalAsync(string identifier) {
       Aggregate aggregate;
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
@@ -52,6 +89,11 @@ namespace AggregateSource.GEventStore {
       return new Optional<TAggregateRoot>(root);
     }
 
+    /// <summary>
+    /// Adds the aggregate root entity to this collection using the specified aggregate identifier.
+    /// </summary>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <param name="root">The aggregate root entity.</param>
     public void Add(string identifier, TAggregateRoot root) {
       _unitOfWork.Attach(new Aggregate(identifier, ExpectedVersion.NoStream, root));
     }
