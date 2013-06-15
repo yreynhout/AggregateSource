@@ -3,7 +3,7 @@
   /// Represents a virtual collection of <typeparamref name="TAggregateRoot"/>.
   /// </summary>
   /// <typeparam name="TAggregateRoot">The type of the aggregate root in this collection.</typeparam>
-  public interface IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
+  public interface IRepository<TAggregateRoot> {
     /// <summary>
     /// Gets the aggregate root entity associated with the specified aggregate identifier.
     /// </summary>
