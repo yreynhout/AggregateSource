@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Subjects;
 
-namespace AggregateSource {
-  /// <summary>
-  /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
-  /// </summary>
-  public abstract class AggregateRootEntity : IAggregateRootEntity {
-    readonly List<object> _changes;
+namespace AggregateSource.Reactive {
+  public class ObservableAggregateRootEntity : IAggregateInitializer, IObservable<object>, IDisposable {
+    readonly ReplaySubject<object> _recorder;
     readonly Dictionary<Type, Action<object>> _handlers;
+    bool _changed;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
+    /// Initializes a new instance of the <see cref="ObservableAggregateRootEntity"/> class.
     /// </summary>
-    protected AggregateRootEntity() {
+    protected ObservableAggregateRootEntity() {
       _handlers = new Dictionary<Type, Action<object>>();
-      _changes = new List<object>();
+      _recorder = new ReplaySubject<object>(Int32.MaxValue, TimeSpan.MaxValue);
+      _changed = false;
     }
 
     /// <summary>
@@ -73,32 +73,20 @@ namespace AggregateSource {
     }
 
     void Record(object @event) {
-      _changes.Add(@event);
+      _changed = true;
+      _recorder.OnNext(@event);
     }
 
-    /// <summary>
-    /// Determines whether this instance has state changes.
-    /// </summary>
-    /// <returns>
-    ///   <c>true</c> if this instance has state changes; otherwise, <c>false</c>.
-    /// </returns>
-    public bool HasChanges() {
-      return _changes.Count != 0;
+    bool HasChanges() {
+      return _changed;
     }
 
-    /// <summary>
-    /// Gets the state changes applied to this instance.
-    /// </summary>
-    /// <returns>A list of recorded state changes.</returns>
-    public IEnumerable<object> GetChanges() {
-      return _changes.ToArray();
+    public IDisposable Subscribe(IObserver<object> observer) {
+      return _recorder.Subscribe(observer);
     }
 
-    /// <summary>
-    /// Clears the state changes.
-    /// </summary>
-    public void ClearChanges() {
-      _changes.Clear();
+    public void Dispose() {
+      _recorder.Dispose();
     }
   }
 }
