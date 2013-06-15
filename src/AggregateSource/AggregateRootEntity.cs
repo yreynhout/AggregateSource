@@ -65,14 +65,14 @@ namespace AggregateSource {
     /// <param name="event">The event that has been applied.</param>
     protected virtual void AfterApply(object @event) { }
 
-    void Play(object @event) {
+    protected virtual void Play(object @event) {
       Action<object> handler;
       if (_handlers.TryGetValue(@event.GetType(), out handler)) {
         handler(@event);
       }
     }
 
-    void Record(object @event) {
+    protected virtual void Record(object @event) {
       _changes.Add(@event);
     }
 
