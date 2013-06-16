@@ -49,6 +49,7 @@
     <Compile Include="AggregateSourceException.cs" />
     <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EventRecorder.cs" />
     <Compile Include="IAggregateChangeTracker.cs" />
     <Compile Include="IAggregateInitializer.cs" />
     <Compile Include="IAggregateRootEntity.cs" />

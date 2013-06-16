@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AggregateSource {
   /// <summary>
   /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
   /// </summary>
   public abstract class AggregateRootEntity : IAggregateRootEntity {
-    readonly List<object> _changes;
+    readonly EventRecorder _recorder;
     readonly Dictionary<Type, Action<object>> _handlers;
 
     /// <summary>
@@ -14,7 +15,7 @@ namespace AggregateSource {
     /// </summary>
     protected AggregateRootEntity() {
       _handlers = new Dictionary<Type, Action<object>>();
-      _changes = new List<object>();
+      _recorder = new EventRecorder();
     }
 
     /// <summary>
@@ -65,15 +66,15 @@ namespace AggregateSource {
     /// <param name="event">The event that has been applied.</param>
     protected virtual void AfterApply(object @event) { }
 
-    protected virtual void Play(object @event) {
+    void Play(object @event) {
       Action<object> handler;
       if (_handlers.TryGetValue(@event.GetType(), out handler)) {
         handler(@event);
       }
     }
 
-    protected virtual void Record(object @event) {
-      _changes.Add(@event);
+    void Record(object @event) {
+      _recorder.Record(@event);
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ namespace AggregateSource {
     ///   <c>true</c> if this instance has state changes; otherwise, <c>false</c>.
     /// </returns>
     public bool HasChanges() {
-      return _changes.Count != 0;
+      return _recorder.Any();
     }
 
     /// <summary>
@@ -91,14 +92,14 @@ namespace AggregateSource {
     /// </summary>
     /// <returns>A list of recorded state changes.</returns>
     public IEnumerable<object> GetChanges() {
-      return _changes.ToArray();
+      return _recorder.ToArray();
     }
 
     /// <summary>
     /// Clears the state changes.
     /// </summary>
     public void ClearChanges() {
-      _changes.Clear();
+      _recorder.Reset();
     }
   }
 }
