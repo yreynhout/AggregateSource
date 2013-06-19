@@ -1,1 +1,0 @@
-﻿[assembly: AggregateSource.GEventStore.GEventStoreIntegration]

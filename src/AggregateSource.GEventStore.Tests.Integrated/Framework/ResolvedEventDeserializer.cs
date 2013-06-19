@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using EventStore.ClientAPI;
 
-namespace AggregateSource.GEventStore {
+namespace AggregateSource.GEventStore.Framework {
   public class ResolvedEventDeserializer : IResolvedEventDeserializer {
     public object Deserialize(ResolvedEvent resolvedEvent) {
       var instance = (IBinaryDeserializer)Activator.CreateInstance(Type.GetType(resolvedEvent.OriginalEvent.EventType, true));

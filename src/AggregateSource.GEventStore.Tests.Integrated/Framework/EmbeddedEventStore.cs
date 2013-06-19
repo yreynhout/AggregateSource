@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -12,7 +12,7 @@ using EventStore.Core.TransactionLog.Checkpoint;
 using EventStore.Core.TransactionLog.Chunks;
 using EventStore.Core.TransactionLog.FileNamingStrategy;
 
-namespace AggregateSource.GEventStore {
+namespace AggregateSource.GEventStore.Framework {
   public class EmbeddedEventStore {
     public static readonly EmbeddedEventStore Instance = new EmbeddedEventStore();
 

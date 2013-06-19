@@ -27,7 +27,7 @@
         $(SourcePath)\StreamSource.FirebirdClient\StreamSource.FirebirdClient.csproj;
         $(SourcePath)\StreamSource.FirebirdClient.Tests\StreamSource.FirebirdClient.Tests.csproj;
         $(SourcePath)\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj;
-        $(SourcePath)\AggregateSource.GEventStore.Tests\AggregateSource.GEventStore.Tests.csproj"
+        $(SourcePath)\AggregateSource.GEventStore.Tests.Integrated\AggregateSource.GEventStore.Tests.Integrated.csproj"
       BuildInParallel="true" 
       Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output"
       UnloadProjectsOnCompletion="true"/>

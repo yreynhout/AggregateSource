@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using AggregateSource.GEventStore.Framework;
 using EventStore.ClientAPI;
 using NUnit.Framework;
 using ProtoBuf;

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Linq;
 using EventStore.ClientAPI;
 
-namespace AggregateSource.GEventStore {
+namespace AggregateSource.GEventStore.Framework {
   public static class EventStoreConnectionExtensions {
     public static void DeleteAllStreams(this EventStoreConnection connection) {
       var slice = connection.ReadAllEventsForward(Position.Start, Int32.MaxValue, false);

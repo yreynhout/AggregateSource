@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AggregateSource.GEventStore</RootNamespace>
-    <AssemblyName>AggregateSource.GEventStore.Tests</AssemblyName>
+    <AssemblyName>AggregateSource.GEventStore.Tests.Integrated</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -57,18 +57,18 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateRootEntityStub.cs" />
-    <Compile Include="AssemblyAttribute.cs" />
     <Compile Include="AsyncRepositoryIntegrationTests.cs" />
-    <Compile Include="EventStoreReadConfigurationFactory.cs" />
-    <Compile Include="IBinaryDeserializer.cs" />
-    <Compile Include="IBinarySerializer.cs" />
+    <Compile Include="Framework\AssemblyAttribute.cs" />
+    <Compile Include="Framework\EmbeddedEventStore.cs" />
+    <Compile Include="Framework\EventStoreConnectionExtensions.cs" />
+    <Compile Include="Framework\EventStoreReadConfigurationFactory.cs" />
+    <Compile Include="Framework\GEventStoreIntegrationAttribute.cs" />
+    <Compile Include="Framework\IBinaryDeserializer.cs" />
+    <Compile Include="Framework\IBinarySerializer.cs" />
+    <Compile Include="Framework\ResolvedEventDeserializer.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EmbeddedEventStore.cs" />
-    <Compile Include="EventStoreConnectionExtensions.cs" />
-    <Compile Include="GEventStoreIntegrationAttribute.cs" />
     <Compile Include="RepositoryIntegrationTests.cs" />
-    <Compile Include="ResolvedEventDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj">

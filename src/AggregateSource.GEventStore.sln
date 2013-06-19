@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DC4CC0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.GEventStore", "AggregateSource.GEventStore\AggregateSource.GEventStore.csproj", "{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.GEventStore.Tests", "AggregateSource.GEventStore.Tests\AggregateSource.GEventStore.Tests.csproj", "{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.GEventStore.Tests.Integrated", "AggregateSource.GEventStore.Tests.Integrated\AggregateSource.GEventStore.Tests.Integrated.csproj", "{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

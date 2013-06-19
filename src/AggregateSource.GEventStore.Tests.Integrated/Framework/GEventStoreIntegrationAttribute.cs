@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 
-namespace AggregateSource.GEventStore {
+namespace AggregateSource.GEventStore.Framework {
   [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
   public class GEventStoreIntegrationAttribute : Attribute, ITestAction {
     public void BeforeTest(TestDetails testDetails) {
