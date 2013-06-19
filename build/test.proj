@@ -14,6 +14,7 @@
     <CreateItem 
       Include="
       $(MSBuildProjectDirectory)\output\AggregateSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Integrated.dll;
       $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.Integrated.dll;
       $(MSBuildProjectDirectory)\output\SampleSource.dll;
       $(MSBuildProjectDirectory)\output\StreamSource.Tests.dll;
