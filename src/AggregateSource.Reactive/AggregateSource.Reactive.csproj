@@ -41,6 +41,7 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="IObservableAggregateRootEntity.cs" />
     <Compile Include="ObservableAggregateRootEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

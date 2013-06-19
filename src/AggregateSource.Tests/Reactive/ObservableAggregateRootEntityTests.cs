@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace AggregateSource {
-  namespace AggregateRootEntityTests {
+namespace AggregateSource.Reactive {
+  namespace ObservableAggregateRootEntityTests {
     [TestFixture]
     public class WithAnyInstance {
       [Test]
       public void IsObservableAggregateRootEntity() {
-        Assert.IsInstanceOf<IAggregateRootEntity>(new AnyAggregateRootEntity());
+        Assert.IsInstanceOf<IObservableAggregateRootEntity>(new AnyAggregateRootEntity());
       }
 
       [Test]
@@ -46,21 +46,21 @@ namespace AggregateSource {
       }
     }
 
-    class AnyAggregateRootEntity : AggregateRootEntity {}
+    class AnyAggregateRootEntity : ObservableAggregateRootEntity {}
 
-    class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity {
+    class InitializeWithNullEventsAggregateRootEntity : ObservableAggregateRootEntity {
       public InitializeWithNullEventsAggregateRootEntity() {
         Initialize(null);
       }
     }
 
-    class ApplyNullEventAggregateRootEntity : AggregateRootEntity {
+    class ApplyNullEventAggregateRootEntity : ObservableAggregateRootEntity {
       public void ApplyNull() {
         Apply(null);
       }
     }
 
-    class ApplyInterceptorAggregateRootEntity : AggregateRootEntity {
+    class ApplyInterceptorAggregateRootEntity : ObservableAggregateRootEntity {
       public ApplyInterceptorAggregateRootEntity() {
         Register<object>(o => { });
         Apply(new object());
@@ -79,13 +79,13 @@ namespace AggregateSource {
       public bool AfterApplyWasCalled { get; private set; }
     }
 
-    class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity {
+    class RegisterNullHandlerAggregateRootEntity : ObservableAggregateRootEntity {
       public RegisterNullHandlerAggregateRootEntity() {
         Register<object>(null);
       }
     }
 
-    class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity {
+    class RegisterSameEventHandlerTwiceAggregateRootEntity : ObservableAggregateRootEntity {
       public RegisterSameEventHandlerTwiceAggregateRootEntity() {
         Register<object>(o => { });
         Register<object>(o => { });
@@ -94,7 +94,7 @@ namespace AggregateSource {
 
     [TestFixture]
     public class WithPristineInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -122,11 +122,11 @@ namespace AggregateSource {
       }
     }
 
-    class PristineAggregateRootEntity : AggregateRootEntity { }
+    class PristineAggregateRootEntity : ObservableAggregateRootEntity { }
 
     [TestFixture]
     public class WithInitializedInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -153,16 +153,16 @@ namespace AggregateSource {
         Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
       }
     }
-    
-    class InitializedAggregateRootEntity : AggregateRootEntity {
+
+    class InitializedAggregateRootEntity : ObservableAggregateRootEntity {
       public InitializedAggregateRootEntity() {
-        Initialize(new [] { new object(), new object() });
+        Initialize(new[] { new object(), new object() });
       }
     }
 
     [TestFixture]
     public class WithChangedInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -190,18 +190,18 @@ namespace AggregateSource {
       }
     }
 
-    class ChangedAggregateRootEntity : AggregateRootEntity {
-      public static readonly object[] AppliedChanges = new [] { new object(), new object() };
+    class ChangedAggregateRootEntity : ObservableAggregateRootEntity {
+      public static readonly object[] AppliedChanges = new[] { new object(), new object() };
       public ChangedAggregateRootEntity() {
         foreach (var change in AppliedChanges) {
-          Apply(change);  
+          Apply(change);
         }
       }
     }
 
     [TestFixture]
     public class WithInitializedThenChangedInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -229,7 +229,7 @@ namespace AggregateSource {
       }
     }
 
-    class InitializedThenChangedAggregateRootEntity : AggregateRootEntity {
+    class InitializedThenChangedAggregateRootEntity : ObservableAggregateRootEntity {
       public static readonly object[] AppliedChanges = new[] { new object(), new object() };
       public InitializedThenChangedAggregateRootEntity() {
         Initialize(new[] { new object(), new object() });
@@ -241,7 +241,7 @@ namespace AggregateSource {
 
     [TestFixture]
     public class WithChangedThenClearedInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -269,7 +269,7 @@ namespace AggregateSource {
       }
     }
 
-    class ChangedThenClearedAggregateRootEntity : AggregateRootEntity {
+    class ChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity {
       public ChangedThenClearedAggregateRootEntity() {
         foreach (var change in new[] { new object(), new object() }) {
           Apply(change);
@@ -280,7 +280,7 @@ namespace AggregateSource {
 
     [TestFixture]
     public class WithInitializedThenChangedThenClearedInstance {
-      AggregateRootEntity _sut;
+      ObservableAggregateRootEntity _sut;
 
       [SetUp]
       public void SetUp() {
@@ -308,7 +308,7 @@ namespace AggregateSource {
       }
     }
 
-    class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity {
+    class InitializedThenChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity {
       public InitializedThenChangedThenClearedAggregateRootEntity() {
         Initialize(new[] { new object(), new object() });
         foreach (var change in new[] { new object(), new object() }) {
@@ -329,8 +329,8 @@ namespace AggregateSource {
 
       [Test]
       public void InitializeCallsHandlerForEachEvent() {
-        var expectedEvents = new[] {new object(), new object()};
-        
+        var expectedEvents = new[] { new object(), new object() };
+
         _sut.Initialize(expectedEvents);
 
         Assert.That(_sut.HandlerCallCount, Is.EqualTo(2));
@@ -340,15 +340,15 @@ namespace AggregateSource {
       [Test]
       public void ApplyEventCallsEventHandler() {
         var @event = new object();
-        
+
         _sut.DoApply(@event);
 
         Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
-        Assert.That(_sut.PlayedEvents, Is.EquivalentTo(new[] {@event}));
+        Assert.That(_sut.PlayedEvents, Is.EquivalentTo(new[] { @event }));
       }
     }
 
-    class WithHandlersAggregateRootEntity : AggregateRootEntity {
+    class WithHandlersAggregateRootEntity : ObservableAggregateRootEntity {
       public WithHandlersAggregateRootEntity() {
         PlayedEvents = new List<object>();
         Register<object>(@event => {
@@ -376,8 +376,8 @@ namespace AggregateSource {
 
       [Test]
       public void InitializeDoesNotThrow() {
-        Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object()}));
-      } 
+        Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object() }));
+      }
 
       [Test]
       public void ApplyEventDoesNotThrow() {
@@ -385,7 +385,7 @@ namespace AggregateSource {
       }
     }
 
-    class WithoutHandlersAggregateRootEntity : AggregateRootEntity {
+    class WithoutHandlersAggregateRootEntity : ObservableAggregateRootEntity {
       public void DoApply(object @event) {
         Apply(@event);
       }
