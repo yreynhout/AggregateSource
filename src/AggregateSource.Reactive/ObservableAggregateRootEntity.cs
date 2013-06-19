@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace AggregateSource.Reactive {
+  /// <summary>
+  /// Base class for aggregate root entities that need some basic infrastructure for tracking and publishing state changes.
+  /// </summary>
   public class ObservableAggregateRootEntity : IObservableAggregateRootEntity {
     readonly EventRecorder _recorder;
     readonly Dictionary<Type, Action<object>> _handlers;
@@ -31,6 +34,7 @@ namespace AggregateSource.Reactive {
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
     protected void Register<TEvent>(Action<TEvent> handler) {
       if (handler == null) throw new ArgumentNullException("handler");
+      //ThrowIfDisposed();
       _handlers.Add(typeof(TEvent), @event => handler((TEvent)@event));
     }
 
@@ -42,6 +46,7 @@ namespace AggregateSource.Reactive {
     /// <exception cref="System.InvalidOperationException">Initialize cannot be called on an instance with changes.</exception>
     public void Initialize(IEnumerable<object> events) {
       if (events == null) throw new ArgumentNullException("events");
+      //ThrowIfDisposed();
       if (HasChanges()) throw new InvalidOperationException("Initialize cannot be called on an instance with changes.");
       foreach (var @event in events) {
         Play(@event);
@@ -54,6 +59,7 @@ namespace AggregateSource.Reactive {
     /// <param name="event">The event to apply.</param>
     protected void Apply(object @event) {
       if (@event == null) throw new ArgumentNullException("event");
+      //ThrowIfDisposed();
       BeforeApply(@event);
       Play(@event);
       Record(@event);
@@ -97,18 +103,42 @@ namespace AggregateSource.Reactive {
         throw new ObjectDisposedException(GetType().Name);
     }
 
+    /// <summary>
+    /// Determines whether this instance has state changes.
+    /// </summary>
+    /// <returns>
+    ///   <c>true</c> if this instance has state changes; otherwise, <c>false</c>.
+    /// </returns>
     public bool HasChanges() {
+      //ThrowIfDisposed();
       return _recorder.Any();
     }
 
+    /// <summary>
+    /// Gets the state changes applied to this instance.
+    /// </summary>
+    /// <returns>
+    /// A list of recorded state changes.
+    /// </returns>
     public IEnumerable<object> GetChanges() {
+      //ThrowIfDisposed();
       return _recorder.ToArray();
     }
 
+    /// <summary>
+    /// Clears the state changes.
+    /// </summary>
     public void ClearChanges() {
+      //ThrowIfDisposed();
       _recorder.Reset();
     }
 
+    /// <summary>
+    /// Subscribes the specified observer to this instance.
+    /// </summary>
+    /// <param name="observer">The observer.</param>
+    /// <returns>A disposable subscription.</returns>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="observer"/> is <c>null</c>.</exception>
     public IDisposable Subscribe(IObserver<object> observer) {
       if (observer == null) throw new ArgumentNullException("observer");
       lock (_gate) {
@@ -121,6 +151,9 @@ namespace AggregateSource.Reactive {
       }
     }
 
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
     public void Dispose() {
       lock (_gate) {
         _disposed = true;
