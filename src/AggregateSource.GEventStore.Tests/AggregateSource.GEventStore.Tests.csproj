@@ -48,10 +48,21 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="PassThroughStreamNameResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj">
+      <Project>{dea0d300-f1a2-4a43-a7ee-75d2dcd6bc7f}</Project>
+      <Name>AggregateSource.GEventStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
