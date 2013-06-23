@@ -64,6 +64,7 @@
     <Compile Include="Resolvers\MetadataSnapshotVersionResolver.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolver.cs" />
     <Compile Include="SliceSize.cs" />
+    <Compile Include="SnapshottableRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">

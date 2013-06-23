@@ -55,15 +55,16 @@ namespace AggregateSource.GEventStore {
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
-      var slice = _connection.ReadStreamEventsForward(identifier, 1, _configuration.SliceSize, false);
+      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var slice = _connection.ReadStreamEventsForward(streamName, 1, _configuration.SliceSize, false);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
       }
       var root = _rootFactory();
-      root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+      root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = _connection.ReadStreamEventsForward(identifier, slice.NextEventNumber, _configuration.SliceSize, false);
-        root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+        slice = _connection.ReadStreamEventsForward(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
+        root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
       _unitOfWork.Attach(aggregate);

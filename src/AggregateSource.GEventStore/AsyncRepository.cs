@@ -56,15 +56,16 @@ namespace AggregateSource.GEventStore {
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
-      var slice = await _connection.ReadStreamEventsForwardAsync(identifier, 1, _configuration.SliceSize, false);
+      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var slice = await _connection.ReadStreamEventsForwardAsync(streamName, 1, _configuration.SliceSize, false);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
       }
       var root = _rootFactory();
-      root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+      root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = await _connection.ReadStreamEventsForwardAsync(identifier, slice.NextEventNumber, _configuration.SliceSize, false);
-        root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+        slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
+        root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
       _unitOfWork.Attach(aggregate);

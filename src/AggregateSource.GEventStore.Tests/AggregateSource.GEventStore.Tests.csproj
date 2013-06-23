@@ -48,9 +48,11 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="EventStoreReadConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resolvers\MetadataSnapshotVersionResolverTests.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolverTests.cs" />
+    <Compile Include="SnapshottableEventStoreReadConfigurationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
