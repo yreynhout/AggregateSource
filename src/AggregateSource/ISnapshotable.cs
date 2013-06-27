@@ -2,7 +2,7 @@
   /// <summary>
   /// Represents the snapshotting operations on an aggregate root entity.
   /// </summary>
-  public interface ISnapshottable {
+  public interface ISnapshotable {
     /// <summary>
     /// Restores a snapshot using the specified <paramref name="state"/> object.
     /// </summary>

@@ -64,7 +64,14 @@
     <Compile Include="Resolvers\MetadataSnapshotVersionResolver.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolver.cs" />
     <Compile Include="SliceSize.cs" />
-    <Compile Include="SnapshottableRepository.cs" />
+    <Compile Include="Snapshots\AsyncSnapshotReader.cs" />
+    <Compile Include="Snapshots\IAsyncSnapshotReader.cs" />
+    <Compile Include="Snapshots\SnapshotableRepository.cs" />
+    <Compile Include="Snapshots\ISnapshotDeserializer.cs" />
+    <Compile Include="Snapshots\ISnapshotReader.cs" />
+    <Compile Include="Snapshots\Snapshot.cs" />
+    <Compile Include="Snapshots\SnapshotReader.cs" />
+    <Compile Include="Snapshots\SnapshotStoreReadConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
