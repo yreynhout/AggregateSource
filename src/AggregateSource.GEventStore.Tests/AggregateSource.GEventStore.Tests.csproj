@@ -56,6 +56,7 @@
     <Compile Include="Resolvers\MetadataSnapshotVersionResolverTests.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolverTests.cs" />
     <Compile Include="Snapshots\SnapshotStoreReadConfigurationTests.cs" />
+    <Compile Include="Snapshots\SnapshotTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

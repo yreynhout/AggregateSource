@@ -3,7 +3,7 @@ using System.IO;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore.Framework {
-  public class ResolvedEventDeserializer : IResolvedEventDeserializer {
+  public class EventDeserializer : IEventDeserializer {
     public object Deserialize(ResolvedEvent resolvedEvent) {
       var instance = (IBinaryDeserializer)Activator.CreateInstance(Type.GetType(resolvedEvent.OriginalEvent.EventType, true));
       using (var stream = new MemoryStream(resolvedEvent.Event.Data)) {

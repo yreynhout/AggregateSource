@@ -12,36 +12,36 @@ namespace AggregateSource.GEventStore {
     }
 
     [Test]
-    public void StreamNameResolverCannotBeNull() {
+    public void ResolverCannotBeNull() {
       Assert.Throws<ArgumentNullException>(() => CreateSutWithResolver(null));
     }
 
     [Test]
     public void UsingConstructorReturnsInstanceWithExpectedProperties() {
-      var resolvedEventDeserializer = new StubbedResolvedEventDeserializer();
+      var resolvedEventDeserializer = new StubbedEventDeserializer();
       var sliceSize = new SliceSize(5);
       var streamNameResolver = new PassThroughStreamNameResolver();
       
       var result = CreateSut(sliceSize, resolvedEventDeserializer, streamNameResolver);
 
-      Assert.That(result.ResolvedEventDeserializer, Is.SameAs(resolvedEventDeserializer));
+      Assert.That(result.EventDeserializer, Is.SameAs(resolvedEventDeserializer));
       Assert.That(result.SliceSize, Is.EqualTo(sliceSize));
       Assert.That(result.StreamNameResolver, Is.SameAs(streamNameResolver));
     }
 
-    EventStoreReadConfiguration CreateSut(SliceSize sliceSize, IResolvedEventDeserializer deserializer, IStreamNameResolver resolver) {
+    static EventStoreReadConfiguration CreateSut(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {
       return new EventStoreReadConfiguration(sliceSize, deserializer, resolver);
     }
 
-    EventStoreReadConfiguration CreateSutWithDeserializer(IResolvedEventDeserializer deserializer) {
+    static EventStoreReadConfiguration CreateSutWithDeserializer(IEventDeserializer deserializer) {
       return CreateSut(new SliceSize(1), deserializer, new PassThroughStreamNameResolver());
     }
 
-    EventStoreReadConfiguration CreateSutWithResolver(IStreamNameResolver resolver) {
-      return CreateSut(new SliceSize(1), new StubbedResolvedEventDeserializer(), resolver);
+    static EventStoreReadConfiguration CreateSutWithResolver(IStreamNameResolver resolver) {
+      return CreateSut(new SliceSize(1), new StubbedEventDeserializer(), resolver);
     }
 
-    class StubbedResolvedEventDeserializer : IResolvedEventDeserializer {
+    class StubbedEventDeserializer : IEventDeserializer {
       public object Deserialize(ResolvedEvent resolvedEvent) {
         return null;
       }

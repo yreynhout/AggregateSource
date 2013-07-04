@@ -62,10 +62,10 @@ namespace AggregateSource.GEventStore {
         return Optional<TAggregateRoot>.Empty;
       }
       var root = _rootFactory();
-      root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
+      root.Initialize(slice.Events.Select(resolved => _configuration.EventDeserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
         slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
-        root.Initialize(slice.Events.Select(resolved => _configuration.ResolvedEventDeserializer.Deserialize(resolved)));
+        root.Initialize(slice.Events.Select(resolved => _configuration.EventDeserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
       _unitOfWork.Attach(aggregate);

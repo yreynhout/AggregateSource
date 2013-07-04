@@ -6,22 +6,22 @@ namespace AggregateSource.GEventStore {
   /// </summary>
   public class EventStoreReadConfiguration {
     readonly SliceSize _sliceSize;
-    readonly IResolvedEventDeserializer _resolvedEventDeserializer;
+    readonly IEventDeserializer _eventDeserializer;
     readonly IStreamNameResolver _streamNameResolver;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EventStoreReadConfiguration"/> class.
     /// </summary>
     /// <param name="sliceSize">Size of the slice to read.</param>
-    /// <param name="resolvedEventDeserializer">The resolved event deserializer to use.</param>
+    /// <param name="eventDeserializer">The resolved event deserializer to use.</param>
     /// <param name="streamNameResolver">The stream name resolver to use.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="resolvedEventDeserializer"/> is null.</exception>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="eventDeserializer"/> is null.</exception>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="streamNameResolver"/> is null.</exception>
-    public EventStoreReadConfiguration(SliceSize sliceSize, IResolvedEventDeserializer resolvedEventDeserializer, IStreamNameResolver streamNameResolver) {
-      if (resolvedEventDeserializer == null) throw new ArgumentNullException("resolvedEventDeserializer");
+    public EventStoreReadConfiguration(SliceSize sliceSize, IEventDeserializer eventDeserializer, IStreamNameResolver streamNameResolver) {
+      if (eventDeserializer == null) throw new ArgumentNullException("eventDeserializer");
       if (streamNameResolver == null) throw new ArgumentNullException("streamNameResolver");
       _sliceSize = sliceSize;
-      _resolvedEventDeserializer = resolvedEventDeserializer;
+      _eventDeserializer = eventDeserializer;
       _streamNameResolver = streamNameResolver;
     }
 
@@ -41,8 +41,8 @@ namespace AggregateSource.GEventStore {
     /// <value>
     /// The resolved event deserializer.
     /// </value>
-    public IResolvedEventDeserializer ResolvedEventDeserializer {
-      get { return _resolvedEventDeserializer; }
+    public IEventDeserializer EventDeserializer {
+      get { return _eventDeserializer; }
     }
 
     /// <summary>

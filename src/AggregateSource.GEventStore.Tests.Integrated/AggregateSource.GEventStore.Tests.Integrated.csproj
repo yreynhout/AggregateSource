@@ -60,7 +60,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateRootEntityStub.cs" />
-    <Compile Include="AsyncRepositoryIntegrationTests.cs" />
+    <Compile Include="AsyncRepositoryTests.cs" />
     <Compile Include="Framework\AssemblyAttribute.cs" />
     <Compile Include="Framework\EmbeddedEventStore.cs" />
     <Compile Include="Framework\EventStoreConnectionExtensions.cs" />
@@ -69,10 +69,19 @@
     <Compile Include="Framework\IBinaryDeserializer.cs" />
     <Compile Include="Framework\IBinarySerializer.cs" />
     <Compile Include="Framework\Catch.cs" />
-    <Compile Include="Framework\ResolvedEventDeserializer.cs" />
+    <Compile Include="Framework\EventDeserializer.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryIntegrationTests.cs" />
+    <Compile Include="RepositoryTests.cs" />
+    <Compile Include="Snapshots\AsyncSnapshotReaderTests.cs" />
+    <Compile Include="Snapshots\Framework\AsyncSnapshotReaderFactory.cs" />
+    <Compile Include="Snapshots\Framework\SnapshotDeserializer.cs" />
+    <Compile Include="Snapshots\Framework\SnapshotReaderFactory.cs" />
+    <Compile Include="Snapshots\Framework\SnapshotState.cs" />
+    <Compile Include="Snapshots\Framework\SnapshotStoreReadConfigurationFactory.cs" />
+    <Compile Include="Snapshots\Framework\SnapshotStreamNameResolver.cs" />
+    <Compile Include="Snapshots\SnapshotableAggregateRootEntityStub.cs" />
+    <Compile Include="Snapshots\SnapshotableRepositoryTests.cs" />
     <Compile Include="Snapshots\SnapshotReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
