@@ -462,110 +462,306 @@ namespace AggregateSource.GEventStore.Snapshots {
         A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustNotHaveHappened();
       }
     }
-    
-    //[TestFixture]
-    //public class WithFilledStore {
-    //  Repository<AggregateRootEntityStub> _sut;
-    //  UnitOfWork _unitOfWork;
-    //  AggregateRootEntityStub _root;
-    //  Model _model;
-    //  IStreamNameResolver _streamNameResolver;
 
-    //  [SetUp]
-    //  public void SetUp() {
-    //    _model = new Model();
-    //    using (var stream = new MemoryStream()) {
-    //      using (var writer = new BinaryWriter(stream)) {
-    //        new RepositoryIntegrationTests.WithFilledStore.Event().Write(writer);
-    //      }
-    //      EmbeddedEventStore.Instance.Connection.AppendToStream(
-    //        _model.KnownIdentifier,
-    //        ExpectedVersion.NoStream,
-    //        new EventData(
-    //          Guid.NewGuid(),
-    //          typeof(RepositoryIntegrationTests.WithFilledStore.Event).AssemblyQualifiedName,
-    //          false,
-    //          stream.ToArray(),
-    //          new byte[0]));
-    //    }
-    //    _root = AggregateRootEntityStub.Factory();
-    //    _unitOfWork = new UnitOfWork();
-    //    _streamNameResolver = A.Fake<IStreamNameResolver>();
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.KnownIdentifier)).Returns(_model.KnownIdentifier);
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.UnknownIdentifier)).Returns(_model.UnknownIdentifier);
-    //    _sut = new Repository<AggregateRootEntityStub>(
-    //      () => _root,
-    //      _unitOfWork,
-    //      EmbeddedEventStore.Instance.Connection,
-    //      EventStoreReadConfigurationFactory.NewInstanceWithStreamNameResolver(_streamNameResolver));
-    //  }
+    [TestFixture]
+    public class WithFilledStoreAndNoSnapshot {
+      SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
+      UnitOfWork _unitOfWork;
+      SnapshotableAggregateRootEntityStub _root;
+      Model _model;
+      IStreamNameResolver _resolver;
+      ISnapshotReader _reader;
 
-    //  [Test]
-    //  public void GetThrowsForUnknownId() {
-    //    var exception =
-    //      Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
-    //    Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-    //    Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
-    //  }
+      [SetUp]
+      public void SetUp() {
+        _model = new Model();
+        using (var stream = new MemoryStream()) {
+          using (var writer = new BinaryWriter(stream)) {
+            new Event().Write(writer);
+          }
+          EmbeddedEventStore.Instance.Connection.AppendToStream(
+            _model.KnownIdentifier,
+            ExpectedVersion.NoStream,
+            new EventData(
+              Guid.NewGuid(),
+              typeof(Event).AssemblyQualifiedName,
+              false,
+              stream.ToArray(),
+              new byte[0]));
+        }
+        _root = SnapshotableAggregateRootEntityStub.Factory();
+        _unitOfWork = new UnitOfWork();
+        _resolver = A.Fake<IStreamNameResolver>();
+        _reader = A.Fake<ISnapshotReader>();
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).Returns(_model.KnownIdentifier);
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).Returns(_model.UnknownIdentifier);
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).Returns(Optional<Snapshot>.Empty);
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).Returns(Optional<Snapshot>.Empty);
+        _sut = new SnapshotableRepository<SnapshotableAggregateRootEntityStub>(
+          () => _root,
+          _unitOfWork,
+          EmbeddedEventStore.Instance.Connection,
+          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          _reader);
+      }
 
-    //  [Test]
-    //  public void GetResolvesNameOfUnknownId() {
-    //    Catch.ExceptionOf(() => _sut.Get(_model.UnknownIdentifier));
+      [Test]
+      public void GetThrowsForUnknownId() {
+        var exception =
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+      }
 
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
-    //  }
+      [Test]
+      public void GetReadsSnapshotOfUnknownId() {
+        Catch.ExceptionOf(() => _sut.Get(_model.UnknownIdentifier));
 
-    //  [Test]
-    //  public void GetReturnsRootOfKnownId() {
-    //    var result = _sut.Get(_model.KnownIdentifier);
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).MustHaveHappened();
+      }
 
-    //    Assert.That(result, Is.SameAs(_root));
-    //  }
+      [Test]
+      public void GetResolvesNameOfUnknownId() {
+        Catch.ExceptionOf(() => _sut.Get(_model.UnknownIdentifier));
 
-    //  [Test]
-    //  public void GetResolvesNameOfKnownId() {
-    //    var _ = _sut.Get(_model.KnownIdentifier);
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
+      }
 
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
-    //  }
+      [Test]
+      public void GetReturnsRootOfKnownId() {
+        var result = _sut.Get(_model.KnownIdentifier);
 
-    //  [Test]
-    //  public void GetOptionalReturnsEmptyForUnknownId() {
-    //    var result = _sut.GetOptional(_model.UnknownIdentifier);
+        Assert.That(result, Is.SameAs(_root));
+      }
 
-    //    Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
-    //  }
+      [Test]
+      public void GetReadsSnapshotOfKnownId() {
+        var _ = _sut.Get(_model.KnownIdentifier);
 
-    //  [Test]
-    //  public void GetOptionalResolvesNameOfUnknownId() {
-    //    var _ = _sut.GetOptional(_model.UnknownIdentifier);
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).MustHaveHappened();
+      }
 
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
-    //  }
+      [Test]
+      public void GetResolvesNameOfKnownId() {
+        var _ = _sut.Get(_model.KnownIdentifier);
 
-    //  [Test]
-    //  public void GetOptionalReturnsRootForKnownId() {
-    //    var result = _sut.GetOptional(_model.KnownIdentifier);
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
+      }
 
-    //    Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
-    //  }
+      [Test]
+      public void GetOptionalReturnsEmptyForUnknownId() {
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-    //  [Test]
-    //  public void GetOptionalResolvesNameOfKnownId() {
-    //    var _ = _sut.GetOptional(_model.KnownIdentifier);
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+      }
 
-    //    A.CallTo(() => _streamNameResolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
-    //  }
+      [Test]
+      public void GetOptionalReadsSnapshotOfUnknownId() {
+        var _ = _sut.GetOptional(_model.UnknownIdentifier);
 
-    //  class Event : IBinarySerializer, IBinaryDeserializer {
-    //    public void Write(BinaryWriter writer) {
-    //      writer.Write(true);
-    //    }
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).MustHaveHappened();
+      }
 
-    //    public void Read(BinaryReader reader) {
-    //      reader.ReadBoolean();
-    //    }
-    //  }
-    //}
+      [Test]
+      public void GetOptionalResolvesNameOfUnknownId() {
+        var _ = _sut.GetOptional(_model.UnknownIdentifier);
+
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalReturnsRootForKnownId() {
+        var result = _sut.GetOptional(_model.KnownIdentifier);
+
+        Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
+      }
+
+      [Test]
+      public void GetOptionalReadsSnapshotOfKnownId() {
+        var _ = _sut.GetOptional(_model.KnownIdentifier);
+
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalResolvesNameOfKnownId() {
+        var _ = _sut.GetOptional(_model.KnownIdentifier);
+
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      class Event : IBinarySerializer, IBinaryDeserializer {
+        public void Write(BinaryWriter writer) {
+          writer.Write(true);
+        }
+
+        public void Read(BinaryReader reader) {
+          reader.ReadBoolean();
+        }
+      }
+    }
+
+    [TestFixture]
+    public class WithFilledStoreAndSnapshot {
+      SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
+      UnitOfWork _unitOfWork;
+      SnapshotableAggregateRootEntityStub _root;
+      Model _model;
+      IStreamNameResolver _resolver;
+      ISnapshotReader _reader;
+      private object _state;
+
+      [SetUp]
+      public void SetUp() {
+        _model = new Model();
+        using (var stream = new MemoryStream()) {
+          using (var writer = new BinaryWriter(stream)) {
+            new Event().Write(writer);
+          }
+          EmbeddedEventStore.Instance.Connection.AppendToStream(
+            _model.KnownIdentifier,
+            ExpectedVersion.NoStream,
+            new EventData(
+              Guid.NewGuid(),
+              typeof(Event).AssemblyQualifiedName,
+              false,
+              stream.ToArray(),
+              new byte[0]));
+          EmbeddedEventStore.Instance.Connection.AppendToStream(
+            _model.KnownIdentifier,
+            1,
+            new EventData(
+              Guid.NewGuid(),
+              typeof(Event).AssemblyQualifiedName,
+              false,
+              stream.ToArray(),
+              new byte[0]));
+        }
+        _root = SnapshotableAggregateRootEntityStub.Factory();
+        _state = new object();
+        _unitOfWork = new UnitOfWork();
+        _resolver = A.Fake<IStreamNameResolver>();
+        _reader = A.Fake<ISnapshotReader>();
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).Returns(_model.KnownIdentifier);
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).Returns(_model.UnknownIdentifier);
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).Returns(new Optional<Snapshot>(new Snapshot(1, _state)));
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).Returns(new Optional<Snapshot>(new Snapshot(1, _state)));
+        _sut = new SnapshotableRepository<SnapshotableAggregateRootEntityStub>(
+          () => _root,
+          _unitOfWork,
+          EmbeddedEventStore.Instance.Connection,
+          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          _reader);
+      }
+
+      [Test]
+      public void GetThrowsForUnknownId() {
+        var exception =
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+      }
+
+      [Test]
+      public void GetReadsSnapshotOfUnknownId() {
+        Catch.ExceptionOf(() => _sut.Get(_model.UnknownIdentifier));
+
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetResolvesNameOfUnknownId() {
+        Catch.ExceptionOf(() => _sut.Get(_model.UnknownIdentifier));
+
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetReturnsRootOfKnownId() {
+        var result = _sut.Get(_model.KnownIdentifier);
+
+        Assert.That(result, Is.SameAs(_root));
+      }
+
+      [Test]
+      public void GetReturnsRootRestoredFromSnapshot() {
+        var result = _sut.Get(_model.KnownIdentifier);
+
+        Assert.That(result.RestoredSnapshot, Is.SameAs(_state));
+      }
+
+      [Test]
+      public void GetReadsSnapshotOfKnownId() {
+        var _ = _sut.Get(_model.KnownIdentifier);
+
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetResolvesNameOfKnownId() {
+        var _ = _sut.Get(_model.KnownIdentifier);
+
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalReturnsEmptyForUnknownId() {
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
+
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+      }
+
+      [Test]
+      public void GetOptionalReadsSnapshotOfUnknownId() {
+        var _ = _sut.GetOptional(_model.UnknownIdentifier);
+
+        A.CallTo(() => _reader.ReadOptional(_model.UnknownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalResolvesNameOfUnknownId() {
+        var _ = _sut.GetOptional(_model.UnknownIdentifier);
+
+        A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalReturnsRootForKnownId() {
+        var result = _sut.GetOptional(_model.KnownIdentifier);
+
+        Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
+      }
+
+      [Test]
+      public void GetOptionalReturnsRootForKnownIdRestoredFromSnapshot() {
+        var result = _sut.GetOptional(_model.KnownIdentifier);
+
+        Assert.That(result.Value.RestoredSnapshot, Is.SameAs(_state));
+      }
+
+      [Test]
+      public void GetOptionalReadsSnapshotOfKnownId() {
+        var _ = _sut.GetOptional(_model.KnownIdentifier);
+
+        A.CallTo(() => _reader.ReadOptional(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      [Test]
+      public void GetOptionalResolvesNameOfKnownId() {
+        var _ = _sut.GetOptional(_model.KnownIdentifier);
+
+        A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
+      }
+
+      class Event : IBinarySerializer, IBinaryDeserializer {
+        public void Write(BinaryWriter writer) {
+          writer.Write(true);
+        }
+
+        public void Read(BinaryReader reader) {
+          reader.ReadBoolean();
+        }
+      }
+    }
   }
 }
