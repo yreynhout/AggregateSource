@@ -63,7 +63,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       var snapshot = await _reader.ReadOptionalAsync(identifier);
       var version = 1;
       if (snapshot.HasValue) {
-        version = snapshot.Value.Version;
+        version = snapshot.Value.Version + 1;
       }
       var streamName = _configuration.Resolver.Resolve(identifier);
       var slice = await _connection.ReadStreamEventsForwardAsync(streamName, version, _configuration.SliceSize, false);
