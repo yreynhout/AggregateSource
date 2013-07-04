@@ -24,9 +24,9 @@ namespace AggregateSource.GEventStore {
       
       var result = CreateSut(sliceSize, resolvedEventDeserializer, streamNameResolver);
 
-      Assert.That(result.EventDeserializer, Is.SameAs(resolvedEventDeserializer));
+      Assert.That(result.Deserializer, Is.SameAs(resolvedEventDeserializer));
       Assert.That(result.SliceSize, Is.EqualTo(sliceSize));
-      Assert.That(result.StreamNameResolver, Is.SameAs(streamNameResolver));
+      Assert.That(result.Resolver, Is.SameAs(streamNameResolver));
     }
 
     static EventStoreReadConfiguration CreateSut(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {

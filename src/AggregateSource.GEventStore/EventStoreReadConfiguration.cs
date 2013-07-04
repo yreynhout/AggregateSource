@@ -6,23 +6,22 @@ namespace AggregateSource.GEventStore {
   /// </summary>
   public class EventStoreReadConfiguration {
     readonly SliceSize _sliceSize;
-    readonly IEventDeserializer _eventDeserializer;
-    readonly IStreamNameResolver _streamNameResolver;
+    readonly IEventDeserializer _deserializer;
+    readonly IStreamNameResolver _resolver;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EventStoreReadConfiguration"/> class.
     /// </summary>
     /// <param name="sliceSize">Size of the slice to read.</param>
-    /// <param name="eventDeserializer">The resolved event deserializer to use.</param>
-    /// <param name="streamNameResolver">The stream name resolver to use.</param>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="eventDeserializer"/> is null.</exception>
-    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="streamNameResolver"/> is null.</exception>
-    public EventStoreReadConfiguration(SliceSize sliceSize, IEventDeserializer eventDeserializer, IStreamNameResolver streamNameResolver) {
-      if (eventDeserializer == null) throw new ArgumentNullException("eventDeserializer");
-      if (streamNameResolver == null) throw new ArgumentNullException("streamNameResolver");
+    /// <param name="deserializer">The event deserializer to use.</param>
+    /// <param name="resolver">The stream name resolver to use.</param>
+    /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="deserializer"/> or <paramref name="resolver"/> is <c>null</c>.</exception>
+    public EventStoreReadConfiguration(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {
+      if (deserializer == null) throw new ArgumentNullException("deserializer");
+      if (resolver == null) throw new ArgumentNullException("resolver");
       _sliceSize = sliceSize;
-      _eventDeserializer = eventDeserializer;
-      _streamNameResolver = streamNameResolver;
+      _deserializer = deserializer;
+      _resolver = resolver;
     }
 
     /// <summary>
@@ -36,21 +35,21 @@ namespace AggregateSource.GEventStore {
     }
 
     /// <summary>
-    /// Gets the resolved event deserializer.
+    /// Gets the event deserializer.
     /// </summary>
     /// <value>
-    /// The resolved event deserializer.
+    /// The event deserializer.
     /// </value>
-    public IEventDeserializer EventDeserializer {
-      get { return _eventDeserializer; }
+    public IEventDeserializer Deserializer {
+      get { return _deserializer; }
     }
 
     /// <summary>
     /// Gets the stream name resolver.
     /// </summary>
     /// <value>The stream name resolver.</value>
-    public IStreamNameResolver StreamNameResolver {
-      get { return _streamNameResolver; }
+    public IStreamNameResolver Resolver {
+      get { return _resolver; }
     }
   }
 }

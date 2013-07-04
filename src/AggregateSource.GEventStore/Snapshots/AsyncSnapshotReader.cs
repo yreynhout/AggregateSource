@@ -43,6 +43,14 @@ namespace AggregateSource.GEventStore.Snapshots {
       get { return _configuration; }
     }
 
+    /// <summary>
+    /// Reads a snapshot from the underlying storage if one is present.
+    /// </summary>
+    /// <param name="identifier">The aggregate identifier.</param>
+    /// <returns>
+    /// A <see cref="Snapshot" /> if found, otherwise <c>empty</c>.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">identifier</exception>
     public async Task<Optional<Snapshot>> ReadOptionalAsync(string identifier) {
       if (identifier == null) throw new ArgumentNullException("identifier");
       var streamName = Configuration.Resolver.Resolve(identifier);

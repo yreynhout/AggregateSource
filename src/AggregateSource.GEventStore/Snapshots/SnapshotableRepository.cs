@@ -21,6 +21,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <param name="unitOfWork">The unit of work to interact with.</param>
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The event store configuration to use.</param>
+    /// <param name="reader">The snapshot reader to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
     public SnapshotableRepository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration, ISnapshotReader reader) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
@@ -63,7 +64,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       if (snapshot.HasValue) {
         version = snapshot.Value.Version + 1;
       }
-      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var streamName = _configuration.Resolver.Resolve(identifier);
       var slice = _connection.ReadStreamEventsForward(streamName, version, _configuration.SliceSize, false);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
@@ -72,10 +73,10 @@ namespace AggregateSource.GEventStore.Snapshots {
       if (snapshot.HasValue) {
         root.RestoreSnapshot(snapshot.Value.State);
       }
-      root.Initialize(slice.Events.Select(resolved => _configuration.EventDeserializer.Deserialize(resolved)));
+      root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
         slice = _connection.ReadStreamEventsForward(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
-        root.Initialize(slice.Events.Select(resolved => _configuration.EventDeserializer.Deserialize(resolved)));
+        root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
       _unitOfWork.Attach(aggregate);
