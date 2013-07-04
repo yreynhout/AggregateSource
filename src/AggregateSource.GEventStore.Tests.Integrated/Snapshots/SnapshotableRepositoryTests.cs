@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AggregateSource.GEventStore.Framework;
 using AggregateSource.GEventStore.Snapshots.Framework;
 using EventStore.ClientAPI;
@@ -407,6 +403,13 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
 
       [Test]
+      public void GetReturnsRootOfKnownIdNotRestoredFromSnapshot() {
+        var result = _sut.Get(_model.KnownIdentifier);
+
+        Assert.That(result.RestoredSnapshot, Is.Null);
+      }
+
+      [Test]
       public void GetDoesNotReadSnapshotOfKnownId() {
         var _ = _sut.Get(_model.KnownIdentifier);
 
@@ -446,6 +449,13 @@ namespace AggregateSource.GEventStore.Snapshots {
         var result = _sut.GetOptional(_model.KnownIdentifier);
 
         Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
+      }
+
+      [Test]
+      public void GetOptionalReturnsRootForKnownIdNotRestoredFromSnapshot() {
+        var result = _sut.GetOptional(_model.KnownIdentifier);
+
+        Assert.That(result.Value.RestoredSnapshot, Is.Null);
       }
 
       [Test]
