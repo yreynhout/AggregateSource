@@ -19,7 +19,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       [SetUp]
       public void SetUp() {
         _connection = EmbeddedEventStore.Instance.Connection;
-        _reader = new SnapshotReader(_connection, SnapshotStoreReadConfigurationFactory.Create());
+        _reader = SnapshotReaderFactory.Create();
         _configuration = EventStoreReadConfigurationFactory.Create();
         _unitOfWork = new UnitOfWork();
         _factory = SnapshotableAggregateRootEntityStub.Factory;
@@ -619,7 +619,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       Model _model;
       IStreamNameResolver _resolver;
       ISnapshotReader _reader;
-      private object _state;
+      object _state;
 
       [SetUp]
       public void SetUp() {

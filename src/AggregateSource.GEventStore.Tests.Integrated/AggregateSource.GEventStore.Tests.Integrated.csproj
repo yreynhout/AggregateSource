@@ -73,6 +73,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests.cs" />
+    <Compile Include="Snapshots\AsyncSnapshotableRepositoryTests.cs" />
     <Compile Include="Snapshots\AsyncSnapshotReaderTests.cs" />
     <Compile Include="Snapshots\Framework\AsyncSnapshotReaderFactory.cs" />
     <Compile Include="Snapshots\Framework\SnapshotDeserializer.cs" />
