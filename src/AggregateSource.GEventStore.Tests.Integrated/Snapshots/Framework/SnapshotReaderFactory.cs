@@ -11,11 +11,11 @@ namespace AggregateSource.GEventStore.Snapshots.Framework {
       return Create(EmbeddedEventStore.Instance.Connection, configuration);
     }
 
-    public static SnapshotReader CreateWithConnection(EventStoreConnection connection) {
+    public static SnapshotReader CreateWithConnection(IEventStoreConnection connection) {
       return Create(connection, SnapshotStoreReadConfigurationFactory.Create());
     }
 
-    public static SnapshotReader Create(EventStoreConnection connection, SnapshotStoreReadConfiguration configuration) {
+    public static SnapshotReader Create(IEventStoreConnection connection, SnapshotStoreReadConfiguration configuration) {
       return new SnapshotReader(connection, configuration);
     }
   }

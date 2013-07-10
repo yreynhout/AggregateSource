@@ -10,7 +10,7 @@ namespace AggregateSource.GEventStore {
   public class Repository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
-    readonly EventStoreConnection _connection;
+    readonly IEventStoreConnection _connection;
     readonly EventStoreReadConfiguration _configuration;
 
     /// <summary>
@@ -21,7 +21,7 @@ namespace AggregateSource.GEventStore {
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The event store configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
-    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, IEventStoreConnection connection, EventStoreReadConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");

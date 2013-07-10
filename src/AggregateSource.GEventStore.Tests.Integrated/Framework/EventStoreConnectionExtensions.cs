@@ -4,7 +4,7 @@ using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore.Framework {
   public static class EventStoreConnectionExtensions {
-    public static void DeleteAllStreams(this EventStoreConnection connection) {
+    public static void DeleteAllStreams(this IEventStoreConnection connection) {
       var slice = connection.ReadAllEventsForward(Position.Start, Int32.MaxValue, false);
       var streams = slice.
         Events.

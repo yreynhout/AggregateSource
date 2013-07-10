@@ -10,7 +10,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     [TestFixture]
     public class WithAnyInstance {
       SnapshotStoreReadConfiguration _configuration;
-      EventStoreConnection _connection;
+      IEventStoreConnection _connection;
 
       [SetUp]
       public void SetUp() {
@@ -130,11 +130,10 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
 
       static void CreateEmptySnapshotStream(string snapshotStreamName) {
-        EmbeddedEventStore.Instance.Connection.CreateStream(
+        EmbeddedEventStore.Instance.Connection.AppendToStream(
           snapshotStreamName,
-          Guid.NewGuid(),
-          false,
-          new byte[0]);
+          ExpectedVersion.Any,
+          new EventData[0]);
       }
 
       [Test]
@@ -165,11 +164,10 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
 
       static void CreateDeletedSnapshotStream(string snapshotStreamName) {
-        EmbeddedEventStore.Instance.Connection.CreateStream(
+        EmbeddedEventStore.Instance.Connection.AppendToStream(
           snapshotStreamName,
-          Guid.NewGuid(),
-          false,
-          new byte[0]);
+          ExpectedVersion.Any,
+          new EventData[0]);
         EmbeddedEventStore.Instance.Connection.DeleteStream(
           snapshotStreamName,
           ExpectedVersion.EmptyStream);

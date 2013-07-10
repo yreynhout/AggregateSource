@@ -13,7 +13,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     public class Construction {
       IAsyncSnapshotReader _reader;
       EventStoreReadConfiguration _configuration;
-      EventStoreConnection _connection;
+      IEventStoreConnection _connection;
       ConcurrentUnitOfWork _unitOfWork;
       Func<SnapshotableAggregateRootEntityStub> _factory;
 
