@@ -1,18 +1,30 @@
 ﻿using System;
-using AggregateSource.GEventStore.Snapshots.Framework;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using AggregateSource.GEventStore.Framework;
+using AggregateSource.GEventStore.Framework.Snapshots;
 
 namespace AggregateSource.GEventStore.Snapshots {
   public class SnapshotableAggregateRootEntityStub : AggregateRootEntity, ISnapshotable {
     public static readonly Func<SnapshotableAggregateRootEntityStub> Factory = () => new SnapshotableAggregateRootEntityStub();
 
-    public object RestoredSnapshot { get; private set; }
+    readonly List<object> _recordedEvents;
+
+    public SnapshotableAggregateRootEntityStub() {
+      _recordedEvents = new List<object>();
+
+      Register<EventStub>(_ => _recordedEvents.Add(_));
+    }
+
+    public object RecordedSnapshot { get; private set; }
+    public IList<object> RecordedEvents { get { return new ReadOnlyCollection<object>(_recordedEvents); } }
 
     public void RestoreSnapshot(object state) {
-      RestoredSnapshot = state;
+      RecordedSnapshot = state;
     }
 
     public object TakeSnapshot() {
-      return new SnapshotState();
+      return new SnapshotStateStub(new Random().Next());
     }
   }
 }

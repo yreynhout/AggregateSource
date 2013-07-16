@@ -50,7 +50,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AsyncRepository.cs" />
-    <Compile Include="EventStoreReadConfiguration.cs" />
+    <Compile Include="EventReaderConfiguration.cs" />
     <Compile Include="IEventDeserializer.cs" />
     <Compile Include="IStreamNameResolver.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -70,7 +70,7 @@
     <Compile Include="Snapshots\ISnapshotReader.cs" />
     <Compile Include="Snapshots\Snapshot.cs" />
     <Compile Include="Snapshots\SnapshotReader.cs" />
-    <Compile Include="Snapshots\SnapshotStoreReadConfiguration.cs" />
+    <Compile Include="Snapshots\SnapshotReaderConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">

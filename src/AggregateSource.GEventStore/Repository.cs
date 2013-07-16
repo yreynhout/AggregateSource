@@ -11,7 +11,7 @@ namespace AggregateSource.GEventStore {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
-    readonly EventStoreReadConfiguration _configuration;
+    readonly EventReaderConfiguration _configuration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
@@ -19,9 +19,9 @@ namespace AggregateSource.GEventStore {
     /// <param name="rootFactory">The aggregate root entity factory.</param>
     /// <param name="unitOfWork">The unit of work to interact with.</param>
     /// <param name="connection">The event store connection to use.</param>
-    /// <param name="configuration">The event store configuration to use.</param>
+    /// <param name="configuration">The event reader configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
-    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
+    public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventReaderConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");
@@ -31,6 +31,38 @@ namespace AggregateSource.GEventStore {
       _connection = connection;
       _configuration = configuration;
     }
+
+    /// <summary>
+    /// Gets the aggregate root entity factory.
+    /// </summary>
+    /// <value>
+    /// The aggregate root entity factory.
+    /// </value>
+    public Func<TAggregateRoot> RootFactory { get { return _rootFactory; } }
+
+    /// <summary>
+    /// Gets the unit of work.
+    /// </summary>
+    /// <value>
+    /// The unit of work.
+    /// </value>
+    public UnitOfWork UnitOfWork { get { return _unitOfWork; } }
+    
+    /// <summary>
+    /// Gets the event store connection to use.
+    /// </summary>
+    /// <value>
+    /// The event store connection to use.
+    /// </value>
+    public EventStoreConnection Connection { get { return _connection; } }
+
+    /// <summary>
+    /// Gets the event reader configuration.
+    /// </summary>
+    /// <value>
+    /// The event reader configuration.
+    /// </value>
+    public EventReaderConfiguration Configuration { get { return _configuration; } }
 
     /// <summary>
     /// Gets the aggregate root entity associated with the specified aggregate identifier.

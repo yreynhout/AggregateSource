@@ -12,7 +12,7 @@ namespace AggregateSource.GEventStore {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly ConcurrentUnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
-    readonly EventStoreReadConfiguration _configuration;
+    readonly EventReaderConfiguration _configuration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AsyncRepository{TAggregateRoot}"/> class.
@@ -22,7 +22,7 @@ namespace AggregateSource.GEventStore {
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The event store configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
-    public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration) {
+    public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventReaderConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");

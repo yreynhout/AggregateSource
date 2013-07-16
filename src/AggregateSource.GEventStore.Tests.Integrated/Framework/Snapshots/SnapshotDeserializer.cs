@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using AggregateSource.GEventStore.Framework;
+using AggregateSource.GEventStore.Snapshots;
 using EventStore.ClientAPI;
 
-namespace AggregateSource.GEventStore.Snapshots.Framework {
+namespace AggregateSource.GEventStore.Framework.Snapshots {
   public class SnapshotDeserializer : ISnapshotDeserializer {
     public Snapshot Deserialize(ResolvedEvent resolvedEvent) {
       var type = Type.GetType(resolvedEvent.Event.EventType, true);

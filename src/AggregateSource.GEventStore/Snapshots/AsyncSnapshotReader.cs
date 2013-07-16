@@ -8,7 +8,7 @@ namespace AggregateSource.GEventStore.Snapshots {
   /// </summary>
   public class AsyncSnapshotReader : IAsyncSnapshotReader {
     readonly EventStoreConnection _connection;
-    readonly SnapshotStoreReadConfiguration _configuration;
+    readonly SnapshotReaderConfiguration _configuration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AsyncSnapshotReader"/> class.
@@ -16,7 +16,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="connection"/> or <paramref name="configuration"/> are <c>null</c>.</exception>
-    public AsyncSnapshotReader(EventStoreConnection connection, SnapshotStoreReadConfiguration configuration) {
+    public AsyncSnapshotReader(EventStoreConnection connection, SnapshotReaderConfiguration configuration) {
       if (connection == null) throw new ArgumentNullException("connection");
       if (configuration == null) throw new ArgumentNullException("configuration");
       _connection = connection;
@@ -39,7 +39,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <value>
     /// The configuration.
     /// </value>
-    public SnapshotStoreReadConfiguration Configuration {
+    public SnapshotReaderConfiguration Configuration {
       get { return _configuration; }
     }
 

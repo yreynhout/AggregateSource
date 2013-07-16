@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using AggregateSource.GEventStore.Framework;
-using AggregateSource.GEventStore.Snapshots.Framework;
+using AggregateSource.GEventStore.Framework.Snapshots;
 using EventStore.ClientAPI;
 using NUnit.Framework;
 
@@ -9,12 +9,12 @@ namespace AggregateSource.GEventStore.Snapshots {
   namespace SnapshotReaderTests {
     [TestFixture]
     public class WithAnyInstance {
-      SnapshotStoreReadConfiguration _configuration;
+      SnapshotReaderConfiguration _configuration;
       EventStoreConnection _connection;
 
       [SetUp]
       public void SetUp() {
-        _configuration = SnapshotStoreReadConfigurationFactory.Create();
+        _configuration = SnapshotReaderConfigurationFactory.Create();
         _connection = EmbeddedEventStore.Instance.Connection;
       }
 
@@ -35,7 +35,7 @@ namespace AggregateSource.GEventStore.Snapshots {
 
       [Test]
       public void ConfigurationReturnsExpectedValue() {
-        var configuration = SnapshotStoreReadConfigurationFactory.Create();
+        var configuration = SnapshotReaderConfigurationFactory.Create();
         Assert.That(SnapshotReaderFactory.CreateWithConfiguration(configuration).Configuration, Is.SameAs(configuration));
       }
 
@@ -67,14 +67,14 @@ namespace AggregateSource.GEventStore.Snapshots {
       static void CreateSnapshotStreamWithOneSnapshot(string snapshotStreamName) {
         using (var stream = new MemoryStream()) {
           using (var writer = new BinaryWriter(stream)) {
-            new SnapshotState().Write(writer);
+            new SnapshotStateStub(1).Write(writer);
           }
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             snapshotStreamName,
             ExpectedVersion.NoStream,
             new EventData(
               Guid.NewGuid(),
-              typeof (SnapshotState).AssemblyQualifiedName,
+              typeof (SnapshotStateStub).AssemblyQualifiedName,
               false,
               stream.ToArray(),
               BitConverter.GetBytes(100)));
@@ -85,7 +85,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetReturnsSnapshotOfKnownId() {
         var result = _sut.ReadOptional(_model.KnownIdentifier);
 
-        Assert.That(result, Is.EqualTo(new Optional<Snapshot>(new Snapshot(100, new SnapshotState()))));
+        Assert.That(result, Is.EqualTo(new Optional<Snapshot>(new Snapshot(100, new SnapshotStateStub(1)))));
       }
 
       [Test]

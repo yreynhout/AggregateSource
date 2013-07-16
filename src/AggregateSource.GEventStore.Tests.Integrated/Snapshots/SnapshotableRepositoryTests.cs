@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using AggregateSource.GEventStore.Framework;
-using AggregateSource.GEventStore.Snapshots.Framework;
+using AggregateSource.GEventStore.Framework.Snapshots;
 using EventStore.ClientAPI;
 using FakeItEasy;
 using NUnit.Framework;
@@ -11,7 +11,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     [TestFixture]
     public class Construction {
       ISnapshotReader _reader;
-      EventStoreReadConfiguration _configuration;
+      EventReaderConfiguration _configuration;
       EventStoreConnection _connection;
       UnitOfWork _unitOfWork;
       Func<SnapshotableAggregateRootEntityStub> _factory;
@@ -20,7 +20,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _connection = EmbeddedEventStore.Instance.Connection;
         _reader = SnapshotReaderFactory.Create();
-        _configuration = EventStoreReadConfigurationFactory.Create();
+        _configuration = EventReaderConfigurationFactory.Create();
         _unitOfWork = new UnitOfWork();
         _factory = SnapshotableAggregateRootEntityStub.Factory;
       }
@@ -44,7 +44,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
 
       [Test]
-      public void EventStoreReadConfigurationCanNotBeNull() {
+      public void EventReaderConfigurationCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
           new SnapshotableRepository<SnapshotableAggregateRootEntityStub>(_factory, _unitOfWork, _connection, null, _reader));
       }
@@ -79,7 +79,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           SnapshotableAggregateRootEntityStub.Factory,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -109,7 +109,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmpty() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -164,7 +164,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           SnapshotableAggregateRootEntityStub.Factory,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -194,7 +194,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmpty() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -251,7 +251,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           SnapshotableAggregateRootEntityStub.Factory,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -302,7 +302,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -369,7 +369,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           SnapshotableAggregateRootEntityStub.Factory,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -406,7 +406,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetReturnsRootOfKnownIdNotRestoredFromSnapshot() {
         var result = _sut.Get(_model.KnownIdentifier);
 
-        Assert.That(result.RestoredSnapshot, Is.Null);
+        Assert.That(result.RecordedSnapshot, Is.Null);
       }
 
       [Test]
@@ -427,7 +427,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -455,7 +455,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsRootForKnownIdNotRestoredFromSnapshot() {
         var result = _sut.GetOptional(_model.KnownIdentifier);
 
-        Assert.That(result.Value.RestoredSnapshot, Is.Null);
+        Assert.That(result.Value.RecordedSnapshot, Is.Null);
       }
 
       [Test]
@@ -487,14 +487,14 @@ namespace AggregateSource.GEventStore.Snapshots {
         _model = new Model();
         using (var stream = new MemoryStream()) {
           using (var writer = new BinaryWriter(stream)) {
-            new Event().Write(writer);
+            new EventStub(1).Write(writer);
           }
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
             ExpectedVersion.NoStream,
             new EventData(
               Guid.NewGuid(),
-              typeof(Event).AssemblyQualifiedName,
+              typeof(EventStub).AssemblyQualifiedName,
               false,
               stream.ToArray(),
               new byte[0]));
@@ -511,7 +511,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           () => _root,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -562,7 +562,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -599,16 +599,6 @@ namespace AggregateSource.GEventStore.Snapshots {
 
         A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
       }
-
-      class Event : IBinarySerializer, IBinaryDeserializer {
-        public void Write(BinaryWriter writer) {
-          writer.Write(true);
-        }
-
-        public void Read(BinaryReader reader) {
-          reader.ReadBoolean();
-        }
-      }
     }
 
     [TestFixture]
@@ -626,14 +616,14 @@ namespace AggregateSource.GEventStore.Snapshots {
         _model = new Model();
         using (var stream = new MemoryStream()) {
           using (var writer = new BinaryWriter(stream)) {
-            new Event().Write(writer);
+            new EventStub(1).Write(writer);
           }
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
             ExpectedVersion.NoStream,
             new EventData(
               Guid.NewGuid(),
-              typeof(Event).AssemblyQualifiedName,
+              typeof(EventStub).AssemblyQualifiedName,
               false,
               stream.ToArray(),
               new byte[0]));
@@ -642,7 +632,7 @@ namespace AggregateSource.GEventStore.Snapshots {
             1,
             new EventData(
               Guid.NewGuid(),
-              typeof(Event).AssemblyQualifiedName,
+              typeof(EventStub).AssemblyQualifiedName,
               false,
               stream.ToArray(),
               new byte[0]));
@@ -660,7 +650,7 @@ namespace AggregateSource.GEventStore.Snapshots {
           () => _root,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_resolver),
+          EventReaderConfigurationFactory.CreateWithResolver(_resolver),
           _reader);
       }
 
@@ -697,7 +687,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetReturnsRootRestoredFromSnapshot() {
         var result = _sut.Get(_model.KnownIdentifier);
 
-        Assert.That(result.RestoredSnapshot, Is.SameAs(_state));
+        Assert.That(result.RecordedSnapshot, Is.SameAs(_state));
       }
 
       [Test]
@@ -718,7 +708,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsEmptyForUnknownId() {
         var result = _sut.GetOptional(_model.UnknownIdentifier);
 
-        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+        Assert.That(result, Is.EqualTo(Optional<GEventStore.Framework.AggregateRootEntityStub>.Empty));
       }
 
       [Test]
@@ -746,7 +736,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void GetOptionalReturnsRootForKnownIdRestoredFromSnapshot() {
         var result = _sut.GetOptional(_model.KnownIdentifier);
 
-        Assert.That(result.Value.RestoredSnapshot, Is.SameAs(_state));
+        Assert.That(result.Value.RecordedSnapshot, Is.SameAs(_state));
       }
 
       [Test]
@@ -761,16 +751,6 @@ namespace AggregateSource.GEventStore.Snapshots {
         var _ = _sut.GetOptional(_model.KnownIdentifier);
 
         A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
-      }
-
-      class Event : IBinarySerializer, IBinaryDeserializer {
-        public void Write(BinaryWriter writer) {
-          writer.Write(true);
-        }
-
-        public void Read(BinaryReader reader) {
-          reader.ReadBoolean();
-        }
       }
     }
   }

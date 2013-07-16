@@ -12,7 +12,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly ConcurrentUnitOfWork _unitOfWork;
     readonly EventStoreConnection _connection;
-    readonly EventStoreReadConfiguration _configuration;
+    readonly EventReaderConfiguration _configuration;
     readonly IAsyncSnapshotReader _reader;
 
     /// <summary>
@@ -24,7 +24,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <param name="configuration">The event store configuration to use.</param>
     /// <param name="reader">The snapshot reader to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> or <paramref name="reader"/> is null.</exception>
-    public AsyncSnapshotableRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventStoreReadConfiguration configuration, IAsyncSnapshotReader reader) {
+    public AsyncSnapshotableRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventReaderConfiguration configuration, IAsyncSnapshotReader reader) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");

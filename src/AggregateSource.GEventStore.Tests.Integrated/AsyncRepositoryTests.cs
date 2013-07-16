@@ -12,23 +12,23 @@ namespace AggregateSource.GEventStore {
       [Test]
       public void FactoryCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(null, new ConcurrentUnitOfWork(), EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.Create()));
+          new AsyncRepository<AggregateRootEntityStub>(null, new ConcurrentUnitOfWork(), EmbeddedEventStore.Instance.Connection, EventReaderConfigurationFactory.Create()));
       }
 
       [Test]
       public void ConcurrentUnitOfWorkCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EmbeddedEventStore.Instance.Connection, EventStoreReadConfigurationFactory.Create()));
+          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EmbeddedEventStore.Instance.Connection, EventReaderConfigurationFactory.Create()));
       }
 
       [Test]
       public void EventStoreConnectionCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(), null, EventStoreReadConfigurationFactory.Create()));
+          new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(), null, EventReaderConfigurationFactory.Create()));
       }
 
       [Test]
-      public void EventStoreReadConfigurationCanNotBeNull() {
+      public void EventReaderConfigurationCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
           new AsyncRepository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(), EmbeddedEventStore.Instance.Connection, null));
       }
@@ -53,7 +53,7 @@ namespace AggregateSource.GEventStore {
           AggregateRootEntityStub.Factory, 
           _unitOfWork, 
           EmbeddedEventStore.Instance.Connection, 
-          EventStoreReadConfigurationFactory.CreateWithResolver(_streamNameResolver));
+          EventReaderConfigurationFactory.CreateWithResolver(_streamNameResolver));
       }
 
       [Test]
@@ -124,7 +124,7 @@ namespace AggregateSource.GEventStore {
           AggregateRootEntityStub.Factory, 
           _unitOfWork, 
           EmbeddedEventStore.Instance.Connection, 
-          EventStoreReadConfigurationFactory.CreateWithResolver(_streamNameResolver));
+          EventReaderConfigurationFactory.CreateWithResolver(_streamNameResolver));
       }
 
       [Test]
@@ -201,14 +201,14 @@ namespace AggregateSource.GEventStore {
         _model = new Model();
         using (var stream = new MemoryStream()) {
           using (var writer = new BinaryWriter(stream)) {
-            new Event().Write(writer);
+            new EventStub(1).Write(writer);
           }
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
             ExpectedVersion.NoStream,
             new EventData(
               Guid.NewGuid(),
-              typeof(Event).AssemblyQualifiedName,
+              typeof(EventStub).AssemblyQualifiedName,
               false,
               stream.ToArray(),
               new byte[0]));
@@ -222,7 +222,7 @@ namespace AggregateSource.GEventStore {
           () => _root,
           _unitOfWork,
           EmbeddedEventStore.Instance.Connection,
-          EventStoreReadConfigurationFactory.CreateWithResolver(_streamNameResolver));
+          EventReaderConfigurationFactory.CreateWithResolver(_streamNameResolver));
       }
 
       [Test]
@@ -283,16 +283,6 @@ namespace AggregateSource.GEventStore {
         var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
 
         A.CallTo(() => _streamNameResolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
-      }
-
-      class Event : IBinarySerializer, IBinaryDeserializer {
-        public void Write(BinaryWriter writer) {
-          writer.Write(true);
-        }
-
-        public void Read(BinaryReader reader) {
-          reader.ReadBoolean();
-        }
       }
     }
   }

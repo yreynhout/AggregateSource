@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AggregateSource.GEventStore {
   [TestFixture]
-  public class EventStoreReadConfigurationTests {
+  public class EventReaderConfigurationTests {
     [Test]
     public void DeserializerCannotBeNull() {
       Assert.Throws<ArgumentNullException>(() => CreateSutWithDeserializer(null));
@@ -29,15 +29,15 @@ namespace AggregateSource.GEventStore {
       Assert.That(result.Resolver, Is.SameAs(streamNameResolver));
     }
 
-    static EventStoreReadConfiguration CreateSut(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {
-      return new EventStoreReadConfiguration(sliceSize, deserializer, resolver);
+    static EventReaderConfiguration CreateSut(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {
+      return new EventReaderConfiguration(sliceSize, deserializer, resolver);
     }
 
-    static EventStoreReadConfiguration CreateSutWithDeserializer(IEventDeserializer deserializer) {
+    static EventReaderConfiguration CreateSutWithDeserializer(IEventDeserializer deserializer) {
       return CreateSut(new SliceSize(1), deserializer, new PassThroughStreamNameResolver());
     }
 
-    static EventStoreReadConfiguration CreateSutWithResolver(IStreamNameResolver resolver) {
+    static EventReaderConfiguration CreateSutWithResolver(IStreamNameResolver resolver) {
       return CreateSut(new SliceSize(1), new StubbedEventDeserializer(), resolver);
     }
 
