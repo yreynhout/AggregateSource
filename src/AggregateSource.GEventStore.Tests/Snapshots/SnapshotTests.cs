@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using AggregateSource.GEventStore.Builders;
 using NUnit.Framework;
 
 namespace AggregateSource.GEventStore.Snapshots {
   [TestFixture]
   public class SnapshotTests {
+    SnapshotBuilder _sutBuilder;
+
+    [SetUp]
+    public void SetUp() {
+      _sutBuilder = SnapshotBuilder.Default;
+    }
+
     [Test, Combinatorial]
     public void UsingConstructorReturnsInstanceWithExpectedProperties(
       [Values(Int32.MinValue,-1,0,1,Int32.MaxValue)]
       int version,
       [ValueSource("StateObjects")]
       object state) {
-      var sut = new Snapshot(version, state);
+      var sut = _sutBuilder.WithVersion(version).WithState(state).Build();
 
       Assert.That(sut.Version, Is.EqualTo(version));
       Assert.That(sut.State, Is.EqualTo(state));
@@ -85,23 +93,16 @@ namespace AggregateSource.GEventStore.Snapshots {
           Is.Not.EqualTo(CreateSutWithState(new object()).GetHashCode()));
     }
 
-    static readonly object KnownState = new object();
-    const int KnownVersion = 0;
-
-    static Snapshot CreateSut() {
-      return CreateSut(KnownVersion, KnownState);
+    Snapshot CreateSut() {
+      return _sutBuilder.Build();
     }
 
-    static Snapshot CreateSutWithVersion(int version) {
-      return CreateSut(version, KnownState);
+    Snapshot CreateSutWithVersion(int version) {
+      return _sutBuilder.WithVersion(version).Build();
     }
 
-    static Snapshot CreateSutWithState(object state) {
-      return CreateSut(KnownVersion, state);
-    }
-
-    static Snapshot CreateSut(int version, object state) {
-      return new Snapshot(version, state);
+    Snapshot CreateSutWithState(object state) {
+      return _sutBuilder.WithState(state).Build();
     }
   }
 }

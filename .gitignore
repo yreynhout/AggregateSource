@@ -2,7 +2,7 @@ build/packages/*
 build/output/*
 build/TestRunResult.xml
 lib/eventstore/*
-lib/eventstore-net-1.0.1.zip
+lib/eventstore-net-*.zip
 lib/eventstore_license.txt
 lib/firebird*
 lib/firebird*.zip

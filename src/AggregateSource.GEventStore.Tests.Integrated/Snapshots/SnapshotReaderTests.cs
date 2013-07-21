@@ -61,7 +61,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = SnapshotReaderFactory.Create();
-        CreateSnapshotStreamWithOneSnapshot(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateSnapshotStreamWithOneSnapshot(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateSnapshotStreamWithOneSnapshot(string snapshotStreamName) {
@@ -124,7 +124,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = SnapshotReaderFactory.Create();
-        CreateEmptySnapshotStream(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateEmptySnapshotStream(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateEmptySnapshotStream(string snapshotStreamName) {
@@ -158,7 +158,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = SnapshotReaderFactory.Create();
-        CreateDeletedSnapshotStream(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateDeletedSnapshotStream(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateDeletedSnapshotStream(string snapshotStreamName) {

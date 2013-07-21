@@ -53,8 +53,9 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <exception cref="System.ArgumentNullException">identifier</exception>
     public async Task<Optional<Snapshot>> ReadOptionalAsync(string identifier) {
       if (identifier == null) throw new ArgumentNullException("identifier");
-      var streamName = Configuration.Resolver.Resolve(identifier);
-      var slice = await Connection.ReadStreamEventsBackwardAsync(streamName, StreamPosition.End, 1, false);
+      var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
+      var streamName = Configuration.StreamNameResolver.Resolve(identifier);
+      var slice = await Connection.ReadStreamEventsBackwardAsync(streamName, StreamPosition.End, 1, false, streamUserCredentials);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound || slice.NextEventNumber == -1) {
         return Optional<Snapshot>.Empty;
       }

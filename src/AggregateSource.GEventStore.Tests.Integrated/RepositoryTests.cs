@@ -200,6 +200,7 @@ namespace AggregateSource.GEventStore {
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
             ExpectedVersion.NoStream,
+            EmbeddedEventStore.Instance.DefaultCredentials,
             new EventData(
               Guid.NewGuid(),
               typeof (Event).AssemblyQualifiedName,

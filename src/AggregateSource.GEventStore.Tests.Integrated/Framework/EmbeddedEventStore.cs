@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using EventStore.ClientAPI;
+using EventStore.ClientAPI.SystemData;
+using EventStore.Common.Log;
 using EventStore.Core;
 using EventStore.Core.Bus;
 using EventStore.Core.Messages;
@@ -12,31 +13,46 @@ using EventStore.Core.Settings;
 using EventStore.Core.TransactionLog.Checkpoint;
 using EventStore.Core.TransactionLog.Chunks;
 using EventStore.Core.TransactionLog.FileNamingStrategy;
+using EventStore.Core.Util;
 
 namespace AggregateSource.GEventStore.Framework {
   public class EmbeddedEventStore {
     public static readonly EmbeddedEventStore Instance = new EmbeddedEventStore();
 
     static readonly IPEndPoint TcpEndPoint = new IPEndPoint(IPAddress.Loopback, 1113);
+    static readonly IPEndPoint HttpEndPoint = new IPEndPoint(IPAddress.Loopback, 2113);
 
     SingleVNode _node;
     IEventStoreConnection _connection;
+    UserCredentials _credentials;
 
     public IEventStoreConnection Connection { get { return _connection; } }
+    public UserCredentials DefaultCredentials { get { return _credentials; } }
 
     public void Start() {
       var db = CreateTFChunkDb();
+      var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
+      if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
+      LogManager.Init("embedded-es", logPath);
       var settings = CreateSingleVNodeSettings();
-      _node = new SingleVNode(db, settings, false, 1, new ISubsystem[0]);
+      _node = new SingleVNode(db, settings, false, 0xf4240, new ISubsystem[0]);
       var waitHandle = new ManualResetEvent(false);
       _node.MainBus.Subscribe(new AdHocHandler<SystemMessage.BecomeMaster>(m => waitHandle.Set()));
       _node.Start();
       waitHandle.WaitOne();
-      _connection = EventStoreConnection.Create(TcpEndPoint);
+      _credentials = new UserCredentials("admin", "changeit");
+      _connection = EventStoreConnection.Create(
+        ConnectionSettings.Create().
+                           EnableVerboseLogging().
+                           //FailOnNoServerResponse().
+                           //KeepReconnecting().
+                           //KeepRetrying().
+                           //PerformOnMasterOnly().
+                           SetDefaultUserCredentials(_credentials).
+                           UseConsoleLogger(),
+        TcpEndPoint);
       _connection.Connect();
-      //var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
-      //if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-      //EventStore.Common.Log.LogManager.Init("embedded-es", logPath);
+      
     }
 
     public void Stop() {
@@ -66,35 +82,38 @@ namespace AggregateSource.GEventStore.Framework {
       var epochChk = new MemoryMappedFileCheckpoint(epochCheckFilename, Checkpoint.Epoch, cached: true, initValue: -1);
       var truncateChk = new MemoryMappedFileCheckpoint(truncateCheckFilename, Checkpoint.Truncate, cached: true, initValue: -1);
       const int cachedChunks = 100;
-      var cache = cachedChunks * (long)(TFConsts.ChunkSize + ChunkHeader.Size + ChunkFooter.Size);
-      return new TFChunkDb(
-        new TFChunkDbConfig(
-          dbPath,
-          new VersionedPatternFileNamingStrategy(dbPath, "chunk-"),
-          TFConsts.ChunkSize,
-          cache,
-          writerChk,
-          chaserChk,
-          epochChk,
-          truncateChk
-          ));
+      //var cache = cachedChunks * (long)(TFConsts.ChunkSize + ChunkHeader.Size + ChunkFooter.Size);
+      //return new TFChunkDb(
+      //  new TFChunkDbConfig(
+      //    dbPath,
+      //    new VersionedPatternFileNamingStrategy(dbPath, "chunk-"),
+      //    TFConsts.ChunkSize,
+      //    cache,
+      //    writerChk,
+      //    chaserChk,
+      //    epochChk,
+      //    truncateChk
+      //    ));
+      return new TFChunkDb(new TFChunkDbConfig(dbPath,
+        new VersionedPatternFileNamingStrategy(dbPath, "chunk-"), 
+        0x10000000, cachedChunks * 0x10000100L, writerChk, chaserChk, epochChk, truncateChk));
     }
 
     static SingleVNodeSettings CreateSingleVNodeSettings() {
       var settings = new SingleVNodeSettings(
         TcpEndPoint,
+        null,
         new IPEndPoint(IPAddress.None, 0),
-        new IPEndPoint(IPAddress.None, 0),
-        new string[0], 
-        false,
-        new X509Certificate2(),
-        1,
-        0,
-        TimeSpan.Zero,
-        TimeSpan.Zero,
-        TimeSpan.Zero,
+        new [] { string.Format("http://{0}:{1}/", HttpEndPoint.Address, HttpEndPoint.Port) }, 
+        true,
+        null,
+        Opts.WorkerThreadsDefault,
+        Opts.MinFlushDelayMsDefault,
+        TimeSpan.FromMilliseconds(Opts.PrepareTimeoutMsDefault),
+        TimeSpan.FromMilliseconds(Opts.CommitTimeoutMsDefault),
+        TimeSpan.FromMilliseconds(Opts.StatsPeriodDefault),
         StatsStorage.None,
-        false);
+        true);
       return settings;
     }
   }

@@ -65,8 +65,9 @@ namespace AggregateSource.GEventStore.Snapshots {
       if (snapshot.HasValue) {
         version = snapshot.Value.Version + 1;
       }
-      var streamName = _configuration.Resolver.Resolve(identifier);
-      var slice = await _connection.ReadStreamEventsForwardAsync(streamName, version, _configuration.SliceSize, false);
+      var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
+      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var slice = await _connection.ReadStreamEventsForwardAsync(streamName, version, _configuration.SliceSize, false, streamUserCredentials);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
       }
@@ -76,7 +77,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
       root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
+        slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false, streamUserCredentials);
         root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);

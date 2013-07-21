@@ -1,50 +1,41 @@
 ﻿using System;
-using AggregateSource.GEventStore.Resolvers;
-using EventStore.ClientAPI;
+using AggregateSource.GEventStore.Builders;
+using AggregateSource.GEventStore.Stubs;
 using NUnit.Framework;
 
 namespace AggregateSource.GEventStore {
   [TestFixture]
   public class EventStoreReadConfigurationTests {
-    [Test]
-    public void DeserializerCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => CreateSutWithDeserializer(null));
+    EventStoreReadConfigurationBuilder _sutBuilder;
+
+    [SetUp]
+    public void SetUp() {
+      _sutBuilder = EventStoreReadConfigurationBuilder.Default;
     }
 
     [Test]
-    public void ResolverCannotBeNull() {
-      Assert.Throws<ArgumentNullException>(() => CreateSutWithResolver(null));
+    public void DeserializerCannotBeNull() {
+      Assert.Throws<ArgumentNullException>(() => _sutBuilder.UsingDeserializer(null).Build());
+    }
+
+    [Test]
+    public void StreamNameResolverCannotBeNull() {
+      Assert.Throws<ArgumentNullException>(() => _sutBuilder.UsingStreamNameResolver(null).Build());
+    }
+
+    [Test]
+    public void StreamUserCredentialsResolverCannotBeNull() {
+      Assert.Throws<ArgumentNullException>(() => _sutBuilder.UsingStreamUserCredentialsResolver(null).Build());
     }
 
     [Test]
     public void UsingConstructorReturnsInstanceWithExpectedProperties() {
-      var resolvedEventDeserializer = new StubbedEventDeserializer();
-      var sliceSize = new SliceSize(5);
-      var streamNameResolver = new PassThroughStreamNameResolver();
-      
-      var result = CreateSut(sliceSize, resolvedEventDeserializer, streamNameResolver);
+      var sut = _sutBuilder.Build();
 
-      Assert.That(result.Deserializer, Is.SameAs(resolvedEventDeserializer));
-      Assert.That(result.SliceSize, Is.EqualTo(sliceSize));
-      Assert.That(result.Resolver, Is.SameAs(streamNameResolver));
-    }
-
-    static EventStoreReadConfiguration CreateSut(SliceSize sliceSize, IEventDeserializer deserializer, IStreamNameResolver resolver) {
-      return new EventStoreReadConfiguration(sliceSize, deserializer, resolver);
-    }
-
-    static EventStoreReadConfiguration CreateSutWithDeserializer(IEventDeserializer deserializer) {
-      return CreateSut(new SliceSize(1), deserializer, new PassThroughStreamNameResolver());
-    }
-
-    static EventStoreReadConfiguration CreateSutWithResolver(IStreamNameResolver resolver) {
-      return CreateSut(new SliceSize(1), new StubbedEventDeserializer(), resolver);
-    }
-
-    class StubbedEventDeserializer : IEventDeserializer {
-      public object Deserialize(ResolvedEvent resolvedEvent) {
-        return null;
-      }
+      Assert.That(sut.SliceSize, Is.EqualTo(new SliceSize(1)));
+      Assert.That(sut.Deserializer, Is.SameAs(StubbedEventDeserializer.Instance));
+      Assert.That(sut.StreamNameResolver, Is.SameAs(StubbedStreamNameResolver.Instance));
+      Assert.That(sut.StreamUserCredentialsResolver, Is.SameAs(StubbedStreamUserCredentialsResolver.Instance));
     }
   }
 }
