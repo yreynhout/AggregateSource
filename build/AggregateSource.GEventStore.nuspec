@@ -28,7 +28,7 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.36" />
+        <dependency id="AggregateSource" version="0.0.38" />
       </group>
       <group targetFramework=".NETFramework4.5">
         <dependency id="EventStore.Client" version="1.1.0" />
@@ -40,6 +40,8 @@ using this tokenized nuspec file.
     <file src="output\AggregateSource.GEventStore.pdb" target="lib\net45\AggregateSource.GEventStore.pdb" />
     <file src="output\AggregateSource.GEventStore.xml" target="lib\net45\AggregateSource.GEventStore.xml" />
     <file src="..\src\AggregateSource.GEventStore\*.cs" target="src\AggregateSource.GEventStore" />
+    <file src="..\src\AggregateSource.GEventStore\Resolvers\*.cs" target="src\AggregateSource.GEventStore\Resolvers" />
+    <file src="..\src\AggregateSource.GEventStore\Snapshots\*.cs" target="src\AggregateSource.GEventStore\Snapshots" />
     <file src="..\src\AggregateSource.GEventStore\Properties\*.cs" target="src\AggregateSource.GEventStore\Properties" />
   </files>
 </package>
