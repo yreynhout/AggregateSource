@@ -43,7 +43,7 @@ namespace AggregateSource.GEventStore.Framework {
       _credentials = new UserCredentials("admin", "changeit");
       _connection = EventStoreConnection.Create(
         ConnectionSettings.Create().
-                           EnableVerboseLogging().
+                           //EnableVerboseLogging().
                            //FailOnNoServerResponse().
                            //KeepReconnecting().
                            //KeepRetrying().
@@ -60,10 +60,7 @@ namespace AggregateSource.GEventStore.Framework {
         _connection.Close();
       }
       if (_node != null) {
-        //var waitHandle = new ManualResetEvent(false);
-        //_node.Bus.Subscribe(new AdHocHandler<SystemMessage.BecomeShuttingDown>(m => waitHandle.WaitOne()));
         _node.Stop(false);
-        //waitHandle.WaitOne();
       }
     }
 
@@ -82,18 +79,6 @@ namespace AggregateSource.GEventStore.Framework {
       var epochChk = new MemoryMappedFileCheckpoint(epochCheckFilename, Checkpoint.Epoch, cached: true, initValue: -1);
       var truncateChk = new MemoryMappedFileCheckpoint(truncateCheckFilename, Checkpoint.Truncate, cached: true, initValue: -1);
       const int cachedChunks = 100;
-      //var cache = cachedChunks * (long)(TFConsts.ChunkSize + ChunkHeader.Size + ChunkFooter.Size);
-      //return new TFChunkDb(
-      //  new TFChunkDbConfig(
-      //    dbPath,
-      //    new VersionedPatternFileNamingStrategy(dbPath, "chunk-"),
-      //    TFConsts.ChunkSize,
-      //    cache,
-      //    writerChk,
-      //    chaserChk,
-      //    epochChk,
-      //    truncateChk
-      //    ));
       return new TFChunkDb(new TFChunkDbConfig(dbPath,
         new VersionedPatternFileNamingStrategy(dbPath, "chunk-"), 
         0x10000000, cachedChunks * 0x10000100L, writerChk, chaserChk, epochChk, truncateChk));
@@ -105,15 +90,14 @@ namespace AggregateSource.GEventStore.Framework {
         null,
         new IPEndPoint(IPAddress.None, 0),
         new [] { string.Format("http://{0}:{1}/", HttpEndPoint.Address, HttpEndPoint.Port) }, 
-        true,
+        false,
         null,
         Opts.WorkerThreadsDefault,
         Opts.MinFlushDelayMsDefault,
         TimeSpan.FromMilliseconds(Opts.PrepareTimeoutMsDefault),
         TimeSpan.FromMilliseconds(Opts.CommitTimeoutMsDefault),
         TimeSpan.FromMilliseconds(Opts.StatsPeriodDefault),
-        StatsStorage.None,
-        true);
+        StatsStorage.None);
       return settings;
     }
   }

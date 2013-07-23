@@ -503,7 +503,7 @@ namespace AggregateSource.GEventStore.Snapshots {
               new byte[0]));
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
-            1,
+            ExpectedVersion.Any,
             new EventData(
               Guid.NewGuid(),
               typeof(Event).AssemblyQualifiedName,

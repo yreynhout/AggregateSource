@@ -55,7 +55,8 @@ namespace AggregateSource.GEventStore.Snapshots {
       var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
       var streamName = Configuration.StreamNameResolver.Resolve(identifier);
       var slice = Connection.ReadStreamEventsBackward(streamName, StreamPosition.End, 1, false, streamUserCredentials);
-      if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound || slice.NextEventNumber == -1) {
+      if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound || 
+        (slice.Events.Length == 0 && slice.NextEventNumber == -1)) {
         return Optional<Snapshot>.Empty;
       }
       return new Optional<Snapshot>(Configuration.Deserializer.Deserialize(slice.Events[0]));
