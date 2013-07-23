@@ -59,8 +59,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesAreNotEqualIfTheirGivensDiffer(object when, Tuple<string, object>[] thens) {
       Assert.That(
-        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens),
-        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens)));
+        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, thens),
+        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, thens)));
     }
 
     [Theory]
@@ -73,8 +73,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesAreNotEqualIfTheirThensDiffer(Tuple<string, object>[] givens, object when) {
       Assert.That(
-        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }),
-        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) })));
+        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier1, new object()) }),
+        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier1, new object()) })));
     }
 
     [Theory]
@@ -87,8 +87,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesHaveDifferentHashCodeIfTheirGivensDiffer(object when, Tuple<string, object>[] thens) {
       Assert.That(
-        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens).GetHashCode(),
-        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, thens).GetHashCode()));
+        new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, thens).GetHashCode(),
+        Is.Not.EqualTo(new EventCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, thens).GetHashCode()));
     }
 
     [Theory]
@@ -101,8 +101,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesHaveDifferentHashCodeIfTheirThensDiffer(Tuple<string, object>[] givens, object when) {
       Assert.That(
-        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }).GetHashCode(),
-        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier, new object()) }).GetHashCode()));
+        new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier1, new object()) }).GetHashCode(),
+        Is.Not.EqualTo(new EventCentricTestSpecification(givens, when, new[] { new Tuple<string, object>(Model.Identifier1, new object()) }).GetHashCode()));
     }
 
     [Test]
@@ -140,7 +140,7 @@ namespace AggregateSource.Testing {
     public void FailWithActualEventsReturnsExpectedResult() {
       var sut = new EventCentricTestSpecification(NoEvents, Message, NoEvents);
 
-      var actual = new[] { new Tuple<string, object>(Model.Identifier, new object()) };
+      var actual = new[] { new Tuple<string, object>(Model.Identifier1, new object()) };
 
       var result = sut.Fail(actual);
 

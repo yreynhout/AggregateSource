@@ -13,6 +13,11 @@ namespace AggregateSource.Testing {
       _context = context;
     }
 
+    public IGivenStateBuilder Given(params Tuple<string, object>[] facts) {
+      if (facts == null) throw new ArgumentNullException("facts");
+      return new TestSpecificationBuilder(_context.AppendGivens(facts));
+    }
+
     public IGivenStateBuilder Given(string identifier, params object[] events) {
       if (identifier == null) throw new ArgumentNullException("identifier");
       if (events == null) throw new ArgumentNullException("events");
@@ -22,6 +27,11 @@ namespace AggregateSource.Testing {
     public IWhenStateBuilder When(object message) {
       if (message == null) throw new ArgumentNullException("message");
       return new TestSpecificationBuilder(_context.SetWhen(message));
+    }
+
+    public IThenStateBuilder Then(params Tuple<string, object>[] facts) {
+      if (facts == null) throw new ArgumentNullException("facts");
+      return new TestSpecificationBuilder(_context.AppendThens(facts));
     }
 
     public IThenStateBuilder Then(string identifier, params object[] events) {

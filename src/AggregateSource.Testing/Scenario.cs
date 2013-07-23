@@ -6,9 +6,22 @@ namespace AggregateSource.Testing {
   /// </summary>
   public class Scenario : IGivenStateBuilder {
     /// <summary>
+    /// Given the following facts occured.
+    /// </summary>
+    /// <param name="facts">The facts that occurred.</param>
+    /// <returns>
+    /// A builder continuation.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">facts</exception>
+    public IGivenStateBuilder Given(params Tuple<string, object>[] facts) {
+      if (facts == null) throw new ArgumentNullException("facts");
+      return new TestSpecificationBuilder().Given(facts);
+    }
+
+    /// <summary>
     /// Given the following events occured.
     /// </summary>
-    /// <param name="identifier"></param>
+    /// <param name="identifier">The aggregate identifier the events are to be associated with.</param>
     /// <param name="events">The events that occurred.</param>
     /// <returns>A builder continuation.</returns>
     public IGivenStateBuilder Given(string identifier, params object[] events) {

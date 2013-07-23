@@ -59,8 +59,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesAreNotEqualIfTheirGivensDiffer(object when, Exception throws) {
       Assert.That(
-        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws),
-        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws)));
+        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, throws),
+        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, throws)));
     }
 
     [Theory]
@@ -87,8 +87,8 @@ namespace AggregateSource.Testing {
     [Theory]
     public void TwoInstancesHaveDifferentHashCodeIfTheirGivensDiffer(object when, Exception throws) {
       Assert.That(
-        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws).GetHashCode(),
-        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier, new object()) }, when, throws).GetHashCode()));
+        new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, throws).GetHashCode(),
+        Is.Not.EqualTo(new ExceptionCentricTestSpecification(new[] { new Tuple<string, object>(Model.Identifier1, new object()) }, when, throws).GetHashCode()));
     }
 
     [Theory]
@@ -158,7 +158,7 @@ namespace AggregateSource.Testing {
     public void FailWithActualEventsReturnsExpectedResult() {
       var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
 
-      var actual = new[] { new Tuple<string, object>(Model.Identifier, new object()) };
+      var actual = new[] { new Tuple<string, object>(Model.Identifier1, new object()) };
 
       var result = sut.Fail(actual);
 
