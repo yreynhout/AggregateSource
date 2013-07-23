@@ -55,6 +55,7 @@
     <Compile Include="AggregateQueryThenStateBuilder.cs" />
     <Compile Include="AggregateQueryThrowStateBuilder.cs" />
     <Compile Include="AggregateQueryWhenStateBuilder.cs" />
+    <Compile Include="BatchOf.cs" />
     <Compile Include="CommandScenarioFor.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecification.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecification.cs" />
