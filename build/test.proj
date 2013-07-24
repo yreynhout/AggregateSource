@@ -13,12 +13,12 @@
 
     <CreateItem 
       Include="
-      $(MSBuildProjectDirectory)\output\AggregateSource.Tests.dll;
-      $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.dll;
-      $(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.Tests.Integrated.dll;
-      $(MSBuildProjectDirectory)\output\SampleSource.dll;
-      $(MSBuildProjectDirectory)\output\StreamSource.Tests.dll;
-      $(MSBuildProjectDirectory)\output\StreamSource.FirebirdClient.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll;
+      $(MSBuildProjectDirectory)\output\net45\SampleSource.dll;
+      $(MSBuildProjectDirectory)\output\net45\StreamSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\StreamSource.FirebirdClient.Tests.dll;
       ">
       <Output TaskParameter="Include" ItemName="AssembliesToTest" />
     </CreateItem>

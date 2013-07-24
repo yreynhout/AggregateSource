@@ -23,14 +23,17 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>A very early release. There's support for aggregates &amp; entities, as well as a collection based repository interface that plays nicely with a unit of work. Fluent test specifications can be written using either the Scenario class or the FactoryScenarioFor, CommandScenarioFor and QueryScenarioFor classes. Warning! The API is still in flux.</releaseNotes>
+    <releaseNotes>Targeting of both 4.0 and 4.5. Warning! The API is still in flux.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
   </metadata>
   <files>
-    <file src="output\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
-    <file src="output\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
-    <file src="output\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
+    <file src="output\net40\AggregateSource.dll" target="lib\net40\AggregateSource.dll" />
+    <file src="output\net40\AggregateSource.pdb" target="lib\net40\AggregateSource.pdb" />
+    <file src="output\net40\AggregateSource.xml" target="lib\net40\AggregateSource.xml" />
+    <file src="output\net45\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
+    <file src="output\net45\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
+    <file src="output\net45\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
     <file src="..\src\AggregateSource\*.cs" target="src\AggregateSource" />
     <file src="..\src\AggregateSource\Properties\*.cs" target="src\AggregateSource\Properties" />
   </files>
