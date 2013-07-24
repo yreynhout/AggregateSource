@@ -34,6 +34,38 @@ namespace AggregateSource.GEventStore {
     }
 
     /// <summary>
+    /// Gets the aggregate root entity factory.
+    /// </summary>
+    /// <value>
+    /// The aggregate root entity factory.
+    /// </value>
+    public Func<TAggregateRoot> RootFactory { get { return _rootFactory; } }
+
+    /// <summary>
+    /// Gets the unit of work.
+    /// </summary>
+    /// <value>
+    /// The unit of work.
+    /// </value>
+    public ConcurrentUnitOfWork UnitOfWork { get { return _unitOfWork; } }
+
+    /// <summary>
+    /// Gets the event store connection to use.
+    /// </summary>
+    /// <value>
+    /// The event store connection to use.
+    /// </value>
+    public EventStoreConnection Connection { get { return _connection; } }
+
+    /// <summary>
+    /// Gets the event reader configuration.
+    /// </summary>
+    /// <value>
+    /// The event reader configuration.
+    /// </value>
+    public EventReaderConfiguration Configuration { get { return _configuration; } }
+
+    /// <summary>
     /// Gets the aggregate root entity associated with the specified aggregate identifier.
     /// </summary>
     /// <param name="identifier">The aggregate identifier.</param>

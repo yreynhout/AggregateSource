@@ -1,37 +1,57 @@
 ﻿using System;
 using AggregateSource.GEventStore.Framework;
+using EventStore.ClientAPI;
 using NUnit.Framework;
 
 namespace AggregateSource.GEventStore {
   namespace RepositoryTests {
     [TestFixture]
     public class Construction {
+      EventReaderConfiguration _configuration;
+      EventStoreConnection _connection;
+      UnitOfWork _unitOfWork;
+      Func<AggregateRootEntityStub> _factory;
+
+      [SetUp]
+      public void SetUp() {
+        _connection = EmbeddedEventStore.Instance.Connection;
+        _configuration = EventReaderConfigurationFactory.Create();
+        _unitOfWork = new UnitOfWork();
+        _factory = AggregateRootEntityStub.Factory;
+      }
+
       [Test]
       public void FactoryCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new Repository<AggregateRootEntityStub>(null, new UnitOfWork(), EmbeddedEventStore.Instance.Connection, EventReaderConfigurationFactory.Create()));
+          new Repository<AggregateRootEntityStub>(null, _unitOfWork, _connection, _configuration));
       }
 
       [Test]
       public void UnitOfWorkCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, null, EmbeddedEventStore.Instance.Connection, EventReaderConfigurationFactory.Create()));
+          new Repository<AggregateRootEntityStub>(_factory, null, _connection, _configuration));
       }
 
       [Test]
       public void EventStoreConnectionCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new UnitOfWork(), null, EventReaderConfigurationFactory.Create()));
+          new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, null, _configuration));
       }
 
       [Test]
       public void EventReaderConfigurationCanNotBeNull() {
         Assert.Throws<ArgumentNullException>(() =>
-          new Repository<AggregateRootEntityStub>(AggregateRootEntityStub.Factory, new UnitOfWork(), EmbeddedEventStore.Instance.Connection, null));
+          new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, _connection, null));
       }
 
-      [Ignore("TODO after merge - requires setup")]
-      public void UsingCtorReturnsInstanceWithExpectedProperties() {}
+      [Test]
+      public void UsingCtorReturnsInstanceWithExpectedProperties() {
+        var sut = new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, _connection, _configuration);
+        Assert.That(sut.RootFactory, Is.SameAs(_factory));
+        Assert.That(sut.UnitOfWork, Is.SameAs(_unitOfWork));
+        Assert.That(sut.Connection, Is.SameAs(_connection));
+        Assert.That(sut.Configuration, Is.SameAs(_configuration));
+      }
     }
 
     [TestFixture]
@@ -122,7 +142,7 @@ namespace AggregateSource.GEventStore {
     }
 
     [TestFixture]
-    public class WithFilledStore {
+    public class WithStreamPresentInStore {
       Repository<AggregateRootEntityStub> _sut;
       Model _model;
 
@@ -163,6 +183,52 @@ namespace AggregateSource.GEventStore {
 
         Assert.That(result.HasValue, Is.True);
         Assert.That(result.Value.RecordedEvents, Is.EquivalentTo(new[] { new EventStub(1) }));
+      }
+    }
+
+    [TestFixture]
+    public class WithDeletedStreamInStore {
+      Repository<AggregateRootEntityStub> _sut;
+      Model _model;
+
+      [SetUp]
+      public void SetUp() {
+        EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+        _model = new Model();
+        _sut = new RepositoryScenarioBuilder().
+          ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
+          ScheduleDeleteStream(_model.KnownIdentifier).
+          BuildForRepository();
+      }
+
+      [Test]
+      public void GetThrowsForUnknownId() {
+        var exception =
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+      }
+
+      [Test]
+      public void GetThrowsForKnownDeletedId() {
+        var exception =
+          Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.KnownIdentifier));
+        Assert.That(exception.Identifier, Is.EqualTo(_model.KnownIdentifier));
+        Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+      }
+
+      [Test]
+      public void GetOptionalReturnsEmptyForUnknownId() {
+        var result = _sut.GetOptional(_model.UnknownIdentifier);
+
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
+      }
+
+      [Test]
+      public void GetOptionalReturnsEmptyForKnownDeletedId() {
+        var result = _sut.GetOptional(_model.KnownIdentifier);
+
+        Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
       }
     }
   }

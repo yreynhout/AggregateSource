@@ -33,9 +33,6 @@ namespace AggregateSource.GEventStore.Framework {
       waitHandle.WaitOne();
       _connection = EventStoreConnection.Create();
       _connection.Connect(TcpEndPoint);
-      //var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
-      //if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-      //EventStore.Common.Log.LogManager.Init("embedded-es", logPath);
     }
 
     public void Stop() {
@@ -43,10 +40,7 @@ namespace AggregateSource.GEventStore.Framework {
         _connection.Close();
       }
       if (_node != null) {
-        //var waitHandle = new ManualResetEvent(false);
-        //_node.Bus.Subscribe(new AdHocHandler<SystemMessage.BecomeShuttingDown>(m => waitHandle.WaitOne()));
         _node.Stop();
-        //waitHandle.WaitOne();
       }
     }
 
@@ -57,7 +51,6 @@ namespace AggregateSource.GEventStore.Framework {
       }
       var writerCheckFilename = Path.Combine(dbPath, "writer.chk");
       var chaserCheckFilename = Path.Combine(dbPath, "chaser.chk");
-      //Not mono friendly at this point.
       var writerChk = new MemoryMappedFileCheckpoint(writerCheckFilename, "writer", true);
       var chaserChk = new MemoryMappedFileCheckpoint(chaserCheckFilename, "chaser", true);
       return new TFChunkDb(
