@@ -8,10 +8,10 @@ using EventStore.ClientAPI;
 
 namespace AggregateSource.GEventStore.Framework {
   public class RepositoryScenarioBuilder {
-    readonly List<Action<EventStoreConnection>> _eventStoreSchedule;
+    readonly List<Action<IEventStoreConnection>> _eventStoreSchedule;
     readonly List<Action<UnitOfWork>> _unitOfWorkSchedule;
     readonly List<Action<ConcurrentUnitOfWork>> _concurrentUnitOfWorkSchedule;
-    readonly EventStoreConnection _connection;
+    readonly IEventStoreConnection _connection;
     readonly EventReaderConfiguration _eventReaderConfiguration;
     readonly SnapshotReaderConfiguration _snapshotReaderConfiguration;
     readonly UnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace AggregateSource.GEventStore.Framework {
       _concurrentUnitOfWork = new ConcurrentUnitOfWork();
       _eventReaderConfiguration = EventReaderConfigurationFactory.Create();
       _snapshotReaderConfiguration = SnapshotReaderConfigurationFactory.Create();
-      _eventStoreSchedule = new List<Action<EventStoreConnection>>();
+      _eventStoreSchedule = new List<Action<IEventStoreConnection>>();
       _unitOfWorkSchedule = new List<Action<UnitOfWork>>();
       _concurrentUnitOfWorkSchedule = new List<Action<ConcurrentUnitOfWork>>();
     }
@@ -46,11 +46,11 @@ namespace AggregateSource.GEventStore.Framework {
     //  return this;
     //}
 
-    public RepositoryScenarioBuilder ScheduleCreateStream(string stream) {
-      if (stream == null) throw new ArgumentNullException("stream");
-      _eventStoreSchedule.Add(connection => connection.CreateStream(stream, Guid.NewGuid(), false, new byte[0]));
-      return this;
-    }
+    //public RepositoryScenarioBuilder ScheduleCreateStream(string stream) {
+    //  if (stream == null) throw new ArgumentNullException("stream");
+    //  _eventStoreSchedule.Add(connection => connection.CreateStream(stream, Guid.NewGuid(), false, new byte[0]));
+    //  return this;
+    //}
 
     public RepositoryScenarioBuilder ScheduleAppendToStream(string stream, params object[] events) {
       if (stream == null) throw new ArgumentNullException("stream");

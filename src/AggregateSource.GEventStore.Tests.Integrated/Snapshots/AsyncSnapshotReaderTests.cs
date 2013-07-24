@@ -10,7 +10,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     [TestFixture]
     public class WithAnyInstance {
       SnapshotReaderConfiguration _configuration;
-      EventStoreConnection _connection;
+      IEventStoreConnection _connection;
 
       [SetUp]
       public void SetUp() {
@@ -63,7 +63,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = AsyncSnapshotReaderFactory.Create();
-        CreateSnapshotStreamWithOneSnapshot(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateSnapshotStreamWithOneSnapshot(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateSnapshotStreamWithOneSnapshot(string snapshotStreamName) {
@@ -126,15 +126,14 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = AsyncSnapshotReaderFactory.Create();
-        CreateEmptySnapshotStream(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateEmptySnapshotStream(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateEmptySnapshotStream(string snapshotStreamName) {
-        EmbeddedEventStore.Instance.Connection.CreateStream(
+        EmbeddedEventStore.Instance.Connection.AppendToStream(
           snapshotStreamName,
-          Guid.NewGuid(),
-          false,
-          new byte[0]);
+          ExpectedVersion.Any,
+          new EventData[0]);
       }
 
       [Test]
@@ -161,15 +160,14 @@ namespace AggregateSource.GEventStore.Snapshots {
       public void SetUp() {
         _model = new Model();
         _sut = AsyncSnapshotReaderFactory.Create();
-        CreateDeletedSnapshotStream(_sut.Configuration.Resolver.Resolve(_model.KnownIdentifier));
+        CreateDeletedSnapshotStream(_sut.Configuration.StreamNameResolver.Resolve(_model.KnownIdentifier));
       }
 
       static void CreateDeletedSnapshotStream(string snapshotStreamName) {
-        EmbeddedEventStore.Instance.Connection.CreateStream(
+        EmbeddedEventStore.Instance.Connection.AppendToStream(
           snapshotStreamName,
-          Guid.NewGuid(),
-          false,
-          new byte[0]);
+          ExpectedVersion.Any,
+          new EventData[0]);
         EmbeddedEventStore.Instance.Connection.DeleteStream(
           snapshotStreamName,
           ExpectedVersion.EmptyStream);

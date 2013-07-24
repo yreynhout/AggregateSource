@@ -6,7 +6,7 @@ namespace AggregateSource.GEventStore.Snapshots {
   /// Represents the default behavior that reads a <see cref="Snapshot"/> from the underlying storage.
   /// </summary>
   public class SnapshotReader : ISnapshotReader {
-    readonly EventStoreConnection _connection;
+    readonly IEventStoreConnection _connection;
     readonly SnapshotReaderConfiguration _configuration;
 
     /// <summary>
@@ -15,7 +15,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="connection"/> or <paramref name="configuration"/> are <c>null</c>.</exception>
-    public SnapshotReader(EventStoreConnection connection, SnapshotReaderConfiguration configuration) {
+    public SnapshotReader(IEventStoreConnection connection, SnapshotReaderConfiguration configuration) {
       if (connection == null) throw new ArgumentNullException("connection");
       if (configuration == null) throw new ArgumentNullException("configuration");
       _connection = connection;
@@ -28,7 +28,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <value>
     /// The connection.
     /// </value>
-    public EventStoreConnection Connection {
+    public IEventStoreConnection Connection {
       get { return _connection; }
     }
 
@@ -52,9 +52,11 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <exception cref="System.ArgumentNullException">identifier</exception>
     public Optional<Snapshot> ReadOptional(string identifier) {
       if (identifier == null) throw new ArgumentNullException("identifier");
-      var streamName = Configuration.Resolver.Resolve(identifier);
-      var slice = Connection.ReadStreamEventsBackward(streamName, StreamPosition.End, 1, false);
-      if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound || slice.NextEventNumber == -1) {
+      var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
+      var streamName = Configuration.StreamNameResolver.Resolve(identifier);
+      var slice = Connection.ReadStreamEventsBackward(streamName, StreamPosition.End, 1, false, streamUserCredentials);
+      if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound || 
+        (slice.Events.Length == 0 && slice.NextEventNumber == -1)) {
         return Optional<Snapshot>.Empty;
       }
       return new Optional<Snapshot>(Configuration.Deserializer.Deserialize(slice.Events[0]));

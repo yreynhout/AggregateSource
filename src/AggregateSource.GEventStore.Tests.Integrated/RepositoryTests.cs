@@ -8,7 +8,7 @@ namespace AggregateSource.GEventStore {
     [TestFixture]
     public class Construction {
       EventReaderConfiguration _configuration;
-      EventStoreConnection _connection;
+      IEventStoreConnection _connection;
       UnitOfWork _unitOfWork;
       Func<AggregateRootEntityStub> _factory;
 

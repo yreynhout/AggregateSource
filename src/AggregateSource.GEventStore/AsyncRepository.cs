@@ -11,7 +11,7 @@ namespace AggregateSource.GEventStore {
   public class AsyncRepository<TAggregateRoot> : IAsyncRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly ConcurrentUnitOfWork _unitOfWork;
-    readonly EventStoreConnection _connection;
+    readonly IEventStoreConnection _connection;
     readonly EventReaderConfiguration _configuration;
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace AggregateSource.GEventStore {
     /// <param name="connection">The event store connection to use.</param>
     /// <param name="configuration">The event store configuration to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
-    public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, EventStoreConnection connection, EventReaderConfiguration configuration) {
+    public AsyncRepository(Func<TAggregateRoot> rootFactory, ConcurrentUnitOfWork unitOfWork, IEventStoreConnection connection, EventReaderConfiguration configuration) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");
@@ -55,7 +55,7 @@ namespace AggregateSource.GEventStore {
     /// <value>
     /// The event store connection to use.
     /// </value>
-    public EventStoreConnection Connection { get { return _connection; } }
+    public IEventStoreConnection Connection { get { return _connection; } }
 
     /// <summary>
     /// Gets the event reader configuration.
@@ -88,15 +88,16 @@ namespace AggregateSource.GEventStore {
       if (_unitOfWork.TryGet(identifier, out aggregate)) {
         return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
       }
-      var streamName = _configuration.Resolver.Resolve(identifier);
-      var slice = await _connection.ReadStreamEventsForwardAsync(streamName, 1, _configuration.SliceSize, false);
+      var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
+      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var slice = await _connection.ReadStreamEventsForwardAsync(streamName, StreamPosition.Start, _configuration.SliceSize, false, streamUserCredentials);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
       }
       var root = _rootFactory();
       root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
+        slice = await _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize, false, streamUserCredentials);
         root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);

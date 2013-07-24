@@ -12,7 +12,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     public class Construction {
       ISnapshotReader _reader;
       EventReaderConfiguration _configuration;
-      EventStoreConnection _connection;
+      IEventStoreConnection _connection;
       UnitOfWork _unitOfWork;
       Func<SnapshotableAggregateRootEntityStub> _factory;
 
@@ -629,7 +629,7 @@ namespace AggregateSource.GEventStore.Snapshots {
               new byte[0]));
           EmbeddedEventStore.Instance.Connection.AppendToStream(
             _model.KnownIdentifier,
-            1,
+            ExpectedVersion.Any,
             new EventData(
               Guid.NewGuid(),
               typeof(EventStub).AssemblyQualifiedName,

@@ -10,7 +10,7 @@ namespace AggregateSource.GEventStore.Snapshots {
   public class SnapshotableRepository<TAggregateRoot> : IRepository<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity, ISnapshotable {
     readonly Func<TAggregateRoot> _rootFactory;
     readonly UnitOfWork _unitOfWork;
-    readonly EventStoreConnection _connection;
+    readonly IEventStoreConnection _connection;
     readonly EventReaderConfiguration _configuration;
     readonly ISnapshotReader _reader;
 
@@ -23,7 +23,7 @@ namespace AggregateSource.GEventStore.Snapshots {
     /// <param name="configuration">The event store configuration to use.</param>
     /// <param name="reader">The snapshot reader to use.</param>
     /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="connection"/> or <paramref name="configuration"/> is null.</exception>
-    public SnapshotableRepository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, EventStoreConnection connection, EventReaderConfiguration configuration, ISnapshotReader reader) {
+    public SnapshotableRepository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, IEventStoreConnection connection, EventReaderConfiguration configuration, ISnapshotReader reader) {
       if (rootFactory == null) throw new ArgumentNullException("rootFactory");
       if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
       if (connection == null) throw new ArgumentNullException("connection");
@@ -64,8 +64,9 @@ namespace AggregateSource.GEventStore.Snapshots {
       if (snapshot.HasValue) {
         version = snapshot.Value.Version + 1;
       }
-      var streamName = _configuration.Resolver.Resolve(identifier);
-      var slice = _connection.ReadStreamEventsForward(streamName, version, _configuration.SliceSize, false);
+      var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
+      var streamName = _configuration.StreamNameResolver.Resolve(identifier);
+      var slice = _connection.ReadStreamEventsForward(streamName, version, _configuration.SliceSize, false, streamUserCredentials);
       if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound) {
         return Optional<TAggregateRoot>.Empty;
       }
@@ -75,7 +76,7 @@ namespace AggregateSource.GEventStore.Snapshots {
       }
       root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       while (!slice.IsEndOfStream) {
-        slice = _connection.ReadStreamEventsForward(streamName, slice.NextEventNumber, _configuration.SliceSize, false);
+        slice = _connection.ReadStreamEventsForward(streamName, slice.NextEventNumber, _configuration.SliceSize, false, streamUserCredentials);
         root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
       }
       aggregate = new Aggregate(identifier, slice.LastEventNumber, root);

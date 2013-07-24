@@ -30,12 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore.ClientAPI, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EventStore.ClientAPI, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EventStore.Client.1.1.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
+      <HintPath>..\packages\EventStore.Client.2.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
-    <Reference Include="FakeItEasy">
-      <HintPath>..\packages\FakeItEasy.1.12.0\lib\net40\FakeItEasy.dll</HintPath>
+    <Reference Include="FakeItEasy, Version=1.13.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FakeItEasy.1.13.0\lib\net40\FakeItEasy.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
@@ -52,10 +53,19 @@
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
     <Compile Include="EventReaderConfigurationTests.cs" />
+    <Compile Include="Builders\EventReaderConfigurationBuilder.cs" />
+    <Compile Include="Builders\SnapshotBuilder.cs" />
+    <Compile Include="Builders\SnapshotReaderConfigurationBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolvers\FixedStreamUserCredentialsResolverTests.cs" />
+    <Compile Include="Resolvers\NoStreamUserCredentialsResolverTests.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolverTests.cs" />
     <Compile Include="Snapshots\SnapshotReaderConfigurationTests.cs" />
     <Compile Include="Snapshots\SnapshotTests.cs" />
+    <Compile Include="Stubs\StubbedEventDeserializer.cs" />
+    <Compile Include="Stubs\StubbedSnapshotDeserializer.cs" />
+    <Compile Include="Stubs\StubbedStreamNameResolver.cs" />
+    <Compile Include="Stubs\StubbedStreamUserCredentialsResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
