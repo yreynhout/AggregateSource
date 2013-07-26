@@ -1,11 +1,14 @@
-namespace AggregateSource.GEventStore.Stubs {
-  public class StubbedStreamNameResolver : IStreamNameResolver {
-    public static readonly IStreamNameResolver Instance = new StubbedStreamNameResolver();
-    
-    StubbedStreamNameResolver() {}
+namespace AggregateSource.GEventStore.Stubs
+{
+    public class StubbedStreamNameResolver : IStreamNameResolver
+    {
+        public static readonly IStreamNameResolver Instance = new StubbedStreamNameResolver();
 
-    public string Resolve(string identifier) {
-      return null;
+        StubbedStreamNameResolver() {}
+
+        public string Resolve(string identifier)
+        {
+            return null;
+        }
     }
-  }
 }

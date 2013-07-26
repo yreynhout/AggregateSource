@@ -1,12 +1,14 @@
-﻿namespace AggregateSource.Testing {
-  /// <summary>
-  /// The act of building an event-centric aggregate command test specification.
-  /// </summary>
-  public interface IEventCentricAggregateCommandTestSpecificationBuilder {
+﻿namespace AggregateSource.Testing
+{
     /// <summary>
-    /// Builds the test specification thus far.
+    /// The act of building an event-centric aggregate command test specification.
     /// </summary>
-    /// <returns>The test specification.</returns>
-    EventCentricAggregateCommandTestSpecification Build();
-  }
+    public interface IEventCentricAggregateCommandTestSpecificationBuilder
+    {
+        /// <summary>
+        /// Builds the test specification thus far.
+        /// </summary>
+        /// <returns>The test specification.</returns>
+        EventCentricAggregateCommandTestSpecification Build();
+    }
 }

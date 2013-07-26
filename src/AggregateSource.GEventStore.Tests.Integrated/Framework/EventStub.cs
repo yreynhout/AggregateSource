@@ -1,34 +1,44 @@
 using System.IO;
 
-namespace AggregateSource.GEventStore.Framework {
-  public class EventStub : IBinarySerializer, IBinaryDeserializer {
-    int _value;
+namespace AggregateSource.GEventStore.Framework
+{
+    public class EventStub : IBinarySerializer, IBinaryDeserializer
+    {
+        int _value;
 
-    public EventStub() {}
-    public EventStub(int value) {
-      _value = value;
-    }
+        public EventStub() {}
 
-    public void Write(BinaryWriter writer) {
-      writer.Write(_value);
-    }
+        public EventStub(int value)
+        {
+            _value = value;
+        }
 
-    public void Read(BinaryReader reader) {
-      _value = reader.ReadInt32();
-    }
+        public void Write(BinaryWriter writer)
+        {
+            writer.Write(_value);
+        }
 
-    public override bool Equals(object obj) {
-      return Equals(obj as EventStub);
-    }
+        public void Read(BinaryReader reader)
+        {
+            _value = reader.ReadInt32();
+        }
 
-    bool Equals(EventStub @event) {
-      return !ReferenceEquals(@event, null) && _value.Equals(@event._value);
-    }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as EventStub);
+        }
 
-    public override int GetHashCode() {
-      unchecked {
-        return _value.GetHashCode() * 10 + 2;
-      }
+        bool Equals(EventStub @event)
+        {
+            return !ReferenceEquals(@event, null) && _value.Equals(@event._value);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return _value.GetHashCode()*10 + 2;
+            }
+        }
     }
-  }
 }

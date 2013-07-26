@@ -1,22 +1,24 @@
 ﻿using System;
 
-namespace AggregateSource.Testing {
-  /// <summary>
-  /// The when state within the test specification building process.
-  /// </summary>
-  public interface IAggregateCommandWhenStateBuilder {
+namespace AggregateSource.Testing
+{
     /// <summary>
-    /// Then events should have occurred.
+    /// The when state within the test specification building process.
     /// </summary>
-    /// <param name="events">The events that should have occurred.</param>
-    /// <returns>A builder continuation.</returns>
-    IAggregateCommandThenStateBuilder Then(params object[] events);
+    public interface IAggregateCommandWhenStateBuilder
+    {
+        /// <summary>
+        /// Then events should have occurred.
+        /// </summary>
+        /// <param name="events">The events that should have occurred.</param>
+        /// <returns>A builder continuation.</returns>
+        IAggregateCommandThenStateBuilder Then(params object[] events);
 
-    /// <summary>
-    /// Throws an exception.
-    /// </summary>
-    /// <param name="exception">The exception thrown.</param>
-    /// <returns>A builder continuation.</returns>
-    IAggregateCommandThrowStateBuilder Throws(Exception exception);
-  }
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
+        /// <param name="exception">The exception thrown.</param>
+        /// <returns>A builder continuation.</returns>
+        IAggregateCommandThrowStateBuilder Throws(Exception exception);
+    }
 }

@@ -1,5 +1,7 @@
-﻿namespace StreamSource {
-  public interface IEventStreamWriter {
-    void Write(EventStreamChangeset changeset);
-  }
+﻿namespace StreamSource
+{
+    public interface IEventStreamWriter
+    {
+        void Write(EventStreamChangeset changeset);
+    }
 }
