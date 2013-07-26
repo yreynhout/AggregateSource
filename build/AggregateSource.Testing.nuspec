@@ -27,8 +27,11 @@ using this tokenized nuspec file.
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="AggregateSource" version="0.0.57" />
+      </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.56" />
+        <dependency id="AggregateSource" version="0.0.57" />
       </group>
     </dependencies>
   </metadata>
