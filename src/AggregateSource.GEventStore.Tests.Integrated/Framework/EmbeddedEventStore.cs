@@ -1,4 +1,6 @@
 using System;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -22,6 +24,17 @@ namespace AggregateSource.GEventStore.Framework {
     static readonly IPEndPoint TcpEndPoint = new IPEndPoint(IPAddress.Loopback, 1113);
     static readonly IPEndPoint HttpEndPoint = new IPEndPoint(IPAddress.Loopback, 2113);
 
+    public EmbeddedEventStore() {
+      RunWithLogging = Convert.ToBoolean(ConfigurationManager.AppSettings["RunWithLogging"]);
+      if (RunWithLogging) {
+        LogPath = ConfigurationManager.AppSettings["LogPath"];
+      }
+    }
+
+    string LogPath { get; set; }
+
+    bool RunWithLogging { get; set; }
+
     SingleVNode _node;
     IEventStoreConnection _connection;
     UserCredentials _credentials;
@@ -30,10 +43,13 @@ namespace AggregateSource.GEventStore.Framework {
     public UserCredentials DefaultCredentials { get { return _credentials; } }
 
     public void Start() {
+      if (RunWithLogging) {
+        if (!Directory.Exists(LogPath)) 
+          Directory.CreateDirectory(LogPath);
+        LogManager.Init(string.Format("as-embed-es-pid{0}-ticks{1}", Process.GetCurrentProcess().Id, DateTime.Now.Ticks), LogPath);
+      }
+
       var db = CreateTFChunkDb();
-      var logPath = Path.Combine(Path.GetDirectoryName(db.Config.Path), "logs");
-      if (!Directory.Exists(logPath)) Directory.CreateDirectory(logPath);
-      LogManager.Init("embedded-es", logPath);
       var settings = CreateSingleVNodeSettings();
       _node = new SingleVNode(db, settings, false, 0xf4240, new ISubsystem[0]);
       var waitHandle = new ManualResetEvent(false);
@@ -43,7 +59,7 @@ namespace AggregateSource.GEventStore.Framework {
       _credentials = new UserCredentials("admin", "changeit");
       _connection = EventStoreConnection.Create(
         ConnectionSettings.Create().
-                           //EnableVerboseLogging().
+                           EnableVerboseLogging().
                            //FailOnNoServerResponse().
                            //KeepReconnecting().
                            //KeepRetrying().

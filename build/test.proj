@@ -5,11 +5,23 @@
     <SourcePath>$(RootPath)\src</SourcePath>
     <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
     <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
+    <RunWithLogging Condition="$(RunWithLogging) == ''">false</RunWithLogging>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="Test">
     <MSBuild Projects="$(MSBuildProjectDirectory)\build.proj" Targets="Build" />
+
+    <XmlUpdate
+      XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
+      XPath='/configuration/appSettings/add[@key="RunWithLogging"]/@value'
+      Value="$(RunWithLogging)"
+      ContinueOnError="false"/>
+    <XmlUpdate 
+      XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
+      XPath='/configuration/appSettings/add[@key="LogPath"]/@value'
+      Value="$(MSBuildProjectDirectory)\logs"
+      ContinueOnError="false"/>
 
     <CreateItem 
       Include="
@@ -28,6 +40,9 @@
         ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
         Force32Bit="true"
         ContinueOnError="false"
-        OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult.xml"/>
+        OutputXmlFile="$(MSBuildProjectDirectory)\logs\TestRunResult.xml"/>
+
+    <Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\logs\TestRunResult.xml']"/>
+    <Message Text="##teamcity[publishArtifacts '$(MSBuildProjectDirectory)\logs']"/>
   </Target>
 </Project>

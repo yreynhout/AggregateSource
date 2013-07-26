@@ -3,11 +3,12 @@
 	<PropertyGroup>
     	<RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     	<NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
+    	<RunWithLogging Condition="$(RunWithLogging) == ''">false</RunWithLogging>
   	</PropertyGroup>
 
 	<Target Name="TeamCityCodeBetter">
 		<MSBuild Projects="$(MSBuildProjectDirectory)\run_me_first.proj" />
-		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" />
+		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" Properties="RunWithLogging=$(RunWithLogging)" />
 		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult.xml']" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Pack" />
 		<!-- <MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Push" Properties="NuGetApiKey=$(NuGetApiKey)" Condition="$(NuGetApiKey) != ''" /> -->
