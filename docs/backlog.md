@@ -4,7 +4,7 @@
 - ~~Add a license~~
 - ~~Build file~~
 - ~~Test build on TeamCity~~
-- NuSpec
+- ~~NuSpec~~
 
 # Functional issues
 
@@ -26,3 +26,5 @@
 - [DESIGN] StreamSource - Reading from sql
 - [DESIGN] StreamSource - Readonly resource oriented API using Nancy
 - Extend SampleSource with an async sample.
+- DRY up those repos, there's a SlicedEventStreamReader in them (bonus, we can test this thing separately).
+- Build a realistic app on top of this API that shows off entities, aggregates, testing, bulk loading.
