@@ -18,17 +18,32 @@
       XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
       XPath='/configuration/appSettings/add[@key="RunWithLogging"]/@value'
       Value="$(RunWithLogging)"
-      ContinueOnError="false"/>
+      ContinueOnError="false"
+      />
     <XmlUpdate 
       XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
       XPath='/configuration/appSettings/add[@key="LogPath"]/@value'
       Value="$(MSBuildProjectDirectory)\logs"
-      ContinueOnError="false"/>
+      ContinueOnError="false"
+      Condition="$(RunWithLogging) == 'true'" />
+    <XmlUpdate 
+      XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
+      XPath='/configuration/appSettings/add[@key="LogPath"]/@value'
+      Value=""
+      ContinueOnError="false"
+      Condition="$(RunWithLogging) == 'false'" />
     <XmlUpdate 
       XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
       XPath='/configuration/appSettings/add[@key="StoragePath"]/@value'
       Value="$(MSBuildProjectDirectory)\storage"
-      ContinueOnError="false" />
+      ContinueOnError="false" 
+      Condition="$(RunWithLogging) == 'true'" />
+    <XmlUpdate 
+      XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
+      XPath='/configuration/appSettings/add[@key="StoragePath"]/@value'
+      Value=""
+      ContinueOnError="false" 
+      Condition="$(RunWithLogging) == 'false'" />
 
     <CreateItem 
       Include="
@@ -47,6 +62,8 @@
         ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
         Force32Bit="true"
         ContinueOnError="false"
-        OutputXmlFile="$(MSBuildProjectDirectory)\output\TestRunResult.xml"/>
+        OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult.xml"/>
+
+    <Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult.xml']"/>
   </Target>
 </Project>

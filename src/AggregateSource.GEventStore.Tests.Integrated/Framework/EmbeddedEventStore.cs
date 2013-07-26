@@ -1,6 +1,4 @@
 using System;
-using System.Configuration;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -27,27 +25,6 @@ namespace AggregateSource.GEventStore.Framework
         static readonly IPEndPoint TcpEndPoint = new IPEndPoint(IPAddress.Loopback, 1113);
         static readonly IPEndPoint HttpEndPoint = new IPEndPoint(IPAddress.Loopback, 2113);
 
-        public EmbeddedEventStore()
-        {
-            RunWithLogging = Convert.ToBoolean(ConfigurationManager.AppSettings["RunWithLogging"]);
-            if (RunWithLogging)
-            {
-                StoragePath = string.IsNullOrEmpty(ConfigurationManager.AppSettings["StoragePath"])
-                                  ? Path.Combine(Path.GetTempPath(), "EventStore")
-                                  : ConfigurationManager.AppSettings["StoragePath"];
-                LogPath = ConfigurationManager.AppSettings["LogPath"];
-            }
-            else
-            {
-                StoragePath = Path.Combine(Path.GetTempPath(), "EventStore");
-                LogPath = Path.Combine(Path.GetTempPath(), "EventStore", "logs");
-            }
-        }
-
-        string StoragePath { get; set; }
-        bool RunWithLogging { get; set; }
-        string LogPath { get; set; }
-
         SingleVNode _node;
         IEventStoreConnection _connection;
         UserCredentials _credentials;
@@ -64,14 +41,14 @@ namespace AggregateSource.GEventStore.Framework
 
         public void Start()
         {
-            if (RunWithLogging)
+            if (EmbeddedEventStoreConfiguration.RunWithLogging)
             {
-                if (!Directory.Exists(LogPath))
-                    Directory.CreateDirectory(LogPath);
-                LogManager.Init(string.Format("as-embed-es-{0}", DateTime.Now.Ticks), LogPath);
+                if (!Directory.Exists(EmbeddedEventStoreConfiguration.LogPath))
+                    Directory.CreateDirectory(EmbeddedEventStoreConfiguration.LogPath);
+                LogManager.Init(string.Format("as-embed-es-{0}", DateTime.Now.Ticks), EmbeddedEventStoreConfiguration.LogPath);
             }
 
-            var db = CreateTFChunkDb(StoragePath);
+            var db = CreateTFChunkDb(EmbeddedEventStoreConfiguration.StoragePath);
             var settings = CreateSingleVNodeSettings();
             _node = new SingleVNode(db, settings, false, 0xf4240, new ISubsystem[0]);
             var waitHandle = new ManualResetEvent(false);
@@ -82,10 +59,6 @@ namespace AggregateSource.GEventStore.Framework
             _connection = EventStoreConnection.Create(
                 ConnectionSettings.Create().
                                    EnableVerboseLogging().
-                    //FailOnNoServerResponse().
-                    //KeepReconnecting().
-                    //KeepRetrying().
-                    //PerformOnMasterOnly().
                                    SetDefaultUserCredentials(_credentials).
                                    UseConsoleLogger(),
                 TcpEndPoint);

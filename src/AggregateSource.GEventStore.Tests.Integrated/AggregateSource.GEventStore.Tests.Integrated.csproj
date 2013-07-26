@@ -83,6 +83,7 @@
     <Compile Include="Framework\AggregateRootEntityStub.cs" />
     <Compile Include="Framework\AssemblyAttribute.cs" />
     <Compile Include="Framework\EmbeddedEventStore.cs" />
+    <Compile Include="Framework\EmbeddedEventStoreConfiguration.cs" />
     <Compile Include="Framework\EventStoreConnectionExtensions.cs" />
     <Compile Include="Framework\EventReaderConfigurationFactory.cs" />
     <Compile Include="Framework\EventStub.cs" />
