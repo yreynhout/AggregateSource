@@ -12,6 +12,8 @@
   <Target Name="Test">
     <MSBuild Projects="$(MSBuildProjectDirectory)\build.proj" Targets="Build" />
 
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\logs;$(MSBuildProjectDirectory)\storage;" />
+
     <XmlUpdate
       XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
       XPath='/configuration/appSettings/add[@key="RunWithLogging"]/@value'
@@ -22,6 +24,11 @@
       XPath='/configuration/appSettings/add[@key="LogPath"]/@value'
       Value="$(MSBuildProjectDirectory)\logs"
       ContinueOnError="false"/>
+    <XmlUpdate 
+      XmlFileName="$(MSBuildProjectDirectory)\output\net45\AggregateSource.GEventStore.Tests.Integrated.dll.config"
+      XPath='/configuration/appSettings/add[@key="StoragePath"]/@value'
+      Value="$(MSBuildProjectDirectory)\storage"
+      ContinueOnError="false" />
 
     <CreateItem 
       Include="
@@ -40,9 +47,6 @@
         ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
         Force32Bit="true"
         ContinueOnError="false"
-        OutputXmlFile="$(MSBuildProjectDirectory)\logs\TestRunResult.xml"/>
-
-    <Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\logs\TestRunResult.xml']"/>
-    <Message Text="##teamcity[publishArtifacts '$(MSBuildProjectDirectory)\logs']"/>
+        OutputXmlFile="$(MSBuildProjectDirectory)\output\TestRunResult.xml"/>
   </Target>
 </Project>

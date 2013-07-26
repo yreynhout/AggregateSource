@@ -1,5 +1,7 @@
 build/packages/*
 build/output/*
+build/logs/*
+build/storage/*
 build/TestRunResult.xml
 lib/eventstore/*
 lib/eventstore2/*

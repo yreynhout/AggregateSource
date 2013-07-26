@@ -1,6 +1,7 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -27,13 +28,19 @@ namespace AggregateSource.GEventStore.Framework {
     public EmbeddedEventStore() {
       RunWithLogging = Convert.ToBoolean(ConfigurationManager.AppSettings["RunWithLogging"]);
       if (RunWithLogging) {
+        StoragePath = string.IsNullOrEmpty(ConfigurationManager.AppSettings["StoragePath"])
+                        ? Path.Combine(Path.GetTempPath(), "EventStore")
+                        : ConfigurationManager.AppSettings["StoragePath"];
         LogPath = ConfigurationManager.AppSettings["LogPath"];
+      } else {
+        StoragePath = Path.Combine(Path.GetTempPath(), "EventStore");
+        LogPath = Path.Combine(Path.GetTempPath(), "EventStore", "logs");
       }
     }
 
-    string LogPath { get; set; }
-
+    string StoragePath { get; set; }
     bool RunWithLogging { get; set; }
+    string LogPath { get; set; }
 
     SingleVNode _node;
     IEventStoreConnection _connection;
@@ -46,10 +53,10 @@ namespace AggregateSource.GEventStore.Framework {
       if (RunWithLogging) {
         if (!Directory.Exists(LogPath)) 
           Directory.CreateDirectory(LogPath);
-        LogManager.Init(string.Format("as-embed-es-pid{0}-ticks{1}", Process.GetCurrentProcess().Id, DateTime.Now.Ticks), LogPath);
+        LogManager.Init(string.Format("as-embed-es-{0}", DateTime.Now.Ticks), LogPath);
       }
 
-      var db = CreateTFChunkDb();
+      var db = CreateTFChunkDb(StoragePath);
       var settings = CreateSingleVNodeSettings();
       _node = new SingleVNode(db, settings, false, 0xf4240, new ISubsystem[0]);
       var waitHandle = new ManualResetEvent(false);
@@ -79,8 +86,8 @@ namespace AggregateSource.GEventStore.Framework {
       }
     }
 
-    static TFChunkDb CreateTFChunkDb() {
-      var dbPath = Path.Combine(Path.GetTempPath(), "EventStore", Guid.NewGuid().ToString("N"));
+    static TFChunkDb CreateTFChunkDb(string storagePath) {
+      var dbPath = Path.Combine(storagePath, DateTime.Now.Ticks.ToString(CultureInfo.InvariantCulture));
       if (!Directory.Exists(dbPath)) {
         Directory.CreateDirectory(dbPath);
       }
