@@ -81,7 +81,7 @@
     <Compile Include="CommandScenarioFor.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecification.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecification.cs" />
-    <Compile Include="EventCentricAggregateQueryTestSpecification.cs" />
+    <Compile Include="ResultCentricAggregateQueryTestSpecification.cs" />
     <Compile Include="EventCentricTestResult.cs" />
     <Compile Include="EventCentricTestSpecification.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestSpecification.cs" />
@@ -100,7 +100,13 @@
     <Compile Include="IAggregateQueryThenStateBuilder.cs" />
     <Compile Include="IAggregateQueryThrowStateBuilder.cs" />
     <Compile Include="IAggregateQueryWhenStateBuilder.cs" />
+    <Compile Include="IEventCentricAggregateCommandTestSpecificationBuilder.cs" />
+    <Compile Include="IEventCentricAggregateFactoryTestSpecificationBuilder.cs" />
+    <Compile Include="IResultCentricAggregateQueryTestSpecificationBuilder.cs" />
     <Compile Include="IEventCentricTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateCommandTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateFactoryTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateQueryTestSpecificationBuilder.cs" />
     <Compile Include="IExceptionCentricTestSpecificationBuilder.cs" />
     <Compile Include="IExceptionCentricTestSpecificationWriter.cs" />
     <Compile Include="IGivenStateBuilder.cs" />

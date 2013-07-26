@@ -1,5 +1,6 @@
 ﻿namespace AggregateSource.Testing {
-  public interface IAggregateCommandThrowStateBuilder {
-    ExceptionCentricAggregateCommandTestSpecification Build();
-  }
+  /// <summary>
+  /// The throw state within the test specification building process.
+  /// </summary>
+  public interface IAggregateCommandThrowStateBuilder : IExceptionCentricAggregateCommandTestSpecificationBuilder {}
 }

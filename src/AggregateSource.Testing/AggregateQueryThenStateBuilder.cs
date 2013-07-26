@@ -15,8 +15,8 @@ namespace AggregateSource.Testing {
       _then = then;
     }
 
-    public EventCentricAggregateQueryTestSpecification Build() {
-      return new EventCentricAggregateQueryTestSpecification(_sutFactory, _givens, _when, _then);
+    public ResultCentricAggregateQueryTestSpecification Build() {
+      return new ResultCentricAggregateQueryTestSpecification(_sutFactory, _givens, _when, _then);
     }
   }
 }

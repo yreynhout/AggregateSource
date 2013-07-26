@@ -2,27 +2,27 @@
 
 namespace AggregateSource.Testing {
   /// <summary>
-  /// Represents an exception centric test specification, meaning that the outcome revolves around an exception as a result of executing a query method.
+  /// Represents an result-centric test specification, meaning that the outcome revolves around the result of executing a query method.
   /// </summary>
-  public class ExceptionCentricAggregateQueryTestSpecification {
+  public class ResultCentricAggregateQueryTestSpecification {
     readonly Func<IAggregateRootEntity> _sutFactory;
     readonly object[] _givens;
     readonly Func<IAggregateRootEntity, object> _when;
-    readonly Exception _throws;
+    readonly object _then;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ExceptionCentricAggregateQueryTestSpecification"/> class.
+    /// Initializes a new instance of the <see cref="ResultCentricAggregateQueryTestSpecification"/> class.
     /// </summary>
     /// <param name="sutFactory">The sut factory.</param>
     /// <param name="givens">The events to arrange.</param>
     /// <param name="when">The query method to act upon.</param>
-    /// <param name="throws">The expected exception to assert.</param>
-    public ExceptionCentricAggregateQueryTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
-                                                           Func<IAggregateRootEntity, object> when, Exception throws) {
+    /// <param name="then">The events to assert.</param>
+    public ResultCentricAggregateQueryTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
+                                                       Func<IAggregateRootEntity, object> when, object then) {
       _sutFactory = sutFactory;
       _givens = givens;
       _when = when;
-      _throws = throws;
+      _then = then;
     }
 
     /// <summary>
@@ -50,10 +50,10 @@ namespace AggregateSource.Testing {
     }
 
     /// <summary>
-    /// The expected exception to assert.
+    /// The expected result to assert.
     /// </summary>
-    public Exception Throws {
-      get { return _throws; }
+    public object Then {
+      get { return _then; }
     }
   }
 }
