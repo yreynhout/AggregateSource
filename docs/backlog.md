@@ -21,7 +21,7 @@
   - ~~[DESIGN] Support both Guid and String as identifier - using conditional compilation~~
   - ~~[DESIGN] Support both Guid and String as identifier - using yet another abstraction~~
 - ~~[DESIGN] The asynchronous repository~~
-- [DESIGN] Snapshotting
+- ~~[DESIGN] Snapshotting~~
 - [DESIGN] StreamSource - Writing to sql
 - [DESIGN] StreamSource - Reading from sql
 - [DESIGN] StreamSource - Readonly resource oriented API using Nancy
