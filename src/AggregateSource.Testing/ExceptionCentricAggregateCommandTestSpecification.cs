@@ -3,7 +3,7 @@
 namespace AggregateSource.Testing
 {
     /// <summary>
-    /// Represents an exception centric test specification, meaning that the outcome revolves around an exception as a result of executing a command method.
+    /// Represents an exception centric test specification, meaning that the outcome revolves around an exception as a result of executing a command method on an aggregate.
     /// </summary>
     public class ExceptionCentricAggregateCommandTestSpecification
     {

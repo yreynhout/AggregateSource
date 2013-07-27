@@ -3,8 +3,7 @@
 namespace AggregateSource.Testing
 {
 	/// <summary>
-	/// Represents an exception centric constructor test specification, meaning that the outcome revolves whether the constructor
-	/// of the subject under test throws the specified exception when called.
+	/// Represents an exception centric constructor test specification, meaning that the outcome revolves around an exception as a result of constructing an aggregate.
 	/// </summary>
 	public class ExceptionCentricAggregateConstructorTestSpecification
 	{

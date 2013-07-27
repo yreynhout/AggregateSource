@@ -3,7 +3,7 @@
 namespace AggregateSource.Testing
 {
     /// <summary>
-    /// Represents an event centric test specification, meaning that the outcome revolves around events as the result of executing a factory method.
+    /// Represents an event centric test specification, meaning that the outcome revolves around events as the result of executing a factory method on an aggregate.
     /// </summary>
     public class EventCentricAggregateFactoryTestSpecification
     {
