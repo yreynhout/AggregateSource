@@ -45,3 +45,8 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
  [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt977&guest=1
 
 ![YouTrack and TeamCity](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
+
+## Contributors
+
+* Martijn Van den Broek (@martijnvdbrk): Optional<T> as a struct
+* James Nugent (@jen20): ConstructionScenarioFor<TAggregateRoot>, GetEventStore integration
