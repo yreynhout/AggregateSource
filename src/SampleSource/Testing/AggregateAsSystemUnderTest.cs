@@ -16,6 +16,23 @@ namespace SampleSource.Testing
             public static readonly ConcertId ConcertId = new ConcertId(Guid.NewGuid());
             public static readonly TicketSaleId TicketSaleId = new TicketSaleId(Guid.NewGuid());
 
+			[Test]
+			public void ConcertIsPlannedWithIdAndValidCapacity()
+			{
+				var id = new ConcertId(Guid.NewGuid());
+
+				new ConstructorScenarioFor(() => Concert.Plan(id, 100)).
+					Then(ConcertEvents.Planned(id)).
+					Assert();
+			}
+
+			[Test]
+			public void PlanningConcertWithInvalidCapacityThrows()
+			{
+				new ConstructorScenarioFor(() => Concert.Plan(new ConcertId(Guid.NewGuid()), -4)).
+					AssertThrows(new ArgumentException("venueCapacity"));
+			}
+
             [Test]
             public void PlannedConcertCanHaveTicketSaleStarted()
             {
@@ -110,6 +127,24 @@ namespace SampleSource.Testing
                     Is.EqualTo(exception.Message));
             }
 
+			public static void Assert(this IAggregateConstructorThenStateBuilder builder)
+			{
+				var specification = builder.Build();
+				var sut = specification.SutFactory();
+				NUnit.Framework.Assert.That(
+					sut.GetChanges(),
+					Is.EquivalentTo(specification.Thens));
+			}
+
+			public static void AssertThrows<TException>(this IAggregateConstructorWhenStateBuilder builder,
+			                                            TException exception) where TException : Exception
+			{
+				var specification = builder.Throws(exception).Build();
+				NUnit.Framework.Assert.That(
+					NUnit.Framework.Assert.Throws<TException>(() => specification.SutFactory()).Message,
+					Is.EqualTo(exception.Message));
+			}
+
             public static void Assert(this IAggregateCommandThenStateBuilder builder)
             {
                 var specification = builder.Build();
@@ -197,6 +232,16 @@ namespace SampleSource.Testing
                         throw new InvalidOperationException("The concert has already been cancelled.");
                     Apply(ConcertEvents.Cancelled(_id, reason));
                 }
+
+	            public static Concert Plan(ConcertId id, int venueCapacity)
+	            {
+		            if (venueCapacity < 1)
+			            throw new ArgumentException("venueCapacity");
+
+		            var concert = Factory();
+					concert.Apply(ConcertEvents.Planned(id));
+		            return concert;
+	            }
             }
 
             public class TicketSale : AggregateRootEntity
