@@ -21,7 +21,7 @@ namespace SampleSource.Testing
 			{
 				var id = new ConcertId(Guid.NewGuid());
 
-				new ConstructorScenarioFor(() => Concert.Plan(id, 100)).
+				new ConstructorScenarioFor<Concert>(() => Concert.Plan(id, 100)).
 					Then(ConcertEvents.Planned(id)).
 					Assert();
 			}
@@ -29,7 +29,7 @@ namespace SampleSource.Testing
 			[Test]
 			public void PlanningConcertWithInvalidCapacityThrows()
 			{
-				new ConstructorScenarioFor(() => Concert.Plan(new ConcertId(Guid.NewGuid()), -4)).
+                new ConstructorScenarioFor<Concert>(() => Concert.Plan(new ConcertId(Guid.NewGuid()), -4)).
 					AssertThrows(new ArgumentException("venueCapacity"));
 			}
 
