@@ -17,7 +17,7 @@
       <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
       <SourcePackageConfigs Include="$(RootPath)\src\**\packages.config" />
     </ItemGroup>
-    <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\build\packages"' />
+    <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\winbuild\packages"' />
     <Exec Command='$(NuGetExe) install %(LibPackageConfigs.Identity) -o "$(RootPath)\lib\packages"' />
     <Exec Command='$(NuGetExe) install %(SourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
   </Target>
