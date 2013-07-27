@@ -48,5 +48,5 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
 
 ## Contributors
 
-* Martijn Van den Broek (@martijnvdbrk): Optional<T> as a struct
-* James Nugent (@jen20): ConstructionScenarioFor<TAggregateRoot>, GetEventStore integration
+* Martijn Van den Broek ([@martijnvdbrk](https://github.com/martijnvdbrk)): Optional<T> as a struct
+* James Nugent ([@jen20](https://github.com/jen20)): ConstructionScenarioFor<TAggregateRoot>, GetEventStore integration
