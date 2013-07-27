@@ -10,7 +10,7 @@
 
   <Target Name="Version">
   	<Version 
-		VersionFile="$(RootPath)\build\master_version.txt" 
+		VersionFile="$(RootPath)\winbuild\master_version.txt" 
 		MajorType="None" 
 		MinorType="None" 
 		BuildType="Increment" 

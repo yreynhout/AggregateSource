@@ -63,7 +63,5 @@
         Force32Bit="true"
         ContinueOnError="false"
         OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult.xml"/>
-
-    <Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult.xml']"/>
   </Target>
 </Project>

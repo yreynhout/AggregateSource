@@ -1,8 +1,8 @@
-build/packages/*
-build/output/*
-build/logs/*
-build/storage/*
-build/TestRunResult.xml
+winbuild/packages/*
+winbuild/output/*
+winbuild/logs/*
+winbuild/storage/*
+winbuild/TestRunResult.xml
 lib/eventstore/*
 lib/eventstore2/*
 lib/eventstore-net-*.zip

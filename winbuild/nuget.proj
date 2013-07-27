@@ -11,7 +11,7 @@
 
   <Target Name="Pack">
     <Version 
-      VersionFile="$(RootPath)\build\master_version.txt" 
+      VersionFile="$(RootPath)\winbuild\master_version.txt" 
       MajorType="None" 
       MinorType="None" 
       BuildType="None" 
@@ -39,7 +39,7 @@
 
   <Target Name="Push">
     <Version 
-      VersionFile="$(RootPath)\build\master_version.txt" 
+      VersionFile="$(RootPath)\winbuild\master_version.txt" 
       MajorType="None" 
       MinorType="None" 
       BuildType="None" 

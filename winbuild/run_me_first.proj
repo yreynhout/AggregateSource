@@ -13,7 +13,7 @@
 
   <Target Name="RestorePackages">
     <ItemGroup>
-      <BuildPackageConfigs Include="$(RootPath)\build\packages.config" />
+      <BuildPackageConfigs Include="$(RootPath)\winbuild\packages.config" />
       <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
       <SourcePackageConfigs Include="$(RootPath)\src\**\packages.config" />
     </ItemGroup>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)/..</RootPath>
+    <SourcePath>$(RootPath)/src</SourcePath>
+  </PropertyGroup>
+
+  <Target Name="Build">
+    <CreateItem 
+      Condition="Exists('$(MSBuildProjectDirectory)/output/mono40')"
+      Include="$(MSBuildProjectDirectory)/output/mono40/*.*">
+      <Output TaskParameter="Include" ItemName="FilesToDelete" />
+    </CreateItem>
+    <Delete 
+      Condition="Exists('$(MSBuildProjectDirectory)/output/mono40')"
+      Files="@(FilesToDelete)" />
+    <RemoveDir 
+      Condition="Exists('$(MSBuildProjectDirectory)/output/mono40')"
+      Directories="$(MSBuildProjectDirectory)/output/mono40" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)/mono-version.proj" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)/mono-info.proj" />
+    <MSBuild 
+      Projects="
+        $(SourcePath)/AggregateSource/AggregateSource.csproj;
+        $(SourcePath)/AggregateSource.Testing/AggregateSource.Testing.csproj;
+        $(SourcePath)/AggregateSource.Tests/AggregateSource.Tests.csproj;"
+      BuildInParallel="true" 
+      Properties="Configuration=Release 4.0;OutputPath=$(MSBuildProjectDirectory)/output/mono40" />
+  </Target>
+</Project>

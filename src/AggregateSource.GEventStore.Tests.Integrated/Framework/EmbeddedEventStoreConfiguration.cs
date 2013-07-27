@@ -35,7 +35,7 @@ namespace AggregateSource.GEventStore.Framework
         {
             if (string.IsNullOrEmpty(storagePath))
             {
-                return Path.Combine(Path.GetTempPath(), "EventStore", DateTime.Now.Ticks.ToString());
+                return Path.Combine(Path.GetTempPath(), "EventStore");
             }
             return storagePath;
         }

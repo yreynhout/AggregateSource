@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Version" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)/..</RootPath>
+    <SourcePath>$(RootPath)/src</SourcePath>
+    <PackagesPath>$(MSBuildProjectDirectory)/packages</PackagesPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)/MSBuildTasks.1.4.0.56/tools</MSBuildCommunityTasksPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildCommunityTasksPath)/MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="Version">
+  	<Version 
+		VersionFile="$(RootPath)/build/master_version.txt" 
+		MajorType="None" 
+		MinorType="None" 
+		BuildType="Increment" 
+		RevisionType="None">
+		<Output TaskParameter="Major" PropertyName="Major"/>
+		<Output TaskParameter="Minor" PropertyName="Minor"/>
+		<Output TaskParameter="Build" PropertyName="Build"/>
+		<Output TaskParameter="Revision" PropertyName="Revision"/>
+	</Version>
+
+	<AssemblyInfo 
+		CodeLanguage="CS"
+		OutputFile="$(SourcePath)/SharedVersionInfo.cs"
+		AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+		/>
+  </Target>
+</Project>
