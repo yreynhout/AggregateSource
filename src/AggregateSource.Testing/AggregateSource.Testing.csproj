@@ -69,6 +69,8 @@
     <Compile Include="AggregateCommandThenStateBuilder.cs" />
     <Compile Include="AggregateCommandThrowStateBuilder.cs" />
     <Compile Include="AggregateCommandWhenStateBuilder.cs" />
+    <Compile Include="AggregateConstructorThenStateBuilder.cs" />
+    <Compile Include="AggregateConstructorThrowStateBuilder.cs" />
     <Compile Include="AggregateFactoryGivenStateBuilder.cs" />
     <Compile Include="AggregateFactoryThenStateBuilder.cs" />
     <Compile Include="AggregateFactoryThrowStateBuilder.cs" />
@@ -78,9 +80,17 @@
     <Compile Include="AggregateQueryThrowStateBuilder.cs" />
     <Compile Include="AggregateQueryWhenStateBuilder.cs" />
     <Compile Include="BatchOf.cs" />
+    <Compile Include="EventCentricAggregateConstructorTestSpecification.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestSpecification.cs" />
+    <Compile Include="IAggregateConstructorThenStateBuilder.cs" />
+    <Compile Include="IAggregateConstructorThrowStateBuilder.cs" />
+    <Compile Include="IAggregateConstructorWhenStateBuilder.cs" />
+    <Compile Include="ConstructorScenarioFor.cs" />
     <Compile Include="CommandScenarioFor.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecification.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecification.cs" />
+    <Compile Include="IEventCentricAggregateConstructorTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateConstructorTestSpecificationBuilder.cs" />
     <Compile Include="ResultCentricAggregateQueryTestSpecification.cs" />
     <Compile Include="EventCentricTestResult.cs" />
     <Compile Include="EventCentricTestSpecification.cs" />
