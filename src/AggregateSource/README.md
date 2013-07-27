@@ -1,16 +1,16 @@
 AggregateSource Core
 ====================
 
-# IAggregateChangeTracker
+### IAggregateChangeTracker
 An interface that provides the contract for getting the tracked changes of the aggregate. Typically, commands will induce one or more events. It's these events - applied on the aggregate root entity - that will end up as a tracked change.
 
-# IAggregateInitializer
+### IAggregateInitializer
 An interface that provides the contract for performing aggregate initialization. Typically this involves *replaying* an enumeration of events onto the aggregate root entity which reconstructs the aggregate's state, including the root, any value objects and/or entities, however deep you may choose them to be.
 
-# IAggregateRootEntity
+### IAggregateRootEntity
 An interface that aggregates ```IAggregateInitializer``` and ```IAggregateChangeTracker``` interfaces. If you have the balls, you can provide your own implementation. Especially if don't like the need to explicitly register apply methods/callbacks, and would like e.g. a more convention based way of calling apply methods.
 
-# AggregateRootEntity
+### AggregateRootEntity
 A base class for an aggregate root entity that does the usual initialization and change tracking that people have come accustomed to when doing eventsourcing in a domain model. It's a bit opnionated, in that it
 
 * doesn't force any interfaces down your throat like IEvent, because a base class is enough coupling as it is,
