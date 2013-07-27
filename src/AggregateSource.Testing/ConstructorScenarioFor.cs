@@ -11,10 +11,10 @@ namespace AggregateSource.Testing
 		private readonly Func<IAggregateRootEntity> _ctor;
 
 		/// <summary>
-		/// TODO
+		/// Creates a new constructor scenario testing the constructor passed as a delegate.
 		/// </summary>
-		/// <param name="ctor">The constructor delegate</param>
-		/// <exception cref="ArgumentNullException">If the constructor delegate is null</exception>
+		/// <param name="ctor">The constructor delegate.</param>
+		/// <exception cref="ArgumentNullException">If the constructor delegate is null.</exception>
 		public ConstructorScenarioFor(Func<IAggregateRootEntity> ctor)
 		{
 			if (ctor == null)

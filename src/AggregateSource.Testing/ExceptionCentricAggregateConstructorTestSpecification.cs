@@ -3,7 +3,8 @@
 namespace AggregateSource.Testing
 {
 	/// <summary>
-	/// TODO
+	/// Represents an exception centric constructor test specification, meaning that the outcome revolves whether the constructor
+	/// of the subject under test throws the specified exception when called.
 	/// </summary>
 	public class ExceptionCentricAggregateConstructorTestSpecification
 	{
