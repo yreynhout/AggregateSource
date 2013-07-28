@@ -84,9 +84,11 @@
     <Compile Include="Framework\AssemblyAttribute.cs" />
     <Compile Include="Framework\EmbeddedEventStore.cs" />
     <Compile Include="Framework\EmbeddedEventStoreConfiguration.cs" />
+    <Compile Include="Framework\EventReaderFactory.cs" />
     <Compile Include="Framework\EventStoreConnectionExtensions.cs" />
     <Compile Include="Framework\EventReaderConfigurationFactory.cs" />
     <Compile Include="Framework\EventStub.cs" />
+    <Compile Include="Framework\RepositoryConfigurationFactory.cs" />
     <Compile Include="Framework\Snapshots\AsyncSnapshotReaderFactory.cs" />
     <Compile Include="Framework\Snapshots\SnapshotDeserializer.cs" />
     <Compile Include="Framework\Snapshots\SnapshotReaderConfigurationFactory.cs" />

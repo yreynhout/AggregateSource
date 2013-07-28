@@ -1,6 +1,5 @@
 ﻿using System;
 using AggregateSource.GEventStore.Framework;
-using EventStore.ClientAPI;
 using NUnit.Framework;
 
 namespace AggregateSource.GEventStore
@@ -10,59 +9,55 @@ namespace AggregateSource.GEventStore
         [TestFixture]
         public class Construction
         {
-            EventReaderConfiguration _configuration;
-            IEventStoreConnection _connection;
-            UnitOfWork _unitOfWork;
             Func<AggregateRootEntityStub> _factory;
+            UnitOfWork _unitOfWork;
+            RepositoryConfiguration _configuration;
+            EventReader _eventReader;
 
             [SetUp]
             public void SetUp()
             {
-                _connection = EmbeddedEventStore.Instance.Connection;
-                _configuration = EventReaderConfigurationFactory.Create();
                 _unitOfWork = new UnitOfWork();
                 _factory = AggregateRootEntityStub.Factory;
+                _eventReader = EventReaderFactory.Create();
+                _configuration = RepositoryConfigurationFactory.Create();
             }
 
             [Test]
             public void FactoryCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                                                     new Repository<AggregateRootEntityStub>(null, _unitOfWork,
-                                                                                             _connection, _configuration));
+                                                     new Repository<AggregateRootEntityStub>(null, _unitOfWork, _eventReader, _configuration));
             }
 
             [Test]
             public void UnitOfWorkCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                                                     new Repository<AggregateRootEntityStub>(_factory, null, _connection,
-                                                                                             _configuration));
+                                                     new Repository<AggregateRootEntityStub>(_factory, null, _eventReader, _configuration));
             }
 
             [Test]
-            public void EventStoreConnectionCanNotBeNull()
+            public void EventReaderCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                                                     new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, null,
-                                                                                             _configuration));
+                                                     new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, null, _configuration));
             }
 
             [Test]
-            public void EventReaderConfigurationCanNotBeNull()
+            public void RepositoryConfigurationCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() =>
-                                                     new Repository<AggregateRootEntityStub>(_factory, _unitOfWork,
-                                                                                             _connection, null));
+                                                     new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, _eventReader, null));
             }
 
             [Test]
             public void UsingCtorReturnsInstanceWithExpectedProperties()
             {
-                var sut = new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, _connection, _configuration);
+                var sut = new Repository<AggregateRootEntityStub>(_factory, _unitOfWork, _eventReader, _configuration);
                 Assert.That(sut.RootFactory, Is.SameAs(_factory));
                 Assert.That(sut.UnitOfWork, Is.SameAs(_unitOfWork));
-                Assert.That(sut.Connection, Is.SameAs(_connection));
+                Assert.That(sut.EventReader, Is.SameAs(_eventReader));
                 Assert.That(sut.Configuration, Is.SameAs(_configuration));
             }
         }

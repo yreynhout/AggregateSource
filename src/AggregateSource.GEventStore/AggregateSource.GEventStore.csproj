@@ -64,9 +64,15 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AsyncEventReader.cs" />
     <Compile Include="AsyncRepository.cs" />
+    <Compile Include="EventReader.cs" />
     <Compile Include="EventReaderConfiguration.cs" />
+    <Compile Include="EventsSlice.cs" />
+    <Compile Include="IAsyncEnumerator.cs" />
+    <Compile Include="IAsyncEventReader.cs" />
     <Compile Include="IEventDeserializer.cs" />
+    <Compile Include="IEventReader.cs" />
     <Compile Include="IStreamNameResolver.cs" />
     <Compile Include="IStreamUserCredentialsResolver.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -76,6 +82,7 @@
     </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryConfiguration.cs" />
     <Compile Include="Resolvers\FixedStreamUserCredentialsResolver.cs" />
     <Compile Include="Resolvers\NoStreamUserCredentialsResolver.cs" />
     <Compile Include="Resolvers\PassThroughStreamNameResolver.cs" />
