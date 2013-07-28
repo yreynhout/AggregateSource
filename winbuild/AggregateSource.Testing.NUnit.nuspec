@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This tokenized .nuspec manifest file is targeting the latest NuGet namespace,
+which ensures you can benefit from the latest packaging features.
+
+If desired, you can change the XML-namespace and target the original XSD.
+To do so, replace the current package declaration by the following:
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+
+Run "nuget.exe pack <project>" to build a nuget package for this project
+using this tokenized nuspec file.
+
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AggregateSource.Testing.NUnit</id>
+    <version>0.0.0</version>
+    <authors>Yves Reynhout</authors>
+    <owners>Yves Reynhout</owners>
+    <title>AggregateSource.Testing.NUnit</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
+    <description>AggregateSource.Testing.NUnit provides an adapter for the executing AggregateSource.Testing specifications using the NUnit test runner.</description>
+    <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <tags>eventsourcing DDDesign</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="AggregateSource" version="0.0.78" />
+      	<dependency id="AggregateSource.Testing" version="0.0.78" />
+      	<dependency id="NUnit" version="2.6.1" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="AggregateSource" version="0.0.78" />
+      	<dependency id="AggregateSource.Testing" version="0.0.78" />
+      	<dependency id="NUnit" version="2.6.1" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="output\net40\AggregateSource.Testing.NUnit.dll" target="lib\net40\AggregateSource.Testing.NUnit.dll" />
+    <file src="output\net40\AggregateSource.Testing.NUnit.pdb" target="lib\net40\AggregateSource.Testing.NUnit.pdb" />
+    <file src="output\net40\AggregateSource.Testing.NUnit.xml" target="lib\net40\AggregateSource.Testing.NUnit.xml" />
+    <file src="output\net45\AggregateSource.Testing.NUnit.dll" target="lib\net45\AggregateSource.Testing.NUnit.dll" />
+    <file src="output\net45\AggregateSource.Testing.NUnit.pdb" target="lib\net45\AggregateSource.Testing.NUnit.pdb" />
+    <file src="output\net45\AggregateSource.Testing.NUnit.xml" target="lib\net45\AggregateSource.Testing.NUnit.xml" />
+    <file src="..\src\AggregateSource.Testing.NUnit\*.cs" target="src\AggregateSource.Testing.NUnit" />
+    <file src="..\src\AggregateSource.Testing.NUnit\Properties\*.cs" target="src\AggregateSource.Testing.NUnit\Properties" />
+  </files>
+</package>
