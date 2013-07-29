@@ -89,7 +89,7 @@ namespace AggregateSource.GEventStore
             {
                 ThrowIfDisposed();
                 var result = false;
-                if (_state == State.Initial || _state == State.Final)
+                if (_state == State.Initial || _state == State.ReadSlice)
                 {
                     switch (_state)
                     {
