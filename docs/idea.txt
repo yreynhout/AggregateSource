@@ -1,0 +1,8 @@
+IInstanceEventRouter <- ConventionBasedInstanceEventRouter, RegistrationBasedInstanceEventRouter
+.AddRoute<TEvent>(Action<TEvent> handler);
+.AddRoute(Type event, Action<object> handler);
+
+IStaticEventRouter <- ConventionBasedStaticEventRouter
+.AddRoute<TInstance, TEvent>(Action<TInstance, TEvent> handler);
+.AddRoute(Type instance, Type @event, Action<object, object> handler);
+.Route(object instance, object @event);
