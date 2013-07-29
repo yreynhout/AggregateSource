@@ -10,14 +10,14 @@ namespace AggregateSource
     public abstract class AggregateRootEntity : IAggregateRootEntity
     {
         readonly EventRecorder _recorder;
-        readonly Dictionary<Type, Action<object>> _handlers;
+        readonly IConfigureInstanceEventRouter _router;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
         /// </summary>
         protected AggregateRootEntity()
         {
-            _handlers = new Dictionary<Type, Action<object>>();
+            _router = new InstanceEventRouter();
             _recorder = new EventRecorder();
         }
 
@@ -30,7 +30,7 @@ namespace AggregateSource
         protected void Register<TEvent>(Action<TEvent> handler)
         {
             if (handler == null) throw new ArgumentNullException("handler");
-            _handlers.Add(typeof (TEvent), @event => handler((TEvent) @event));
+            _router.AddRoute(handler);
         }
 
         /// <summary>
@@ -76,11 +76,7 @@ namespace AggregateSource
 
         void Play(object @event)
         {
-            Action<object> handler;
-            if (_handlers.TryGetValue(@event.GetType(), out handler))
-            {
-                handler(@event);
-            }
+            _router.Route(@event);
         }
 
         void Record(object @event)
