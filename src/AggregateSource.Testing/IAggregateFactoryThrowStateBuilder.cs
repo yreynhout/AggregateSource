@@ -1,5 +1,7 @@
-﻿namespace AggregateSource.Testing {
-  public interface IAggregateFactoryThrowStateBuilder {
-    ExceptionCentricAggregateFactoryTestSpecification Build();
-  }
+﻿namespace AggregateSource.Testing
+{
+    public interface IAggregateFactoryThrowStateBuilder
+    {
+        ExceptionCentricAggregateFactoryTestSpecification Build();
+    }
 }

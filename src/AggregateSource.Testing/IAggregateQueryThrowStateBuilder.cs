@@ -1,5 +1,7 @@
-﻿namespace AggregateSource.Testing {
-  public interface IAggregateQueryThrowStateBuilder {
-    ExceptionCentricAggregateQueryTestSpecification Build();
-  }
+﻿namespace AggregateSource.Testing
+{
+    public interface IAggregateQueryThrowStateBuilder
+    {
+        ExceptionCentricAggregateQueryTestSpecification Build();
+    }
 }

@@ -1,5 +1,7 @@
-﻿namespace AggregateSource.Testing {
-  public interface IAggregateQueryThenStateBuilder {
-    EventCentricAggregateQueryTestSpecification Build();
-  }
+﻿namespace AggregateSource.Testing
+{
+    public interface IAggregateQueryThenStateBuilder
+    {
+        EventCentricAggregateQueryTestSpecification Build();
+    }
 }
