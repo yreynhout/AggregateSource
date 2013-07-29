@@ -66,7 +66,7 @@ namespace AggregateSource.GEventStore
         /// <value>
         /// The asynchronous event reader to use.
         /// </value>
-        public IAsyncEventReader Reader
+        public IAsyncEventReader EventReader
         {
             get { return _reader; }
         }

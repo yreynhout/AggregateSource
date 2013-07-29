@@ -19,6 +19,7 @@ namespace AggregateSource.GEventStore.Framework
         readonly UnitOfWork _unitOfWork;
         readonly ConcurrentUnitOfWork _concurrentUnitOfWork;
         readonly EventReader _eventReader;
+        readonly AsyncEventReader _asyncEventReader;
         readonly RepositoryConfiguration _repositoryConfiguration;
 
         public RepositoryScenarioBuilder()
@@ -29,6 +30,7 @@ namespace AggregateSource.GEventStore.Framework
             _eventReaderConfiguration = EventReaderConfigurationFactory.Create();
             _snapshotReaderConfiguration = SnapshotReaderConfigurationFactory.Create();
             _eventReader = EventReaderFactory.Create();
+            _asyncEventReader = AsyncEventReaderFactory.Create();
             _eventStoreSchedule = new List<Action<IEventStoreConnection>>();
             _unitOfWorkSchedule = new List<Action<UnitOfWork>>();
             _concurrentUnitOfWorkSchedule = new List<Action<ConcurrentUnitOfWork>>();
@@ -141,8 +143,8 @@ namespace AggregateSource.GEventStore.Framework
             return new AsyncRepository<AggregateRootEntityStub>(
                 AggregateRootEntityStub.Factory,
                 _concurrentUnitOfWork,
-                _connection,
-                _eventReaderConfiguration);
+                _asyncEventReader,
+                _repositoryConfiguration);
         }
 
         public SnapshotableRepository<SnapshotableAggregateRootEntityStub> BuildForSnapshotableRepository()

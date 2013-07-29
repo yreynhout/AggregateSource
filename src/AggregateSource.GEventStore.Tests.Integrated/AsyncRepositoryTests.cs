@@ -9,50 +9,57 @@ namespace AggregateSource.GEventStore
         [TestFixture]
         public class Construction
         {
+            Func<AggregateRootEntityStub> _factory;
+            ConcurrentUnitOfWork _unitOfWork;
+            RepositoryConfiguration _configuration;
+            AsyncEventReader _eventReader;
+
+            [SetUp]
+            public void SetUp()
+            {
+                _unitOfWork = new ConcurrentUnitOfWork();
+                _factory = AggregateRootEntityStub.Factory;
+                _eventReader = AsyncEventReaderFactory.Create();
+                _configuration = RepositoryConfigurationFactory.Create();
+            }
+
             [Test]
             public void FactoryCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() =>
-                                                     new AsyncRepository<AggregateRootEntityStub>(null,
-                                                                                                  new ConcurrentUnitOfWork
-                                                                                                      (),
-                                                                                                  EmbeddedEventStore
-                                                                                                      .Instance
-                                                                                                      .Connection,
-                                                                                                  EventReaderConfigurationFactory
-                                                                                                      .Create()));
+                Assert.Throws<ArgumentNullException>(
+                    () => new AsyncRepository<AggregateRootEntityStub>(null, _unitOfWork, _eventReader, _configuration));
             }
 
             [Test]
             public void ConcurrentUnitOfWorkCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() =>
-                                                     new AsyncRepository<AggregateRootEntityStub>(
-                                                         AggregateRootEntityStub.Factory, null,
-                                                         EmbeddedEventStore.Instance.Connection,
-                                                         EventReaderConfigurationFactory.Create()));
+                Assert.Throws<ArgumentNullException>(
+                    () => new AsyncRepository<AggregateRootEntityStub>(_factory, null, _eventReader, _configuration));
             }
 
             [Test]
-            public void EventStoreConnectionCanNotBeNull()
+            public void AsyncEventReaderCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() =>
-                                                     new AsyncRepository<AggregateRootEntityStub>(
-                                                         AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(),
-                                                         null, EventReaderConfigurationFactory.Create()));
+                Assert.Throws<ArgumentNullException>(
+                    () => new AsyncRepository<AggregateRootEntityStub>(_factory, _unitOfWork, null, _configuration));
             }
 
             [Test]
-            public void EventReaderConfigurationCanNotBeNull()
+            public void RepositoryConfigurationCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() =>
-                                                     new AsyncRepository<AggregateRootEntityStub>(
-                                                         AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(),
-                                                         EmbeddedEventStore.Instance.Connection, null));
+                Assert.Throws<ArgumentNullException>(
+                    () => new AsyncRepository<AggregateRootEntityStub>(_factory, _unitOfWork, _eventReader, null));
             }
 
-            [Ignore("TODO after merge - requires setup")]
-            public void UsingCtorReturnsInstanceWithExpectedProperties() {}
+            [Test]
+            public void UsingCtorReturnsInstanceWithExpectedProperties()
+            {
+                var sut = new AsyncRepository<AggregateRootEntityStub>(_factory, _unitOfWork, _eventReader, _configuration);
+                Assert.That(sut.RootFactory, Is.SameAs(_factory));
+                Assert.That(sut.UnitOfWork, Is.SameAs(_unitOfWork));
+                Assert.That(sut.EventReader, Is.SameAs(_eventReader));
+                Assert.That(sut.Configuration, Is.SameAs(_configuration));
+            }
         }
 
         [TestFixture]

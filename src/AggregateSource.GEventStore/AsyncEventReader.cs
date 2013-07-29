@@ -63,6 +63,7 @@ namespace AggregateSource.GEventStore
             string _streamName;
             StreamEventsSlice _slice;
             EventsSlice _current;
+            bool _disposed;
 
             public AsyncEnumerator(string identifier, int version, IEventStoreConnection connection, EventReaderConfiguration configuration)
             {
@@ -72,12 +73,21 @@ namespace AggregateSource.GEventStore
                 _configuration = configuration;
                 _state = State.Initial;
                 _current = null;
+                _disposed = false;
             }
 
-            public EventsSlice Current { get { return _current; } }
+            public EventsSlice Current
+            {
+                get
+                {
+                    ThrowIfDisposed();
+                    return _current;
+                }
+            }
 
             public async Task<bool> MoveNextAsync()
             {
+                ThrowIfDisposed();
                 var result = false;
                 if (_state == State.Initial || _state == State.Final)
                 {
@@ -126,6 +136,20 @@ namespace AggregateSource.GEventStore
                     result = true;
                 }
                 return result;
+            }
+
+            void ThrowIfDisposed()
+            {
+                if(_disposed)
+                    throw new ObjectDisposedException(typeof(AsyncEnumerator).Name);
+            }
+
+            public void Dispose()
+            {
+                if (!_disposed)
+                {
+                    _disposed = true;
+                }
             }
         }
     }

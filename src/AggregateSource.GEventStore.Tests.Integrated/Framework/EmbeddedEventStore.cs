@@ -116,7 +116,8 @@ namespace AggregateSource.GEventStore.Framework
                 TimeSpan.FromMilliseconds(Opts.PrepareTimeoutMsDefault),
                 TimeSpan.FromMilliseconds(Opts.CommitTimeoutMsDefault),
                 TimeSpan.FromMilliseconds(Opts.StatsPeriodDefault),
-                StatsStorage.None);
+                StatsStorage.None,
+                false);
             return settings;
         }
     }
