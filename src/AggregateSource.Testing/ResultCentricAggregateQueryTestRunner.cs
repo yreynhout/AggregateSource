@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AggregateSource.Testing
 {
     /// <summary>
-    /// Represents an aggregate command test specification runner.
+    /// Represents an aggregate query test specification runner.
     /// </summary>
-    public class EventCentricAggregateCommandTestRunner : IEventCentricAggregateCommandTestRunner
+    public class ResultCentricAggregateQueryTestRunner : IResultCentricAggregateQueryTestRunner
     {
         readonly IEqualityComparer<object> _comparer;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventCentricAggregateCommandTestRunner"/> class.
+        /// Initializes a new instance of the <see cref="ResultCentricAggregateQueryTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing events.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public EventCentricAggregateCommandTestRunner(IEqualityComparer<object> comparer)
+        public ResultCentricAggregateQueryTestRunner(IEqualityComparer<object> comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -30,22 +29,22 @@ namespace AggregateSource.Testing
         /// The result of running the test specification.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="specification"/> is <c>null</c>.</exception>
-        public EventCentricAggregateCommandTestResult Run(EventCentricAggregateCommandTestSpecification specification)
+        public ResultCentricAggregateQueryTestResult Run(ResultCentricAggregateQueryTestSpecification specification)
         {
             if (specification == null) throw new ArgumentNullException("specification");
             var sut = specification.SutFactory();
             sut.Initialize(specification.Givens);
-            var result = Catch.Exception(() => specification.When(sut));
+            object queryResult = null;
+            var result = Catch.Exception(() => queryResult = specification.When(sut));
             if (result.HasValue)
             {
-                return new EventCentricAggregateCommandTestResult(specification, TestResultState.Failed, actualException: result.Value);
+                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, result.Value);
             }
-            var actualEvents = sut.GetChanges().ToArray();
-            if (!actualEvents.SequenceEqual(specification.Thens, _comparer))
+            if (!_comparer.Equals(queryResult, specification.Then))
             {
-                return new EventCentricAggregateCommandTestResult(specification, TestResultState.Failed, actualEvents);
+                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, new Optional<object>(queryResult));
             }
-            return new EventCentricAggregateCommandTestResult(specification, TestResultState.Passed);
+            return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Passed, Optional<object>.Empty);
         }
     }
 }
