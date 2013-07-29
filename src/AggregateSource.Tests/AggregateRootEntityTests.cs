@@ -57,8 +57,7 @@ namespace AggregateSource
         }
 
         class AnyAggregateRootEntity : AggregateRootEntity
-        {
-        }
+        {}
 
         class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity
         {
@@ -153,8 +152,7 @@ namespace AggregateSource
         }
 
         class PristineAggregateRootEntity : AggregateRootEntity
-        {
-        }
+        {}
 
         [TestFixture]
         public class WithInitializedInstance

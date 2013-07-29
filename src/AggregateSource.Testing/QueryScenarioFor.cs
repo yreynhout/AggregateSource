@@ -9,8 +9,7 @@ namespace AggregateSource.Testing
 
         public QueryScenarioFor(TAggregateRoot sut)
             : this(() => sut)
-        {
-        }
+        {}
 
         public QueryScenarioFor(Func<TAggregateRoot> sutFactory)
         {

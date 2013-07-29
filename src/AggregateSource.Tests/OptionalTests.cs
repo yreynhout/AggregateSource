@@ -343,7 +343,6 @@ namespace AggregateSource
         }
 
         class MismatchObject
-        {
-        }
+        {}
     }
 }

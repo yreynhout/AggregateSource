@@ -44,8 +44,7 @@ namespace AggregateSource
         class UseNullApplierEntity : Entity
         {
             public UseNullApplierEntity() : base(null)
-            {
-            }
+            {}
         }
 
         class PlayWithNullEventEntity : Entity
@@ -59,8 +58,7 @@ namespace AggregateSource
         class ApplyNullEventEntity : Entity
         {
             public ApplyNullEventEntity() : base(_ => { })
-            {
-            }
+            {}
 
             public void ApplyNull()
             {
@@ -179,8 +177,7 @@ namespace AggregateSource
         class WithoutHandlersEntity : Entity
         {
             public WithoutHandlersEntity(Action<object> applier) : base(applier)
-            {
-            }
+            {}
 
             public void DoApply(object @event)
             {

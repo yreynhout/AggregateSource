@@ -87,8 +87,7 @@ namespace SampleSource
         public class TodoList : DomainEventAwareAggregateRootEntity
         {
             TodoList()
-            {
-            }
+            {}
 
             public TodoList(TodoListId id, string name)
                 : this()

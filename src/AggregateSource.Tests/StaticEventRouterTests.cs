@@ -47,12 +47,10 @@ namespace AggregateSource
         }
 
         class Event1
-        {
-        }
+        {}
 
         class Event2
-        {
-        }
+        {}
 
         [Test]
         public void AddRouteInstanceCanNotBeNull()

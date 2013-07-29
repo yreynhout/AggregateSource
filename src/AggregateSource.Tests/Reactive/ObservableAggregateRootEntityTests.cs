@@ -57,8 +57,7 @@ namespace AggregateSource.Reactive
         }
 
         class AnyAggregateRootEntity : ObservableAggregateRootEntity
-        {
-        }
+        {}
 
         class InitializeWithNullEventsAggregateRootEntity : ObservableAggregateRootEntity
         {
@@ -153,8 +152,7 @@ namespace AggregateSource.Reactive
         }
 
         class PristineAggregateRootEntity : ObservableAggregateRootEntity
-        {
-        }
+        {}
 
         [TestFixture]
         public class WithInitializedInstance
