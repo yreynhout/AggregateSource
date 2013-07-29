@@ -11,7 +11,7 @@ namespace AggregateSource.Reactive
     public class ObservableAggregateRootEntity : IObservableAggregateRootEntity
     {
         readonly EventRecorder _recorder;
-        readonly Dictionary<Type, Action<object>> _handlers;
+        readonly IConfigureInstanceEventRouter _router;
 
         ImmutableObserverList _observers;
         bool _disposed;
@@ -22,7 +22,7 @@ namespace AggregateSource.Reactive
         /// </summary>
         protected ObservableAggregateRootEntity()
         {
-            _handlers = new Dictionary<Type, Action<object>>();
+            _router = new InstanceEventRouter();
             _recorder = new EventRecorder();
 
             _observers = ImmutableObserverList.Empty;
@@ -39,7 +39,7 @@ namespace AggregateSource.Reactive
         {
             if (handler == null) throw new ArgumentNullException("handler");
             //ThrowIfDisposed();
-            _handlers.Add(typeof (TEvent), @event => handler((TEvent) @event));
+            _router.AddRoute(handler);
         }
 
         /// <summary>
@@ -88,11 +88,7 @@ namespace AggregateSource.Reactive
 
         void Play(object @event)
         {
-            Action<object> handler;
-            if (_handlers.TryGetValue(@event.GetType(), out handler))
-            {
-                handler(@event);
-            }
+            _router.Route(@event);
         }
 
         void Record(object @event)
