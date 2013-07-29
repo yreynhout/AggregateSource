@@ -8,8 +8,8 @@ namespace AggregateSource
     [TestFixture]
     public class AggregateNotFoundExceptionTests
     {
-        private static readonly string AggregateIdentifier = Guid.NewGuid().ToString();
-        private static readonly Type AggregateType = typeof (object);
+        static readonly string AggregateIdentifier = Guid.NewGuid().ToString();
+        static readonly Type AggregateType = typeof (object);
 
         [Test]
         public void IsAnAggregateSourceException()

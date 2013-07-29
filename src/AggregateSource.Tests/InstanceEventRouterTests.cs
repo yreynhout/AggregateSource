@@ -6,7 +6,7 @@ namespace AggregateSource
     [TestFixture]
     public class InstanceEventRouterTests
     {
-        private InstanceEventRouter _sut;
+        InstanceEventRouter _sut;
 
         [SetUp]
         public void SetUp()
@@ -35,7 +35,7 @@ namespace AggregateSource
         [Test]
         public void CanNotAddDuplicateRouteGenerically()
         {
-            _sut.AddRoute((object _) => {});
+            _sut.AddRoute((object _) => { });
             Assert.Throws<ArgumentException>(() => _sut.AddRoute((object _) => { }));
         }
 
@@ -48,14 +48,14 @@ namespace AggregateSource
         [Test]
         public void AddRouteHandlerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof(object), null));
+            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof (object), null));
         }
 
         [Test]
         public void CanNotAddDuplicateRoute()
         {
-            _sut.AddRoute(typeof(object), _ => { });
-            Assert.Throws<ArgumentException>(() => _sut.AddRoute(typeof(object), _ => { }));
+            _sut.AddRoute(typeof (object), _ => { });
+            Assert.Throws<ArgumentException>(() => _sut.AddRoute(typeof (object), _ => { }));
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace AggregateSource
         public void RouteEventWithHandlerHasExpectedResult()
         {
             var called = false;
-            _sut.AddRoute((object _)=> called = true);
-            
+            _sut.AddRoute((object _) => called = true);
+
             _sut.Route(new object());
 
             Assert.That(called, Is.True);

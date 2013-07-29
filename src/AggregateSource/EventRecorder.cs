@@ -9,7 +9,7 @@ namespace AggregateSource
     /// </summary>
     public class EventRecorder : IEnumerable<object>
     {
-        private readonly List<object> _recorded;
+        readonly List<object> _recorded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventRecorder"/> class.

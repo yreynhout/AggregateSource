@@ -5,7 +5,7 @@ namespace AggregateSource.Testing
     public class QueryScenarioFor<TAggregateRoot> : IAggregateQueryGivenStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly Func<IAggregateRootEntity> _sutFactory;
 
         public QueryScenarioFor(TAggregateRoot sut)
             : this(() => sut)

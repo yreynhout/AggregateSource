@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateFactoryThenStateBuilder : IAggregateFactoryThenStateBuilder
+    class AggregateFactoryThenStateBuilder : IAggregateFactoryThenStateBuilder
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
-        private readonly object[] _thens;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
+        readonly object[] _thens;
 
         public AggregateFactoryThenStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                                 Func<IAggregateRootEntity, IAggregateRootEntity> when, object[] thens)

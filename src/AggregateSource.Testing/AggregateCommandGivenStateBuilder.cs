@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateCommandGivenStateBuilder<TAggregateRoot> :
+    class AggregateCommandGivenStateBuilder<TAggregateRoot> :
         IAggregateCommandGivenStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
 
         public AggregateCommandGivenStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens)
         {

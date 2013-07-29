@@ -41,14 +41,14 @@ namespace AggregateSource
             }
         }
 
-        internal class UseNullApplierEntity : Entity
+        class UseNullApplierEntity : Entity
         {
             public UseNullApplierEntity() : base(null)
             {
             }
         }
 
-        internal class PlayWithNullEventEntity : Entity
+        class PlayWithNullEventEntity : Entity
         {
             public PlayWithNullEventEntity() : base(_ => { })
             {
@@ -56,7 +56,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ApplyNullEventEntity : Entity
+        class ApplyNullEventEntity : Entity
         {
             public ApplyNullEventEntity() : base(_ => { })
             {
@@ -68,7 +68,7 @@ namespace AggregateSource
             }
         }
 
-        internal class RegisterNullHandlerEntity : Entity
+        class RegisterNullHandlerEntity : Entity
         {
             public RegisterNullHandlerEntity() : base(_ => { })
             {
@@ -76,7 +76,7 @@ namespace AggregateSource
             }
         }
 
-        internal class RegisterSameEventHandlerTwiceEntity : Entity
+        class RegisterSameEventHandlerTwiceEntity : Entity
         {
             public RegisterSameEventHandlerTwiceEntity() : base(_ => { })
             {
@@ -88,9 +88,9 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithHandlers
         {
-            private WithHandlersEntity _sut;
-            private Action<object> _applier;
-            private List<object> _appliedEvents;
+            WithHandlersEntity _sut;
+            Action<object> _applier;
+            List<object> _appliedEvents;
 
             [SetUp]
             public void SetUp()
@@ -122,7 +122,7 @@ namespace AggregateSource
             }
         }
 
-        internal class WithHandlersEntity : Entity
+        class WithHandlersEntity : Entity
         {
             public WithHandlersEntity(Action<object> applier)
                 : base(applier)
@@ -147,9 +147,9 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithoutHandlers
         {
-            private WithoutHandlersEntity _sut;
-            private Action<object> _applier;
-            private List<object> _appliedEvents;
+            WithoutHandlersEntity _sut;
+            Action<object> _applier;
+            List<object> _appliedEvents;
 
             [SetUp]
             public void SetUp()
@@ -176,7 +176,7 @@ namespace AggregateSource
             }
         }
 
-        internal class WithoutHandlersEntity : Entity
+        class WithoutHandlersEntity : Entity
         {
             public WithoutHandlersEntity(Action<object> applier) : base(applier)
             {

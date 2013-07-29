@@ -8,7 +8,7 @@ namespace AggregateSource
     /// </summary>
     public class InstanceEventRouter : IConfigureInstanceEventRouter
     {
-        private readonly Dictionary<Type, Action<object>> _handlers;
+        readonly Dictionary<Type, Action<object>> _handlers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstanceEventRouter"/> class.

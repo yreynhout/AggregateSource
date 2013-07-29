@@ -9,8 +9,8 @@ namespace AggregateSource
     /// </summary>
     public abstract class AggregateRootEntity : IAggregateRootEntity
     {
-        private readonly EventRecorder _recorder;
-        private readonly IConfigureInstanceEventRouter _router;
+        readonly EventRecorder _recorder;
+        readonly IConfigureInstanceEventRouter _router;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
@@ -78,12 +78,12 @@ namespace AggregateSource
         {
         }
 
-        private void Play(object @event)
+        void Play(object @event)
         {
             _router.Route(@event);
         }
 
-        private void Record(object @event)
+        void Record(object @event)
         {
             _recorder.Record(@event);
         }

@@ -9,7 +9,7 @@ namespace AggregateSource
     /// </summary>
     public class UnitOfWork
     {
-        private readonly Dictionary<string, Aggregate> _aggregates;
+        readonly Dictionary<string, Aggregate> _aggregates;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.

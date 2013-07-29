@@ -15,7 +15,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithAnyInstance
         {
-            private ConcurrentUnitOfWork _sut;
+            ConcurrentUnitOfWork _sut;
 
             [SetUp]
             public void SetUp()
@@ -40,7 +40,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithPristineInstance
         {
-            private ConcurrentUnitOfWork _sut;
+            ConcurrentUnitOfWork _sut;
 
             [SetUp]
             public void SetUp()
@@ -81,8 +81,8 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithAttachedAggregate
         {
-            private ConcurrentUnitOfWork _sut;
-            private Aggregate _aggregate;
+            ConcurrentUnitOfWork _sut;
+            Aggregate _aggregate;
 
             [SetUp]
             public void SetUp()
@@ -141,9 +141,9 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithAttachedChangedAggregates
         {
-            private ConcurrentUnitOfWork _sut;
-            private Aggregate _aggregate1;
-            private Aggregate _aggregate2;
+            ConcurrentUnitOfWork _sut;
+            Aggregate _aggregate1;
+            Aggregate _aggregate2;
 
             [SetUp]
             public void SetUp()
@@ -168,7 +168,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ChangedAggregateRootEntityStub : AggregateRootEntity
+        class ChangedAggregateRootEntityStub : AggregateRootEntity
         {
             public ChangedAggregateRootEntityStub()
             {

@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateQueryGivenStateBuilder<TAggregateRoot> : IAggregateQueryGivenStateBuilder<TAggregateRoot>
+    class AggregateQueryGivenStateBuilder<TAggregateRoot> : IAggregateQueryGivenStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
 
         public AggregateQueryGivenStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens)
         {

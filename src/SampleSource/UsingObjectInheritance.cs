@@ -46,12 +46,12 @@ namespace SampleSource
                 return new VideoTitle(new VideoTitleRegistered(videoTitleId, title));
             }
 
-            private VideoTitle(VideoTitleRegistered @event) : this()
+            VideoTitle(VideoTitleRegistered @event) : this()
             {
                 Apply(@event);
             }
 
-            private VideoTitle()
+            VideoTitle()
             {
                 Register<VideoTitleRegistered>(When);
                 Register<CorrectedVideoTitle>(When);
@@ -64,13 +64,13 @@ namespace SampleSource
                     new ScannedNewVideoTape(Id, tapeId, barCode));
             }
 
-            private void When(VideoTitleRegistered @event)
+            void When(VideoTitleRegistered @event)
             {
                 Id = new VideoTitleId(@event.Id);
                 Title = @event.Title;
             }
 
-            private void When(CorrectedVideoTitle @event)
+            void When(CorrectedVideoTitle @event)
             {
                 Title = @event.Title;
             }
@@ -94,9 +94,9 @@ namespace SampleSource
 
         public class VideoTape : AggregateRootEntity
         {
-            private readonly IVideoTitleProfile _title;
+            readonly IVideoTitleProfile _title;
 
-            private VideoTape(IVideoTitleProfile title)
+            VideoTape(IVideoTitleProfile title)
             {
                 if (title == null) throw new ArgumentNullException("title");
                 _title = title;
@@ -117,7 +117,7 @@ namespace SampleSource
                         memberId, period.FromDate, period.ToDate));
             }
 
-            private void When(ScannedNewVideoTape @event)
+            void When(ScannedNewVideoTape @event)
             {
                 Id = new VideoTapeId(@event.VideoTapeId);
             }
@@ -127,8 +127,8 @@ namespace SampleSource
 
         public class RentalPeriod
         {
-            private readonly DateTime _fromDate;
-            private readonly DateTime _toDate;
+            readonly DateTime _fromDate;
+            readonly DateTime _toDate;
 
             public RentalPeriod(DateTime from, DateTime to)
             {
@@ -153,7 +153,7 @@ namespace SampleSource
 
         public class BarCode
         {
-            private readonly string _value;
+            readonly string _value;
 
             public BarCode(string value)
             {
@@ -193,7 +193,7 @@ namespace SampleSource
 
         public static class CharExtensions
         {
-            private static readonly char[] HexChars = new[]
+            static readonly char[] HexChars = new[]
             {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e',
                 'f'
@@ -207,7 +207,7 @@ namespace SampleSource
 
         public struct VideoTapeId : IEquatable<VideoTapeId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public VideoTapeId(Guid value)
             {
@@ -238,7 +238,7 @@ namespace SampleSource
 
         public struct VideoTitleId : IEquatable<VideoTitleId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public VideoTitleId(Guid value)
             {
@@ -269,7 +269,7 @@ namespace SampleSource
 
         public struct VideoStoreMemberId : IEquatable<VideoStoreMemberId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public VideoStoreMemberId(Guid value)
             {

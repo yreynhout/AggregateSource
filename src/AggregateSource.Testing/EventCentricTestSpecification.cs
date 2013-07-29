@@ -7,9 +7,9 @@ namespace AggregateSource.Testing
     /// </summary>
     public class EventCentricTestSpecification
     {
-        private readonly Tuple<string, object>[] _givens;
-        private readonly object _when;
-        private readonly Tuple<string, object>[] _thens;
+        readonly Tuple<string, object>[] _givens;
+        readonly object _when;
+        readonly Tuple<string, object>[] _thens;
 
         /// <summary>
         /// Initializes a new <see cref="EventCentricTestSpecification"/> instance.

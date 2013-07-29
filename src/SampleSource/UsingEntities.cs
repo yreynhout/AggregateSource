@@ -12,8 +12,8 @@ namespace SampleSource
         [TestFixture]
         public class SampleUsage
         {
-            private TodoList _list;
-            private TodoListItemId _todoListItemId;
+            TodoList _list;
+            TodoListItemId _todoListItemId;
 
             [SetUp]
             public void SetUp()
@@ -51,7 +51,7 @@ namespace SampleSource
 
         public class TodoList : AggregateRootEntity
         {
-            private TodoList()
+            TodoList()
             {
                 Register<AddedNewTodoList>(When);
                 Register<AddedNewItemToTodoList>(When);
@@ -82,22 +82,22 @@ namespace SampleSource
             // state
 
             public TodoListId Id { get; private set; }
-            private List<TodoListItem> _items;
+            List<TodoListItem> _items;
 
-            private void When(AddedNewTodoList @event)
+            void When(AddedNewTodoList @event)
             {
                 Id = new TodoListId(@event.Id);
                 _items = new List<TodoListItem>();
             }
 
-            private void When(AddedNewItemToTodoList @event)
+            void When(AddedNewItemToTodoList @event)
             {
                 var item = new TodoListItem(Apply);
                 item.Play(@event);
                 _items.Add(item);
             }
 
-            private void When(DescribedTodoListItem @event)
+            void When(DescribedTodoListItem @event)
             {
                 _items.Find(item => item.Id == @event.Id).Play(@event);
             }
@@ -119,12 +119,12 @@ namespace SampleSource
 
             public TodoListItemId Id { get; private set; }
 
-            private void When(AddedNewItemToTodoList @event)
+            void When(AddedNewItemToTodoList @event)
             {
                 Id = new TodoListItemId(@event.TodoListItemId);
             }
 
-            private void When(DescribedTodoListItem @event)
+            void When(DescribedTodoListItem @event)
             {
                 /* just so you can see we really get to this point */
             }
@@ -132,7 +132,7 @@ namespace SampleSource
 
         public struct TodoListItemId : IEquatable<TodoListItemId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public TodoListItemId(Guid value)
             {
@@ -163,7 +163,7 @@ namespace SampleSource
 
         public struct TodoListId : IEquatable<TodoListId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public TodoListId(Guid value)
             {

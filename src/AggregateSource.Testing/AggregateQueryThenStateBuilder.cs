@@ -2,12 +2,12 @@
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateQueryThenStateBuilder : IAggregateQueryThenStateBuilder
+    class AggregateQueryThenStateBuilder : IAggregateQueryThenStateBuilder
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Func<IAggregateRootEntity, object> _when;
-        private readonly object _then;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Func<IAggregateRootEntity, object> _when;
+        readonly object _then;
 
         public AggregateQueryThenStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                               Func<IAggregateRootEntity, object> when, object then)

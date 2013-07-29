@@ -12,7 +12,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithAnyInstance
         {
-            private Optional<AggregateRootEntityStub> _sut;
+            Optional<AggregateRootEntityStub> _sut;
 
             [SetUp]
             public void SetUp()
@@ -59,7 +59,7 @@ namespace AggregateSource
         [TestFixture]
         public abstract class WithEmptyInstanceFixture<T>
         {
-            private Optional<T> _sut;
+            Optional<T> _sut;
 
             [SetUp]
             public void SetUp()
@@ -211,8 +211,8 @@ namespace AggregateSource
         [TestFixture]
         public abstract class WithFilledInstance<T>
         {
-            private Optional<T> _sut;
-            private T _value;
+            Optional<T> _sut;
+            T _value;
 
             [SetUp]
             public void SetUp()
@@ -342,7 +342,7 @@ namespace AggregateSource
             }
         }
 
-        internal class MismatchObject
+        class MismatchObject
         {
         }
     }

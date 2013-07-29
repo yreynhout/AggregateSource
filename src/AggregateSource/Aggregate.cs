@@ -7,9 +7,9 @@ namespace AggregateSource
     /// </summary>
     public class Aggregate
     {
-        private readonly string _identifier;
-        private readonly IAggregateRootEntity _root;
-        private readonly int _expectedVersion;
+        readonly string _identifier;
+        readonly IAggregateRootEntity _root;
+        readonly int _expectedVersion;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Aggregate"/> class.

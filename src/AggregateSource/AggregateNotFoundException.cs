@@ -10,8 +10,8 @@ namespace AggregateSource
     [Serializable]
     public class AggregateNotFoundException : AggregateSourceException
     {
-        private readonly string _identifier;
-        private readonly Type _type;
+        readonly string _identifier;
+        readonly Type _type;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.

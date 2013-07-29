@@ -4,7 +4,7 @@ namespace AggregateSource
 {
     public static class AggregateStubs
     {
-        private static Random _random = new Random();
+        static Random _random = new Random();
 
         public static readonly Aggregate Stub1 =
             Create("Stub/123", AggregateRootEntityStub.Factory());

@@ -8,7 +8,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class InitialInstanceTests
         {
-            private BatchOf _sut;
+            BatchOf _sut;
 
             [SetUp]
             public void SetUp()
@@ -28,7 +28,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class FactTests
         {
-            private BatchOf _sut;
+            BatchOf _sut;
 
             [SetUp]
             public void SetUp()
@@ -100,7 +100,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class FactsTests
         {
-            private BatchOf _sut;
+            BatchOf _sut;
 
             [SetUp]
             public void SetUp()

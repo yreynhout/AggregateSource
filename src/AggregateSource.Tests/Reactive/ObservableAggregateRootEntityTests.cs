@@ -56,11 +56,11 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class AnyAggregateRootEntity : ObservableAggregateRootEntity
+        class AnyAggregateRootEntity : ObservableAggregateRootEntity
         {
         }
 
-        internal class InitializeWithNullEventsAggregateRootEntity : ObservableAggregateRootEntity
+        class InitializeWithNullEventsAggregateRootEntity : ObservableAggregateRootEntity
         {
             public InitializeWithNullEventsAggregateRootEntity()
             {
@@ -68,7 +68,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class ApplyNullEventAggregateRootEntity : ObservableAggregateRootEntity
+        class ApplyNullEventAggregateRootEntity : ObservableAggregateRootEntity
         {
             public void ApplyNull()
             {
@@ -76,7 +76,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class ApplyInterceptorAggregateRootEntity : ObservableAggregateRootEntity
+        class ApplyInterceptorAggregateRootEntity : ObservableAggregateRootEntity
         {
             public ApplyInterceptorAggregateRootEntity()
             {
@@ -99,7 +99,7 @@ namespace AggregateSource.Reactive
             public bool AfterApplyWasCalled { get; private set; }
         }
 
-        internal class RegisterNullHandlerAggregateRootEntity : ObservableAggregateRootEntity
+        class RegisterNullHandlerAggregateRootEntity : ObservableAggregateRootEntity
         {
             public RegisterNullHandlerAggregateRootEntity()
             {
@@ -107,7 +107,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class RegisterSameEventHandlerTwiceAggregateRootEntity : ObservableAggregateRootEntity
+        class RegisterSameEventHandlerTwiceAggregateRootEntity : ObservableAggregateRootEntity
         {
             public RegisterSameEventHandlerTwiceAggregateRootEntity()
             {
@@ -119,7 +119,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithPristineInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -152,14 +152,14 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class PristineAggregateRootEntity : ObservableAggregateRootEntity
+        class PristineAggregateRootEntity : ObservableAggregateRootEntity
         {
         }
 
         [TestFixture]
         public class WithInitializedInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -192,7 +192,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class InitializedAggregateRootEntity : ObservableAggregateRootEntity
+        class InitializedAggregateRootEntity : ObservableAggregateRootEntity
         {
             public InitializedAggregateRootEntity()
             {
@@ -203,7 +203,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithChangedInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -237,7 +237,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class ChangedAggregateRootEntity : ObservableAggregateRootEntity
+        class ChangedAggregateRootEntity : ObservableAggregateRootEntity
         {
             public static readonly object[] AppliedChanges = new[] {new object(), new object()};
 
@@ -253,7 +253,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithInitializedThenChangedInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -287,7 +287,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class InitializedThenChangedAggregateRootEntity : ObservableAggregateRootEntity
+        class InitializedThenChangedAggregateRootEntity : ObservableAggregateRootEntity
         {
             public static readonly object[] AppliedChanges = new[] {new object(), new object()};
 
@@ -304,7 +304,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithChangedThenClearedInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -337,7 +337,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class ChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity
+        class ChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity
         {
             public ChangedThenClearedAggregateRootEntity()
             {
@@ -352,7 +352,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithInitializedThenChangedThenClearedInstance
         {
-            private ObservableAggregateRootEntity _sut;
+            ObservableAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -385,7 +385,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class InitializedThenChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity
+        class InitializedThenChangedThenClearedAggregateRootEntity : ObservableAggregateRootEntity
         {
             public InitializedThenChangedThenClearedAggregateRootEntity()
             {
@@ -401,7 +401,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithInstanceWithHandlers
         {
-            private WithHandlersAggregateRootEntity _sut;
+            WithHandlersAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -432,7 +432,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class WithHandlersAggregateRootEntity : ObservableAggregateRootEntity
+        class WithHandlersAggregateRootEntity : ObservableAggregateRootEntity
         {
             public WithHandlersAggregateRootEntity()
             {
@@ -456,7 +456,7 @@ namespace AggregateSource.Reactive
         [TestFixture]
         public class WithInstanceWithoutHandlers
         {
-            private WithoutHandlersAggregateRootEntity _sut;
+            WithoutHandlersAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -477,7 +477,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        internal class WithoutHandlersAggregateRootEntity : ObservableAggregateRootEntity
+        class WithoutHandlersAggregateRootEntity : ObservableAggregateRootEntity
         {
             public void DoApply(object @event)
             {

@@ -11,7 +11,7 @@ namespace AggregateSource.Testing
     public class TestSpecificationTextWriter : IEventCentricTestSpecificationWriter,
                                                IExceptionCentricTestSpecificationWriter
     {
-        private readonly IndentedTextWriter _writer;
+        readonly IndentedTextWriter _writer;
 
         /// <summary>
         /// Initializes a new instance of <see cref="TestSpecificationTextWriter"/>.
@@ -45,7 +45,7 @@ namespace AggregateSource.Testing
             WriteThrows(specification);
         }
 
-        private void WriteGivens(EventCentricTestSpecification specification)
+        void WriteGivens(EventCentricTestSpecification specification)
         {
             if (specification.Givens.Length == 0) return;
 
@@ -53,19 +53,19 @@ namespace AggregateSource.Testing
             WriteEvents(specification.Givens);
         }
 
-        private void WriteWhen(EventCentricTestSpecification specification)
+        void WriteWhen(EventCentricTestSpecification specification)
         {
             _writer.WriteLine("When");
             WriteMessage(specification.When);
         }
 
-        private void WriteThens(EventCentricTestSpecification specification)
+        void WriteThens(EventCentricTestSpecification specification)
         {
             _writer.WriteLine("Then");
             WriteEvents(specification.Thens);
         }
 
-        private void WriteGivens(ExceptionCentricTestSpecification specification)
+        void WriteGivens(ExceptionCentricTestSpecification specification)
         {
             if (specification.Givens.Length == 0) return;
 
@@ -73,13 +73,13 @@ namespace AggregateSource.Testing
             WriteEvents(specification.Givens);
         }
 
-        private void WriteWhen(ExceptionCentricTestSpecification specification)
+        void WriteWhen(ExceptionCentricTestSpecification specification)
         {
             _writer.WriteLine("When");
             WriteMessage(specification.When);
         }
 
-        private void WriteThrows(ExceptionCentricTestSpecification specification)
+        void WriteThrows(ExceptionCentricTestSpecification specification)
         {
             _writer.WriteLine("Throws");
             _writer.Indent++;
@@ -87,14 +87,14 @@ namespace AggregateSource.Testing
             _writer.Indent--;
         }
 
-        private void WriteMessage(object message)
+        void WriteMessage(object message)
         {
             _writer.Indent++;
             _writer.WriteLine(message);
             _writer.Indent--;
         }
 
-        private void WriteEvents(IEnumerable<Tuple<string, object>> events)
+        void WriteEvents(IEnumerable<Tuple<string, object>> events)
         {
             _writer.Indent++;
             using (var enumerator = events.GetEnumerator())

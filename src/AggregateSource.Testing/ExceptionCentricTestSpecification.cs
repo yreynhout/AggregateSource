@@ -7,9 +7,9 @@ namespace AggregateSource.Testing
     /// </summary>
     public class ExceptionCentricTestSpecification
     {
-        private readonly Tuple<string, object>[] _givens;
-        private readonly object _when;
-        private readonly Exception _throws;
+        readonly Tuple<string, object>[] _givens;
+        readonly object _when;
+        readonly Exception _throws;
 
         /// <summary>
         /// Initializes a new <see cref="ExceptionCentricTestSpecification"/> instance.

@@ -2,12 +2,12 @@
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateFactoryThrowStateBuilder : IAggregateFactoryThrowStateBuilder
+    class AggregateFactoryThrowStateBuilder : IAggregateFactoryThrowStateBuilder
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
-        private readonly Exception _throws;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
+        readonly Exception _throws;
 
         public AggregateFactoryThrowStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                                  Func<IAggregateRootEntity, IAggregateRootEntity> when, Exception throws)

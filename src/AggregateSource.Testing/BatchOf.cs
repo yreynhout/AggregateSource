@@ -7,9 +7,9 @@ namespace AggregateSource.Testing
     /// </summary>
     public class BatchOf
     {
-        private static readonly Tuple<string, object>[] Empty = new Tuple<string, object>[0];
+        static readonly Tuple<string, object>[] Empty = new Tuple<string, object>[0];
 
-        private readonly Tuple<string, object>[] _facts;
+        readonly Tuple<string, object>[] _facts;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchOf"/> class.
@@ -19,7 +19,7 @@ namespace AggregateSource.Testing
             _facts = Empty;
         }
 
-        private BatchOf(Tuple<string, object>[] facts)
+        BatchOf(Tuple<string, object>[] facts)
         {
             _facts = facts;
         }

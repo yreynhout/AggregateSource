@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
-    internal class TestSpecificationBuilderContext
+    class TestSpecificationBuilderContext
     {
-        private readonly Tuple<string, object>[] _givens;
-        private readonly Tuple<string, object>[] _thens;
-        private readonly object _when;
-        private readonly Exception _throws;
+        readonly Tuple<string, object>[] _givens;
+        readonly Tuple<string, object>[] _thens;
+        readonly object _when;
+        readonly Exception _throws;
 
         public TestSpecificationBuilderContext()
         {
@@ -19,8 +19,8 @@ namespace AggregateSource.Testing
             _throws = null;
         }
 
-        private TestSpecificationBuilderContext(Tuple<string, object>[] givens, object when,
-                                                Tuple<string, object>[] thens, Exception throws)
+        TestSpecificationBuilderContext(Tuple<string, object>[] givens, object when,
+                                        Tuple<string, object>[] thens, Exception throws)
         {
             _givens = givens;
             _when = when;

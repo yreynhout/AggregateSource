@@ -100,7 +100,7 @@ namespace AggregateSource.Testing
         {
             protected abstract IThenStateBuilder Then(params Tuple<string, object>[] facts);
 
-            private Tuple<string, object> _fact;
+            Tuple<string, object> _fact;
 
             [SetUp]
             public void SetUp()

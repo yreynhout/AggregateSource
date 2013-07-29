@@ -161,24 +161,24 @@ namespace SampleSource.Testing
 
             public class Concert : AggregateRootEntity
             {
-                private ConcertId _id;
-                private bool _cancelled;
+                ConcertId _id;
+                bool _cancelled;
 
                 public static readonly Func<Concert> Factory = () => new Concert();
 
-                private Concert()
+                Concert()
                 {
                     Register<ConcertPlannedEvent>(When);
                     Register<ConcertCancelledEvent>(When);
                 }
 
-                private void When(ConcertPlannedEvent @event)
+                void When(ConcertPlannedEvent @event)
                 {
                     _id = new ConcertId(@event.ConcertId);
                     _cancelled = false;
                 }
 
-                private void When(ConcertCancelledEvent @event)
+                void When(ConcertCancelledEvent @event)
                 {
                     _cancelled = true;
                 }
@@ -201,24 +201,24 @@ namespace SampleSource.Testing
 
             public class TicketSale : AggregateRootEntity
             {
-                private SeatCount _availableSeats;
-                private bool _ended;
+                SeatCount _availableSeats;
+                bool _ended;
 
                 public static readonly Func<TicketSale> Factory = () => new TicketSale();
 
-                private TicketSale()
+                TicketSale()
                 {
                     Register<TicketSaleStartedEvent>(When);
                     Register<TicketSaleEndedEvent>(When);
                 }
 
-                private void When(TicketSaleStartedEvent @event)
+                void When(TicketSaleStartedEvent @event)
                 {
                     _ended = false;
                     _availableSeats = new SeatCount(@event.SeatCount);
                 }
 
-                private void When(TicketSaleEndedEvent @event)
+                void When(TicketSaleEndedEvent @event)
                 {
                     _ended = true;
                 }
@@ -264,7 +264,7 @@ namespace SampleSource.Testing
                     return !left.Equals(right);
                 }
 
-                private readonly int _value;
+                readonly int _value;
 
                 public SeatCount(int value)
                 {
@@ -281,7 +281,7 @@ namespace SampleSource.Testing
 
             public struct ConcertId : IEquatable<ConcertId>
             {
-                private readonly Guid _value;
+                readonly Guid _value;
 
                 public ConcertId(Guid value)
                 {
@@ -312,7 +312,7 @@ namespace SampleSource.Testing
 
             public struct TicketSaleId : IEquatable<TicketSaleId>
             {
-                private readonly Guid _value;
+                readonly Guid _value;
 
                 public TicketSaleId(Guid value)
                 {

@@ -5,7 +5,7 @@ namespace AggregateSource.Testing
     public class CommandScenarioFor<TAggregateRoot> : IAggregateCommandGivenStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly Func<IAggregateRootEntity> _sutFactory;
 
         public CommandScenarioFor(TAggregateRoot sut)
             : this(() => sut)

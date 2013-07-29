@@ -56,11 +56,11 @@ namespace AggregateSource
             }
         }
 
-        internal class AnyAggregateRootEntity : AggregateRootEntity
+        class AnyAggregateRootEntity : AggregateRootEntity
         {
         }
 
-        internal class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity
+        class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity
         {
             public InitializeWithNullEventsAggregateRootEntity()
             {
@@ -68,7 +68,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ApplyNullEventAggregateRootEntity : AggregateRootEntity
+        class ApplyNullEventAggregateRootEntity : AggregateRootEntity
         {
             public void ApplyNull()
             {
@@ -76,7 +76,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ApplyInterceptorAggregateRootEntity : AggregateRootEntity
+        class ApplyInterceptorAggregateRootEntity : AggregateRootEntity
         {
             public ApplyInterceptorAggregateRootEntity()
             {
@@ -99,7 +99,7 @@ namespace AggregateSource
             public bool AfterApplyWasCalled { get; private set; }
         }
 
-        internal class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity
+        class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity
         {
             public RegisterNullHandlerAggregateRootEntity()
             {
@@ -107,7 +107,7 @@ namespace AggregateSource
             }
         }
 
-        internal class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity
+        class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity
         {
             public RegisterSameEventHandlerTwiceAggregateRootEntity()
             {
@@ -119,7 +119,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithPristineInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -152,14 +152,14 @@ namespace AggregateSource
             }
         }
 
-        internal class PristineAggregateRootEntity : AggregateRootEntity
+        class PristineAggregateRootEntity : AggregateRootEntity
         {
         }
 
         [TestFixture]
         public class WithInitializedInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -192,7 +192,7 @@ namespace AggregateSource
             }
         }
 
-        internal class InitializedAggregateRootEntity : AggregateRootEntity
+        class InitializedAggregateRootEntity : AggregateRootEntity
         {
             public InitializedAggregateRootEntity()
             {
@@ -203,7 +203,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithChangedInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -237,7 +237,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ChangedAggregateRootEntity : AggregateRootEntity
+        class ChangedAggregateRootEntity : AggregateRootEntity
         {
             public static readonly object[] AppliedChanges = new[] {new object(), new object()};
 
@@ -253,7 +253,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInitializedThenChangedInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -287,7 +287,7 @@ namespace AggregateSource
             }
         }
 
-        internal class InitializedThenChangedAggregateRootEntity : AggregateRootEntity
+        class InitializedThenChangedAggregateRootEntity : AggregateRootEntity
         {
             public static readonly object[] AppliedChanges = new[] {new object(), new object()};
 
@@ -304,7 +304,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithChangedThenClearedInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -337,7 +337,7 @@ namespace AggregateSource
             }
         }
 
-        internal class ChangedThenClearedAggregateRootEntity : AggregateRootEntity
+        class ChangedThenClearedAggregateRootEntity : AggregateRootEntity
         {
             public ChangedThenClearedAggregateRootEntity()
             {
@@ -352,7 +352,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInitializedThenChangedThenClearedInstance
         {
-            private AggregateRootEntity _sut;
+            AggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -385,7 +385,7 @@ namespace AggregateSource
             }
         }
 
-        internal class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity
+        class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity
         {
             public InitializedThenChangedThenClearedAggregateRootEntity()
             {
@@ -401,7 +401,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithHandlers
         {
-            private WithHandlersAggregateRootEntity _sut;
+            WithHandlersAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -432,7 +432,7 @@ namespace AggregateSource
             }
         }
 
-        internal class WithHandlersAggregateRootEntity : AggregateRootEntity
+        class WithHandlersAggregateRootEntity : AggregateRootEntity
         {
             public WithHandlersAggregateRootEntity()
             {
@@ -456,7 +456,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithoutHandlers
         {
-            private WithoutHandlersAggregateRootEntity _sut;
+            WithoutHandlersAggregateRootEntity _sut;
 
             [SetUp]
             public void SetUp()
@@ -477,7 +477,7 @@ namespace AggregateSource
             }
         }
 
-        internal class WithoutHandlersAggregateRootEntity : AggregateRootEntity
+        class WithoutHandlersAggregateRootEntity : AggregateRootEntity
         {
             public void DoApply(object @event)
             {

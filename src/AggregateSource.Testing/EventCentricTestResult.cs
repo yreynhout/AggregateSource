@@ -7,10 +7,10 @@ namespace AggregateSource.Testing
     /// </summary>
     public class EventCentricTestResult
     {
-        private readonly EventCentricTestSpecification _specification;
-        private readonly TestResultState _state;
-        private readonly Optional<Tuple<string, object>[]> _actualEvents;
-        private readonly Optional<Exception> _actualException;
+        readonly EventCentricTestSpecification _specification;
+        readonly TestResultState _state;
+        readonly Optional<Tuple<string, object>[]> _actualEvents;
+        readonly Optional<Exception> _actualException;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventCentricTestResult"/> class.

@@ -4,10 +4,10 @@ namespace AggregateSource.Testing
 {
     public class EventCentricAggregateFactoryTestSpecification
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
-        private readonly object[] _thens;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Func<IAggregateRootEntity, IAggregateRootEntity> _when;
+        readonly object[] _thens;
 
         public EventCentricAggregateFactoryTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                                              Func<IAggregateRootEntity, IAggregateRootEntity> when,

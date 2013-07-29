@@ -8,8 +8,8 @@ namespace AggregateSource
     /// </summary>
     public abstract class Entity
     {
-        private readonly Action<object> _applier;
-        private readonly Dictionary<Type, Action<object>> _handlers;
+        readonly Action<object> _applier;
+        readonly Dictionary<Type, Action<object>> _handlers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class.

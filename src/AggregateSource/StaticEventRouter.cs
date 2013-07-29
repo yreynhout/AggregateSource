@@ -8,7 +8,7 @@ namespace AggregateSource
     /// </summary>
     public class StaticEventRouter : IConfigureStaticEventRouter
     {
-        private readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> _index;
+        readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> _index;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StaticEventRouter"/> class.
@@ -51,7 +51,7 @@ namespace AggregateSource
             if (!_index.TryGetValue(typeof (TInstance), out handlers))
             {
                 handlers = new Dictionary<Type, Action<object, object>>();
-                _index.Add(typeof(TInstance), handlers);
+                _index.Add(typeof (TInstance), handlers);
             }
             handlers.Add(typeof (TEvent), (instance, @event) => handler((TInstance) instance, (TEvent) @event));
         }

@@ -36,7 +36,7 @@ namespace AggregateSource
                     () => new Aggregate(Guid.NewGuid().ToString(), 0, null));
         }
 
-        private static class AggregateTestsValueSource
+        static class AggregateTestsValueSource
         {
             public static IEnumerable<string> IdSource
             {

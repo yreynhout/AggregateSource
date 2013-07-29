@@ -9,7 +9,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithAnyInstance
         {
-            private EventRecorder _sut;
+            EventRecorder _sut;
 
             [SetUp]
             public void SetUp()
@@ -33,7 +33,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithEmptyInstance
         {
-            private EventRecorder _sut;
+            EventRecorder _sut;
 
             [SetUp]
             public void SetUp()
@@ -78,8 +78,8 @@ namespace AggregateSource
         [TestFixture]
         public class WithMutatedInstance
         {
-            private EventRecorder _sut;
-            private object _initialEvent;
+            EventRecorder _sut;
+            object _initialEvent;
 
             [SetUp]
             public void SetUp()

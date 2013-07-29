@@ -2,11 +2,11 @@
 
 namespace AggregateSource.Testing
 {
-    internal class AggregateQueryWhenStateBuilder<TResult> : IAggregateQueryWhenStateBuilder<TResult>
+    class AggregateQueryWhenStateBuilder<TResult> : IAggregateQueryWhenStateBuilder<TResult>
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Func<IAggregateRootEntity, object> _when;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Func<IAggregateRootEntity, object> _when;
 
         public AggregateQueryWhenStateBuilder(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                               Func<IAggregateRootEntity, object> when)

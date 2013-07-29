@@ -10,12 +10,12 @@ namespace AggregateSource.Reactive
     /// </summary>
     public class ObservableAggregateRootEntity : IObservableAggregateRootEntity
     {
-        private readonly EventRecorder _recorder;
-        private readonly Dictionary<Type, Action<object>> _handlers;
+        readonly EventRecorder _recorder;
+        readonly Dictionary<Type, Action<object>> _handlers;
 
-        private ImmutableObserverList _observers;
-        private bool _disposed;
-        private readonly object _gate = new object();
+        ImmutableObserverList _observers;
+        bool _disposed;
+        readonly object _gate = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObservableAggregateRootEntity"/> class.
@@ -90,7 +90,7 @@ namespace AggregateSource.Reactive
         {
         }
 
-        private void Play(object @event)
+        void Play(object @event)
         {
             Action<object> handler;
             if (_handlers.TryGetValue(@event.GetType(), out handler))
@@ -99,7 +99,7 @@ namespace AggregateSource.Reactive
             }
         }
 
-        private void Record(object @event)
+        void Record(object @event)
         {
             _recorder.Record(@event);
 
@@ -114,7 +114,7 @@ namespace AggregateSource.Reactive
                 observer.OnNext(@event);
         }
 
-        private void ThrowIfDisposed()
+        void ThrowIfDisposed()
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().Name);
@@ -186,10 +186,10 @@ namespace AggregateSource.Reactive
             }
         }
 
-        private class Subscription : IDisposable
+        class Subscription : IDisposable
         {
-            private readonly ObservableAggregateRootEntity _owner;
-            private IObserver<object> _observer;
+            readonly ObservableAggregateRootEntity _owner;
+            IObserver<object> _observer;
 
             public Subscription(ObservableAggregateRootEntity owner, IObserver<object> observer)
             {
@@ -209,18 +209,18 @@ namespace AggregateSource.Reactive
             }
         }
 
-        private class ImmutableObserverList : IEnumerable
+        class ImmutableObserverList : IEnumerable
         {
             public static readonly ImmutableObserverList Empty = new ImmutableObserverList();
 
-            private readonly IObserver<object>[] _data;
+            readonly IObserver<object>[] _data;
 
-            private ImmutableObserverList()
+            ImmutableObserverList()
             {
                 _data = new IObserver<object>[0];
             }
 
-            private ImmutableObserverList(IObserver<object>[] data)
+            ImmutableObserverList(IObserver<object>[] data)
             {
                 _data = data;
             }
@@ -249,7 +249,7 @@ namespace AggregateSource.Reactive
                 return new ImmutableObserverList(data);
             }
 
-            private int IndexOf(IObserver<object> value)
+            int IndexOf(IObserver<object> value)
             {
                 for (var index = 0; index < _data.Length; ++index)
                 {

@@ -6,7 +6,7 @@ namespace AggregateSource
     [TestFixture]
     public class StaticEventRouterTests
     {
-        private StaticEventRouter _sut;
+        StaticEventRouter _sut;
 
         [SetUp]
         public void SetUp()
@@ -29,7 +29,7 @@ namespace AggregateSource
         [Test]
         public void AddRouteGenericHandlerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute<object,object>(null));
+            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute<object, object>(null));
         }
 
         [Test]
@@ -46,32 +46,38 @@ namespace AggregateSource
             Assert.DoesNotThrow(() => _sut.AddRoute((object instance, Event2 @event) => { }));
         }
 
-        class Event1 {}
-        class Event2 {}
+        class Event1
+        {
+        }
+
+        class Event2
+        {
+        }
 
         [Test]
         public void AddRouteInstanceCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(null, typeof(object), (instance, @event) => { }));
+            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(null, typeof (object), (instance, @event) => { }));
         }
 
         [Test]
         public void AddRouteEventCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof(object), null, (instance, @event) => { }));
+            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof (object), null, (instance, @event) => { }));
         }
 
         [Test]
         public void AddRouteHandlerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof(object), typeof(object), null));
+            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof (object), typeof (object), null));
         }
 
         [Test]
         public void CanNotAddDuplicateRoute()
         {
-            _sut.AddRoute(typeof(object), typeof(object), (instance, @event) => { });
-            Assert.Throws<ArgumentException>(() => _sut.AddRoute(typeof(object), typeof(object), (instance, @event) => { }));
+            _sut.AddRoute(typeof (object), typeof (object), (instance, @event) => { });
+            Assert.Throws<ArgumentException>(
+                () => _sut.AddRoute(typeof (object), typeof (object), (instance, @event) => { }));
         }
 
         [Test]

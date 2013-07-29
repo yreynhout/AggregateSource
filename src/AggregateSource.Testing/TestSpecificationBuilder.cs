@@ -3,17 +3,17 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
-    internal class TestSpecificationBuilder : IGivenStateBuilder, IWhenStateBuilder, IThenStateBuilder,
-                                              IThrowStateBuilder
+    class TestSpecificationBuilder : IGivenStateBuilder, IWhenStateBuilder, IThenStateBuilder,
+                                     IThrowStateBuilder
     {
-        private readonly TestSpecificationBuilderContext _context;
+        readonly TestSpecificationBuilderContext _context;
 
         public TestSpecificationBuilder()
         {
             _context = new TestSpecificationBuilderContext();
         }
 
-        private TestSpecificationBuilder(TestSpecificationBuilderContext context)
+        TestSpecificationBuilder(TestSpecificationBuilderContext context)
         {
             _context = context;
         }

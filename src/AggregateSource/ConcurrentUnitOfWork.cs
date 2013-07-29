@@ -10,7 +10,7 @@ namespace AggregateSource
     /// </summary>
     public class ConcurrentUnitOfWork
     {
-        private readonly ConcurrentDictionary<string, Aggregate> _aggregates;
+        readonly ConcurrentDictionary<string, Aggregate> _aggregates;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConcurrentUnitOfWork"/> class.

@@ -16,8 +16,8 @@ namespace AggregateSource
         /// </summary>
         public static readonly Optional<T> Empty = new Optional<T>();
 
-        private readonly bool _hasValue;
-        private readonly T _value;
+        readonly bool _hasValue;
+        readonly T _value;
 
         /// <summary>
         /// Initializes a new <see cref="Optional{T}"/> instance.

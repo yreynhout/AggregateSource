@@ -35,7 +35,7 @@ namespace SampleSource
 
         public static class DomainEventDispatcher
         {
-            [ThreadStatic] private static Dictionary<Type, List<Action<object>>> _index;
+            [ThreadStatic] static Dictionary<Type, List<Action<object>>> _index;
 
             public static IDisposable Subscribe<TEvent>(Action<TEvent> handler)
             {
@@ -64,10 +64,10 @@ namespace SampleSource
                 }
             }
 
-            private class Disposable : IDisposable
+            class Disposable : IDisposable
             {
-                private readonly Action _disposer;
-                private bool _disposed;
+                readonly Action _disposer;
+                bool _disposed;
 
                 public Disposable(Action disposer)
                 {
@@ -86,7 +86,7 @@ namespace SampleSource
 
         public class TodoList : DomainEventAwareAggregateRootEntity
         {
-            private TodoList()
+            TodoList()
             {
             }
 
@@ -101,7 +101,7 @@ namespace SampleSource
 
         public struct TodoListId : IEquatable<TodoListId>
         {
-            private readonly Guid _value;
+            readonly Guid _value;
 
             public TodoListId(Guid value)
             {

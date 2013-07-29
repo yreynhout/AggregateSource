@@ -4,10 +4,10 @@ namespace AggregateSource.Testing
 {
     public class ExceptionCentricAggregateCommandTestSpecification
     {
-        private readonly Func<IAggregateRootEntity> _sutFactory;
-        private readonly object[] _givens;
-        private readonly Action<IAggregateRootEntity> _when;
-        private readonly Exception _throws;
+        readonly Func<IAggregateRootEntity> _sutFactory;
+        readonly object[] _givens;
+        readonly Action<IAggregateRootEntity> _when;
+        readonly Exception _throws;
 
         public ExceptionCentricAggregateCommandTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                                                  Action<IAggregateRootEntity> when, Exception throws)
