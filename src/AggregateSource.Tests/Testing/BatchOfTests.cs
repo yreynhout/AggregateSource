@@ -1,4 +1,5 @@
 ﻿using System;
+using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
 namespace AggregateSource.Testing
@@ -8,12 +9,12 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class InitialInstanceTests
         {
-            BatchOf _sut;
+            State _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new BatchOf();
+                _sut = new State();
             }
 
             [Test]
@@ -28,12 +29,12 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class FactTests
         {
-            BatchOf _sut;
+            State _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new BatchOf();
+                _sut = new State();
             }
 
             [Test]
@@ -100,12 +101,12 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class FactsTests
         {
-            BatchOf _sut;
+            State _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new BatchOf();
+                _sut = new State();
             }
 
             [Test]

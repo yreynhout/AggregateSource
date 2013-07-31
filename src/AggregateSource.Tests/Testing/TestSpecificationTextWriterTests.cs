@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
 namespace AggregateSource.Testing

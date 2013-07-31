@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AggregateSource;
 using AggregateSource.Testing;
+using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
 namespace SampleSource.Testing

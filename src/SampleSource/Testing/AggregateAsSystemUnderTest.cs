@@ -1,6 +1,7 @@
 ﻿using System;
 using AggregateSource;
 using AggregateSource.Testing;
+using AggregateSource.Testing.AggregateCentric;
 using NUnit.Framework;
 
 namespace SampleSource.Testing

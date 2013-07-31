@@ -1,4 +1,5 @@
 ﻿using System;
+using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
 namespace AggregateSource.Testing
