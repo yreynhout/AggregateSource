@@ -40,6 +40,12 @@ namespace AggregateSource.GEventStore
         public IEnumerable<EventsSlice> Read(string identifier, int version)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
+            if (version <= 0) throw new ArgumentOutOfRangeException("version");
+            return ReadCore(identifier, version);
+        }
+
+        IEnumerable<EventsSlice> ReadCore(string identifier, int version)
+        {
             var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
             var streamName = _configuration.StreamNameResolver.Resolve(identifier);
             var slice = _connection.

@@ -80,6 +80,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AsyncRepositoryTests.cs" />
+    <Compile Include="EventReaderTests.cs" />
     <Compile Include="Framework\AggregateRootEntityStub.cs" />
     <Compile Include="Framework\AssemblyAttribute.cs" />
     <Compile Include="Framework\AsyncEventReaderFactory.cs" />
