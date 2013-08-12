@@ -1,15 +1,14 @@
 ﻿using System;
-using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
-    namespace ThrowStateBuilderTests
+    namespace ScenarioThrowStateBuilderTests
     {
         [TestFixture]
         public class WhenStateBuilderThrowTests : ThrowFixture
         {
-            protected override IThrowStateBuilder Throw(Exception exception)
+            protected override IScenarioThrowStateBuilder Throw(Exception exception)
             {
                 return new Scenario().Given("", new object[0]).When(new object()).Throws(exception);
             }
@@ -17,7 +16,7 @@ namespace AggregateSource.Testing
 
         public abstract class ThrowFixture
         {
-            protected abstract IThrowStateBuilder Throw(Exception exception);
+            protected abstract IScenarioThrowStateBuilder Throw(Exception exception);
 
             [Test]
             public void ThrowThrowsWhenExceptionIsNull()
@@ -36,7 +35,7 @@ namespace AggregateSource.Testing
             public void ThrowReturnsThrowBuilderContinuation()
             {
                 var result = Throw(new Exception());
-                Assert.That(result, Is.InstanceOf<IThrowStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioThrowStateBuilder>());
             }
 
             [Test]

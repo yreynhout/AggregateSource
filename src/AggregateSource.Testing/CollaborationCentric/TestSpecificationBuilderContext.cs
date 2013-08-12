@@ -6,20 +6,20 @@ namespace AggregateSource.Testing.CollaborationCentric
 {
     class TestSpecificationBuilderContext
     {
-        readonly Tuple<string, object>[] _givens;
-        readonly Tuple<string, object>[] _thens;
+        readonly Fact[] _givens;
+        readonly Fact[] _thens;
         readonly object _when;
         readonly Exception _throws;
 
         public TestSpecificationBuilderContext()
         {
-            _givens = new Tuple<string, object>[0];
-            _thens = new Tuple<string, object>[0];
+            _givens = Fact.Empty;
+            _thens = Fact.Empty;
             _when = null;
             _throws = null;
         }
 
-        TestSpecificationBuilderContext(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens,
+        TestSpecificationBuilderContext(Fact[] givens, object when, Fact[] thens,
                                         Exception throws)
         {
             _givens = givens;
@@ -28,7 +28,7 @@ namespace AggregateSource.Testing.CollaborationCentric
             _throws = throws;
         }
 
-        public TestSpecificationBuilderContext AppendGivens(IEnumerable<Tuple<string, object>> events)
+        public TestSpecificationBuilderContext AppendGivens(IEnumerable<Fact> events)
         {
             return new TestSpecificationBuilderContext(_givens.Concat(events).ToArray(), _when, _thens, _throws);
         }
@@ -38,7 +38,7 @@ namespace AggregateSource.Testing.CollaborationCentric
             return new TestSpecificationBuilderContext(_givens, message, _thens, _throws);
         }
 
-        public TestSpecificationBuilderContext AppendThens(IEnumerable<Tuple<string, object>> events)
+        public TestSpecificationBuilderContext AppendThens(IEnumerable<Fact> events)
         {
             return new TestSpecificationBuilderContext(_givens, _when, _thens.Concat(events).ToArray(), _throws);
         }

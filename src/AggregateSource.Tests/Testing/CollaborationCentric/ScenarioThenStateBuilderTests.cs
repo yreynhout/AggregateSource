@@ -1,15 +1,14 @@
 ﻿using System;
-using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
-    namespace ThenStateBuilderTests
+    namespace ScenarioThenStateBuilderTests
     {
         [TestFixture]
         public class WhenBuilderThenEventsTests : ThenEventsFixture
         {
-            protected override IThenStateBuilder Then(string identifier, params object[] events)
+            protected override IScenarioThenStateBuilder Then(string identifier, params object[] events)
             {
                 return new Scenario().When(new object()).Then(identifier, events);
             }
@@ -18,7 +17,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class ThenEventsBuilderThenEventsTests : ThenEventsFixture
         {
-            protected override IThenStateBuilder Then(string identifier, params object[] events)
+            protected override IScenarioThenStateBuilder Then(string identifier, params object[] events)
             {
                 return new Scenario().When(new object()).Then("", new object[0]).Then(identifier, events);
             }
@@ -26,7 +25,7 @@ namespace AggregateSource.Testing
 
         public abstract class ThenEventsFixture
         {
-            protected abstract IThenStateBuilder Then(string identifier, params object[] events);
+            protected abstract IScenarioThenStateBuilder Then(string identifier, params object[] events);
 
             [Test]
             public void ThenThrowsWhenIdentifierIsNull()
@@ -51,7 +50,7 @@ namespace AggregateSource.Testing
             public void ThenReturnsThenBuilderContinuation()
             {
                 var result = Then(Model.Identifier1, new object[0]);
-                Assert.That(result, Is.InstanceOf<IThenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioThenStateBuilder>());
             }
 
             [Test]
@@ -73,8 +72,8 @@ namespace AggregateSource.Testing
                 Assert.That(result, Is.EquivalentTo(
                     new[]
                     {
-                        new Tuple<string, object>(Model.Identifier1, events[0]),
-                        new Tuple<string, object>(Model.Identifier1, events[1])
+                        new Fact(Model.Identifier1, events[0]),
+                        new Fact(Model.Identifier1, events[1])
                     }));
             }
         }
@@ -82,7 +81,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class WhenBuilderThenFactsTests : ThenFactsFixture
         {
-            protected override IThenStateBuilder Then(params Tuple<string, object>[] facts)
+            protected override IScenarioThenStateBuilder Then(params Fact[] facts)
             {
                 return new Scenario().When(new object()).Then(facts);
             }
@@ -91,7 +90,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class ThenFactsBuilderThenFactsTests : ThenFactsFixture
         {
-            protected override IThenStateBuilder Then(params Tuple<string, object>[] facts)
+            protected override IScenarioThenStateBuilder Then(params Fact[] facts)
             {
                 return new Scenario().When(new object()).Then("", new object[0]).Then(facts);
             }
@@ -99,14 +98,14 @@ namespace AggregateSource.Testing
 
         public abstract class ThenFactsFixture
         {
-            protected abstract IThenStateBuilder Then(params Tuple<string, object>[] facts);
+            protected abstract IScenarioThenStateBuilder Then(params Fact[] facts);
 
-            Tuple<string, object> _fact;
+            Fact _fact;
 
             [SetUp]
             public void SetUp()
             {
-                _fact = new Tuple<string, object>(Model.Identifier1, new object());
+                _fact = new Fact(Model.Identifier1, new object());
             }
 
             [Test]
@@ -126,7 +125,7 @@ namespace AggregateSource.Testing
             public void ThenReturnsThenBuilderContinuation()
             {
                 var result = Then(_fact);
-                Assert.That(result, Is.InstanceOf<IThenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioThenStateBuilder>());
             }
 
             [Test]
@@ -143,13 +142,67 @@ namespace AggregateSource.Testing
             {
                 var facts = new[]
                 {
-                    new Tuple<string, object>(Model.Identifier1, new object()),
-                    new Tuple<string, object>(Model.Identifier2, new object()),
+                    new Fact(Model.Identifier1, new object()),
+                    new Fact(Model.Identifier2, new object()),
                 };
 
                 var result = Then(facts).Build().Thens;
 
                 Assert.That(result, Is.EquivalentTo(facts));
+            }
+        }
+
+        [TestFixture]
+        public class WhenBuilderThenNoneTests : ThenNoneFixture
+        {
+            protected override IScenarioThenNoneStateBuilder ThenNone()
+            {
+                return new Scenario().When(new object()).ThenNone();
+            }
+        }
+
+        [TestFixture]
+        public class ThenEventsBuilderThenNoneTests : ThenNoneFixture
+        {
+            protected override IScenarioThenNoneStateBuilder ThenNone()
+            {
+                return new Scenario().When(new object()).ThenNone();
+            }
+        }
+
+        public abstract class ThenNoneFixture
+        {
+            protected abstract IScenarioThenNoneStateBuilder ThenNone();
+
+            [Test]
+            public void ThenNoneDoesNotReturnNull()
+            {
+                var result = ThenNone();
+                Assert.That(result, Is.Not.Null);
+            }
+
+            [Test]
+            public void ThenNoneReturnsThenBuilderContinuation()
+            {
+                var result = ThenNone();
+                Assert.That(result, Is.InstanceOf<IScenarioThenNoneStateBuilder>());
+            }
+
+            [Test]
+            [Repeat(2)]
+            public void ThenReturnsNewInstanceUponEachCall()
+            {
+                Assert.That(
+                    ThenNone(),
+                    Is.Not.SameAs(ThenNone()));
+            }
+
+            [Test]
+            public void IsSetInResultingSpecification()
+            {
+                var result = ThenNone().Build().Thens;
+
+                Assert.That(result, Is.EquivalentTo(Fact.Empty));
             }
         }
     }

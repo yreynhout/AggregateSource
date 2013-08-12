@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AggregateSource.Testing.CollaborationCentric
 {
-    class TestSpecificationBuilder : IGivenStateBuilder, IWhenStateBuilder, IThenStateBuilder, IThrowStateBuilder
+    class TestSpecificationBuilder : IScenarioGivenStateBuilder, IScenarioGivenNoneStateBuilder, IScenarioWhenStateBuilder, IScenarioThenStateBuilder, IScenarioThenNoneStateBuilder, IScenarioThrowStateBuilder
     {
         readonly TestSpecificationBuilderContext _context;
 
@@ -17,43 +17,53 @@ namespace AggregateSource.Testing.CollaborationCentric
             _context = context;
         }
 
-        public IGivenStateBuilder Given(params Tuple<string, object>[] facts)
+        public IScenarioGivenStateBuilder Given(params Fact[] facts)
         {
             if (facts == null) throw new ArgumentNullException("facts");
             return new TestSpecificationBuilder(_context.AppendGivens(facts));
         }
 
-        public IGivenStateBuilder Given(string identifier, params object[] events)
+        public IScenarioGivenStateBuilder Given(string identifier, params object[] events)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
             if (events == null) throw new ArgumentNullException("events");
             return
                 new TestSpecificationBuilder(
-                    _context.AppendGivens(events.Select(@event => new Tuple<string, object>(identifier, @event))));
+                    _context.AppendGivens(events.Select(@event => new Fact(identifier, @event))));
         }
 
-        public IWhenStateBuilder When(object message)
+        public IScenarioGivenNoneStateBuilder GivenNone()
+        {
+            return new TestSpecificationBuilder(_context);
+        }
+
+        public IScenarioWhenStateBuilder When(object message)
         {
             if (message == null) throw new ArgumentNullException("message");
             return new TestSpecificationBuilder(_context.SetWhen(message));
         }
 
-        public IThenStateBuilder Then(params Tuple<string, object>[] facts)
+        public IScenarioThenStateBuilder Then(params Fact[] facts)
         {
             if (facts == null) throw new ArgumentNullException("facts");
             return new TestSpecificationBuilder(_context.AppendThens(facts));
         }
 
-        public IThenStateBuilder Then(string identifier, params object[] events)
+        public IScenarioThenStateBuilder Then(string identifier, params object[] events)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
             if (events == null) throw new ArgumentNullException("events");
             return
                 new TestSpecificationBuilder(
-                    _context.AppendThens(events.Select(@event => new Tuple<string, object>(identifier, @event))));
+                    _context.AppendThens(events.Select(@event => new Fact(identifier, @event))));
         }
 
-        public IThrowStateBuilder Throws(Exception exception)
+        public IScenarioThenNoneStateBuilder ThenNone()
+        {
+            return new TestSpecificationBuilder(_context);
+        }
+
+        public IScenarioThrowStateBuilder Throws(Exception exception)
         {
             if (exception == null) throw new ArgumentNullException("exception");
             return new TestSpecificationBuilder(_context.SetThrows(exception));

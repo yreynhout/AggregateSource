@@ -10,7 +10,7 @@ namespace AggregateSource.Testing.CollaborationCentric
         readonly ExceptionCentricTestSpecification _specification;
         readonly TestResultState _state;
         readonly Optional<Exception> _actualException;
-        readonly Optional<Tuple<string, object>[]> _actualEvents;
+        readonly Optional<Fact[]> _actualEvents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionCentricTestResult"/> class.
@@ -20,17 +20,13 @@ namespace AggregateSource.Testing.CollaborationCentric
         /// <param name="actualException">The actual exception.</param>
         /// <param name="actualEvents">The actual events.</param>
         internal ExceptionCentricTestResult(ExceptionCentricTestSpecification specification, TestResultState state,
-                                            Exception actualException = null,
-                                            Tuple<string, object>[] actualEvents = null)
+                                            Optional<Exception> actualException,
+                                            Optional<Fact[]> actualEvents)
         {
             _specification = specification;
             _state = state;
-            _actualException = actualException == null
-                                   ? Optional<Exception>.Empty
-                                   : new Optional<Exception>(actualException);
-            _actualEvents = actualEvents == null
-                                ? Optional<Tuple<string, object>[]>.Empty
-                                : new Optional<Tuple<string, object>[]>(actualEvents);
+            _actualException = actualException;
+            _actualEvents = actualEvents;
         }
 
         /// <summary>
@@ -72,7 +68,7 @@ namespace AggregateSource.Testing.CollaborationCentric
         /// <value>
         /// The exception.
         /// </value>
-        public Optional<Exception> But
+        public Optional<Exception> ButException
         {
             get { return _actualException; }
         }
@@ -83,7 +79,7 @@ namespace AggregateSource.Testing.CollaborationCentric
         /// <value>
         /// The events.
         /// </value>
-        public Optional<Tuple<string, object>[]> Buts
+        public Optional<Fact[]> ButEvents
         {
             get { return _actualEvents; }
         }

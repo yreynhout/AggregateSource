@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
     public static class Model
     {

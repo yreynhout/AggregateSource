@@ -1,15 +1,14 @@
 ﻿using System;
-using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
-    namespace WhenStateBuilderTests
+    namespace ScenarioWhenStateBuilderTests
     {
         [TestFixture]
         public class ScenarioWhenTests : WhenFixture
         {
-            protected override IWhenStateBuilder When(object message)
+            protected override IScenarioWhenStateBuilder When(object message)
             {
                 return new Scenario().When(message);
             }
@@ -18,7 +17,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class GivenStateBuilderWhenTests : WhenFixture
         {
-            protected override IWhenStateBuilder When(object message)
+            protected override IScenarioWhenStateBuilder When(object message)
             {
                 return new Scenario().Given("", new object[0]).When(message);
             }
@@ -26,7 +25,7 @@ namespace AggregateSource.Testing
 
         public abstract class WhenFixture
         {
-            protected abstract IWhenStateBuilder When(object message);
+            protected abstract IScenarioWhenStateBuilder When(object message);
 
             [Test]
             public void WhenThrowsWhenMessageIsNull()
@@ -45,7 +44,7 @@ namespace AggregateSource.Testing
             public void WhenReturnsWhenBuilderContinuation()
             {
                 var result = When(new object());
-                Assert.That(result, Is.InstanceOf<IWhenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioWhenStateBuilder>());
             }
 
             [Test]

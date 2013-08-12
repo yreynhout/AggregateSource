@@ -29,13 +29,13 @@ namespace SampleSource.Testing
 
         public static class ScenarioExtensions
         {
-            public static IGivenStateBuilder Given(this IGivenStateBuilder builder, params IEvent[] events)
+            public static IScenarioGivenStateBuilder Given(this IScenarioGivenStateBuilder builder, params IEvent[] events)
             {
                 if (events == null) throw new ArgumentNullException("events");
                 return events.Aggregate(builder, (current, @event) => current.Given(@event.Id.ToString(), @event));
             }
 
-            public static IThenStateBuilder Then(this IWhenStateBuilder builder, params IEvent[] events)
+            public static IScenarioThenStateBuilder Then(this IScenarioWhenStateBuilder builder, params IEvent[] events)
             {
                 if (events == null) throw new ArgumentNullException("events");
                 if (events.Length == 0) return builder.Then(Guid.Empty.ToString(), new object[0]);
@@ -52,13 +52,13 @@ namespace SampleSource.Testing
                 }
             }
 
-            public static IThenStateBuilder Then(this IThenStateBuilder builder, params IEvent[] events)
+            public static IScenarioThenStateBuilder Then(this IScenarioThenStateBuilder builder, params IEvent[] events)
             {
                 if (events == null) throw new ArgumentNullException("events");
                 return events.Aggregate(builder, (current, @event) => current.Then(@event.Id.ToString(), @event));
             }
 
-            public static void Assert(this IThenStateBuilder builder)
+            public static void Assert(this IScenarioThenStateBuilder builder)
             {
                 //ommitted for brevity.
             }

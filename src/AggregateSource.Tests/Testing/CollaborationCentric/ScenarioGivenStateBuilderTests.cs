@@ -1,15 +1,14 @@
 ﻿using System;
-using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
-    namespace GivenStateBuilderTests
+    namespace ScenarioGivenStateBuilderTests
     {
         [TestFixture]
         public class ScenarioGivenEventsTests : GivenEventsFixture
         {
-            protected override IGivenStateBuilder Given(string identifier, params object[] events)
+            protected override IScenarioGivenStateBuilder Given(string identifier, params object[] events)
             {
                 return new Scenario().Given(identifier, events);
             }
@@ -18,7 +17,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class GivenStateBuilderGivenEventsTests : GivenEventsFixture
         {
-            protected override IGivenStateBuilder Given(string identifier, params object[] events)
+            protected override IScenarioGivenStateBuilder Given(string identifier, params object[] events)
             {
                 return new Scenario().Given(Model.Identifier1, new object[0]).Given(identifier, events);
             }
@@ -26,7 +25,7 @@ namespace AggregateSource.Testing
 
         public abstract class GivenEventsFixture
         {
-            protected abstract IGivenStateBuilder Given(string identifier, params object[] events);
+            protected abstract IScenarioGivenStateBuilder Given(string identifier, params object[] events);
 
             [Test]
             public void GivenThrowsWhenIdentifierIsNull()
@@ -51,7 +50,7 @@ namespace AggregateSource.Testing
             public void GivenReturnsGivenBuilderContinuation()
             {
                 var result = Given(Model.Identifier1, new object[0]);
-                Assert.That(result, Is.InstanceOf<IGivenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioGivenStateBuilder>());
             }
 
             [Test]
@@ -73,8 +72,8 @@ namespace AggregateSource.Testing
                 Assert.That(result, Is.EquivalentTo(
                     new[]
                     {
-                        new Tuple<string, object>(Model.Identifier1, events[0]),
-                        new Tuple<string, object>(Model.Identifier1, events[1])
+                        new Fact(Model.Identifier1, events[0]),
+                        new Fact(Model.Identifier1, events[1])
                     }));
             }
         }
@@ -82,7 +81,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class ScenarioGivenFactsTests : GivenFactsFixture
         {
-            protected override IGivenStateBuilder Given(params Tuple<string, object>[] facts)
+            protected override IScenarioGivenStateBuilder Given(params Fact[] facts)
             {
                 return new Scenario().Given(facts);
             }
@@ -91,7 +90,7 @@ namespace AggregateSource.Testing
         [TestFixture]
         public class GivenStateBuilderGivenFactsTests : GivenFactsFixture
         {
-            protected override IGivenStateBuilder Given(params Tuple<string, object>[] facts)
+            protected override IScenarioGivenStateBuilder Given(params Fact[] facts)
             {
                 return new Scenario().Given(Model.Identifier1, new object[0]).Given(facts);
             }
@@ -99,14 +98,14 @@ namespace AggregateSource.Testing
 
         public abstract class GivenFactsFixture
         {
-            protected abstract IGivenStateBuilder Given(params Tuple<string, object>[] facts);
+            protected abstract IScenarioGivenStateBuilder Given(params Fact[] facts);
 
-            Tuple<string, object> _fact;
+            Fact _fact;
 
             [SetUp]
             public void SetUp()
             {
-                _fact = new Tuple<string, object>(Model.Identifier1, new object());
+                _fact = new Fact(Model.Identifier1, new object());
             }
 
             [Test]
@@ -126,7 +125,7 @@ namespace AggregateSource.Testing
             public void GivenReturnsGivenBuilderContinuation()
             {
                 var result = Given(_fact);
-                Assert.That(result, Is.InstanceOf<IGivenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IScenarioGivenStateBuilder>());
             }
 
             [Test]
@@ -144,13 +143,68 @@ namespace AggregateSource.Testing
             {
                 var facts = new[]
                 {
-                    new Tuple<string, object>(Model.Identifier1, new object()),
-                    new Tuple<string, object>(Model.Identifier2, new object()),
+                    new Fact(Model.Identifier1, new object()),
+                    new Fact(Model.Identifier2, new object()),
                 };
 
                 var result = Given(facts).When(new object()).Build().Givens;
 
                 Assert.That(result, Is.EquivalentTo(facts));
+            }
+        }
+
+        [TestFixture]
+        public class ScenarioGivenNoneTests : GivenNoneFixture
+        {
+            protected override IScenarioGivenNoneStateBuilder GivenNone()
+            {
+                return new Scenario().GivenNone();
+            }
+        }
+
+        [TestFixture]
+        public class GivenStateBuilderGivenNoneTests : GivenNoneFixture
+        {
+            protected override IScenarioGivenNoneStateBuilder GivenNone()
+            {
+                return new Scenario().GivenNone();
+            }
+        }
+
+        public abstract class GivenNoneFixture
+        {
+            protected abstract IScenarioGivenNoneStateBuilder GivenNone();
+
+            [Test]
+            public void GivenNoneDoesNotReturnNull()
+            {
+                var result = GivenNone();
+                Assert.That(result, Is.Not.Null);
+            }
+
+            [Test]
+            public void GivenNoneReturnsGivenNoneBuilderContinuation()
+            {
+                var result = GivenNone();
+                Assert.That(result, Is.InstanceOf<IScenarioGivenNoneStateBuilder>());
+            }
+
+            [Test]
+            [Repeat(2)]
+            public void GivenNoneReturnsNewInstanceUponEachCall()
+            {
+                Assert.That(
+                    GivenNone(),
+                    Is.Not.SameAs(GivenNone()));
+            }
+
+
+            [Test]
+            public void IsSetInResultingSpecification()
+            {
+                var result = GivenNone().When(new object()).Build().Givens;
+
+                Assert.That(result, Is.EquivalentTo(Fact.Empty));
             }
         }
     }

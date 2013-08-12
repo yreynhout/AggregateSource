@@ -1,8 +1,7 @@
 ﻿using System;
-using AggregateSource.Testing.CollaborationCentric;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.CollaborationCentric
 {
     [TestFixture]
     public class ExceptionCentricTestSpecificationTests : TestSpecificationDataPointFixture
@@ -46,11 +45,11 @@ namespace AggregateSource.Testing
         {
             var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
 
-            Assert.That(sut.Equals(sut), Is.True);
+            Assert.That(sut.Equals((object)sut), Is.True);
         }
 
         [Theory]
-        public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Tuple<string, object>[] givens,
+        public void UsingDefaultConstructorReturnsInstanceWithExpectedProperties(Fact[] givens,
                                                                                  object when, Exception throws)
         {
             var sut = new ExceptionCentricTestSpecification(givens, when, throws);
@@ -61,7 +60,7 @@ namespace AggregateSource.Testing
         }
 
         [Theory]
-        public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Tuple<string, object>[] givens, object when,
+        public void TwoInstancesAreEqualIfTheyHaveTheSameProperties(Fact[] givens, object when,
                                                                     Exception throws)
         {
             Assert.That(
@@ -74,14 +73,14 @@ namespace AggregateSource.Testing
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(
-                    new[] {new Tuple<string, object>(Model.Identifier1, new object())}, when, throws),
+                    new[] {new Fact(Model.Identifier1, new object())}, when, throws),
                 Is.Not.EqualTo(
                     new ExceptionCentricTestSpecification(
-                        new[] {new Tuple<string, object>(Model.Identifier1, new object())}, when, throws)));
+                        new[] {new Fact(Model.Identifier1, new object())}, when, throws)));
         }
 
         [Theory]
-        public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Tuple<string, object>[] givens, Exception throws)
+        public void TwoInstancesAreNotEqualIfTheirWhenDiffers(Fact[] givens, Exception throws)
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(givens, new object(), throws),
@@ -89,7 +88,7 @@ namespace AggregateSource.Testing
         }
 
         [Theory]
-        public void TwoInstancesAreNotEqualIfTheirThrowsDiffers(Tuple<string, object>[] givens, object when)
+        public void TwoInstancesAreNotEqualIfTheirThrowsDiffers(Fact[] givens, object when)
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(givens, when, new Exception()),
@@ -97,7 +96,7 @@ namespace AggregateSource.Testing
         }
 
         [Theory]
-        public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Tuple<string, object>[] givens,
+        public void TwoInstancesHaveTheSameHashCodeIfTheyHaveTheSameProperties(Fact[] givens,
                                                                                object when, Exception throws)
         {
             Assert.That(
@@ -110,14 +109,14 @@ namespace AggregateSource.Testing
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(
-                    new[] {new Tuple<string, object>(Model.Identifier1, new object())}, when, throws).GetHashCode(),
+                    new[] {new Fact(Model.Identifier1, new object())}, when, throws).GetHashCode(),
                 Is.Not.EqualTo(
                     new ExceptionCentricTestSpecification(
-                        new[] {new Tuple<string, object>(Model.Identifier1, new object())}, when, throws).GetHashCode()));
+                        new[] {new Fact(Model.Identifier1, new object())}, when, throws).GetHashCode()));
         }
 
         [Theory]
-        public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Tuple<string, object>[] givens, Exception throws)
+        public void TwoInstancesHaveDifferentHashCodeIfTheirWhenDiffers(Fact[] givens, Exception throws)
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(givens, new object(), throws).GetHashCode(),
@@ -125,7 +124,7 @@ namespace AggregateSource.Testing
         }
 
         [Theory]
-        public void TwoInstancesHaveDifferentHashCodeIfTheirThrowsDiffers(Tuple<string, object>[] givens, object when)
+        public void TwoInstancesHaveDifferentHashCodeIfTheirThrowsDiffers(Fact[] givens, object when)
         {
             Assert.That(
                 new ExceptionCentricTestSpecification(givens, when, new Exception()).GetHashCode(),
@@ -141,7 +140,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Specification, Is.SameAs(sut));
             Assert.That(result.Passed, Is.True);
             Assert.That(result.Failed, Is.False);
-            Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
 
         [Test]
@@ -153,7 +152,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Specification, Is.SameAs(sut));
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
 
         [Test]
@@ -175,7 +174,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Specification, Is.SameAs(sut));
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.But, Is.EqualTo(new Optional<Exception>(actual)));
+            Assert.That(result.ButException, Is.EqualTo(new Optional<Exception>(actual)));
         }
 
         [Test]
@@ -183,7 +182,7 @@ namespace AggregateSource.Testing
         {
             var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
 
-            Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Tuple<string, object>[]) null); });
+            Assert.Throws<ArgumentNullException>(() => { var _ = sut.Fail((Fact[]) null); });
         }
 
         [Test]
@@ -191,15 +190,15 @@ namespace AggregateSource.Testing
         {
             var sut = new ExceptionCentricTestSpecification(NoEvents, Message, Exception);
 
-            var actual = new[] {new Tuple<string, object>(Model.Identifier1, new object())};
+            var actual = new[] {new Fact(Model.Identifier1, new object())};
 
             var result = sut.Fail(actual);
 
             Assert.That(result.Specification, Is.SameAs(sut));
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.Buts, Is.EqualTo(new Optional<Tuple<string, object>[]>(actual)));
-            Assert.That(result.But, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButEvents, Is.EqualTo(new Optional<Fact[]>(actual)));
+            Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
     }
 }

@@ -3,5 +3,5 @@
     /// <summary>
     /// The throw state within the test specification building process.
     /// </summary>
-    public interface IThrowStateBuilder : IExceptionCentricTestSpecificationBuilder {}
+    public interface IScenarioThrowStateBuilder : IExceptionCentricTestSpecificationBuilder {}
 }
