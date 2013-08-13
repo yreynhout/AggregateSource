@@ -84,18 +84,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reactive\ObservableAggregateRootEntityTests.cs" />
     <Compile Include="StaticEventRouterTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\FactsBuilderTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\TestFactBuilder.cs" />
-    <Compile Include="Testing\CollaborationCentric\FactTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\ExceptionCentricTestSpecificationTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\Model.cs" />
-    <Compile Include="Testing\CollaborationCentric\TestSpecificationTextWriterTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\ScenarioGivenStateBuilderTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\TestSpecificationDataPointFixture.cs" />
-    <Compile Include="Testing\CollaborationCentric\EventCentricTestSpecificationTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\ScenarioThenStateBuilderTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\ScenarioThrowStateBuilderTests.cs" />
-    <Compile Include="Testing\CollaborationCentric\ScenarioWhenStateBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\FactsBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\TestFactBuilder.cs" />
+    <Compile Include="Testing\CollaborationBehavior\FactTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ExceptionCentricTestSpecificationTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\Model.cs" />
+    <Compile Include="Testing\CollaborationBehavior\TestSpecificationTextWriterTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ScenarioGivenStateBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\TestSpecificationDataPointFixture.cs" />
+    <Compile Include="Testing\CollaborationBehavior\EventCentricTestSpecificationTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ScenarioThenStateBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ScenarioThrowStateBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ScenarioWhenStateBuilderTests.cs" />
     <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
