@@ -12,9 +12,8 @@ namespace AggregateSource.Testing.CollaborationCentric
         /// <summary>
         /// Initializes a new instance of the <see cref="FactsBuilder"/> class.
         /// </summary>
-        public FactsBuilder()
+        public FactsBuilder() : this(Fact.Empty)
         {
-            _facts = CollaborationCentric.Fact.Empty;
         }
 
         FactsBuilder(Fact[] facts)
@@ -23,13 +22,13 @@ namespace AggregateSource.Testing.CollaborationCentric
         }
 
         /// <summary>
-        /// Defines a set of facts that happened to a particular aggregate.
+        /// Defines a set of events that happened to a particular aggregate.
         /// </summary>
         /// <param name="identifier">The aggregate identifier the events apply to.</param>
         /// <param name="events">The events that occurred.</param>
         /// <returns>A builder of facts.</returns>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="identifier"/> or <paramref name="events"/> is <c>null</c>.</exception>
-        public FactsBuilder Fact(string identifier, params object[] events)
+        public FactsBuilder That(string identifier, params object[] events)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
             if (events == null) throw new ArgumentNullException("events");
@@ -49,7 +48,7 @@ namespace AggregateSource.Testing.CollaborationCentric
         /// <param name="facts">The facts that occurred.</param>
         /// <returns>A builder of facts.</returns>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="facts"/> is <c>null</c>.</exception>
-        public FactsBuilder Facts(params Fact[] facts)
+        public FactsBuilder That(params Fact[] facts)
         {
             if (facts == null) throw new ArgumentNullException("facts");
             var combinedFacts = new Fact[_facts.Length + facts.Length];

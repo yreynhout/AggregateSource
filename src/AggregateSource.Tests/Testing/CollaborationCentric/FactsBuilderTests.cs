@@ -26,22 +26,22 @@ namespace AggregateSource.Testing.CollaborationCentric
         }
 
         [TestFixture]
-        public class StateFactTests : FactFixture {
+        public class StateThatEventsTests : ThatEventsFixture {
             public override FactsBuilder Fact(string identifier, params object[] events)
             {
-                return State.Fact(identifier, events);
+                return State.That(identifier, events);
             }
         }
 
         [TestFixture]
-        public class FactsBuilderFactTests : FactFixture {
+        public class FactsBuilderThatEventsTests : ThatEventsFixture {
             public override FactsBuilder Fact(string identifier, params object[] events)
             {
-                return new FactsBuilder().Fact(identifier, events);
+                return new FactsBuilder().That(identifier, events);
             }
         }
 
-        public abstract class FactFixture
+        public abstract class ThatEventsFixture
         {
             public abstract FactsBuilder Fact(string identifier, params object[] events);
 
@@ -92,7 +92,7 @@ namespace AggregateSource.Testing.CollaborationCentric
                 var event3 = new object();
                 var event4 = new object();
 
-                Fact[] result = sut.Fact(Model.Identifier2, event3, event4);
+                Fact[] result = sut.That(Model.Identifier2, event3, event4);
 
                 Assert.That(result, Is.EquivalentTo(
                     new[]
@@ -106,24 +106,24 @@ namespace AggregateSource.Testing.CollaborationCentric
         }
 
         [TestFixture]
-        public class StateFactsTests : FactsFixture
+        public class StateThatFactsTests : ThatFactsFixture
         {
             public override FactsBuilder Facts(params Fact[] facts)
             {
-                return State.Facts(facts);
+                return State.That(facts);
             }
         }
 
         [TestFixture]
-        public class FactsBuilderFactsTests : FactsFixture
+        public class FactsBuilderThatFactsTests : ThatFactsFixture
         {
             public override FactsBuilder Facts(params Fact[] facts)
             {
-                return new FactsBuilder().Facts(facts);
+                return new FactsBuilder().That(facts);
             }
         }
 
-        public abstract class FactsFixture
+        public abstract class ThatFactsFixture
         {
             public abstract FactsBuilder Facts(params Fact[] facts);
 
@@ -158,7 +158,7 @@ namespace AggregateSource.Testing.CollaborationCentric
             }
 
             [Test]
-            public void WhenNewEventsAreSpecifiedThenReturnsCombinedExpectedResult()
+            public void WhenNewFactsAreSpecifiedThenReturnsCombinedExpectedResult()
             {
                 var fact1 = new Fact(Model.Identifier1, new object());
                 var fact2 = new Fact(Model.Identifier2, new object());
@@ -168,7 +168,7 @@ namespace AggregateSource.Testing.CollaborationCentric
                 var fact3 = new Fact(Model.Identifier1, new object());
                 var fact4 = new Fact(Model.Identifier2, new object());
 
-                Fact[] result = sut.Facts(fact3, fact4);
+                Fact[] result = sut.That(fact3, fact4);
 
                 Assert.That(result, Is.EquivalentTo(new[] {fact1, fact2, fact3, fact4}));
             }

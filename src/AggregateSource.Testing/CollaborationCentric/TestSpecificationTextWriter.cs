@@ -94,10 +94,10 @@ namespace AggregateSource.Testing.CollaborationCentric
             _writer.Indent--;
         }
 
-        void WriteFacts(IEnumerable<Fact> events)
+        void WriteFacts(IEnumerable<Fact> facts)
         {
             _writer.Indent++;
-            using (var enumerator = events.GetEnumerator())
+            using (var enumerator = facts.GetEnumerator())
             {
                 var moved = enumerator.MoveNext();
                 if (moved)

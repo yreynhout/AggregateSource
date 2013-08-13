@@ -28,9 +28,9 @@ namespace AggregateSource.Testing.CollaborationCentric
             _throws = throws;
         }
 
-        public TestSpecificationBuilderContext AppendGivens(IEnumerable<Fact> events)
+        public TestSpecificationBuilderContext AppendGivens(IEnumerable<Fact> facts)
         {
-            return new TestSpecificationBuilderContext(_givens.Concat(events).ToArray(), _when, _thens, _throws);
+            return new TestSpecificationBuilderContext(_givens.Concat(facts).ToArray(), _when, _thens, _throws);
         }
 
         public TestSpecificationBuilderContext SetWhen(object message)
@@ -38,9 +38,9 @@ namespace AggregateSource.Testing.CollaborationCentric
             return new TestSpecificationBuilderContext(_givens, message, _thens, _throws);
         }
 
-        public TestSpecificationBuilderContext AppendThens(IEnumerable<Fact> events)
+        public TestSpecificationBuilderContext AppendThens(IEnumerable<Fact> facts)
         {
-            return new TestSpecificationBuilderContext(_givens, _when, _thens.Concat(events).ToArray(), _throws);
+            return new TestSpecificationBuilderContext(_givens, _when, _thens.Concat(facts).ToArray(), _throws);
         }
 
         public TestSpecificationBuilderContext SetThrows(Exception exception)
