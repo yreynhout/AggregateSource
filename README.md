@@ -27,6 +27,10 @@ Helps you write test specifications, using a simple, codified statechart and a f
 
 Licensed using a BSD 3-Clause License. See [License.txt](LICENSE.txt) for more details
 
+## Discussion
+
+Have questions? Head on over to the discussion group: https://groups.google.com/forum/#!forum/aggregatesource
+
 ## Build
 
 ```RunRightOffThe.bat``` provides a sanity check. It's a combination of ```RunMeFirst.bat``` and ```RunBuild.bat```. Before working with the solution it's probably best to run the ```RunMeFirst.bat```, well, first. It restores NuGet packages and downloads and unzips a version of GetEventStore. ```RunBuild.bat``` and ```RunTest.bat``` should speak for themselves.
