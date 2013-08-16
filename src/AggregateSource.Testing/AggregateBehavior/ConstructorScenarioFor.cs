@@ -12,11 +12,11 @@ namespace AggregateSource.Testing.AggregateBehavior
 	{
 		private readonly Func<IAggregateRootEntity> _constructor;
 
-		/// <summary>
-		/// Creates a new constructor scenario testing the constructor passed as a delegate.
-		/// </summary>
-		/// <param name="constructor">The constructor invocation.</param>
-		/// <exception cref="ArgumentNullException">If the constructor delegate is null.</exception>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstructorScenarioFor{TAggregateRoot}"/> class.
+        /// </summary>
+        /// <param name="constructor">The constructor to test.</param>
+        /// <exception cref="System.ArgumentNullException">Throw if <paramref name="constructor"/> is <c>null</c>.</exception>
         public ConstructorScenarioFor(Func<TAggregateRoot> constructor)
 		{
 			if (constructor == null)

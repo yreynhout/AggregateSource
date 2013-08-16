@@ -146,8 +146,10 @@
     <Compile Include="CollaborationBehavior\ExceptionCentricTestResult.cs" />
     <Compile Include="CollaborationBehavior\ExceptionCentricTestSpecification.cs" />
     <Compile Include="CollaborationBehavior\IEventCentricTestSpecificationBuilder.cs" />
+    <Compile Include="CollaborationBehavior\IEventCentricTestSpecificationRunner.cs" />
     <Compile Include="CollaborationBehavior\IEventCentricTestSpecificationWriter.cs" />
     <Compile Include="CollaborationBehavior\IExceptionCentricTestSpecificationBuilder.cs" />
+    <Compile Include="CollaborationBehavior\IExceptionCentricTestSpecificationRunner.cs" />
     <Compile Include="CollaborationBehavior\IExceptionCentricTestSpecificationWriter.cs" />
     <Compile Include="CollaborationBehavior\IScenarioGivenNoneStateBuilder.cs" />
     <Compile Include="CollaborationBehavior\IScenarioGivenStateBuilder.cs" />

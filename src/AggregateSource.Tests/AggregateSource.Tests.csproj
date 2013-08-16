@@ -84,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reactive\ObservableAggregateRootEntityTests.cs" />
     <Compile Include="StaticEventRouterTests.cs" />
+    <Compile Include="Testing\AggregateBehavior\ConstructorScenarioForTests.cs" />
     <Compile Include="Testing\CollaborationBehavior\FactsBuilderTests.cs" />
     <Compile Include="Testing\CollaborationBehavior\TestFactBuilder.cs" />
     <Compile Include="Testing\CollaborationBehavior\FactTests.cs" />
