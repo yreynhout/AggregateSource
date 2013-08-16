@@ -67,7 +67,9 @@
     </Compile>
     <Compile Include="AggregateBehavior\Catch.cs" />
     <Compile Include="AggregateBehavior\CommandScenarioFor.cs" />
+    <Compile Include="AggregateBehavior\Command\AggregateCommandGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Command\AggregateCommandGivenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\Command\AggregateCommandThenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Command\AggregateCommandThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Command\AggregateCommandThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Command\AggregateCommandWhenStateBuilder.cs" />
@@ -101,7 +103,10 @@
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryWhenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateCommandGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateCommandGivenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateCommandInitialStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateCommandThenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateCommandThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateCommandThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateCommandWhenStateBuilder.cs" />

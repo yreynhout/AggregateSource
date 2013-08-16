@@ -8,6 +8,12 @@ namespace AggregateSource.Testing.AggregateBehavior
     public interface IAggregateCommandWhenStateBuilder
     {
         /// <summary>
+        /// Then no events should have occurred.
+        /// </summary>
+        /// <returns>A builder continuation.</returns>
+        IAggregateCommandThenNoneStateBuilder ThenNone();
+        
+        /// <summary>
         /// Then events should have occurred.
         /// </summary>
         /// <param name="events">The events that should have occurred.</param>
