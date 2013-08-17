@@ -25,6 +25,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="sutFactory">The sut factory.</param>
         public QueryScenarioFor(Func<TAggregateRoot> sutFactory)
         {
+            if (sutFactory == null) throw new ArgumentNullException("sutFactory");
             _sutFactory = () => sutFactory();
         }
 

@@ -119,5 +119,180 @@ namespace AggregateSource.Testing.AggregateBehavior
                 Assert.That(result, Is.EquivalentTo(events1.Union(events2)));
             }
         }
+
+        [TestFixture]
+        public class QueryScenarioForGivenNoneTests : GivenNoneFixture<AggregateRootEntityStub>
+        {
+            protected override IAggregateQueryGivenNoneStateBuilder<AggregateRootEntityStub> GivenNone()
+            {
+                return new QueryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    GivenNone();
+            }
+        }
+
+        public abstract class GivenNoneFixture<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity
+        {
+            protected abstract IAggregateQueryGivenNoneStateBuilder<TAggregateRoot> GivenNone();
+
+            [Test]
+            public void GivenNoneDoesNotReturnNull()
+            {
+                var result = GivenNone();
+                Assert.That(result, Is.Not.Null);
+            }
+
+            [Test]
+            public void GivenNoneReturnsGivenNoneBuilderContinuation()
+            {
+                var result = GivenNone();
+                Assert.That(result, Is.InstanceOf<IAggregateQueryGivenNoneStateBuilder<TAggregateRoot>>());
+            }
+
+            [Test]
+            public void GivenNoneReturnsNewInstanceUponEachCall()
+            {
+                Assert.That(
+                    GivenNone(),
+                    Is.Not.SameAs(GivenNone()));
+            }
+
+            [Test]
+            public void GivenNoneEventsAreSetInResultingSpecification()
+            {
+                var result = GivenNone().When(_ => 0).Then(0).Build().Givens;
+
+                Assert.That(result, Is.Empty);
+            }
+        }
+
+        [TestFixture]
+        public class QueryScenarioForWhenTests : WhenFixture<AggregateRootEntityStub, Int32> 
+        {
+            protected override IAggregateQueryWhenStateBuilder<int> When(Func<AggregateRootEntityStub, int> query)
+            {
+                return new QueryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    When(query);
+            }
+        }
+
+        [TestFixture]
+        public class AggregateQueryGivenNoneStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub, Int32>
+        {
+            protected override IAggregateQueryWhenStateBuilder<int> When(Func<AggregateRootEntityStub, int> query)
+            {
+                return new QueryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    GivenNone().
+                    When(query);
+            }
+        }
+
+        [TestFixture]
+        public class AggregateQueryGivenStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub, Int32>
+        {
+            protected override IAggregateQueryWhenStateBuilder<int> When(Func<AggregateRootEntityStub, int> query)
+            {
+                return new QueryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    Given(new object[0]).
+                    When(query);
+            }
+        }
+
+        public abstract class WhenFixture<TAggregateRoot, TResult> where TAggregateRoot : IAggregateRootEntity
+        {
+            protected abstract IAggregateQueryWhenStateBuilder<TResult> When(Func<TAggregateRoot, TResult> query);
+
+            [Test]
+            public void WhenThrowsWhenQueryIsNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => When(null));
+            }
+
+            [Test]
+            public void WhenDoesNotReturnNull()
+            {
+                var result = When(_ => default(TResult));
+                Assert.That(result, Is.Not.Null);
+            }
+
+            [Test]
+            public void WhenReturnsWhenBuilderContinuation()
+            {
+                var result = When(_ => default(TResult));
+                Assert.That(result, Is.InstanceOf<IAggregateQueryWhenStateBuilder<TResult>>());
+            }
+
+            [Test]
+            [Repeat(2)]
+            public void WhenReturnsNewInstanceUponEachCall()
+            {
+                Assert.That(
+                    When(_ => default(TResult)),
+                    Is.Not.SameAs(When(_ => default(TResult))));
+            }
+
+            [Test]
+            public void IsSetInResultingSpecification()
+            {
+                var called = false;
+                Func<TAggregateRoot, TResult> query = _ => { 
+                    called = true;
+                    return default(TResult);
+                };
+
+                var specification = When(query).Then(default(TResult)).Build();
+
+                var result = specification.When(specification.SutFactory());
+
+                Assert.That(called, Is.True);
+                Assert.That(result, Is.EqualTo(default(TResult)));
+            }
+        }
+
+        [TestFixture]
+        public class AggregateQueryWhenStateBuilderThenTests : ThenFixture<Int32>{
+            protected override IAggregateQueryThenStateBuilder Then(int result)
+            {
+                return new QueryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    GivenNone().
+                    When(_ => 0).
+                    Then(result);
+            }
+        }
+
+        public abstract class ThenFixture<TResult>
+        {
+            protected abstract IAggregateQueryThenStateBuilder Then(TResult result);
+
+            [Test]
+            public void ThenDoesNotReturnNull()
+            {
+                var result = Then(default(TResult));
+                Assert.That(result, Is.Not.Null);
+            }
+
+            [Test]
+            public void ThenReturnsWhenBuilderContinuation()
+            {
+                var result = Then(default(TResult));
+                Assert.That(result, Is.InstanceOf<IAggregateQueryThenStateBuilder>());
+            }
+
+            [Test]
+            [Repeat(2)]
+            public void ThenReturnsNewInstanceUponEachCall()
+            {
+                Assert.That(
+                    Then(default(TResult)),
+                    Is.Not.SameAs(Then(default(TResult))));
+            }
+
+            [Test]
+            public void IsSetInResultingSpecification()
+            {
+                var result = Then(default(TResult)).Build().Then;
+                
+                Assert.That(result, Is.EqualTo(default(TResult)));
+            }
+        }
     }
 }

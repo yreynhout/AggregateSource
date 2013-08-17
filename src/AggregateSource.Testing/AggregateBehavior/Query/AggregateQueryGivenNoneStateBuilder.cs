@@ -13,6 +13,7 @@ namespace AggregateSource.Testing.AggregateBehavior.Query
 
         public IAggregateQueryWhenStateBuilder<TResult> When<TResult>(Func<TAggregateRoot, TResult> query)
         {
+            if (query == null) throw new ArgumentNullException("query");
             return new AggregateQueryWhenStateBuilder<TResult>(_sutFactory, new object[0], root => query((TAggregateRoot)root));
         }
     }
