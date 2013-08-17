@@ -117,7 +117,9 @@
     <Compile Include="AggregateBehavior\IAggregateFactoryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryWhenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateQueryGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateQueryGivenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateQueryInitialStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateQueryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateQueryThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateQueryWhenStateBuilder.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="AggregateBehavior\IResultCentricAggregateQueryTestRunner.cs" />
     <Compile Include="AggregateBehavior\IResultCentricAggregateQueryTestSpecificationBuilder.cs" />
     <Compile Include="AggregateBehavior\QueryScenarioFor.cs" />
+    <Compile Include="AggregateBehavior\Query\AggregateQueryGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Query\AggregateQueryGivenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Query\AggregateQueryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Query\AggregateQueryThrowStateBuilder.cs" />

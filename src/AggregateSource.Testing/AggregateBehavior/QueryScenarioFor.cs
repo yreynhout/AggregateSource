@@ -7,7 +7,7 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// A given-when-then test specification bootstrapper for testing an aggregate query, i.e. a method on the aggregate that returns a value (but is not a factory of another aggregate).
     /// </summary>
     /// <typeparam name="TAggregateRoot">The type of aggregate root entity under test.</typeparam>
-    public class QueryScenarioFor<TAggregateRoot> : IAggregateQueryGivenStateBuilder<TAggregateRoot>
+    public class QueryScenarioFor<TAggregateRoot> : IAggregateQueryInitialStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
         readonly Func<IAggregateRootEntity> _sutFactory;
@@ -26,6 +26,15 @@ namespace AggregateSource.Testing.AggregateBehavior
         public QueryScenarioFor(Func<TAggregateRoot> sutFactory)
         {
             _sutFactory = () => sutFactory();
+        }
+
+        /// <summary>
+        /// Given no events occured.
+        /// </summary>
+        /// <returns>A builder continuation.</returns>
+        public IAggregateQueryGivenNoneStateBuilder<TAggregateRoot> GivenNone()
+        {
+            return new AggregateQueryGivenNoneStateBuilder<TAggregateRoot>(_sutFactory);
         }
 
         /// <summary>
