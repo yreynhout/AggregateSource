@@ -87,6 +87,7 @@
     <Compile Include="Testing\AggregateBehavior\CommandScenarioForTests.cs" />
     <Compile Include="Testing\AggregateBehavior\ConstructorScenarioForTests.cs" />
     <Compile Include="Testing\CollaborationBehavior\FactsBuilderTests.cs" />
+    <Compile Include="Testing\CollaborationBehavior\ScenarioTests.cs" />
     <Compile Include="Testing\CollaborationBehavior\TestFactBuilder.cs" />
     <Compile Include="Testing\CollaborationBehavior\FactTests.cs" />
     <Compile Include="Testing\CollaborationBehavior\ExceptionCentricTestSpecificationTests.cs" />

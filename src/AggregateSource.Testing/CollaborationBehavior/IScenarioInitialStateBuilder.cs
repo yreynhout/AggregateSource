@@ -1,10 +1,16 @@
 ﻿namespace AggregateSource.Testing.CollaborationBehavior
 {
     /// <summary>
-    /// The given state within the test specification building process.
+    /// The initial state within the test specification building process.
     /// </summary>
-    public interface IScenarioGivenStateBuilder
+    public interface IScenarioInitialStateBuilder
     {
+        /// <summary>
+        /// Given no events occured.
+        /// </summary>
+        /// <returns>A builder continuation.</returns>
+        IScenarioGivenNoneStateBuilder GivenNone();
+
         /// <summary>
         /// Given the following facts occured.
         /// </summary>

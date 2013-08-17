@@ -144,67 +144,12 @@ namespace AggregateSource.Testing.CollaborationBehavior
                 var facts = new[]
                 {
                     new Fact(Model.Identifier1, new object()),
-                    new Fact(Model.Identifier2, new object()),
+                    new Fact(Model.Identifier2, new object())
                 };
 
                 var result = Given(facts).When(new object()).Build().Givens;
 
                 Assert.That(result, Is.EquivalentTo(facts));
-            }
-        }
-
-        [TestFixture]
-        public class ScenarioGivenNoneTests : GivenNoneFixture
-        {
-            protected override IScenarioGivenNoneStateBuilder GivenNone()
-            {
-                return new Scenario().GivenNone();
-            }
-        }
-
-        [TestFixture]
-        public class GivenStateBuilderGivenNoneTests : GivenNoneFixture
-        {
-            protected override IScenarioGivenNoneStateBuilder GivenNone()
-            {
-                return new Scenario().GivenNone();
-            }
-        }
-
-        public abstract class GivenNoneFixture
-        {
-            protected abstract IScenarioGivenNoneStateBuilder GivenNone();
-
-            [Test]
-            public void GivenNoneDoesNotReturnNull()
-            {
-                var result = GivenNone();
-                Assert.That(result, Is.Not.Null);
-            }
-
-            [Test]
-            public void GivenNoneReturnsGivenNoneBuilderContinuation()
-            {
-                var result = GivenNone();
-                Assert.That(result, Is.InstanceOf<IScenarioGivenNoneStateBuilder>());
-            }
-
-            [Test]
-            [Repeat(2)]
-            public void GivenNoneReturnsNewInstanceUponEachCall()
-            {
-                Assert.That(
-                    GivenNone(),
-                    Is.Not.SameAs(GivenNone()));
-            }
-
-
-            [Test]
-            public void IsSetInResultingSpecification()
-            {
-                var result = GivenNone().When(new object()).Build().Givens;
-
-                Assert.That(result, Is.EquivalentTo(Fact.Empty));
             }
         }
     }

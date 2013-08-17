@@ -143,7 +143,7 @@ namespace AggregateSource.Testing.CollaborationBehavior
                 var facts = new[]
                 {
                     new Fact(Model.Identifier1, new object()),
-                    new Fact(Model.Identifier2, new object()),
+                    new Fact(Model.Identifier2, new object())
                 };
 
                 var result = Then(facts).Build().Thens;

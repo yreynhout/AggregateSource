@@ -158,6 +158,7 @@
     <Compile Include="CollaborationBehavior\IExceptionCentricTestSpecificationWriter.cs" />
     <Compile Include="CollaborationBehavior\IScenarioGivenNoneStateBuilder.cs" />
     <Compile Include="CollaborationBehavior\IScenarioGivenStateBuilder.cs" />
+    <Compile Include="CollaborationBehavior\IScenarioInitialStateBuilder.cs" />
     <Compile Include="CollaborationBehavior\IScenarioThenNoneStateBuilder.cs" />
     <Compile Include="CollaborationBehavior\IScenarioThenStateBuilder.cs" />
     <Compile Include="CollaborationBehavior\IScenarioThrowStateBuilder.cs" />

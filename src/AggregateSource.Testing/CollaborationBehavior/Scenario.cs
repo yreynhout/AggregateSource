@@ -5,7 +5,7 @@ namespace AggregateSource.Testing.CollaborationBehavior
     /// <summary>
     /// The given-when-then test specification builder bootstrapper.
     /// </summary>
-    public class Scenario : IScenarioGivenStateBuilder
+    public class Scenario : IScenarioInitialStateBuilder
     {
         /// <summary>
         /// Given the following facts occured.
