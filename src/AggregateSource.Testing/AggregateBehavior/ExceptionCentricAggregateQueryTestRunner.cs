@@ -9,14 +9,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class ExceptionCentricAggregateQueryTestRunner : IExceptionCentricAggregateQueryTestRunner
     {
-        readonly IEqualityComparer<Exception> _comparer;
+        readonly IExceptionComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionCentricAggregateQueryTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing exceptions.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public ExceptionCentricAggregateQueryTestRunner(IEqualityComparer<Exception> comparer)
+        public ExceptionCentricAggregateQueryTestRunner(IExceptionComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -41,16 +41,20 @@ namespace AggregateSource.Testing.AggregateBehavior
             {
                 if (sut.HasChanges())
                 {
-                    return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, actualEvents: sut.GetChanges().ToArray());
+                    return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<Exception>.Empty, new Optional<object[]>(sut.GetChanges().ToArray()), Optional<object>.Empty);
                 }
-                return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed);
+                return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<Exception>.Empty, Optional<object[]>.Empty, new Optional<object>(queryResult));
             }
             var actualException = result.Value;
-            if (!_comparer.Equals(actualException, specification.Throws))
+            if (_comparer.Compare(actualException, specification.Throws).Any())
             {
-                return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, actualException);
+                return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, new Optional<Exception>(actualException), Optional<object[]>.Empty, Optional<object>.Empty);
             }
-            return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Passed);
+            if (sut.HasChanges())
+            {
+                return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<Exception>.Empty, new Optional<object[]>(sut.GetChanges().ToArray()), Optional<object>.Empty);
+            }
+            return new ExceptionCentricAggregateQueryTestResult(specification, TestResultState.Passed, Optional<Exception>.Empty, Optional<object[]>.Empty, Optional<object>.Empty);
         }
     }
 }

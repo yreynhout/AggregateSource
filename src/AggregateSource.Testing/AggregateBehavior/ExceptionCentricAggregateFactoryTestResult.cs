@@ -73,7 +73,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <value>
         /// The exception.
         /// </value>
-        public Optional<Exception> But
+        public Optional<Exception> ButException
         {
             get { return _actualException; }
         }
@@ -84,7 +84,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <value>
         /// The events.
         /// </value>
-        public Optional<object[]> Buts
+        public Optional<object[]> ButEvents
         {
             get { return _actualEvents; }
         }

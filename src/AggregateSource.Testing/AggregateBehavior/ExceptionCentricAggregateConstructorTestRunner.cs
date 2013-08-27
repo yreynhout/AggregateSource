@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
@@ -9,14 +8,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class ExceptionCentricAggregateConstructorTestRunner : IExceptionCentricAggregateConstructorTestRunner
     {
-        readonly IEqualityComparer<Exception> _comparer;
+        readonly IExceptionComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionCentricAggregateConstructorTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing exceptions.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public ExceptionCentricAggregateConstructorTestRunner(IEqualityComparer<Exception> comparer)
+        public ExceptionCentricAggregateConstructorTestRunner(IExceptionComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -44,7 +43,7 @@ namespace AggregateSource.Testing.AggregateBehavior
                 return new ExceptionCentricAggregateConstructorTestResult(specification, TestResultState.Failed);
             }
             var actualException = result.Value;
-            if (!_comparer.Equals(actualException, specification.Throws))
+            if (_comparer.Compare(actualException, specification.Throws).Any())
             {
                 return new ExceptionCentricAggregateConstructorTestResult(specification, TestResultState.Failed, actualException);
             }

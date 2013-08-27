@@ -9,14 +9,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class EventCentricAggregateConstructorTestRunner : IEventCentricAggregateConstructorTestRunner
     {
-        readonly IEqualityComparer<object> _comparer;
+        readonly IEventComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventCentricAggregateConstructorTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing events.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public EventCentricAggregateConstructorTestRunner(IEqualityComparer<object> comparer)
+        public EventCentricAggregateConstructorTestRunner(IEventComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -40,7 +40,7 @@ namespace AggregateSource.Testing.AggregateBehavior
                 return new EventCentricAggregateConstructorTestResult(specification, TestResultState.Failed, actualException: result.Value);
             }
             var actualEvents = sut.GetChanges().ToArray();
-            if (!actualEvents.SequenceEqual(specification.Thens, _comparer))
+            if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
             {
                 return new EventCentricAggregateConstructorTestResult(specification, TestResultState.Failed, actualEvents);
             }

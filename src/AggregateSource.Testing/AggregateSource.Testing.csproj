@@ -76,6 +76,7 @@
     <Compile Include="AggregateBehavior\ConstructorScenarioFor.cs" />
     <Compile Include="AggregateBehavior\Constructor\AggregateConstructorThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Constructor\AggregateConstructorThrowStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\EventComparisonDifference.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateCommandTestResult.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateCommandTestRunner.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateCommandTestSpecification.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="AggregateBehavior\EventCentricAggregateFactoryTestRunner.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateFactoryTestSpecification.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateQueryTestResult.cs" />
+    <Compile Include="AggregateBehavior\WrappedEventComparerEqualityComparer.cs" />
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateCommandTestResult.cs" />
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateCommandTestRunner.cs" />
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateCommandTestSpecification.cs" />
@@ -98,8 +100,11 @@
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateQueryTestResult.cs" />
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateQueryTestRunner.cs" />
     <Compile Include="AggregateBehavior\ExceptionCentricAggregateQueryTestSpecification.cs" />
+    <Compile Include="AggregateBehavior\ExceptionComparisonDifference.cs" />
     <Compile Include="AggregateBehavior\FactoryScenarioFor.cs" />
+    <Compile Include="AggregateBehavior\Factory\AggregateFactoryGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryGivenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\Factory\AggregateFactoryThenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\Factory\AggregateFactoryWhenStateBuilder.cs" />
@@ -113,7 +118,10 @@
     <Compile Include="AggregateBehavior\IAggregateConstructorThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateConstructorThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateConstructorWhenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateFactoryGivenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryGivenStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateFactoryInitialStateBuilder.cs" />
+    <Compile Include="AggregateBehavior\IAggregateFactoryThenNoneStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryThenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryThrowStateBuilder.cs" />
     <Compile Include="AggregateBehavior\IAggregateFactoryWhenStateBuilder.cs" />
@@ -129,6 +137,7 @@
     <Compile Include="AggregateBehavior\IEventCentricAggregateConstructorTestSpecificationBuilder.cs" />
     <Compile Include="AggregateBehavior\IEventCentricAggregateFactoryTestRunner.cs" />
     <Compile Include="AggregateBehavior\IEventCentricAggregateFactoryTestSpecificationBuilder.cs" />
+    <Compile Include="AggregateBehavior\IEventComparer.cs" />
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateCommandTestRunner.cs" />
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateCommandTestSpecificationBuilder.cs" />
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateConstructorTestRunner.cs" />
@@ -137,6 +146,7 @@
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateFactoryTestSpecificationBuilder.cs" />
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateQueryTestRunner.cs" />
     <Compile Include="AggregateBehavior\IExceptionCentricAggregateQueryTestSpecificationBuilder.cs" />
+    <Compile Include="AggregateBehavior\IExceptionComparer.cs" />
     <Compile Include="AggregateBehavior\IResultCentricAggregateQueryTestRunner.cs" />
     <Compile Include="AggregateBehavior\IResultCentricAggregateQueryTestSpecificationBuilder.cs" />
     <Compile Include="AggregateBehavior\QueryScenarioFor.cs" />
@@ -147,6 +157,7 @@
     <Compile Include="AggregateBehavior\Query\AggregateQueryWhenStateBuilder.cs" />
     <Compile Include="AggregateBehavior\ResultCentricAggregateQueryTestRunner.cs" />
     <Compile Include="AggregateBehavior\ResultCentricAggregateQueryTestSpecification.cs" />
+    <Compile Include="AggregateBehavior\ResultComparisonDifference.cs" />
     <Compile Include="CollaborationBehavior\Fact.cs" />
     <Compile Include="CollaborationBehavior\FactsBuilder.cs" />
     <Compile Include="CollaborationBehavior\EventCentricTestResult.cs" />

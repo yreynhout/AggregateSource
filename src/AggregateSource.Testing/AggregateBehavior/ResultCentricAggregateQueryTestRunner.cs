@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
 {
@@ -8,14 +8,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class ResultCentricAggregateQueryTestRunner : IResultCentricAggregateQueryTestRunner
     {
-        readonly IEqualityComparer<object> _comparer;
+        readonly IResultComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResultCentricAggregateQueryTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing events.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public ResultCentricAggregateQueryTestRunner(IEqualityComparer<object> comparer)
+        public ResultCentricAggregateQueryTestRunner(IResultComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -38,13 +38,17 @@ namespace AggregateSource.Testing.AggregateBehavior
             var result = Catch.Exception(() => queryResult = specification.When(sut));
             if (result.HasValue)
             {
-                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, result.Value);
+                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, new Optional<Exception>(result.Value), Optional<object[]>.Empty);
             }
-            if (!_comparer.Equals(queryResult, specification.Then))
+            if (_comparer.Compare(queryResult, specification.Then).Any())
             {
-                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, new Optional<object>(queryResult));
+                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, new Optional<object>(queryResult), Optional<Exception>.Empty, Optional<object[]>.Empty);
             }
-            return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Passed, Optional<object>.Empty);
+            if (sut.HasChanges())
+            {
+                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, Optional<Exception>.Empty, new Optional<object[]>(sut.GetChanges().ToArray()));
+            }
+            return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Passed, Optional<object>.Empty, Optional<Exception>.Empty, Optional<object[]>.Empty);
         }
     }
 }

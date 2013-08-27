@@ -12,6 +12,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         readonly TestResultState _state;
         readonly Optional<Exception> _actualException;
         readonly Optional<object[]> _actualEvents;
+        readonly Optional<object> _actualResult;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionCentricTestResult"/> class.
@@ -20,18 +21,14 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="state">The state.</param>
         /// <param name="actualException">The actual exception.</param>
         /// <param name="actualEvents">The actual events.</param>
-        internal ExceptionCentricAggregateQueryTestResult(ExceptionCentricAggregateQueryTestSpecification specification, TestResultState state,
-                                                          Exception actualException = null,
-                                                          object[] actualEvents = null)
+        /// <param name="actualResult">The actual result.</param>
+        internal ExceptionCentricAggregateQueryTestResult(ExceptionCentricAggregateQueryTestSpecification specification, TestResultState state, Optional<Exception> actualException, Optional<object[]> actualEvents, Optional<object> actualResult)
         {
             _specification = specification;
             _state = state;
-            _actualException = actualException == null
-                                   ? Optional<Exception>.Empty
-                                   : new Optional<Exception>(actualException);
-            _actualEvents = actualEvents == null
-                                ? Optional<object[]>.Empty
-                                : new Optional<object[]>(actualEvents);
+            _actualException = actualException;
+            _actualEvents = actualEvents;
+            _actualResult = actualResult;
         }
 
         /// <summary>
@@ -73,7 +70,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <value>
         /// The exception.
         /// </value>
-        public Optional<Exception> But
+        public Optional<Exception> ButException
         {
             get { return _actualException; }
         }
@@ -84,9 +81,20 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <value>
         /// The events.
         /// </value>
-        public Optional<object[]> Buts
+        public Optional<object[]> ButEvents
         {
             get { return _actualEvents; }
+        }
+
+        /// <summary>
+        /// Gets the result that happened instead of the expected exception, or empty if passed.
+        /// </summary>
+        /// <value>
+        /// The result.
+        /// </value>
+        public Optional<object> ButResult
+        {
+            get { return _actualResult; }
         }
     }
 }

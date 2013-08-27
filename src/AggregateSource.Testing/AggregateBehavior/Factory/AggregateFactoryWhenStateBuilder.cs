@@ -16,6 +16,11 @@ namespace AggregateSource.Testing.AggregateBehavior.Factory
             _when = when;
         }
 
+        public IAggregateFactoryThenNoneStateBuilder ThenNone()
+        {
+            return new AggregateFactoryThenNoneStateBuilder(_sutFactory, _givens, _when);
+        }
+
         public IAggregateFactoryThenStateBuilder Then(params object[] events)
         {
             if (events == null) throw new ArgumentNullException("events");

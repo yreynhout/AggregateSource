@@ -9,14 +9,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class ExceptionCentricAggregateCommandTestRunner : IExceptionCentricAggregateCommandTestRunner
     {
-        readonly IEqualityComparer<Exception> _comparer;
+        readonly IExceptionComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionCentricAggregateCommandTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing exceptions.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public ExceptionCentricAggregateCommandTestRunner(IEqualityComparer<Exception> comparer)
+        public ExceptionCentricAggregateCommandTestRunner(IExceptionComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -45,7 +45,7 @@ namespace AggregateSource.Testing.AggregateBehavior
                 return new ExceptionCentricAggregateCommandTestResult(specification, TestResultState.Failed);
             }
             var actualException = result.Value;
-            if (!_comparer.Equals(actualException, specification.Throws))
+            if (_comparer.Compare(actualException, specification.Throws).Any())
             {
                 return new ExceptionCentricAggregateCommandTestResult(specification, TestResultState.Failed, actualException);
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
@@ -9,14 +8,14 @@ namespace AggregateSource.Testing.AggregateBehavior
     /// </summary>
     public class EventCentricAggregateFactoryTestRunner : IEventCentricAggregateFactoryTestRunner
     {
-        readonly IEqualityComparer<object> _comparer;
+        readonly IEventComparer _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventCentricAggregateFactoryTestRunner"/> class.
         /// </summary>
         /// <param name="comparer">The comparer to use when comparing events.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="comparer"/> is <c>null</c>.</exception>
-        public EventCentricAggregateFactoryTestRunner(IEqualityComparer<object> comparer)
+        public EventCentricAggregateFactoryTestRunner(IEventComparer comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -42,7 +41,7 @@ namespace AggregateSource.Testing.AggregateBehavior
                 return new EventCentricAggregateFactoryTestResult(specification, TestResultState.Failed, actualException: result.Value);
             }
             var actualEvents = factoryResult.GetChanges().ToArray();
-            if (!actualEvents.SequenceEqual(specification.Thens, _comparer))
+            if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
             {
                 return new EventCentricAggregateFactoryTestResult(specification, TestResultState.Failed, actualEvents);
             }

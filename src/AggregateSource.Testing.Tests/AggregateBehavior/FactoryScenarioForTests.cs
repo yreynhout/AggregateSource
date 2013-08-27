@@ -4,29 +4,29 @@ using NUnit.Framework;
 
 namespace AggregateSource.Testing.AggregateBehavior
 {
-    namespace CommandScenarioForTests
+    namespace FactoryScenarioForTests
     {
         [TestFixture]
         public class SutFactoryTests
         {
-            CommandScenarioFor<AggregateRootEntityStub> _sut;
+            FactoryScenarioFor<AggregateRootEntityStub> _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub());
+                _sut = new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub());
             }
 
             [Test]
             public void FactoryCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new CommandScenarioFor<AggregateRootEntityStub>((Func<AggregateRootEntityStub>)null));
+                Assert.Throws<ArgumentNullException>(() => new FactoryScenarioFor<AggregateRootEntityStub>((Func<AggregateRootEntityStub>)null));
             }
 
             [Test]
-            public void IsAggregateCommandInitialStateBuilder()
+            public void IsAggregateFactoryInitialStateBuilder()
             {
-                Assert.IsInstanceOf<IAggregateCommandInitialStateBuilder<AggregateRootEntityStub>>(_sut);
+                Assert.IsInstanceOf<IAggregateFactoryInitialStateBuilder<AggregateRootEntityStub>>(_sut);
             }
 
             [Test]
@@ -35,9 +35,9 @@ namespace AggregateSource.Testing.AggregateBehavior
                 var ctor = new AggregateRootEntityStub();
                 Func<AggregateRootEntityStub> factory = () => ctor;
 
-                var result = new CommandScenarioFor<AggregateRootEntityStub>(factory).
-                    When(_ => { }).
-                    Then(new object[0]).
+                var result = new FactoryScenarioFor<AggregateRootEntityStub>(factory).
+                    When(_ => new AggregateRootEntityStub()).
+                    ThenNone().
                     Build().
                     SutFactory;
 
@@ -46,21 +46,21 @@ namespace AggregateSource.Testing.AggregateBehavior
         }
 
         [TestFixture]
-        public class CommandScenarioForGivenTests : GivenFixture<AggregateRootEntityStub>
+        public class FactoryScenarioForGivenTests : GivenFixture<AggregateRootEntityStub>
         {
-            protected override IAggregateCommandGivenStateBuilder<AggregateRootEntityStub> Given(params object[] events)
+            protected override IAggregateFactoryGivenStateBuilder<AggregateRootEntityStub> Given(params object[] events)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(events);
             }
         }
 
         [TestFixture]
-        public class AggregateCommandGivenStateBuilderGivenTests : GivenFixture<AggregateRootEntityStub>
+        public class AggregateFactoryGivenStateBuilderGivenTests : GivenFixture<AggregateRootEntityStub>
         {
-            protected override IAggregateCommandGivenStateBuilder<AggregateRootEntityStub> Given(params object[] events)
+            protected override IAggregateFactoryGivenStateBuilder<AggregateRootEntityStub> Given(params object[] events)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(new object[0]).
                     Given(events);
             }
@@ -68,7 +68,7 @@ namespace AggregateSource.Testing.AggregateBehavior
 
         public abstract class GivenFixture<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity
         {
-            protected abstract IAggregateCommandGivenStateBuilder<TAggregateRoot> Given(params object[] events);
+            protected abstract IAggregateFactoryGivenStateBuilder<TAggregateRoot> Given(params object[] events);
 
             [Test]
             public void GivenThrowsWhenEventsAreNull()
@@ -87,7 +87,7 @@ namespace AggregateSource.Testing.AggregateBehavior
             public void GivenReturnsGivenBuilderContinuation()
             {
                 var result = Given(new object[0]);
-                Assert.That(result, Is.InstanceOf<IAggregateCommandGivenStateBuilder<TAggregateRoot>>());
+                Assert.That(result, Is.InstanceOf<IAggregateFactoryGivenStateBuilder<TAggregateRoot>>());
             }
 
             [Test]
@@ -103,7 +103,7 @@ namespace AggregateSource.Testing.AggregateBehavior
             {
                 var events = new[] { new object(), new object() };
 
-                var result = Given(events).When(_ => { }).Then(new object[0]).Build().Givens;
+                var result = Given(events).When(_ => new AggregateRootEntityStub()).ThenNone().Build().Givens;
 
                 Assert.That(result, Is.EquivalentTo(events));
             }
@@ -114,25 +114,25 @@ namespace AggregateSource.Testing.AggregateBehavior
                 var events1 = new[] { new object(), new object() };
                 var events2 = new[] { new object(), new object() };
 
-                var result = Given(events1).Given(events2).When(_ => { }).Then(new object[0]).Build().Givens;
+                var result = Given(events1).Given(events2).When(_ => new AggregateRootEntityStub()).ThenNone().Build().Givens;
 
                 Assert.That(result, Is.EquivalentTo(events1.Union(events2)));
             }
         }
 
         [TestFixture]
-        public class CommandScenarioForGivenNoneTests : GivenNoneFixture<AggregateRootEntityStub>
+        public class FactoryScenarioForGivenNoneTests : GivenNoneFixture<AggregateRootEntityStub>
         {
-            protected override IAggregateCommandGivenNoneStateBuilder<AggregateRootEntityStub> GivenNone()
+            protected override IAggregateFactoryGivenNoneStateBuilder<AggregateRootEntityStub> GivenNone()
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     GivenNone();
             }
         }
 
         public abstract class GivenNoneFixture<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity
         {
-            protected abstract IAggregateCommandGivenNoneStateBuilder<TAggregateRoot> GivenNone();
+            protected abstract IAggregateFactoryGivenNoneStateBuilder<TAggregateRoot> GivenNone();
 
             [Test]
             public void GivenNoneDoesNotReturnNull()
@@ -145,7 +145,7 @@ namespace AggregateSource.Testing.AggregateBehavior
             public void GivenNoneReturnsGivenNoneBuilderContinuation()
             {
                 var result = GivenNone();
-                Assert.That(result, Is.InstanceOf<IAggregateCommandGivenNoneStateBuilder<TAggregateRoot>>());
+                Assert.That(result, Is.InstanceOf<IAggregateFactoryGivenNoneStateBuilder<TAggregateRoot>>());
             }
 
             [Test]
@@ -159,50 +159,52 @@ namespace AggregateSource.Testing.AggregateBehavior
             [Test]
             public void GivenNoneEventsAreSetInResultingSpecification()
             {
-                var result = GivenNone().When(_ => { }).Then(new object[0]).Build().Givens;
+                var result = GivenNone().When(_ => new AggregateRootEntityStub()).ThenNone().Build().Givens;
 
                 Assert.That(result, Is.Empty);
             }
         }
 
         [TestFixture]
-        public class CommandScenarioForWhenTests : WhenFixture<AggregateRootEntityStub>
+        public class FactoryScenarioForWhenTests : WhenFixture<AggregateRootEntityStub, AggregateRootEntityStub>
         {
-            protected override IAggregateCommandWhenStateBuilder When(Action<AggregateRootEntityStub> command)
+            protected override IAggregateFactoryWhenStateBuilder When(Func<AggregateRootEntityStub, AggregateRootEntityStub> query)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
-                    When(command);
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                    When(query);
             }
         }
 
         [TestFixture]
-        public class AggregateCommandGivenNoneStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub>
+        public class AggregateQueryGivenNoneStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub, AggregateRootEntityStub>
         {
-            protected override IAggregateCommandWhenStateBuilder When(Action<AggregateRootEntityStub> command)
+            protected override IAggregateFactoryWhenStateBuilder When(Func<AggregateRootEntityStub, AggregateRootEntityStub> query)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     GivenNone().
-                    When(command);
+                    When(query);
             }
         }
 
         [TestFixture]
-        public class AggregateCommandGivenStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub>
+        public class AggregateQueryGivenStateBuilderWhenTests : WhenFixture<AggregateRootEntityStub, AggregateRootEntityStub>
         {
-            protected override IAggregateCommandWhenStateBuilder When(Action<AggregateRootEntityStub> command)
+            protected override IAggregateFactoryWhenStateBuilder When(Func<AggregateRootEntityStub, AggregateRootEntityStub> query)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(new object[0]).
-                    When(command);
+                    When(query);
             }
         }
 
-        public abstract class WhenFixture<TAggregateRoot> where TAggregateRoot : IAggregateRootEntity
+        public abstract class WhenFixture<TAggregateRoot, TAggregateRootResult>
+            where TAggregateRoot : IAggregateRootEntity
+            where TAggregateRootResult : IAggregateRootEntity
         {
-            protected abstract IAggregateCommandWhenStateBuilder When(Action<TAggregateRoot> command);
+            protected abstract IAggregateFactoryWhenStateBuilder When(Func<TAggregateRoot, TAggregateRootResult> query);
 
             [Test]
-            public void WhenThrowsWhenCommandIsNull()
+            public void WhenThrowsWhenQueryIsNull()
             {
                 Assert.Throws<ArgumentNullException>(() => When(null));
             }
@@ -210,15 +212,15 @@ namespace AggregateSource.Testing.AggregateBehavior
             [Test]
             public void WhenDoesNotReturnNull()
             {
-                var result = When(_ => {});
+                var result = When(_ => default(TAggregateRootResult));
                 Assert.That(result, Is.Not.Null);
             }
 
             [Test]
             public void WhenReturnsWhenBuilderContinuation()
             {
-                var result = When(_ => { });
-                Assert.That(result, Is.InstanceOf<IAggregateCommandWhenStateBuilder>());
+                var result = When(_ => default(TAggregateRootResult));
+                Assert.That(result, Is.InstanceOf<IAggregateFactoryWhenStateBuilder>());
             }
 
             [Test]
@@ -226,44 +228,50 @@ namespace AggregateSource.Testing.AggregateBehavior
             public void WhenReturnsNewInstanceUponEachCall()
             {
                 Assert.That(
-                    When(_ => { }),
-                    Is.Not.SameAs(When(_ => { })));
+                    When(_ => default(TAggregateRootResult)),
+                    Is.Not.SameAs(When(_ => default(TAggregateRootResult))));
             }
 
             [Test]
             public void IsSetInResultingSpecification()
             {
                 var called = false;
-                Action<TAggregateRoot> command = _ => { called = true; };
+                Func<TAggregateRoot, TAggregateRootResult> query = _ =>
+                {
+                    called = true;
+                    return default(TAggregateRootResult);
+                };
 
-                var specification = When(command).ThenNone().Build();
-                
-                specification.When(specification.SutFactory());
+                var specification = When(query).ThenNone().Build();
+
+                var result = specification.When(specification.SutFactory());
 
                 Assert.That(called, Is.True);
+                Assert.That(result, Is.EqualTo(default(TAggregateRootResult)));
             }
         }
 
+
         [TestFixture]
-        public class CommandScenarioForThenTests : ThenFixture
+        public class AggregateFactoryWhenStateBuilderThenTests : ThenFixture
         {
-            protected override IAggregateCommandThenStateBuilder Then(params object[] events)
+            protected override IAggregateFactoryThenStateBuilder Then(params object[] events)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(new object[0]).
-                    When(_ => { }).
+                    When(_ => new AggregateRootEntityStub()).
                     Then(events);
             }
         }
 
         [TestFixture]
-        public class AggregateCommandThenStateBuilderThenTests : ThenFixture
+        public class AggregateFactoryThenStateBuilderThenTests : ThenFixture
         {
-            protected override IAggregateCommandThenStateBuilder Then(params object[] events)
+            protected override IAggregateFactoryThenStateBuilder Then(params object[] events)
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(new object[0]).
-                    When(_ => { }).
+                    When(_ => new AggregateRootEntityStub()).
                     Then(new object[0]).
                     Then(events);
             }
@@ -271,7 +279,7 @@ namespace AggregateSource.Testing.AggregateBehavior
 
         public abstract class ThenFixture
         {
-            protected abstract IAggregateCommandThenStateBuilder Then(params object[] events);
+            protected abstract IAggregateFactoryThenStateBuilder Then(params object[] events);
 
             [Test]
             public void ThenThrowsWhenEventsAreNull()
@@ -290,7 +298,7 @@ namespace AggregateSource.Testing.AggregateBehavior
             public void ThenReturnsThenBuilderContinuation()
             {
                 var result = Then(new object[0]);
-                Assert.That(result, Is.InstanceOf<IAggregateCommandThenStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IAggregateFactoryThenStateBuilder>());
             }
 
             [Test]
@@ -324,20 +332,20 @@ namespace AggregateSource.Testing.AggregateBehavior
         }
 
         [TestFixture]
-        public class AggregateCommandWhenStateThenNoneTests : ThenNoneFixture
+        public class AggregateFactoryWhenStateThenNoneTests : ThenNoneFixture
         {
-            protected override IAggregateCommandThenNoneStateBuilder ThenNone()
+            protected override IAggregateFactoryThenNoneStateBuilder ThenNone()
             {
-                return new CommandScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
+                return new FactoryScenarioFor<AggregateRootEntityStub>(() => new AggregateRootEntityStub()).
                     Given(new object[0]).
-                    When(_ => { }).
+                    When(_ => new AggregateRootEntityStub()).
                     ThenNone();
             }
         }
 
         public abstract class ThenNoneFixture
         {
-            protected abstract IAggregateCommandThenNoneStateBuilder ThenNone();
+            protected abstract IAggregateFactoryThenNoneStateBuilder ThenNone();
 
             [Test]
             public void ThenNoneDoesNotReturnNull()
@@ -350,7 +358,7 @@ namespace AggregateSource.Testing.AggregateBehavior
             public void ThenNoneReturnsThenNoneBuilderContinuation()
             {
                 var result = ThenNone();
-                Assert.That(result, Is.InstanceOf<IAggregateCommandThenNoneStateBuilder>());
+                Assert.That(result, Is.InstanceOf<IAggregateFactoryThenNoneStateBuilder>());
             }
 
             [Test]
