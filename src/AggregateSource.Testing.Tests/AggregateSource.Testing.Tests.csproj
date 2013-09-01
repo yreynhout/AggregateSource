@@ -70,6 +70,7 @@
     <Compile Include="AggregateBehavior\CommandScenarioForTests.cs" />
     <Compile Include="AggregateBehavior\ConstructorScenarioForTests.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateCommandTestSpecificationTests.cs" />
+    <Compile Include="AggregateBehavior\EventCentricAggregateConstructorTestSpecificationTests.cs" />
     <Compile Include="AggregateBehavior\EventCentricAggregateFactoryTestSpecificationTests.cs" />
     <Compile Include="AggregateBehavior\FactoryScenarioForTests.cs" />
     <Compile Include="AggregateBehavior\NUnitExtensionsForFactoryScenarioTests.cs" />
