@@ -4,8 +4,16 @@ using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
 {
+    /// <summary>
+    /// NUnit specific extension methods for asserting aggregate constructor behavior.
+    /// </summary>
     public static class NUnitExtensionsForConstructorScenario
     {
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The event comparer.</param>
         public static void Assert(this IEventCentricAggregateConstructorTestSpecificationBuilder builder,
             IEventComparer comparer)
         {
@@ -63,6 +71,11 @@ namespace AggregateSource.Testing.AggregateBehavior
             }
         }
 
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The exception comparer.</param>
         public static void Assert(this IExceptionCentricAggregateConstructorTestSpecificationBuilder builder,
             IExceptionComparer comparer)
         {

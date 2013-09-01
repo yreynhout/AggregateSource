@@ -20,18 +20,15 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="state">The state.</param>
         /// <param name="actualException">The actual exception.</param>
         /// <param name="actualEvents">The actual events.</param>
-        internal ExceptionCentricAggregateCommandTestResult(ExceptionCentricAggregateCommandTestSpecification specification, TestResultState state,
-                                                            Exception actualException = null,
-                                                            object[] actualEvents = null)
+        internal ExceptionCentricAggregateCommandTestResult(
+            ExceptionCentricAggregateCommandTestSpecification specification, TestResultState state,
+            Optional<Exception> actualException,
+            Optional<object[]> actualEvents)
         {
             _specification = specification;
             _state = state;
-            _actualException = actualException == null
-                                   ? Optional<Exception>.Empty
-                                   : new Optional<Exception>(actualException);
-            _actualEvents = actualEvents == null
-                                ? Optional<object[]>.Empty
-                                : new Optional<object[]>(actualEvents);
+            _actualException = actualException;
+            _actualEvents = actualEvents;
         }
 
         /// <summary>

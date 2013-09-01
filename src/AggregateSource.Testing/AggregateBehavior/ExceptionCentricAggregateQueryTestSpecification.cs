@@ -19,8 +19,11 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="givens">The events to arrange.</param>
         /// <param name="when">The query method to act upon.</param>
         /// <param name="throws">The expected exception to assert.</param>
-        public ExceptionCentricAggregateQueryTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
-                                                               Func<IAggregateRootEntity, object> when, Exception throws)
+        public ExceptionCentricAggregateQueryTestSpecification(
+            Func<IAggregateRootEntity> sutFactory, 
+            object[] givens,
+            Func<IAggregateRootEntity, object> when, 
+            Exception throws)
         {
             _sutFactory = sutFactory;
             _givens = givens;

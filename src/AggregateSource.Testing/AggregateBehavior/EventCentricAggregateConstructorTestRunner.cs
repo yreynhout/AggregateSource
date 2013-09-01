@@ -37,14 +37,26 @@ namespace AggregateSource.Testing.AggregateBehavior
             var result = Catch.Exception(() => sut = specification.SutFactory());
             if (result.HasValue)
             {
-                return new EventCentricAggregateConstructorTestResult(specification, TestResultState.Failed, actualException: result.Value);
+                return new EventCentricAggregateConstructorTestResult(
+                    specification, 
+                    TestResultState.Failed, 
+                    Optional<object[]>.Empty, 
+                    new Optional<Exception>(result.Value));
             }
             var actualEvents = sut.GetChanges().ToArray();
             if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
             {
-                return new EventCentricAggregateConstructorTestResult(specification, TestResultState.Failed, actualEvents);
+                return new EventCentricAggregateConstructorTestResult(
+                    specification, 
+                    TestResultState.Failed, 
+                    new Optional<object[]>(actualEvents),
+                    Optional<Exception>.Empty);
             }
-            return new EventCentricAggregateConstructorTestResult(specification, TestResultState.Passed);
+            return new EventCentricAggregateConstructorTestResult(
+                specification, 
+                TestResultState.Passed,
+                Optional<object[]>.Empty,
+                Optional<Exception>.Empty);
         }
     }
 }

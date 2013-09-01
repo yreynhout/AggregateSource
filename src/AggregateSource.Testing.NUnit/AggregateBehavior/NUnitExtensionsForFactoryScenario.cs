@@ -4,8 +4,16 @@ using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
 {
+    /// <summary>
+    /// NUnit specific extension methods for asserting aggregate factory behavior.
+    /// </summary>
     public static class NUnitExtensionsForFactoryScenario
     {
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The event comparer.</param>
         public static void Assert(this IEventCentricAggregateFactoryTestSpecificationBuilder builder,
             IEventComparer comparer)
         {
@@ -63,6 +71,11 @@ namespace AggregateSource.Testing.AggregateBehavior
             }
         }
 
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The exception comparer.</param>
         public static void Assert(this IExceptionCentricAggregateFactoryTestSpecificationBuilder builder,
             IExceptionComparer comparer)
         {
@@ -98,50 +111,4 @@ namespace AggregateSource.Testing.AggregateBehavior
             }
         }
     }
-
-
-    //TODO: Same thing for command, query (requires IResultComparer), constructor
-
-    
-    //class NUnitEventComparerDiscovery
-    //{
-    //    public static readonly NUnitEventComparerDiscovery Instance = new NUnitEventComparerDiscovery();
-
-    //    public IEqualityComparer<object> Discover(IEqualityComparer<object> comparer)
-    //    {
-    //        if (comparer != null)
-    //            return comparer;
-    //        var testContext = NUnit.Framework.TestContext.CurrentContext;
-    //        if (testContext != null && testContext.Test != null && testContext.Test.Properties != null)
-    //        {
-    //            if (testContext.Test.Properties.Contains("TODO"))
-    //            {
-    //                comparer = testContext.Test.Properties["TODO"] as IEqualityComparer<object>;
-    //                if (comparer != null)
-    //                    return comparer;
-    //            }
-    //        }
-    //        return new CompareObjectsBasedEventComparer();
-    //    }
-    //}
-
-    //public class CompareObjectsBasedEventComparer : IEqualityComparer<object>
-    //{
-    //    readonly CompareObjects _compareObjects;
-
-    //    public CompareObjectsBasedEventComparer()
-    //    {
-    //        _compareObjects = new CompareObjects();
-    //    }
-
-    //    public bool Equals(object x, object y)
-    //    {
-    //        return _compareObjects.Compare(x, y);
-    //    }
-
-    //    public int GetHashCode(object obj)
-    //    {
-    //        throw new NotSupportedException();
-    //    }
-    //}
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
@@ -41,16 +40,32 @@ namespace AggregateSource.Testing.AggregateBehavior
             {
                 if (factoryResult.HasChanges())
                 {
-                    return new ExceptionCentricAggregateFactoryTestResult(specification, TestResultState.Failed, actualEvents: factoryResult.GetChanges().ToArray());
+                    return new ExceptionCentricAggregateFactoryTestResult(
+                        specification, 
+                        TestResultState.Failed, 
+                        Optional<Exception>.Empty, 
+                        new Optional<object[]>(factoryResult.GetChanges().ToArray()));
                 }
-                return new ExceptionCentricAggregateFactoryTestResult(specification, TestResultState.Failed);
+                return new ExceptionCentricAggregateFactoryTestResult(
+                    specification, 
+                    TestResultState.Failed,
+                    Optional<Exception>.Empty, 
+                    Optional<object[]>.Empty);
             }
             var actualException = result.Value;
             if (_comparer.Compare(actualException, specification.Throws).Any())
             {
-                return new ExceptionCentricAggregateFactoryTestResult(specification, TestResultState.Failed, actualException);
+                return new ExceptionCentricAggregateFactoryTestResult(
+                    specification, 
+                    TestResultState.Failed, 
+                    new Optional<Exception>(actualException),
+                    Optional<object[]>.Empty);
             }
-            return new ExceptionCentricAggregateFactoryTestResult(specification, TestResultState.Passed);
+            return new ExceptionCentricAggregateFactoryTestResult(
+                specification,
+                TestResultState.Passed,
+                Optional<Exception>.Empty,
+                Optional<object[]>.Empty);
         }
     }
 }

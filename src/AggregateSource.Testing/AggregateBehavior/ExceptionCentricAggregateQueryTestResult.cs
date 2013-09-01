@@ -22,7 +22,11 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="actualException">The actual exception.</param>
         /// <param name="actualEvents">The actual events.</param>
         /// <param name="actualResult">The actual result.</param>
-        internal ExceptionCentricAggregateQueryTestResult(ExceptionCentricAggregateQueryTestSpecification specification, TestResultState state, Optional<Exception> actualException, Optional<object[]> actualEvents, Optional<object> actualResult)
+        internal ExceptionCentricAggregateQueryTestResult(
+            ExceptionCentricAggregateQueryTestSpecification specification, TestResultState state, 
+            Optional<Exception> actualException, 
+            Optional<object[]> actualEvents, 
+            Optional<object> actualResult)
         {
             _specification = specification;
             _state = state;

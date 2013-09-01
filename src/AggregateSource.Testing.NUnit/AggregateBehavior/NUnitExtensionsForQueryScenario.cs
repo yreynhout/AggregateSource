@@ -4,8 +4,16 @@ using System.Linq;
 
 namespace AggregateSource.Testing.AggregateBehavior
 {
+    /// <summary>
+    /// NUnit specific extension methods for asserting aggregate query behavior.
+    /// </summary>
     public static class NUnitExtensionsForQueryScenario
     {
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The result comparer.</param>
         public static void Assert(this IResultCentricAggregateQueryTestSpecificationBuilder builder,
             IResultComparer comparer)
         {
@@ -53,6 +61,11 @@ namespace AggregateSource.Testing.AggregateBehavior
             }
         }
 
+        /// <summary>
+        /// Asserts that the specification is met.
+        /// </summary>
+        /// <param name="builder">The specification builder.</param>
+        /// <param name="comparer">The exception comparer.</param>
         public static void Assert(this IExceptionCentricAggregateQueryTestSpecificationBuilder builder,
             IExceptionComparer comparer)
         {
@@ -82,6 +95,17 @@ namespace AggregateSource.Testing.AggregateBehavior
                         writer.WriteLine("  But was:  {0} events ({1})",
                             result.ButEvents.Value.Length,
                             String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
+
+                        throw new NUnit.Framework.AssertionException(writer.ToString());
+                    }
+                }
+
+                if (result.ButResult.HasValue)
+                {
+                    using (var writer = new StringWriter())
+                    {
+                        writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                        writer.WriteLine("  But was:  {0}", result.ButResult.Value);
 
                         throw new NUnit.Framework.AssertionException(writer.ToString());
                     }

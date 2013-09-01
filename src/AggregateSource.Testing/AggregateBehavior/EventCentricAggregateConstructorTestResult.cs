@@ -22,16 +22,13 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <param name="actualException">The actual exception.</param>
         internal EventCentricAggregateConstructorTestResult(
             EventCentricAggregateConstructorTestSpecification specification, TestResultState state,
-            object[] actualEvents = null, Exception actualException = null)
+            Optional<object[]> actualEvents, 
+            Optional<Exception> actualException)
         {
             _specification = specification;
             _state = state;
-            _actualEvents = actualEvents == null
-                                ? Optional<object[]>.Empty
-                                : new Optional<object[]>(actualEvents);
-            _actualException = actualException == null
-                                   ? Optional<Exception>.Empty
-                                   : new Optional<Exception>(actualException);
+            _actualEvents = actualEvents;
+            _actualException = actualException;
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using NUnit.Framework;
 
 namespace AggregateSource.Testing.AggregateBehavior
