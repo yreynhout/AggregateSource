@@ -28,10 +28,10 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource" version="0.0.96" />
+        <dependency id="AggregateSource" version="0.0.97" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.96" />
+        <dependency id="AggregateSource" version="0.0.97" />
       </group>
     </dependencies>
   </metadata>
