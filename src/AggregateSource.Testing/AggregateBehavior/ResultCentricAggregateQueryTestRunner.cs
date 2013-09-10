@@ -38,17 +38,17 @@ namespace AggregateSource.Testing.AggregateBehavior
             var result = Catch.Exception(() => queryResult = specification.When(sut));
             if (result.HasValue)
             {
-                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, new Optional<Exception>(result.Value), Optional<object[]>.Empty);
+                return specification.Fail(result.Value);
             }
             if (_comparer.Compare(queryResult, specification.Then).Any())
             {
-                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, new Optional<object>(queryResult), Optional<Exception>.Empty, Optional<object[]>.Empty);
+                return specification.Fail(queryResult);
             }
             if (sut.HasChanges())
             {
-                return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Failed, Optional<object>.Empty, Optional<Exception>.Empty, new Optional<object[]>(sut.GetChanges().ToArray()));
+                return specification.Fail(sut.GetChanges().ToArray());
             }
-            return new ResultCentricAggregateQueryTestResult(specification, TestResultState.Passed, Optional<object>.Empty, Optional<Exception>.Empty, Optional<object[]>.Empty);
+            return specification.Pass();
         }
     }
 }

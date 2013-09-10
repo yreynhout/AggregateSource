@@ -40,32 +40,16 @@ namespace AggregateSource.Testing.AggregateBehavior
             {
                 if (factoryResult.HasChanges())
                 {
-                    return new ExceptionCentricAggregateFactoryTestResult(
-                        specification, 
-                        TestResultState.Failed, 
-                        Optional<Exception>.Empty, 
-                        new Optional<object[]>(factoryResult.GetChanges().ToArray()));
+                    return specification.Fail(sut.GetChanges().ToArray());
                 }
-                return new ExceptionCentricAggregateFactoryTestResult(
-                    specification, 
-                    TestResultState.Failed,
-                    Optional<Exception>.Empty, 
-                    Optional<object[]>.Empty);
+                return specification.Fail();
             }
             var actualException = result.Value;
             if (_comparer.Compare(actualException, specification.Throws).Any())
             {
-                return new ExceptionCentricAggregateFactoryTestResult(
-                    specification, 
-                    TestResultState.Failed, 
-                    new Optional<Exception>(actualException),
-                    Optional<object[]>.Empty);
+                return specification.Fail(actualException);
             }
-            return new ExceptionCentricAggregateFactoryTestResult(
-                specification,
-                TestResultState.Passed,
-                Optional<Exception>.Empty,
-                Optional<object[]>.Empty);
+            return specification.Pass();
         }
     }
 }
