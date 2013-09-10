@@ -17,7 +17,9 @@ namespace AggregateSource.Testing.AggregateBehavior
 		/// <param name="throws">The expected exception to assert.</param>
 		public ExceptionCentricAggregateConstructorTestSpecification(Func<IAggregateRootEntity> sutFactory, Exception throws)
 		{
-			_sutFactory = sutFactory;
+		    if (sutFactory == null) throw new ArgumentNullException("sutFactory");
+		    if (throws == null) throw new ArgumentNullException("throws");
+		    _sutFactory = sutFactory;
 			_throws = throws;
 		}
 
@@ -39,5 +41,61 @@ namespace AggregateSource.Testing.AggregateBehavior
 		{
 			get { return _throws; }
 		}
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has passed.
+        /// </summary>
+        /// <returns>A new <see cref="ExceptionCentricAggregateConstructorTestResult"/>.</returns>
+        public ExceptionCentricAggregateConstructorTestResult Pass()
+        {
+            return new ExceptionCentricAggregateConstructorTestResult(
+                this,
+                TestResultState.Passed,
+                Optional<Exception>.Empty,
+                Optional<object[]>.Empty);
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has failed because nothing happened.
+        /// </summary>
+        /// <returns>A new <see cref="ExceptionCentricAggregateConstructorTestResult"/>.</returns>
+        public ExceptionCentricAggregateConstructorTestResult Fail()
+        {
+            return new ExceptionCentricAggregateConstructorTestResult(
+                this,
+                TestResultState.Failed,
+                Optional<Exception>.Empty,
+                Optional<object[]>.Empty);
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has failed because different things happened.
+        /// </summary>
+        /// <param name="actual">The actual events</param>
+        /// <returns>A new <see cref="ExceptionCentricAggregateConstructorTestResult"/>.</returns>
+        public ExceptionCentricAggregateConstructorTestResult Fail(object[] actual)
+        {
+            if (actual == null) throw new ArgumentNullException("actual");
+            return new ExceptionCentricAggregateConstructorTestResult(
+                this,
+                TestResultState.Failed,
+                Optional<Exception>.Empty,
+                new Optional<object[]>(actual));
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has failed because an exception happened.
+        /// </summary>
+        /// <param name="actual">The actual exception</param>
+        /// <returns>A new <see cref="ExceptionCentricAggregateConstructorTestResult"/>.</returns>
+        public ExceptionCentricAggregateConstructorTestResult Fail(Exception actual)
+        {
+            if (actual == null) throw new ArgumentNullException("actual");
+            return new ExceptionCentricAggregateConstructorTestResult(
+                this,
+                TestResultState.Failed,
+                new Optional<Exception>(actual),
+                Optional<object[]>.Empty);
+        }
 	}
 }

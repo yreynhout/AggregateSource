@@ -71,7 +71,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <summary>
         /// Returns a test result that indicates this specification has passed.
         /// </summary>
-        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        /// <returns>A new <see cref="ExceptionCentricAggregateCommandTestResult"/>.</returns>
         public ExceptionCentricAggregateCommandTestResult Pass()
         {
             return new ExceptionCentricAggregateCommandTestResult(
@@ -84,7 +84,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// <summary>
         /// Returns a test result that indicates this specification has failed because nothing happened.
         /// </summary>
-        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        /// <returns>A new <see cref="ExceptionCentricAggregateCommandTestResult"/>.</returns>
         public ExceptionCentricAggregateCommandTestResult Fail()
         {
             return new ExceptionCentricAggregateCommandTestResult(
@@ -98,7 +98,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// Returns a test result that indicates this specification has failed because different things happened.
         /// </summary>
         /// <param name="actual">The actual events</param>
-        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        /// <returns>A new <see cref="ExceptionCentricAggregateCommandTestResult"/>.</returns>
         public ExceptionCentricAggregateCommandTestResult Fail(object[] actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
@@ -113,7 +113,7 @@ namespace AggregateSource.Testing.AggregateBehavior
         /// Returns a test result that indicates this specification has failed because an exception happened.
         /// </summary>
         /// <param name="actual">The actual exception</param>
-        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        /// <returns>A new <see cref="ExceptionCentricAggregateCommandTestResult"/>.</returns>
         public ExceptionCentricAggregateCommandTestResult Fail(Exception actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
