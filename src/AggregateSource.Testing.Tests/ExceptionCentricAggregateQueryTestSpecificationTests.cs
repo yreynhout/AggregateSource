@@ -93,6 +93,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.False);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
@@ -105,6 +106,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
@@ -125,6 +127,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(actual)));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
@@ -145,6 +148,28 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(new Optional<Exception>(actual)));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
+        }
+
+        [Test]
+        public void FailResultCanBeNull()
+        {
+            Assert.DoesNotThrow(() => _sut.Fail((object)null));
+        }
+
+        [Test]
+        public void FailResultReturnsExpectedResult()
+        {
+            var actual = new object();
+
+            var result = _sut.Fail(actual);
+
+            Assert.That(result.Specification, Is.SameAs(_sut));
+            Assert.That(result.Passed, Is.False);
+            Assert.That(result.Failed, Is.True);
+            Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
+            Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(new Optional<object>(actual)));
         }
 
     }

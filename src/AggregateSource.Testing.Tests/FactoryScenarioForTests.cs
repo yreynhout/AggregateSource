@@ -7,6 +7,24 @@ namespace AggregateSource.Testing
     namespace FactoryScenarioForTests
     {
         [TestFixture]
+        public class SutTests
+        {
+            [Test]
+            public void SutIsSetInResultingSpecification()
+            {
+                var ctor = new AggregateRootEntityStub();
+
+                var result = new FactoryScenarioFor<AggregateRootEntityStub>(ctor).
+                    When(_ => new AggregateRootEntityStub()).
+                    ThenNone().
+                    Build().
+                    SutFactory;
+
+                Assert.That(result(), Is.SameAs(ctor));
+            }
+        }
+
+        [TestFixture]
         public class SutFactoryTests
         {
             FactoryScenarioFor<AggregateRootEntityStub> _sut;
