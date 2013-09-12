@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="CommandScenarioForTests.cs" />
     <Compile Include="ConstructorScenarioForTests.cs" />
+    <Compile Include="EventCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecificationTests.cs" />
     <Compile Include="EventCentricAggregateConstructorTestSpecificationTests.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecificationTests.cs" />
