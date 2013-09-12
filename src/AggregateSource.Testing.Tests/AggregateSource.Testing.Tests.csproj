@@ -67,33 +67,33 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateBehavior\CommandScenarioForTests.cs" />
-    <Compile Include="AggregateBehavior\ConstructorScenarioForTests.cs" />
-    <Compile Include="AggregateBehavior\EventCentricAggregateCommandTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\EventCentricAggregateConstructorTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\EventCentricAggregateFactoryTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\EventCentricAggregateQueryTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\ExceptionCentricAggregateCommandTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\ExceptionCentricAggregateConstructorTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\ExceptionCentricAggregateFactoryTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\ExceptionCentricAggregateQueryTestSpecificationTests.cs" />
-    <Compile Include="AggregateBehavior\FactoryScenarioForTests.cs" />
-    <Compile Include="AggregateBehavior\NUnitExtensionsForFactoryScenarioTests.cs" />
-    <Compile Include="AggregateBehavior\QueryScenarioForTests.cs" />
+    <Compile Include="CommandScenarioForTests.cs" />
+    <Compile Include="ConstructorScenarioForTests.cs" />
+    <Compile Include="EventCentricAggregateCommandTestSpecificationTests.cs" />
+    <Compile Include="EventCentricAggregateConstructorTestSpecificationTests.cs" />
+    <Compile Include="EventCentricAggregateFactoryTestSpecificationTests.cs" />
+    <Compile Include="EventCentricAggregateQueryTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateCommandTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateFactoryTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateQueryTestSpecificationTests.cs" />
+    <Compile Include="FactoryScenarioForTests.cs" />
+    <Compile Include="NUnitExtensionsForFactoryScenarioTests.cs" />
+    <Compile Include="QueryScenarioForTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
-    <Compile Include="CollaborationBehavior\EventCentricTestSpecificationTests.cs" />
-    <Compile Include="CollaborationBehavior\ExceptionCentricTestSpecificationTests.cs" />
-    <Compile Include="CollaborationBehavior\FactsBuilderTests.cs" />
-    <Compile Include="CollaborationBehavior\FactTests.cs" />
-    <Compile Include="CollaborationBehavior\Model.cs" />
-    <Compile Include="CollaborationBehavior\ScenarioGivenStateBuilderTests.cs" />
-    <Compile Include="CollaborationBehavior\ScenarioTests.cs" />
-    <Compile Include="CollaborationBehavior\ScenarioThenStateBuilderTests.cs" />
-    <Compile Include="CollaborationBehavior\ScenarioThrowStateBuilderTests.cs" />
-    <Compile Include="CollaborationBehavior\ScenarioWhenStateBuilderTests.cs" />
-    <Compile Include="CollaborationBehavior\TestFactBuilder.cs" />
-    <Compile Include="CollaborationBehavior\TestSpecificationDataPointFixture.cs" />
-    <Compile Include="CollaborationBehavior\TestSpecificationTextWriterTests.cs" />
+    <Compile Include="EventCentricTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricTestSpecificationTests.cs" />
+    <Compile Include="FactsBuilderTests.cs" />
+    <Compile Include="FactTests.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="ScenarioGivenStateBuilderTests.cs" />
+    <Compile Include="ScenarioTests.cs" />
+    <Compile Include="ScenarioThenStateBuilderTests.cs" />
+    <Compile Include="ScenarioThrowStateBuilderTests.cs" />
+    <Compile Include="ScenarioWhenStateBuilderTests.cs" />
+    <Compile Include="TestFactBuilder.cs" />
+    <Compile Include="TestSpecificationDataPointFixture.cs" />
+    <Compile Include="TestSpecificationTextWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +113,7 @@
       <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

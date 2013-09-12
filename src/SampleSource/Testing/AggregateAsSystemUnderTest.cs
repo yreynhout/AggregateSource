@@ -1,6 +1,6 @@
 ﻿using System;
 using AggregateSource;
-using AggregateSource.Testing.AggregateBehavior;
+using AggregateSource.Testing;
 using NUnit.Framework;
 
 namespace SampleSource.Testing

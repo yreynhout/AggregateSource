@@ -65,10 +65,10 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateBehavior\NUnitExtensionsForCommandScenario.cs" />
-    <Compile Include="AggregateBehavior\NUnitExtensionsForConstructorScenario.cs" />
-    <Compile Include="AggregateBehavior\NUnitExtensionsForFactoryScenario.cs" />
-    <Compile Include="AggregateBehavior\NUnitExtensionsForQueryScenario.cs" />
+    <Compile Include="NUnitExtensionsForCommandScenario.cs" />
+    <Compile Include="NUnitExtensionsForConstructorScenario.cs" />
+    <Compile Include="NUnitExtensionsForFactoryScenario.cs" />
+    <Compile Include="NUnitExtensionsForQueryScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
