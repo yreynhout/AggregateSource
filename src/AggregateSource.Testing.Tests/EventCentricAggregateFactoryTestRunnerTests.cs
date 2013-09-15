@@ -5,21 +5,21 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class EventCentricAggregateCommandTestRunnerTests
+    public class EventCentricAggregateFactoryTestRunnerTests
     {
         IEventComparer _comparer;
-        EventCentricAggregateCommandTestRunner _sut;
+        EventCentricAggregateFactoryTestRunner _sut;
 
         [SetUp]
         public void SetUp()
         {
             _comparer = new EqualsEventComparer();
-            _sut = new EventCentricAggregateCommandTestRunner(_comparer);
+            _sut = new EventCentricAggregateFactoryTestRunner(_comparer);
         }
         [Test]
         public void EventComparerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new EventCentricAggregateCommandTestRunner(null));
+            Assert.Throws<ArgumentNullException>(() => new EventCentricAggregateFactoryTestRunner(null));
         }
 
         [Test]
@@ -31,10 +31,10 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenPassed()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
-                () => new PassCase(), 
+            var specification = new EventCentricAggregateFactoryTestSpecification(
+                () => new PassCase(),
                 new object[0],
-                _ => { },
+                _ => new AggregateRootEntityStub(),
                 new object[0]);
 
             var result = _sut.Run(specification);
@@ -47,7 +47,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfNoEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateFactoryTestSpecification(
                 () => new FailNoEventCase(),
                 new object[0],
                 _ => ((FailNoEventCase)_).Fail(),
@@ -63,7 +63,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentCountOfEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateFactoryTestSpecification(
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
@@ -79,11 +79,11 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentContentOfEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateFactoryTestSpecification(
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
-                new [] { new object() });
+                new[] { new object() });
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -95,8 +95,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseExceptionOccurred()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
-                () => new FailExceptionCase(), 
+            var specification = new EventCentricAggregateFactoryTestSpecification(
+                () => new FailExceptionCase(),
                 new object[0],
                 _ => ((FailExceptionCase)_).Fail(),
                 new object[0]);
@@ -112,7 +112,7 @@ namespace AggregateSource.Testing
         {
             public IEnumerable<EventComparisonDifference> Compare(object expected, object actual)
             {
-                if(!expected.Equals(actual))
+                if (!expected.Equals(actual))
                     yield return new EventComparisonDifference(expected, actual, "-");
             }
         }
@@ -121,11 +121,22 @@ namespace AggregateSource.Testing
         {
         }
 
+        class FactoryResult : AggregateRootEntity
+        {
+            public FactoryResult(IEnumerable<object> events)
+            {
+                foreach (var @event in events)
+                {
+                    Apply(@event);
+                }
+            }
+        }
+
         class FailExceptionCase : AggregateRootEntity
         {
             public static readonly Exception TheException = new Exception();
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
                 throw TheException;
             }
@@ -138,12 +149,9 @@ namespace AggregateSource.Testing
                 new object()
             };
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
-                foreach (var theEvent in TheEvents)
-                {
-                    Apply(theEvent);
-                }
+                return new FactoryResult(TheEvents);
             }
         }
 
@@ -151,12 +159,9 @@ namespace AggregateSource.Testing
         {
             public static readonly object[] TheEvents = new object[0];
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
-                foreach (var theEvent in TheEvents)
-                {
-                    Apply(theEvent);
-                }
+                return new FactoryResult(TheEvents);
             }
         }
     }

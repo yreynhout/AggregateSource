@@ -5,21 +5,21 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class EventCentricAggregateCommandTestRunnerTests
+    public class EventCentricAggregateConstructorTestRunnerTests
     {
         IEventComparer _comparer;
-        EventCentricAggregateCommandTestRunner _sut;
+        EventCentricAggregateConstructorTestRunner _sut;
 
         [SetUp]
         public void SetUp()
         {
             _comparer = new EqualsEventComparer();
-            _sut = new EventCentricAggregateCommandTestRunner(_comparer);
+            _sut = new EventCentricAggregateConstructorTestRunner(_comparer);
         }
         [Test]
         public void EventComparerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new EventCentricAggregateCommandTestRunner(null));
+            Assert.Throws<ArgumentNullException>(() => new EventCentricAggregateConstructorTestRunner(null));
         }
 
         [Test]
@@ -31,10 +31,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenPassed()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
-                () => new PassCase(), 
-                new object[0],
-                _ => { },
+            var specification = new EventCentricAggregateConstructorTestSpecification(
+                () => new PassCase(),
                 new object[0]);
 
             var result = _sut.Run(specification);
@@ -47,11 +45,9 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfNoEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateConstructorTestSpecification(
                 () => new FailNoEventCase(),
-                new object[0],
-                _ => ((FailNoEventCase)_).Fail(),
-                new [] { new object() });
+                new[] { new object() });
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -63,10 +59,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentCountOfEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateConstructorTestSpecification(
                 () => new FailEventCase(),
-                new object[0],
-                _ => ((FailEventCase)_).Fail(),
                 new object[0]);
 
             var result = _sut.Run(specification);
@@ -79,11 +73,9 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentContentOfEvents()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
+            var specification = new EventCentricAggregateConstructorTestSpecification(
                 () => new FailEventCase(),
-                new object[0],
-                _ => ((FailEventCase)_).Fail(),
-                new [] { new object() });
+                new[] { new object() });
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -95,10 +87,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseExceptionOccurred()
         {
-            var specification = new EventCentricAggregateCommandTestSpecification(
-                () => new FailExceptionCase(), 
-                new object[0],
-                _ => ((FailExceptionCase)_).Fail(),
+            var specification = new EventCentricAggregateConstructorTestSpecification(
+                () => new FailExceptionCase(),
                 new object[0]);
 
             var result = _sut.Run(specification);
@@ -112,7 +102,7 @@ namespace AggregateSource.Testing
         {
             public IEnumerable<EventComparisonDifference> Compare(object expected, object actual)
             {
-                if(!expected.Equals(actual))
+                if (!expected.Equals(actual))
                     yield return new EventComparisonDifference(expected, actual, "-");
             }
         }
@@ -125,7 +115,7 @@ namespace AggregateSource.Testing
         {
             public static readonly Exception TheException = new Exception();
 
-            public void Fail()
+            public FailExceptionCase()
             {
                 throw TheException;
             }
@@ -138,7 +128,7 @@ namespace AggregateSource.Testing
                 new object()
             };
 
-            public void Fail()
+            public FailEventCase()
             {
                 foreach (var theEvent in TheEvents)
                 {
@@ -151,7 +141,7 @@ namespace AggregateSource.Testing
         {
             public static readonly object[] TheEvents = new object[0];
 
-            public void Fail()
+            public FailNoEventCase()
             {
                 foreach (var theEvent in TheEvents)
                 {
