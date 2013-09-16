@@ -35,7 +35,7 @@ namespace AggregateSource.Testing
                 () => new PassCase(),
                 new object[0],
                 _ => ((PassCase)_).Pass(),
-                PassCase.Result);
+                PassCase.TheResult);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.True);
@@ -52,7 +52,7 @@ namespace AggregateSource.Testing
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
-                FailEventCase.Result);
+                FailEventCase.TheResult);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -86,14 +86,14 @@ namespace AggregateSource.Testing
                 () => new FailResultCase(), 
                 new object[0],
                 _ => ((FailResultCase)_).Fail(),
-                0);
+                FailResultCase.TheExpectedResult);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
-            Assert.That(result.ButResult, Is.EqualTo(new Optional<int>(FailResultCase.Result)));
+            Assert.That(result.ButResult, Is.EqualTo(new Optional<int>(FailResultCase.TheActualResult)));
         }
 
         class EqualsResultComparer : IResultComparer
@@ -107,10 +107,10 @@ namespace AggregateSource.Testing
 
         class PassCase : AggregateRootEntity
         {
-            public static readonly int Result = 1;
+            public static readonly int TheResult = 1;
             public int Pass()
             {
-                return Result;
+                return TheResult;
             }
         }
 
@@ -126,7 +126,7 @@ namespace AggregateSource.Testing
 
         class FailEventCase : AggregateRootEntity
         {
-            public static readonly int Result = 1;
+            public static readonly int TheResult = 1;
             public static readonly object[] TheEvents =
             {
                 new object()
@@ -138,17 +138,18 @@ namespace AggregateSource.Testing
                 {
                     Apply(theEvent);
                 }
-                return Result;
+                return TheResult;
             }
         }
 
         class FailResultCase : AggregateRootEntity
         {
-            public static readonly int Result = 1;
+            public static readonly int TheExpectedResult = 1;
+            public static readonly int TheActualResult = 0;
 
             public int Fail()
             {
-                return Result;
+                return TheActualResult;
             }
         }
     }

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class EventCentricAggregateQueryTestSpecificationTests
+    public class ResultCentricAggregateQueryTestSpecificationTests
     {
         ResultCentricAggregateQueryTestSpecification _sut;
 

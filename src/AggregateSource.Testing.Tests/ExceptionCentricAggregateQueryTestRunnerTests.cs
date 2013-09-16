@@ -5,22 +5,22 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class ExceptionCentricAggregateCommandTestRunnerTests
+    public class ExceptionCentricAggregateQueryTestRunnerTests
     {
         IExceptionComparer _comparer;
-        ExceptionCentricAggregateCommandTestRunner _sut;
+        ExceptionCentricAggregateQueryTestRunner _sut;
 
         [SetUp]
         public void SetUp()
         {
             _comparer = new EqualsExceptionComparer();
-            _sut = new ExceptionCentricAggregateCommandTestRunner(_comparer);
+            _sut = new ExceptionCentricAggregateQueryTestRunner(_comparer);
         }
 
         [Test]
         public void EventComparerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateCommandTestRunner(null));
+            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateQueryTestRunner(null));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenPassed()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateQueryTestSpecification(
                 () => new PassCase(),
                 new object[0],
                 _ => ((PassCase)_).Pass(),
@@ -43,12 +43,13 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.False);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfEvents()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateQueryTestSpecification(
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
@@ -59,12 +60,13 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailEventCase.TheEvents)));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentException()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateQueryTestSpecification(
                 () => new FailExceptionCase(),
                 new object[0],
                 _ => ((FailExceptionCase)_).Fail(),
@@ -75,12 +77,13 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(new Optional<Exception>(FailExceptionCase.TheActualException)));
+            Assert.That(result.ButResult, Is.EqualTo(Optional<object>.Empty));
         }
 
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseNoExceptionOccurred()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateQueryTestSpecification(
                 () => new FailNoExceptionCase(),
                 new object[0],
                 _ => ((FailNoExceptionCase)_).Fail(),
@@ -91,6 +94,7 @@ namespace AggregateSource.Testing
             Assert.That(result.Failed, Is.True);
             Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
+            Assert.That(result.ButResult, Is.EqualTo(new Optional<object>(FailNoExceptionCase.TheResult)));
         }
 
         class EqualsExceptionComparer : IExceptionComparer
@@ -106,7 +110,7 @@ namespace AggregateSource.Testing
         {
             public static readonly Exception TheException = new Exception();
 
-            public void Pass()
+            public int Pass()
             {
                 throw TheException;
             }
@@ -117,7 +121,7 @@ namespace AggregateSource.Testing
             public static readonly Exception TheExpectedException = new Exception();
             public static readonly Exception TheActualException = new Exception();
 
-            public void Fail()
+            public int Fail()
             {
                 throw TheActualException;
             }
@@ -125,6 +129,7 @@ namespace AggregateSource.Testing
 
         class FailEventCase : AggregateRootEntity
         {
+            public static readonly int TheResult = 1;
             public static readonly Exception TheExpectedException = new Exception();
 
             public static readonly object[] TheEvents =
@@ -132,21 +137,24 @@ namespace AggregateSource.Testing
                 new object()
             };
 
-            public void Fail()
+            public int Fail()
             {
                 foreach (var theEvent in TheEvents)
                 {
                     Apply(theEvent);
                 }
+                return TheResult;
             }
         }
 
         class FailNoExceptionCase : AggregateRootEntity
         {
+            public static readonly int TheResult = 1;
             public static readonly Exception TheExpectedException = new Exception();
 
-            public void Fail()
+            public int Fail()
             {
+                return TheResult;
             }
         }
     }

@@ -5,22 +5,22 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class ExceptionCentricAggregateCommandTestRunnerTests
+    public class ExceptionCentricAggregateConstructorTestRunnerTests
     {
         IExceptionComparer _comparer;
-        ExceptionCentricAggregateCommandTestRunner _sut;
+        ExceptionCentricAggregateConstructorTestRunner _sut;
 
         [SetUp]
         public void SetUp()
         {
             _comparer = new EqualsExceptionComparer();
-            _sut = new ExceptionCentricAggregateCommandTestRunner(_comparer);
+            _sut = new ExceptionCentricAggregateConstructorTestRunner(_comparer);
         }
 
         [Test]
         public void EventComparerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateCommandTestRunner(null));
+            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateConstructorTestRunner(null));
         }
 
         [Test]
@@ -32,10 +32,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenPassed()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateConstructorTestSpecification(
                 () => new PassCase(),
-                new object[0],
-                _ => ((PassCase)_).Pass(),
                 PassCase.TheException);
 
             var result = _sut.Run(specification);
@@ -48,10 +46,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfEvents()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateConstructorTestSpecification(
                 () => new FailEventCase(),
-                new object[0],
-                _ => ((FailEventCase)_).Fail(),
                 FailEventCase.TheExpectedException);
 
             var result = _sut.Run(specification);
@@ -64,10 +60,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentException()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateConstructorTestSpecification(
                 () => new FailExceptionCase(),
-                new object[0],
-                _ => ((FailExceptionCase)_).Fail(),
                 FailExceptionCase.TheExpectedException);
 
             var result = _sut.Run(specification);
@@ -80,10 +74,8 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseNoExceptionOccurred()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateConstructorTestSpecification(
                 () => new FailNoExceptionCase(),
-                new object[0],
-                _ => ((FailNoExceptionCase)_).Fail(),
                 FailNoExceptionCase.TheExpectedException);
 
             var result = _sut.Run(specification);
@@ -106,7 +98,7 @@ namespace AggregateSource.Testing
         {
             public static readonly Exception TheException = new Exception();
 
-            public void Pass()
+            public PassCase()
             {
                 throw TheException;
             }
@@ -117,7 +109,7 @@ namespace AggregateSource.Testing
             public static readonly Exception TheExpectedException = new Exception();
             public static readonly Exception TheActualException = new Exception();
 
-            public void Fail()
+            public FailExceptionCase()
             {
                 throw TheActualException;
             }
@@ -132,7 +124,7 @@ namespace AggregateSource.Testing
                 new object()
             };
 
-            public void Fail()
+            public FailEventCase()
             {
                 foreach (var theEvent in TheEvents)
                 {
@@ -144,10 +136,6 @@ namespace AggregateSource.Testing
         class FailNoExceptionCase : AggregateRootEntity
         {
             public static readonly Exception TheExpectedException = new Exception();
-
-            public void Fail()
-            {
-            }
         }
     }
 }

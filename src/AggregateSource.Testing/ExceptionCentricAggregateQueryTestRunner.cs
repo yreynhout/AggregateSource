@@ -42,7 +42,7 @@ namespace AggregateSource.Testing
                 {
                     return specification.Fail(sut.GetChanges().ToArray());
                 }
-                return specification.Fail();
+                return specification.Fail(queryResult);
             }
             var actualException = result.Value;
             if (_comparer.Compare(actualException, specification.Throws).Any())

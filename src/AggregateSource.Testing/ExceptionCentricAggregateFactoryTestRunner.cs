@@ -40,7 +40,7 @@ namespace AggregateSource.Testing
             {
                 if (factoryResult.HasChanges())
                 {
-                    return specification.Fail(sut.GetChanges().ToArray());
+                    return specification.Fail(factoryResult.GetChanges().ToArray());
                 }
                 return specification.Fail();
             }

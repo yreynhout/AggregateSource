@@ -5,22 +5,22 @@ using NUnit.Framework;
 namespace AggregateSource.Testing
 {
     [TestFixture]
-    public class ExceptionCentricAggregateCommandTestRunnerTests
+    public class ExceptionCentricAggregateFactoryTestRunnerTests
     {
         IExceptionComparer _comparer;
-        ExceptionCentricAggregateCommandTestRunner _sut;
+        ExceptionCentricAggregateFactoryTestRunner _sut;
 
         [SetUp]
         public void SetUp()
         {
             _comparer = new EqualsExceptionComparer();
-            _sut = new ExceptionCentricAggregateCommandTestRunner(_comparer);
+            _sut = new ExceptionCentricAggregateFactoryTestRunner(_comparer);
         }
 
         [Test]
         public void EventComparerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateCommandTestRunner(null));
+            Assert.Throws<ArgumentNullException>(() => new ExceptionCentricAggregateFactoryTestRunner(null));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenPassed()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateFactoryTestSpecification(
                 () => new PassCase(),
                 new object[0],
                 _ => ((PassCase)_).Pass(),
@@ -48,11 +48,11 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfEvents()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateFactoryTestSpecification(
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
-                FailEventCase.TheExpectedException);
+                FailEventCase.TheException);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -64,7 +64,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseOfDifferentException()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateFactoryTestSpecification(
                 () => new FailExceptionCase(),
                 new object[0],
                 _ => ((FailExceptionCase)_).Fail(),
@@ -80,7 +80,7 @@ namespace AggregateSource.Testing
         [Test]
         public void RunReturnsExpectedResultWhenFailedBecauseNoExceptionOccurred()
         {
-            var specification = new ExceptionCentricAggregateCommandTestSpecification(
+            var specification = new ExceptionCentricAggregateFactoryTestSpecification(
                 () => new FailNoExceptionCase(),
                 new object[0],
                 _ => ((FailNoExceptionCase)_).Fail(),
@@ -102,11 +102,22 @@ namespace AggregateSource.Testing
             }
         }
 
+        class FactoryResult : AggregateRootEntity
+        {
+            public FactoryResult(IEnumerable<object> events)
+            {
+                foreach (var @event in events)
+                {
+                    Apply(@event);
+                }
+            }
+        }
+
         class PassCase : AggregateRootEntity
         {
             public static readonly Exception TheException = new Exception();
 
-            public void Pass()
+            public IAggregateRootEntity Pass()
             {
                 throw TheException;
             }
@@ -117,7 +128,7 @@ namespace AggregateSource.Testing
             public static readonly Exception TheExpectedException = new Exception();
             public static readonly Exception TheActualException = new Exception();
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
                 throw TheActualException;
             }
@@ -125,19 +136,16 @@ namespace AggregateSource.Testing
 
         class FailEventCase : AggregateRootEntity
         {
-            public static readonly Exception TheExpectedException = new Exception();
+            public static readonly Exception TheException = new Exception();
 
             public static readonly object[] TheEvents =
             {
                 new object()
             };
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
-                foreach (var theEvent in TheEvents)
-                {
-                    Apply(theEvent);
-                }
+                return new FactoryResult(TheEvents);
             }
         }
 
@@ -145,8 +153,9 @@ namespace AggregateSource.Testing
         {
             public static readonly Exception TheExpectedException = new Exception();
 
-            public void Fail()
+            public IAggregateRootEntity Fail()
             {
+                return new FactoryResult(new object[0]);
             }
         }
     }

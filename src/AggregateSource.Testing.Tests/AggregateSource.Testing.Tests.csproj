@@ -75,10 +75,13 @@
     <Compile Include="EventCentricAggregateConstructorTestSpecificationTests.cs" />
     <Compile Include="EventCentricAggregateFactoryTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecificationTests.cs" />
-    <Compile Include="EventCentricAggregateQueryTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateQueryTestRunnerTests.cs" />
+    <Compile Include="ResultCentricAggregateQueryTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestRunnerTests.cs" />
     <Compile Include="ExceptionCentricAggregateConstructorTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateFactoryTestRunnerTests.cs" />
     <Compile Include="ExceptionCentricAggregateFactoryTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateQueryTestSpecificationTests.cs" />
     <Compile Include="FactoryScenarioForTests.cs" />
