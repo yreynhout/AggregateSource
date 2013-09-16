@@ -84,20 +84,6 @@ namespace AggregateSource.Testing
         }
 
         /// <summary>
-        /// Returns a test result that indicates this specification has failed because nothing was returned nor happened.
-        /// </summary>
-        /// <returns>A new <see cref="ResultCentricAggregateQueryTestResult"/>.</returns>
-        public ResultCentricAggregateQueryTestResult Fail()
-        {
-            return new ResultCentricAggregateQueryTestResult(
-                this,
-                TestResultState.Failed,
-                Optional<object>.Empty,
-                Optional<Exception>.Empty,
-                Optional<object[]>.Empty);
-        }
-
-        /// <summary>
         /// Returns a test result that indicates this specification has failed because different things happened.
         /// </summary>
         /// <param name="actual">The actual events</param>

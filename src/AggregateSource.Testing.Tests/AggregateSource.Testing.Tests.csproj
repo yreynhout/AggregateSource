@@ -76,6 +76,7 @@
     <Compile Include="EventCentricAggregateFactoryTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecificationTests.cs" />
     <Compile Include="EventCentricAggregateQueryTestSpecificationTests.cs" />
+    <Compile Include="ExceptionCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateConstructorTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateFactoryTestSpecificationTests.cs" />

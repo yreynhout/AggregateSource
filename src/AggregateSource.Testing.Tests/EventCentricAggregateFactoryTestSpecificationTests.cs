@@ -96,18 +96,6 @@ namespace AggregateSource.Testing
         }
 
         [Test]
-        public void FailReturnsExpectedResult()
-        {
-            var result = _sut.Fail();
-
-            Assert.That(result.Specification, Is.SameAs(_sut));
-            Assert.That(result.Passed, Is.False);
-            Assert.That(result.Failed, Is.True);
-            Assert.That(result.ButEvents, Is.EqualTo(Optional<object[]>.Empty));
-            Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
-        }
-
-        [Test]
         public void FailEventsCanNotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.Fail((object[])null));

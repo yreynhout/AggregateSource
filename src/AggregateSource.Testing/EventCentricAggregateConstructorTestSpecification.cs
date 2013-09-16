@@ -56,19 +56,6 @@ namespace AggregateSource.Testing
         }
 
         /// <summary>
-        /// Returns a test result that indicates this specification has failed because nothing happened.
-        /// </summary>
-        /// <returns>A new <see cref="EventCentricAggregateConstructorTestResult"/>.</returns>
-        public EventCentricAggregateConstructorTestResult Fail()
-        {
-            return new EventCentricAggregateConstructorTestResult(
-                this,
-                TestResultState.Failed,
-                Optional<object[]>.Empty,
-                Optional<Exception>.Empty);
-        }
-
-        /// <summary>
         /// Returns a test result that indicates this specification has failed because different things happened.
         /// </summary>
         /// <param name="actual">The actual events</param>
