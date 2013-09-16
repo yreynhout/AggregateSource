@@ -53,6 +53,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -68,6 +71,9 @@
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
     <Compile Include="CommandScenarioForTests.cs" />
+    <Compile Include="CompareNetObjectsBasedEventComparerTests.cs" />
+    <Compile Include="CompareNetObjectsBasedExceptionComparerTests.cs" />
+    <Compile Include="CompareNetObjectsBasedResultComparerTests.cs" />
     <Compile Include="ConstructorScenarioForTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecificationTests.cs" />

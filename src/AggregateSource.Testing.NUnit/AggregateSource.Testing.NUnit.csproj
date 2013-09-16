@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\AggregateSource.Testing.NUnit.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\AggregateSource.Testing.NUnit.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +53,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -65,11 +70,14 @@
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="CompareNetObjectsBasedEventComparer.cs" />
+    <Compile Include="CompareNetObjectsBasedExceptionComparer.cs" />
     <Compile Include="NUnitExtensionsForCommandScenario.cs" />
     <Compile Include="NUnitExtensionsForConstructorScenario.cs" />
     <Compile Include="NUnitExtensionsForFactoryScenario.cs" />
     <Compile Include="NUnitExtensionsForQueryScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CompareNetObjectsBasedResultComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
