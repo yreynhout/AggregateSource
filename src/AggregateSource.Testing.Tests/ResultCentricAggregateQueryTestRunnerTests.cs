@@ -69,7 +69,7 @@ namespace AggregateSource.Testing
                 () => new FailExceptionCase(),
                 new object[0],
                 _ => ((FailExceptionCase)_).Fail(),
-                new object[0]);
+                FailExceptionCase.TheResult);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -116,9 +116,10 @@ namespace AggregateSource.Testing
 
         class FailExceptionCase : AggregateRootEntity
         {
+            public static readonly int TheResult = 1;
             public static readonly Exception TheException = new Exception();
 
-            public IAggregateRootEntity Fail()
+            public int Fail()
             {
                 throw TheException;
             }

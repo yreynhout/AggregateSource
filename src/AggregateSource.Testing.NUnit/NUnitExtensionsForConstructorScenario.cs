@@ -125,6 +125,13 @@ namespace AggregateSource.Testing
                         throw new NUnit.Framework.AssertionException(writer.ToString());
                     }
                 }
+                using (var writer = new StringWriter())
+                {
+                    writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                    writer.WriteLine("  But no exception occurred");
+
+                    throw new NUnit.Framework.AssertionException(writer.ToString());
+                }
             }
         }
     }
