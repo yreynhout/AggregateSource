@@ -168,7 +168,7 @@ namespace AggregateSource.Testing
             public void BuilderCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(
-                    () => ((IEventCentricAggregateCommandTestSpecificationBuilder)null).Assert(null));
+                    () => ((IExceptionCentricAggregateCommandTestSpecificationBuilder)null).Assert(new EqualsExceptionComparer()));
             }
 
             [Test]
@@ -247,7 +247,7 @@ namespace AggregateSource.Testing
 
             class FailExceptionCase : AggregateRootEntity
             {
-                public static readonly Exception TheExpectedException = new Exception();
+                public static readonly Exception TheExpectedException = new InvalidOperationException();
                 public static readonly Exception TheActualException = new Exception();
 
                 public void Fail()

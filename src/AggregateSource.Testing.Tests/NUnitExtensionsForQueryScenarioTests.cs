@@ -148,7 +148,7 @@ namespace AggregateSource.Testing
             public void BuilderCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(
-                    () => ((IResultCentricAggregateQueryTestSpecificationBuilder)null).Assert(null));
+                    () => ((IExceptionCentricAggregateQueryTestSpecificationBuilder)null).Assert(null));
             }
 
             [Test]
@@ -183,14 +183,14 @@ namespace AggregateSource.Testing
             }
 
             [Test]
-            public void WhenSpecificationRunFailsBecauseEvents()
+            public void WhenSpecificationRunFailsBecauseEventsButNoException()
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new QueryScenarioFor<FailEventCase>(() => new FailEventCase()).
+                        new QueryScenarioFor<FailEventButNoExceptionCase>(() => new FailEventButNoExceptionCase()).
                             GivenNone().
                             When(_ => _.Fail()).
-                            Throws(FailEventCase.TheExpectedException).
+                            Throws(FailEventButNoExceptionCase.TheExpectedException).
                             Assert(new EqualsExceptionComparer()));
             }
 
@@ -203,6 +203,18 @@ namespace AggregateSource.Testing
                             GivenNone().
                             When(_ => _.Fail()).
                             Throws(FailNoExceptionCase.TheExpectedException).
+                            Assert(new EqualsExceptionComparer()));
+            }
+
+            [Test]
+            public void WhenSpecificationRunFailsBecauseEventsButException()
+            {
+                Assert.Throws<AssertionException>(
+                    () =>
+                        new QueryScenarioFor<FailEventButExceptionCase>(() => new FailEventButExceptionCase()).
+                            GivenNone().
+                            When(_ => _.Fail()).
+                            Throws(FailEventButExceptionCase.TheExpectedException).
                             Assert(new EqualsExceptionComparer()));
             }
 
@@ -229,7 +241,7 @@ namespace AggregateSource.Testing
             class FailExceptionCase : AggregateRootEntity
             {
                 public static readonly int TheResult = 1;
-                public static readonly Exception TheExpectedException = new Exception();
+                public static readonly Exception TheExpectedException = new InvalidOperationException();
                 public static readonly Exception TheActualException = new Exception();
 
                 public int Fail()
@@ -238,7 +250,7 @@ namespace AggregateSource.Testing
                 }
             }
 
-            class FailEventCase : AggregateRootEntity
+            class FailEventButNoExceptionCase : AggregateRootEntity
             {
                 public static readonly int TheResult = 1;
 
@@ -257,6 +269,28 @@ namespace AggregateSource.Testing
                     }
 
                     return TheResult;
+                }
+            }
+
+            class FailEventButExceptionCase : AggregateRootEntity
+            {
+                public static readonly int TheResult = 1;
+
+                public static readonly Exception TheExpectedException = new Exception();
+
+                public static readonly object[] TheEvents =
+                {
+                    new object()
+                };
+
+                public int Fail()
+                {
+                    foreach (var theEvent in TheEvents)
+                    {
+                        Apply(theEvent);
+                    }
+
+                    throw TheExpectedException;
                 }
             }
 

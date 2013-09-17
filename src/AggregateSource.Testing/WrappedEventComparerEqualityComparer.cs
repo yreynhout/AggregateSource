@@ -10,7 +10,6 @@ namespace AggregateSource.Testing
 
         public WrappedEventComparerEqualityComparer(IEventComparer comparer)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
         }
 
