@@ -28,7 +28,7 @@ namespace AggregateSource.Testing
                 {
                     using (var writer = new StringWriter())
                     {
-                        writer.WriteLine("  Expected: {0} events,", result.Specification.Thens.Length);
+                        writer.WriteLine("  Expected: {0} event(s),", result.Specification.Thens.Length);
                         writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
                         throw new NUnit.Framework.AssertionException(writer.ToString());
@@ -40,10 +40,10 @@ namespace AggregateSource.Testing
                     {
                         using (var writer = new StringWriter())
                         {
-                            writer.WriteLine("  Expected: {0} events ({1}),",
+                            writer.WriteLine("  Expected: {0} event(s) ({1}),",
                                 result.Specification.Thens.Length,
                                 String.Join(",", result.Specification.Thens.Select(_ => _.GetType().Name).ToArray()));
-                            writer.WriteLine("  But was:  {0} events ({1})",
+                            writer.WriteLine("  But was:  {0} event(s) ({1})",
                                 result.ButEvents.Value.Length,
                                 String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 
@@ -52,7 +52,7 @@ namespace AggregateSource.Testing
                     }
                     using (var writer = new StringWriter())
                     {
-                        writer.WriteLine("  Expected: {0} events ({1}),",
+                        writer.WriteLine("  Expected: {0} event(s) ({1}),",
                             result.Specification.Thens.Length,
                             String.Join(",", result.Specification.Thens.Select(_ => _.GetType().Name).ToArray()));
                         writer.WriteLine("  But found the following differences:");
@@ -88,12 +88,29 @@ namespace AggregateSource.Testing
             {
                 if (result.ButException.HasValue)
                 {
-                    using (var writer = new StringWriter())
+                    if (result.ButException.Value.GetType() != result.Specification.Throws.GetType())
                     {
-                        writer.WriteLine("  Expected: {0},", result.Specification.Throws);
-                        writer.WriteLine("  But was:  {0}", result.ButException.Value);
+                        using (var writer = new StringWriter())
+                        {
+                            writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                            writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
-                        throw new NUnit.Framework.AssertionException(writer.ToString());
+                            throw new NUnit.Framework.AssertionException(writer.ToString());
+                        }
+                    }
+                    else 
+                    {
+                        using (var writer = new StringWriter())
+                        {
+                            writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                            writer.WriteLine("  But found the following differences:");
+                            foreach (var difference in comparer.Compare(result.Specification.Throws, result.ButException.Value))
+                            {
+                                writer.WriteLine("    {0}", difference.Message);
+                            }
+
+                            throw new NUnit.Framework.AssertionException(writer.ToString());
+                        }
                     }
                 }
                 if (result.ButEvents.HasValue)
@@ -101,7 +118,7 @@ namespace AggregateSource.Testing
                     using (var writer = new StringWriter())
                     {
                         writer.WriteLine("  Expected: {0},", result.Specification.Throws);
-                        writer.WriteLine("  But was:  {0} events ({1})",
+                        writer.WriteLine("  But was:  {0} event(s) ({1})",
                             result.ButEvents.Value.Length,
                             String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 

@@ -28,16 +28,19 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Testing" version="0.0.103" />
+        <dependency id="AggregateSource.Testing" version="0.0.110" />
         <dependency id="CompareNETObjects" version="1.7.2.0" />
+        <dependency id="NUnit" version="2.6.2" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Testing" version="0.0.103" />
+        <dependency id="AggregateSource.Testing" version="0.0.110" />
         <dependency id="CompareNETObjects" version="1.7.2.0" />
+        <dependency id="NUnit" version="2.6.2" />
       </group>
     </dependencies>
   </metadata>
   <files>
+    <file src="..\src\AggregateSource.Testing.NUnit\Content\*.cs" target="content" />
     <file src="output\net40\AggregateSource.Testing.NUnit.dll" target="lib\net40\AggregateSource.Testing.NUnit.dll" />
     <file src="output\net40\AggregateSource.Testing.NUnit.pdb" target="lib\net40\AggregateSource.Testing.NUnit.pdb" />
     <file src="output\net40\AggregateSource.Testing.NUnit.xml" target="lib\net40\AggregateSource.Testing.NUnit.xml" />
