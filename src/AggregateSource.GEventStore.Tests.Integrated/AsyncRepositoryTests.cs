@@ -12,15 +12,12 @@ namespace AggregateSource.GEventStore
             [Test]
             public void FactoryCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() =>
-                                                     new AsyncRepository<AggregateRootEntityStub>(null,
-                                                                                                  new ConcurrentUnitOfWork
-                                                                                                      (),
-                                                                                                  EmbeddedEventStore
-                                                                                                      .Instance
-                                                                                                      .Connection,
-                                                                                                  EventReaderConfigurationFactory
-                                                                                                      .Create()));
+                Assert.Throws<ArgumentNullException>(
+                    () => new AsyncRepository<AggregateRootEntityStub>(
+                        null,
+                        new ConcurrentUnitOfWork(),
+                        EmbeddedEventStore.Connection,
+                        EventReaderConfigurationFactory.Create()));
             }
 
             [Test]
@@ -29,7 +26,7 @@ namespace AggregateSource.GEventStore
                 Assert.Throws<ArgumentNullException>(() =>
                                                      new AsyncRepository<AggregateRootEntityStub>(
                                                          AggregateRootEntityStub.Factory, null,
-                                                         EmbeddedEventStore.Instance.Connection,
+                                                         EmbeddedEventStore.Connection,
                                                          EventReaderConfigurationFactory.Create()));
             }
 
@@ -48,7 +45,7 @@ namespace AggregateSource.GEventStore
                 Assert.Throws<ArgumentNullException>(() =>
                                                      new AsyncRepository<AggregateRootEntityStub>(
                                                          AggregateRootEntityStub.Factory, new ConcurrentUnitOfWork(),
-                                                         EmbeddedEventStore.Instance.Connection, null));
+                                                         EmbeddedEventStore.Connection, null));
             }
 
             [Ignore("TODO after merge - requires setup")]
@@ -64,7 +61,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().BuildForAsyncRepository();
             }
@@ -114,7 +111,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _root = AggregateRootEntityStub.Factory();
                 _sut = new RepositoryScenarioBuilder().
@@ -168,7 +165,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
@@ -222,7 +219,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).

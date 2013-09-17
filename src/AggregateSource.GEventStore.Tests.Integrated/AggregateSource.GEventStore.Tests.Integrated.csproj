@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\eventstore2\EventStore.Core.dll</HintPath>
     </Reference>
+    <Reference Include="EventStore.Core.Tests">
+      <HintPath>..\..\lib\eventstore2\EventStore.Core.Tests.dll</HintPath>
+    </Reference>
     <Reference Include="FakeItEasy, Version=1.13.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FakeItEasy.1.13.0\lib\net40\FakeItEasy.dll</HintPath>
