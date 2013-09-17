@@ -34,8 +34,8 @@ namespace AggregateSource.Testing
             var specification = new EventCentricAggregateFactoryTestSpecification(
                 () => new PassCase(),
                 new object[0],
-                _ => new AggregateRootEntityStub(),
-                new object[0]);
+                _ => ((PassCase)_).Pass(),
+                PassCase.TheExpectedEvents);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.True);
@@ -51,12 +51,12 @@ namespace AggregateSource.Testing
                 () => new FailNoEventCase(),
                 new object[0],
                 _ => ((FailNoEventCase)_).Fail(),
-                new [] { new object() });
+                FailNoEventCase.TheExpectedEvents);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailNoEventCase.TheEvents)));
+            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailNoEventCase.TheActualEvents)));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
 
@@ -67,12 +67,12 @@ namespace AggregateSource.Testing
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
-                new object[0]);
+                FailEventCase.TheExpectedEvents);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailEventCase.TheEvents)));
+            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailEventCase.TheActualEvents)));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
 
@@ -83,12 +83,12 @@ namespace AggregateSource.Testing
                 () => new FailEventCase(),
                 new object[0],
                 _ => ((FailEventCase)_).Fail(),
-                new[] { new object() });
+                FailEventCase.TheExpectedEvents);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
             Assert.That(result.Failed, Is.True);
-            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailEventCase.TheEvents)));
+            Assert.That(result.ButEvents, Is.EqualTo(new Optional<object[]>(FailEventCase.TheActualEvents)));
             Assert.That(result.ButException, Is.EqualTo(Optional<Exception>.Empty));
         }
 
@@ -99,7 +99,7 @@ namespace AggregateSource.Testing
                 () => new FailExceptionCase(),
                 new object[0],
                 _ => ((FailExceptionCase)_).Fail(),
-                new object[0]);
+                FailExceptionCase.TheExpectedEvents);
 
             var result = _sut.Run(specification);
             Assert.That(result.Passed, Is.False);
@@ -117,10 +117,6 @@ namespace AggregateSource.Testing
             }
         }
 
-        class PassCase : AggregateRootEntity
-        {
-        }
-
         class FactoryResult : AggregateRootEntity
         {
             public FactoryResult(IEnumerable<object> events)
@@ -131,9 +127,27 @@ namespace AggregateSource.Testing
                 }
             }
         }
+        
+        class PassCase : AggregateRootEntity
+        {
+            public static readonly object[] TheExpectedEvents =
+            {
+                new object()
+            };
+
+            public IAggregateRootEntity Pass()
+            {
+                return new FactoryResult(TheExpectedEvents);
+            }
+        }
 
         class FailExceptionCase : AggregateRootEntity
         {
+            public static readonly object[] TheExpectedEvents =
+            {
+                new object()
+            };
+
             public static readonly Exception TheException = new Exception();
 
             public IAggregateRootEntity Fail()
@@ -144,24 +158,34 @@ namespace AggregateSource.Testing
 
         class FailEventCase : AggregateRootEntity
         {
-            public static readonly object[] TheEvents =
+            public static readonly object[] TheExpectedEvents =
+            {
+                new object()
+            };
+
+            public static readonly object[] TheActualEvents =
             {
                 new object()
             };
 
             public IAggregateRootEntity Fail()
             {
-                return new FactoryResult(TheEvents);
+                return new FactoryResult(TheActualEvents);
             }
         }
 
         class FailNoEventCase : AggregateRootEntity
         {
-            public static readonly object[] TheEvents = new object[0];
+            public static readonly object[] TheExpectedEvents =
+            {
+                new object()
+            };
+
+            public static readonly object[] TheActualEvents = new object[0];
 
             public IAggregateRootEntity Fail()
             {
-                return new FactoryResult(TheEvents);
+                return new FactoryResult(TheActualEvents);
             }
         }
     }

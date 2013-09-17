@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace AggregateSource.Testing
 {
-    namespace NUnitExtensionsForFactoryScenarioTests
+    namespace NUnitExtensionsForCommandScenarioTests
     {
         [TestFixture]
         public class EventCentricAssert
@@ -13,7 +13,7 @@ namespace AggregateSource.Testing
             public void BuilderCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(
-                    () => ((IEventCentricAggregateFactoryTestSpecificationBuilder)null).Assert(null));
+                    () => ((IEventCentricAggregateCommandTestSpecificationBuilder)null).Assert(null));
             }
 
             [Test]
@@ -28,7 +28,7 @@ namespace AggregateSource.Testing
             {
                 Assert.DoesNotThrow(
                     () =>
-                        new FactoryScenarioFor<PassCase>(() => new PassCase()).
+                        new CommandScenarioFor<PassCase>(() => new PassCase()).
                             GivenNone().
                             When(_ => _.Pass()).
                             Then(PassCase.TheExpectedEvents).
@@ -40,7 +40,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailEventCountDifferenceCase>(() => new FailEventCountDifferenceCase()).
+                        new CommandScenarioFor<FailEventCountDifferenceCase>(() => new FailEventCountDifferenceCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Then(FailEventCountDifferenceCase.TheExpectedEvents).
@@ -52,7 +52,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailExceptionCase>(() => new FailExceptionCase()).
+                        new CommandScenarioFor<FailExceptionCase>(() => new FailExceptionCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Then(FailExceptionCase.TheExpectedEvents).
@@ -64,7 +64,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailEventDifferenceCase>(() => new FailEventDifferenceCase()).
+                        new CommandScenarioFor<FailEventDifferenceCase>(() => new FailEventDifferenceCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Then(FailEventDifferenceCase.TheExpectedEvents).
@@ -80,17 +80,6 @@ namespace AggregateSource.Testing
                 }
             }
 
-            class FactoryResult : AggregateRootEntity
-            {
-                public FactoryResult(IEnumerable<object> events)
-                {
-                    foreach (var @event in events)
-                    {
-                        Apply(@event);
-                    }
-                }
-            }
-
             class PassCase : AggregateRootEntity
             {
                 public static readonly object[] TheExpectedEvents =
@@ -98,9 +87,12 @@ namespace AggregateSource.Testing
                     new object()
                 };
 
-                public IAggregateRootEntity Pass()
+                public void Pass()
                 {
-                    return new FactoryResult(TheExpectedEvents);
+                    foreach (var theEvent in TheExpectedEvents)
+                    {
+                        Apply(theEvent);
+                    }
                 }
             }
 
@@ -113,7 +105,7 @@ namespace AggregateSource.Testing
 
                 public static readonly Exception TheException = new Exception();
 
-                public IAggregateRootEntity Fail()
+                public void Fail()
                 {
                     throw TheException;
                 }
@@ -128,9 +120,12 @@ namespace AggregateSource.Testing
                     new object()
                 };
 
-                public IAggregateRootEntity Fail()
+                public void Fail()
                 {
-                    return new FactoryResult(TheActualEvents);
+                    foreach (var theEvent in TheActualEvents)
+                    {
+                        Apply(theEvent);
+                    }
                 }
             }
 
@@ -146,17 +141,20 @@ namespace AggregateSource.Testing
                     new object()
                 };
 
-                public IAggregateRootEntity Fail()
+                public void Fail()
                 {
-                    return new FactoryResult(TheActualEvents);
+                    foreach (var theEvent in TheActualEvents)
+                    {
+                        Apply(theEvent);
+                    }
                 }
             }
 
-            class NullBuilder : IEventCentricAggregateFactoryTestSpecificationBuilder
+            class NullBuilder : IEventCentricAggregateCommandTestSpecificationBuilder
             {
-                public static readonly IEventCentricAggregateFactoryTestSpecificationBuilder Instance = new NullBuilder();
+                public static readonly IEventCentricAggregateCommandTestSpecificationBuilder Instance = new NullBuilder();
 
-                public EventCentricAggregateFactoryTestSpecification Build()
+                public EventCentricAggregateCommandTestSpecification Build()
                 {
                     return null;
                 }
@@ -170,7 +168,7 @@ namespace AggregateSource.Testing
             public void BuilderCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(
-                    () => ((IEventCentricAggregateFactoryTestSpecificationBuilder)null).Assert(null));
+                    () => ((IEventCentricAggregateCommandTestSpecificationBuilder)null).Assert(null));
             }
 
             [Test]
@@ -185,7 +183,7 @@ namespace AggregateSource.Testing
             {
                 Assert.DoesNotThrow(
                     () =>
-                        new FactoryScenarioFor<PassCase>(() => new PassCase()).
+                        new CommandScenarioFor<PassCase>(() => new PassCase()).
                         GivenNone().
                         When(_ => _.Pass()).
                         Throws(PassCase.TheException).
@@ -197,7 +195,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailExceptionCase>(() => new FailExceptionCase()).
+                        new CommandScenarioFor<FailExceptionCase>(() => new FailExceptionCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Throws(FailExceptionCase.TheExpectedException).
@@ -209,7 +207,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailEventCase>(() => new FailEventCase()).
+                        new CommandScenarioFor<FailEventCase>(() => new FailEventCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Throws(FailEventCase.TheExpectedException).
@@ -221,7 +219,7 @@ namespace AggregateSource.Testing
             {
                 Assert.Throws<AssertionException>(
                     () =>
-                        new FactoryScenarioFor<FailNoExceptionCase>(() => new FailNoExceptionCase()).
+                        new CommandScenarioFor<FailNoExceptionCase>(() => new FailNoExceptionCase()).
                             GivenNone().
                             When(_ => _.Fail()).
                             Throws(FailNoExceptionCase.TheExpectedException).
@@ -237,22 +235,11 @@ namespace AggregateSource.Testing
                 }
             }
 
-            class FactoryResult : AggregateRootEntity
-            {
-                public FactoryResult(IEnumerable<object> events)
-                {
-                    foreach (var @event in events)
-                    {
-                        Apply(@event);
-                    }
-                }
-            }
-
             class PassCase : AggregateRootEntity
             {
                 public static readonly Exception TheException = new Exception();
 
-                public IAggregateRootEntity Pass()
+                public void Pass()
                 {
                     throw TheException;
                 }
@@ -263,7 +250,7 @@ namespace AggregateSource.Testing
                 public static readonly Exception TheExpectedException = new Exception();
                 public static readonly Exception TheActualException = new Exception();
 
-                public IAggregateRootEntity Fail()
+                public void Fail()
                 {
                     throw TheActualException;
                 }
@@ -274,13 +261,16 @@ namespace AggregateSource.Testing
                 public static readonly Exception TheExpectedException = new Exception();
 
                 public static readonly object[] TheEvents =
-            {
-                new object()
-            };
-
-                public IAggregateRootEntity Fail()
                 {
-                    return new FactoryResult(TheEvents);
+                    new object()
+                };
+
+                public void Fail()
+                {
+                    foreach (var theEvent in TheEvents)
+                    {
+                        Apply(theEvent);
+                    }
                 }
             }
 
@@ -288,17 +278,16 @@ namespace AggregateSource.Testing
             {
                 public static readonly Exception TheExpectedException = new Exception();
 
-                public IAggregateRootEntity Fail()
+                public void Fail()
                 {
-                    return new FactoryResult(new object[0]);
                 }
             }
 
-            class NullBuilder : IExceptionCentricAggregateFactoryTestSpecificationBuilder
+            class NullBuilder : IExceptionCentricAggregateCommandTestSpecificationBuilder
             {
-                public static readonly IExceptionCentricAggregateFactoryTestSpecificationBuilder Instance = new NullBuilder();
+                public static readonly IExceptionCentricAggregateCommandTestSpecificationBuilder Instance = new NullBuilder();
 
-                public ExceptionCentricAggregateFactoryTestSpecification Build()
+                public ExceptionCentricAggregateCommandTestSpecification Build()
                 {
                     return null;
                 }

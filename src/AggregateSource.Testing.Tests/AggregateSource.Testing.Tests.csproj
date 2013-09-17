@@ -82,6 +82,9 @@
     <Compile Include="EventCentricAggregateFactoryTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateQueryTestRunnerTests.cs" />
+    <Compile Include="NUnitExtensionsForCommandScenarioTests.cs" />
+    <Compile Include="NUnitExtensionsForConstructorScenarioTests.cs" />
+    <Compile Include="NUnitExtensionsForQueryScenarioTests.cs" />
     <Compile Include="ResultCentricAggregateQueryTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestSpecificationTests.cs" />
