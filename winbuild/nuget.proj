@@ -5,7 +5,7 @@
     <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
     <NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
     <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
-    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.56\tools</MSBuildCommunityTasksPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.61\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
@@ -35,6 +35,13 @@
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
       Value="$(Major).$(Minor).$(Build)" />
     <Exec Command='$(NuGetExe) pack AggregateSource.Testing.NUnit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+        <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="AggregateSource.Testing.Xunit.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack AggregateSource.Testing.Xunit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
@@ -61,6 +68,8 @@
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />

@@ -22,6 +22,7 @@
         $(SourcePath)\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
+        $(SourcePath)\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
         $(SourcePath)\AggregateSource.Tests\AggregateSource.Tests.csproj; 
         $(SourcePath)\SampleSource\SampleSource.csproj;
         $(SourcePath)\StreamSource\StreamSource.csproj;
@@ -40,6 +41,7 @@
         $(SourcePath)\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
+        $(SourcePath)\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
         $(SourcePath)\AggregateSource.Tests\AggregateSource.Tests.csproj; 
         $(SourcePath)\SampleSource\SampleSource.csproj;"
       BuildInParallel="true" 

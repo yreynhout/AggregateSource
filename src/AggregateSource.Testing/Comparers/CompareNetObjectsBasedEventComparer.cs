@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using KellermanSoftware.CompareNetObjects;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.Comparers
 {
     /// <summary>
     /// Compares events using a <see cref="ICompareObjects"/> object and reports the differences.

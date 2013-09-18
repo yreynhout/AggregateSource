@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using KellermanSoftware.CompareNetObjects;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource.Testing.Comparers
 {
     [TestFixture]
     public class CompareNetObjectsBasedExceptionComparerTests

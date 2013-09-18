@@ -54,6 +54,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +76,9 @@
     <Compile Include="Command\AggregateCommandThenStateBuilder.cs" />
     <Compile Include="Command\AggregateCommandThrowStateBuilder.cs" />
     <Compile Include="Command\AggregateCommandWhenStateBuilder.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedEventComparer.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparer.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedResultComparer.cs" />
     <Compile Include="ConstructorScenarioFor.cs" />
     <Compile Include="Constructor\AggregateConstructorThenStateBuilder.cs" />
     <Compile Include="Constructor\AggregateConstructorThrowStateBuilder.cs" />
@@ -191,7 +197,9 @@
       <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

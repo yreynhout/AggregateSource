@@ -4,23 +4,30 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
+#if NUNIT
     /// <summary>
-    /// NUnit specific extension methods for asserting aggregate factory behavior.
+    /// NUnit specific extension methods for asserting aggregate constructor behavior.
     /// </summary>
-    public static class NUnitExtensionsForFactoryScenario
+    public static class NUnitExtensionsForConstructorScenario
+#elif XUNIT
+    /// <summary>
+    /// Xunit specific extension methods for asserting aggregate constructor behavior.
+    /// </summary>
+    public static class XunitExtensionsForConstructorScenario
+#endif
     {
         /// <summary>
         /// Asserts that the specification is met.
         /// </summary>
         /// <param name="builder">The specification builder.</param>
         /// <param name="comparer">The event comparer.</param>
-        public static void Assert(this IEventCentricAggregateFactoryTestSpecificationBuilder builder,
+        public static void Assert(this IEventCentricAggregateConstructorTestSpecificationBuilder builder,
             IEventComparer comparer)
         {
             if (builder == null) throw new ArgumentNullException("builder");
             if (comparer == null) throw new ArgumentNullException("comparer");
             var specification = builder.Build();
-            var runner = new EventCentricAggregateFactoryTestRunner(comparer);
+            var runner = new EventCentricAggregateConstructorTestRunner(comparer);
             var result = runner.Run(specification);
             if (result.Failed)
             {
@@ -31,7 +38,11 @@ namespace AggregateSource.Testing
                         writer.WriteLine("  Expected: {0} event(s),", result.Specification.Thens.Length);
                         writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
                 if (result.ButEvents.HasValue)
@@ -47,25 +58,33 @@ namespace AggregateSource.Testing
                                 result.ButEvents.Value.Length,
                                 String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 
+#if NUNIT
                             throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                            throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                         }
                     }
                     using (var writer = new StringWriter())
                     {
                         writer.WriteLine("  Expected: {0} event(s) ({1}),",
-                                result.Specification.Thens.Length,
-                                String.Join(",", result.Specification.Thens.Select(_ => _.GetType().Name).ToArray()));
+                            result.Specification.Thens.Length,
+                            String.Join(",", result.Specification.Thens.Select(_ => _.GetType().Name).ToArray()));
                         writer.WriteLine("  But found the following differences:");
                         foreach (var difference in
                             result.Specification.Thens.
-                            Zip(result.ButEvents.Value,
-                                (expected, actual) => new Tuple<object, object>(expected, actual)).
-                            SelectMany(_ => comparer.Compare(_.Item1, _.Item2)))
+                                Zip(result.ButEvents.Value,
+                                    (expected, actual) => new Tuple<object, object>(expected, actual)).
+                                SelectMany(_ => comparer.Compare(_.Item1, _.Item2)))
                         {
                             writer.WriteLine("    {0}", difference.Message);
                         }
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
             }
@@ -76,13 +95,13 @@ namespace AggregateSource.Testing
         /// </summary>
         /// <param name="builder">The specification builder.</param>
         /// <param name="comparer">The exception comparer.</param>
-        public static void Assert(this IExceptionCentricAggregateFactoryTestSpecificationBuilder builder,
+        public static void Assert(this IExceptionCentricAggregateConstructorTestSpecificationBuilder builder,
             IExceptionComparer comparer)
         {
             if (builder == null) throw new ArgumentNullException("builder");
             if (comparer == null) throw new ArgumentNullException("comparer");
             var specification = builder.Build();
-            var runner = new ExceptionCentricAggregateFactoryTestRunner(comparer);
+            var runner = new ExceptionCentricAggregateConstructorTestRunner(comparer);
             var result = runner.Run(specification);
             if (result.Failed)
             {
@@ -95,22 +114,27 @@ namespace AggregateSource.Testing
                             writer.WriteLine("  Expected: {0},", result.Specification.Throws);
                             writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
+#if NUNIT
                             throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                            throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                         }
                     }
-                    else 
+                    using (var writer = new StringWriter())
                     {
-                        using (var writer = new StringWriter())
+                        writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                        writer.WriteLine("  But found the following differences:");
+                        foreach (var difference in comparer.Compare(result.Specification.Throws, result.ButException.Value))
                         {
-                            writer.WriteLine("  Expected: {0},", result.Specification.Throws);
-                            writer.WriteLine("  But found the following differences:");
-                            foreach (var difference in comparer.Compare(result.Specification.Throws, result.ButException.Value))
-                            {
-                                writer.WriteLine("    {0}", difference.Message);
-                            }
-
-                            throw new NUnit.Framework.AssertionException(writer.ToString());
+                            writer.WriteLine("    {0}", difference.Message);
                         }
+
+#if NUNIT
+                        throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
                 if (result.ButEvents.HasValue)
@@ -122,7 +146,11 @@ namespace AggregateSource.Testing
                             result.ButEvents.Value.Length,
                             String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
                 using (var writer = new StringWriter())
@@ -130,7 +158,11 @@ namespace AggregateSource.Testing
                     writer.WriteLine("  Expected: {0},", result.Specification.Throws);
                     writer.WriteLine("  But no exception occurred");
 
-                    throw new NUnit.Framework.AssertionException(writer.ToString());
+#if NUNIT
+                        throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                 }
             }
         }

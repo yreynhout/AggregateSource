@@ -71,9 +71,9 @@
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
     <Compile Include="CommandScenarioForTests.cs" />
-    <Compile Include="CompareNetObjectsBasedEventComparerTests.cs" />
-    <Compile Include="CompareNetObjectsBasedExceptionComparerTests.cs" />
-    <Compile Include="CompareNetObjectsBasedResultComparerTests.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedEventComparerTests.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparerTests.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedResultComparerTests.cs" />
     <Compile Include="ConstructorScenarioForTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestRunnerTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestSpecificationTests.cs" />

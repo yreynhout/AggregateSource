@@ -4,73 +4,78 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AE4066F5-55F5-4D0D-9AC1-853666822682}</ProjectGuid>
+    <ProjectGuid>{980841AD-A683-48E4-A1A9-89003F15CACA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AggregateSource.Testing</RootNamespace>
-    <AssemblyName>AggregateSource.Testing.NUnit</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AssemblyName>AggregateSource.Testing.Xunit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NUNIT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;XUNIT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\AggregateSource.Testing.NUnit.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NUNIT</DefineConstants>
+    <DefineConstants>TRACE;XUNIT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\AggregateSource.Testing.NUnit.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\net40</OutputPath>
-    <DefineConstants>TRACE;NUNIT</DefineConstants>
+    <DefineConstants>TRACE;XUNIT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\net40\AggregateSource.Testing.NUnit.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net40\AggregateSource.Testing.Xunit.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\net45</OutputPath>
-    <DefineConstants>TRACE;NUNIT</DefineConstants>
+    <DefineConstants>TRACE;XUNIT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\net45\AggregateSource.Testing.NUnit.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net45\AggregateSource.Testing.Xunit.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AggregateSource.Testing.NUnit\ExtensionsForCommandScenario.cs">
+      <Link>ExtensionsForCommandScenario.cs</Link>
+    </Compile>
+    <Compile Include="..\AggregateSource.Testing.NUnit\ExtensionsForConstructorScenario.cs">
+      <Link>ExtensionsForConstructorScenario.cs</Link>
+    </Compile>
+    <Compile Include="..\AggregateSource.Testing.NUnit\ExtensionsForFactoryScenario.cs">
+      <Link>ExtensionsForFactoryScenario.cs</Link>
+    </Compile>
+    <Compile Include="..\AggregateSource.Testing.NUnit\ExtensionsForQueryScenario.cs">
+      <Link>ExtensionsForQueryScenario.cs</Link>
+    </Compile>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="ExtensionsForCommandScenario.cs" />
-    <Compile Include="ExtensionsForConstructorScenario.cs" />
-    <Compile Include="ExtensionsForFactoryScenario.cs" />
-    <Compile Include="ExtensionsForQueryScenario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

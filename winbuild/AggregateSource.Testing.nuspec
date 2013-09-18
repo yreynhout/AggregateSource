@@ -28,10 +28,12 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource" version="0.0.116" />
+        <dependency id="AggregateSource" version="0.0.123" />
+        <dependency id="CompareNETObjects" version="0.0.123" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.116" />
+        <dependency id="AggregateSource" version="0.0.123" />
+        <dependency id="CompareNETObjects" version="0.0.123" />
       </group>
     </dependencies>
   </metadata>
@@ -43,6 +45,7 @@ using this tokenized nuspec file.
     <file src="output\net45\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
     <file src="output\net45\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
     <file src="..\src\AggregateSource.Testing\*.cs" target="src\AggregateSource.Testing" />
+    <file src="..\src\AggregateSource.Testing\Comparers\*.cs" target="src\AggregateSource.Testing\Comparers" />
     <file src="..\src\AggregateSource.Testing\Command\*.cs" target="src\AggregateSource.Testing\Command" />
     <file src="..\src\AggregateSource.Testing\Constructor\*.cs" target="src\AggregateSource.Testing\Constructor" />
     <file src="..\src\AggregateSource.Testing\Factory\*.cs" target="src\AggregateSource.Testing\Factory" />

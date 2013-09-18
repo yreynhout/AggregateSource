@@ -4,10 +4,17 @@ using System.Linq;
 
 namespace AggregateSource.Testing
 {
+#if NUNIT
     /// <summary>
     /// NUnit specific extension methods for asserting aggregate query behavior.
     /// </summary>
     public static class NUnitExtensionsForQueryScenario
+#elif XUNIT
+    /// <summary>
+    /// Xunit specific extension methods for asserting aggregate query behavior.
+    /// </summary>
+    public static class XunitExtensionsForQueryScenario
+#endif
     {
         /// <summary>
         /// Asserts that the specification is met.
@@ -31,7 +38,11 @@ namespace AggregateSource.Testing
                         writer.WriteLine("  Expected: {0},", result.Specification.Then);
                         writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
 
@@ -42,7 +53,11 @@ namespace AggregateSource.Testing
                         writer.WriteLine("  Expected: {0},", result.Specification.Then);
                         writer.WriteLine("  But was:  {0}", result.ButResult.Value);
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
 
@@ -55,7 +70,11 @@ namespace AggregateSource.Testing
                             result.ButEvents.Value.Length,
                             String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
             }
@@ -85,22 +104,27 @@ namespace AggregateSource.Testing
                             writer.WriteLine("  Expected: {0},", result.Specification.Throws);
                             writer.WriteLine("  But was:  {0}", result.ButException.Value);
 
+#if NUNIT
                             throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                            throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                         }
                     }
-                    else 
+                    using (var writer = new StringWriter())
                     {
-                        using (var writer = new StringWriter())
+                        writer.WriteLine("  Expected: {0},", result.Specification.Throws);
+                        writer.WriteLine("  But found the following differences:");
+                        foreach (var difference in comparer.Compare(result.Specification.Throws, result.ButException.Value))
                         {
-                            writer.WriteLine("  Expected: {0},", result.Specification.Throws);
-                            writer.WriteLine("  But found the following differences:");
-                            foreach (var difference in comparer.Compare(result.Specification.Throws, result.ButException.Value))
-                            {
-                                writer.WriteLine("    {0}", difference.Message);
-                            }
-
-                            throw new NUnit.Framework.AssertionException(writer.ToString());
+                            writer.WriteLine("    {0}", difference.Message);
                         }
+
+#if NUNIT
+                        throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
 
@@ -113,7 +137,11 @@ namespace AggregateSource.Testing
                             result.ButEvents.Value.Length,
                             String.Join(",", result.ButEvents.Value.Select(_ => _.GetType().Name).ToArray()));
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
 
@@ -124,7 +152,11 @@ namespace AggregateSource.Testing
                         writer.WriteLine("  Expected: {0},", result.Specification.Throws);
                         writer.WriteLine("  But was:  {0}", result.ButResult.Value);
 
+#if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
+#elif XUNIT
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
+#endif
                     }
                 }
             }

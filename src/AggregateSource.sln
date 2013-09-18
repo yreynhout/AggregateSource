@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6D2F84
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing.Xunit", "AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj", "{980841AD-A683-48E4-A1A9-89003F15CACA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{980841AD-A683-48E4-A1A9-89003F15CACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{980841AD-A683-48E4-A1A9-89003F15CACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{980841AD-A683-48E4-A1A9-89003F15CACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{980841AD-A683-48E4-A1A9-89003F15CACA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
