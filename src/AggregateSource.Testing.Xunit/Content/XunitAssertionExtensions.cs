@@ -1,4 +1,5 @@
-﻿using KellermanSoftware.CompareNetObjects;
+﻿using AggregateSource.Testing.Comparers;
+using KellermanSoftware.CompareNetObjects;
 
 namespace AggregateSource.Testing {
   public static class XunitAssertionExtensions {

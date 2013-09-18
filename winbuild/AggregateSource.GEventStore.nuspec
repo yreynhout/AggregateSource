@@ -28,7 +28,7 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.123" />
+        <dependency id="AggregateSource" version="0.0.127" />
         <dependency id="EventStore.Client" version="2.0.0" />
       </group>
     </dependencies>

@@ -25,7 +25,7 @@
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="AggregateSource.Testing.nuspec"
-      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency/@version"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
       Value="$(Major).$(Minor).$(Build)" />
     <Exec Command='$(NuGetExe) pack AggregateSource.Testing.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
