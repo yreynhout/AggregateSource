@@ -31,6 +31,13 @@
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="AggregateSource.Testing.NUnit.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack AggregateSource.Testing.NUnit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="AggregateSource.GEventStore.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
       Value="$(Major).$(Minor).$(Build)" />
@@ -52,6 +59,8 @@
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />

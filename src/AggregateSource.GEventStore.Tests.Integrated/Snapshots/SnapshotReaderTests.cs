@@ -19,7 +19,7 @@ namespace AggregateSource.GEventStore.Snapshots
             public void SetUp()
             {
                 _configuration = SnapshotReaderConfigurationFactory.Create();
-                _connection = EmbeddedEventStore.Instance.Connection;
+                _connection = EmbeddedEventStore.Connection;
             }
 
             [Test]
@@ -51,7 +51,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [Test]
             public void ConnectionReturnsExpectedValue()
             {
-                var connection = EmbeddedEventStore.Instance.Connection;
+                var connection = EmbeddedEventStore.Connection;
                 Assert.That(SnapshotReaderFactory.CreateWithConnection(connection).Connection, Is.SameAs(connection));
             }
 
@@ -85,7 +85,7 @@ namespace AggregateSource.GEventStore.Snapshots
                     {
                         new SnapshotStateStub(1).Write(writer);
                     }
-                    EmbeddedEventStore.Instance.Connection.AppendToStream(
+                    EmbeddedEventStore.Connection.AppendToStream(
                         snapshotStreamName,
                         ExpectedVersion.NoStream,
                         new EventData(
@@ -152,7 +152,7 @@ namespace AggregateSource.GEventStore.Snapshots
 
             static void CreateEmptySnapshotStream(string snapshotStreamName)
             {
-                EmbeddedEventStore.Instance.Connection.AppendToStream(
+                EmbeddedEventStore.Connection.AppendToStream(
                     snapshotStreamName,
                     ExpectedVersion.Any,
                     new EventData[0]);
@@ -191,11 +191,11 @@ namespace AggregateSource.GEventStore.Snapshots
 
             static void CreateDeletedSnapshotStream(string snapshotStreamName)
             {
-                EmbeddedEventStore.Instance.Connection.AppendToStream(
+                EmbeddedEventStore.Connection.AppendToStream(
                     snapshotStreamName,
                     ExpectedVersion.Any,
                     new EventData[0]);
-                EmbeddedEventStore.Instance.Connection.DeleteStream(
+                EmbeddedEventStore.Connection.DeleteStream(
                     snapshotStreamName,
                     ExpectedVersion.EmptyStream);
             }

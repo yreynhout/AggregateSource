@@ -9,7 +9,7 @@ namespace AggregateSource.GEventStore.Framework
         public static void DeleteAllStreams(this IEventStoreConnection connection)
         {
             var slice = connection.ReadAllEventsForward(Position.Start, Int32.MaxValue, false,
-                                                        EmbeddedEventStore.Instance.DefaultCredentials);
+                                                        EmbeddedEventStore.Credentials);
             var streams = slice.
                 Events.
                 Select(_ => _.OriginalStreamId).
@@ -22,7 +22,7 @@ namespace AggregateSource.GEventStore.Framework
                       streamStatusSlice.Status != SliceReadStatus.StreamNotFound
                 select _)
             {
-                connection.DeleteStream(stream, ExpectedVersion.Any, EmbeddedEventStore.Instance.DefaultCredentials);
+                connection.DeleteStream(stream, ExpectedVersion.Any, EmbeddedEventStore.Credentials);
             }
         }
 

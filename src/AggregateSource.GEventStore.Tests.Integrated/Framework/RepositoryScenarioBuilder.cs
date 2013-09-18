@@ -24,7 +24,7 @@ namespace AggregateSource.GEventStore.Framework
 
         public RepositoryScenarioBuilder()
         {
-            _connection = EmbeddedEventStore.Instance.Connection;
+            _connection = EmbeddedEventStore.Connection;
             _unitOfWork = new UnitOfWork();
             _concurrentUnitOfWork = new ConcurrentUnitOfWork();
             _eventReaderConfiguration = EventReaderConfigurationFactory.Create();

@@ -50,7 +50,7 @@ namespace AggregateSource.Testing
             if (specification.Givens.Length == 0) return;
 
             _writer.WriteLine("Given");
-            WriteEvents(specification.Givens);
+            WriteFacts(specification.Givens);
         }
 
         void WriteWhen(EventCentricTestSpecification specification)
@@ -62,7 +62,7 @@ namespace AggregateSource.Testing
         void WriteThens(EventCentricTestSpecification specification)
         {
             _writer.WriteLine("Then");
-            WriteEvents(specification.Thens);
+            WriteFacts(specification.Thens);
         }
 
         void WriteGivens(ExceptionCentricTestSpecification specification)
@@ -70,7 +70,7 @@ namespace AggregateSource.Testing
             if (specification.Givens.Length == 0) return;
 
             _writer.WriteLine("Given");
-            WriteEvents(specification.Givens);
+            WriteFacts(specification.Givens);
         }
 
         void WriteWhen(ExceptionCentricTestSpecification specification)
@@ -94,20 +94,20 @@ namespace AggregateSource.Testing
             _writer.Indent--;
         }
 
-        void WriteEvents(IEnumerable<Tuple<string, object>> events)
+        void WriteFacts(IEnumerable<Fact> facts)
         {
             _writer.Indent++;
-            using (var enumerator = events.GetEnumerator())
+            using (var enumerator = facts.GetEnumerator())
             {
                 var moved = enumerator.MoveNext();
                 if (moved)
                 {
-                    _writer.Write(enumerator.Current.Item2);
+                    _writer.Write(enumerator.Current.Event);
                     moved = enumerator.MoveNext();
                     while (moved)
                     {
                         _writer.WriteLine(",");
-                        _writer.Write(enumerator.Current.Item2);
+                        _writer.Write(enumerator.Current.Event);
                         moved = enumerator.MoveNext();
                     }
                     _writer.WriteLine();

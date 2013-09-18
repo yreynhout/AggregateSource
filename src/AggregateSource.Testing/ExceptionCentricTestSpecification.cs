@@ -7,7 +7,7 @@ namespace AggregateSource.Testing
     /// </summary>
     public class ExceptionCentricTestSpecification
     {
-        readonly Tuple<string, object>[] _givens;
+        readonly Fact[] _givens;
         readonly object _when;
         readonly Exception _throws;
 
@@ -17,7 +17,7 @@ namespace AggregateSource.Testing
         /// <param name="givens">The specification givens.</param>
         /// <param name="when">The specification when.</param>
         /// <param name="throws">The specification exception thrown.</param>
-        public ExceptionCentricTestSpecification(Tuple<string, object>[] givens, object when, Exception throws)
+        public ExceptionCentricTestSpecification(Fact[] givens, object when, Exception throws)
         {
             if (givens == null) throw new ArgumentNullException("givens");
             if (when == null) throw new ArgumentNullException("when");
@@ -30,7 +30,7 @@ namespace AggregateSource.Testing
         /// <summary>
         /// The events to arrange.
         /// </summary>
-        public Tuple<string, object>[] Givens
+        public Fact[] Givens
         {
             get { return _givens; }
         }
@@ -57,7 +57,7 @@ namespace AggregateSource.Testing
         /// <returns>A new <see cref="ExceptionCentricTestResult"/>.</returns>
         public ExceptionCentricTestResult Pass()
         {
-            return new ExceptionCentricTestResult(this, TestResultState.Passed);
+            return new ExceptionCentricTestResult(this, TestResultState.Passed, Optional<Exception>.Empty, Optional<Fact[]>.Empty);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AggregateSource.Testing
         /// <returns>A new <see cref="ExceptionCentricTestResult"/>.</returns>
         public ExceptionCentricTestResult Fail()
         {
-            return new ExceptionCentricTestResult(this, TestResultState.Failed);
+            return new ExceptionCentricTestResult(this, TestResultState.Failed, Optional<Exception>.Empty, Optional<Fact[]>.Empty);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace AggregateSource.Testing
         public ExceptionCentricTestResult Fail(Exception actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
-            return new ExceptionCentricTestResult(this, TestResultState.Failed, actualException: actual);
+            return new ExceptionCentricTestResult(this, TestResultState.Failed, new Optional<Exception>(actual), Optional<Fact[]>.Empty);
         }
 
         /// <summary>
@@ -85,10 +85,10 @@ namespace AggregateSource.Testing
         /// </summary>
         /// <param name="actual">The actual events</param>
         /// <returns>A new <see cref="ExceptionCentricTestResult"/>.</returns>
-        public ExceptionCentricTestResult Fail(Tuple<string, object>[] actual)
+        public ExceptionCentricTestResult Fail(Fact[] actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
-            return new ExceptionCentricTestResult(this, TestResultState.Failed, actualEvents: actual);
+            return new ExceptionCentricTestResult(this, TestResultState.Failed, Optional<Exception>.Empty, new Optional<Fact[]>(actual));
         }
 
         /// <summary>

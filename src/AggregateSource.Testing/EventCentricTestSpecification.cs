@@ -7,9 +7,9 @@ namespace AggregateSource.Testing
     /// </summary>
     public class EventCentricTestSpecification
     {
-        readonly Tuple<string, object>[] _givens;
+        readonly Fact[] _givens;
         readonly object _when;
-        readonly Tuple<string, object>[] _thens;
+        readonly Fact[] _thens;
 
         /// <summary>
         /// Initializes a new <see cref="EventCentricTestSpecification"/> instance.
@@ -17,7 +17,7 @@ namespace AggregateSource.Testing
         /// <param name="givens">The specification givens.</param>
         /// <param name="when">The specification when.</param>
         /// <param name="thens">The specification thens.</param>
-        public EventCentricTestSpecification(Tuple<string, object>[] givens, object when, Tuple<string, object>[] thens)
+        public EventCentricTestSpecification(Fact[] givens, object when, Fact[] thens)
         {
             if (givens == null) throw new ArgumentNullException("givens");
             if (when == null) throw new ArgumentNullException("when");
@@ -30,7 +30,7 @@ namespace AggregateSource.Testing
         /// <summary>
         /// The events to arrange.
         /// </summary>
-        public Tuple<string, object>[] Givens
+        public Fact[] Givens
         {
             get { return _givens; }
         }
@@ -46,7 +46,7 @@ namespace AggregateSource.Testing
         /// <summary>
         /// The expected events to assert.
         /// </summary>
-        public Tuple<string, object>[] Thens
+        public Fact[] Thens
         {
             get { return _thens; }
         }
@@ -57,7 +57,7 @@ namespace AggregateSource.Testing
         /// <returns>A new <see cref="EventCentricTestResult"/>.</returns>
         public EventCentricTestResult Pass()
         {
-            return new EventCentricTestResult(this, TestResultState.Passed);
+            return new EventCentricTestResult(this, TestResultState.Passed, Optional<Fact[]>.Empty, Optional<Exception>.Empty);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace AggregateSource.Testing
         /// <returns>A new <see cref="EventCentricTestResult"/>.</returns>
         public EventCentricTestResult Fail()
         {
-            return new EventCentricTestResult(this, TestResultState.Failed);
+            return new EventCentricTestResult(this, TestResultState.Failed, Optional<Fact[]>.Empty, Optional<Exception>.Empty);
         }
 
         /// <summary>
@@ -74,10 +74,12 @@ namespace AggregateSource.Testing
         /// </summary>
         /// <param name="actual">The actual events</param>
         /// <returns>A new <see cref="EventCentricTestResult"/>.</returns>
-        public EventCentricTestResult Fail(Tuple<string, object>[] actual)
+        public EventCentricTestResult Fail(Fact[] actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
-            return new EventCentricTestResult(this, TestResultState.Failed, actualEvents: actual);
+            return new EventCentricTestResult(this, TestResultState.Failed,
+                                              new Optional<Fact[]>(actual),
+                                              Optional<Exception>.Empty);
         }
 
         /// <summary>
@@ -88,7 +90,9 @@ namespace AggregateSource.Testing
         public EventCentricTestResult Fail(Exception actual)
         {
             if (actual == null) throw new ArgumentNullException("actual");
-            return new EventCentricTestResult(this, TestResultState.Failed, actualException: actual);
+            return new EventCentricTestResult(this, TestResultState.Failed,
+                                              Optional<Fact[]>.Empty,
+                                              new Optional<Exception>(actual));
         }
 
         /// <summary>

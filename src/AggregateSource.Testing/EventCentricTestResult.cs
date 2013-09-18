@@ -9,7 +9,7 @@ namespace AggregateSource.Testing
     {
         readonly EventCentricTestSpecification _specification;
         readonly TestResultState _state;
-        readonly Optional<Tuple<string, object>[]> _actualEvents;
+        readonly Optional<Fact[]> _actualEvents;
         readonly Optional<Exception> _actualException;
 
         /// <summary>
@@ -20,16 +20,12 @@ namespace AggregateSource.Testing
         /// <param name="actualEvents">The actual events.</param>
         /// <param name="actualException">The actual exception.</param>
         internal EventCentricTestResult(EventCentricTestSpecification specification, TestResultState state,
-                                        Tuple<string, object>[] actualEvents = null, Exception actualException = null)
+                                        Optional<Fact[]> actualEvents, Optional<Exception> actualException)
         {
             _specification = specification;
             _state = state;
-            _actualEvents = actualEvents == null
-                                ? Optional<Tuple<string, object>[]>.Empty
-                                : new Optional<Tuple<string, object>[]>(actualEvents);
-            _actualException = actualException == null
-                                   ? Optional<Exception>.Empty
-                                   : new Optional<Exception>(actualException);
+            _actualEvents = actualEvents;
+            _actualException = actualException;
         }
 
         /// <summary>
@@ -71,7 +67,7 @@ namespace AggregateSource.Testing
         /// <value>
         /// The events.
         /// </value>
-        public Optional<Tuple<string, object>[]> Buts
+        public Optional<Fact[]> ButEvents
         {
             get { return _actualEvents; }
         }
@@ -82,7 +78,7 @@ namespace AggregateSource.Testing
         /// <value>
         /// The exception.
         /// </value>
-        public Optional<Exception> But
+        public Optional<Exception> ButException
         {
             get { return _actualException; }
         }

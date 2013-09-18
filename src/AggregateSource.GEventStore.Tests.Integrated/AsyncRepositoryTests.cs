@@ -71,7 +71,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().BuildForAsyncRepository();
             }
@@ -121,7 +121,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _root = AggregateRootEntityStub.Factory();
                 _sut = new RepositoryScenarioBuilder().
@@ -175,7 +175,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
@@ -229,7 +229,7 @@ namespace AggregateSource.GEventStore
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).

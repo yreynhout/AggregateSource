@@ -23,7 +23,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [SetUp]
             public void SetUp()
             {
-                _connection = EmbeddedEventStore.Instance.Connection;
+                _connection = EmbeddedEventStore.Connection;
                 _reader = AsyncSnapshotReaderFactory.Create();
                 _configuration = EventReaderConfigurationFactory.Create();
                 _unitOfWork = new ConcurrentUnitOfWork();
@@ -93,7 +93,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _unitOfWork = new ConcurrentUnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -107,7 +107,7 @@ namespace AggregateSource.GEventStore.Snapshots
                 _sut = new AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub>(
                     SnapshotableAggregateRootEntityStub.Factory,
                     _unitOfWork,
-                    EmbeddedEventStore.Instance.Connection,
+                    EmbeddedEventStore.Connection,
                     EventReaderConfigurationFactory.CreateWithResolver(_resolver),
                     _reader);
             }
@@ -191,7 +191,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _unitOfWork = new ConcurrentUnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -205,7 +205,7 @@ namespace AggregateSource.GEventStore.Snapshots
                 _sut = new AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub>(
                     SnapshotableAggregateRootEntityStub.Factory,
                     _unitOfWork,
-                    EmbeddedEventStore.Instance.Connection,
+                    EmbeddedEventStore.Connection,
                     EventReaderConfigurationFactory.CreateWithResolver(_resolver),
                     _reader);
             }
@@ -290,7 +290,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new ConcurrentUnitOfWork();
@@ -306,7 +306,7 @@ namespace AggregateSource.GEventStore.Snapshots
                 _sut = new AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub>(
                     SnapshotableAggregateRootEntityStub.Factory,
                     _unitOfWork,
-                    EmbeddedEventStore.Instance.Connection,
+                    EmbeddedEventStore.Connection,
                     EventReaderConfigurationFactory.CreateWithResolver(_resolver),
                     _reader);
             }
@@ -425,7 +425,7 @@ namespace AggregateSource.GEventStore.Snapshots
             [SetUp]
             public void SetUp()
             {
-                EmbeddedEventStore.Instance.Connection.DeleteAllStreams();
+                EmbeddedEventStore.Connection.DeleteAllStreams();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new ConcurrentUnitOfWork();
@@ -441,7 +441,7 @@ namespace AggregateSource.GEventStore.Snapshots
                 _sut = new AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub>(
                     SnapshotableAggregateRootEntityStub.Factory,
                     _unitOfWork,
-                    EmbeddedEventStore.Instance.Connection,
+                    EmbeddedEventStore.Connection,
                     EventReaderConfigurationFactory.CreateWithResolver(_resolver),
                     _reader);
             }
@@ -568,7 +568,7 @@ namespace AggregateSource.GEventStore.Snapshots
                     {
                         new EventStub(1).Write(writer);
                     }
-                    EmbeddedEventStore.Instance.Connection.AppendToStream(
+                    EmbeddedEventStore.Connection.AppendToStream(
                         _model.KnownIdentifier,
                         ExpectedVersion.NoStream,
                         new EventData(
@@ -577,7 +577,7 @@ namespace AggregateSource.GEventStore.Snapshots
                             false,
                             stream.ToArray(),
                             new byte[0]));
-                    EmbeddedEventStore.Instance.Connection.AppendToStream(
+                    EmbeddedEventStore.Connection.AppendToStream(
                         _model.KnownIdentifier,
                         ExpectedVersion.Any,
                         new EventData(
@@ -601,7 +601,7 @@ namespace AggregateSource.GEventStore.Snapshots
                 _sut = new AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub>(
                     () => _root,
                     _unitOfWork,
-                    EmbeddedEventStore.Instance.Connection,
+                    EmbeddedEventStore.Connection,
                     EventReaderConfigurationFactory.CreateWithResolver(_resolver),
                     _reader);
             }

@@ -27,6 +27,10 @@ Helps you write test specifications, using a simple, codified statechart and a f
 
 Licensed using a BSD 3-Clause License. See [License.txt](LICENSE.txt) for more details
 
+## Discussion
+
+Have questions? Head on over to the discussion group: https://groups.google.com/forum/#!forum/aggregatesource
+
 ## Build
 
 ```RunRightOffThe.bat``` provides a sanity check. It's a combination of ```RunMeFirst.bat``` and ```RunBuild.bat```. Before working with the solution it's probably best to run the ```RunMeFirst.bat```, well, first. It restores NuGet packages and downloads and unzips a version of GetEventStore. ```RunBuild.bat``` and ```RunTest.bat``` should speak for themselves.
@@ -48,5 +52,6 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
 
 ## Contributors
 
+* Yves Reynhout ([@yreynhout](https://github.com/yreynhout)): Maintainer
 * Martijn Van den Broek ([@martijnvdbrk](https://github.com/martijnvdbrk)): ```Optional<T>``` as a struct
 * James Nugent ([@jen20](https://github.com/jen20)): ```ConstructorScenarioFor<TAggregateRoot>```, GetEventStore integration

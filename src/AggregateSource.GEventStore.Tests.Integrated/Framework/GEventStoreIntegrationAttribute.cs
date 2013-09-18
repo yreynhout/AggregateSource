@@ -8,12 +8,12 @@ namespace AggregateSource.GEventStore.Framework
     {
         public void BeforeTest(TestDetails testDetails)
         {
-            EmbeddedEventStore.Instance.Start();
+            EmbeddedEventStore.Start();
         }
 
         public void AfterTest(TestDetails testDetails)
         {
-            EmbeddedEventStore.Instance.Stop();
+            EmbeddedEventStore.Stop();
         }
 
         public ActionTargets Targets

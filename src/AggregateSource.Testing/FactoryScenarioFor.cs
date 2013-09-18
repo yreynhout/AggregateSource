@@ -1,4 +1,5 @@
 ﻿using System;
+using AggregateSource.Testing.Factory;
 
 namespace AggregateSource.Testing
 {
@@ -6,7 +7,7 @@ namespace AggregateSource.Testing
     /// A given-when-then test specification bootstrapper for testing an aggregate factory, i.e. a method on the aggregate that creates a new aggregate.
     /// </summary>
     /// <typeparam name="TAggregateRoot">The type of aggregate root entity under test.</typeparam>
-    public class FactoryScenarioFor<TAggregateRoot> : IAggregateFactoryGivenStateBuilder<TAggregateRoot>
+    public class FactoryScenarioFor<TAggregateRoot> : IAggregateFactoryInitialStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
         readonly Func<IAggregateRootEntity> _sutFactory;
@@ -24,7 +25,17 @@ namespace AggregateSource.Testing
         /// <param name="sutFactory">The sut factory.</param>
         public FactoryScenarioFor(Func<TAggregateRoot> sutFactory)
         {
+            if (sutFactory == null) throw new ArgumentNullException("sutFactory");
             _sutFactory = () => sutFactory();
+        }
+
+        /// <summary>
+        /// Given no events occured.
+        /// </summary>
+        /// <returns>A builder continuation.</returns>
+        public IAggregateFactoryGivenNoneStateBuilder<TAggregateRoot> GivenNone()
+        {
+            return new AggregateFactoryGivenNoneStateBuilder<TAggregateRoot>(_sutFactory);
         }
 
         /// <summary>

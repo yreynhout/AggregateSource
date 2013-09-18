@@ -13,6 +13,8 @@
 - Extra tests that prove that an identifier can't be null (repository)
 - Complete tests for test result
 - Complete tests for aggregate scenario test specification infrastructure
+  - Factory tests are missing
+  - ThrowsFixture is missing for all
 - Usage of indented text writer as the text writer for specifications and results
 
 ## Features

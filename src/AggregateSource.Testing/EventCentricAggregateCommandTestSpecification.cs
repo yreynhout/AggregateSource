@@ -22,6 +22,10 @@ namespace AggregateSource.Testing
         public EventCentricAggregateCommandTestSpecification(Func<IAggregateRootEntity> sutFactory, object[] givens,
                                                              Action<IAggregateRootEntity> when, object[] thens)
         {
+            if (sutFactory == null) throw new ArgumentNullException("sutFactory");
+            if (givens == null) throw new ArgumentNullException("givens");
+            if (when == null) throw new ArgumentNullException("when");
+            if (thens == null) throw new ArgumentNullException("thens");
             _sutFactory = sutFactory;
             _givens = givens;
             _when = when;
@@ -61,6 +65,49 @@ namespace AggregateSource.Testing
         public object[] Thens
         {
             get { return _thens; }
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has passed.
+        /// </summary>
+        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        public EventCentricAggregateCommandTestResult Pass()
+        {
+            return new EventCentricAggregateCommandTestResult(
+                this,
+                TestResultState.Passed, 
+                Optional<object[]>.Empty,
+                Optional<Exception>.Empty);
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has failed because different things happened.
+        /// </summary>
+        /// <param name="actual">The actual events</param>
+        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        public EventCentricAggregateCommandTestResult Fail(object[] actual)
+        {
+            if (actual == null) throw new ArgumentNullException("actual");
+            return new EventCentricAggregateCommandTestResult(
+                this,
+                TestResultState.Failed,
+                new Optional<object[]>(actual), 
+                Optional<Exception>.Empty);
+        }
+
+        /// <summary>
+        /// Returns a test result that indicates this specification has failed because an exception happened.
+        /// </summary>
+        /// <param name="actual">The actual exception</param>
+        /// <returns>A new <see cref="EventCentricAggregateCommandTestResult"/>.</returns>
+        public EventCentricAggregateCommandTestResult Fail(Exception actual)
+        {
+            if (actual == null) throw new ArgumentNullException("actual");
+            return new EventCentricAggregateCommandTestResult(
+                this,
+                TestResultState.Failed,
+                Optional<object[]>.Empty,
+                new Optional<Exception>(actual));
         }
     }
 }

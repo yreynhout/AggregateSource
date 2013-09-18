@@ -23,15 +23,15 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource.Testing provides lightweight infrastructure for building eventsourced, aggregate based test specifications.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>Targeting of both 4.0 and 4.5. Added the ability to define batches of facts, i.e. events that can appear both as givens and thens. Warning! The API is still in flux.</releaseNotes>
+    <releaseNotes>Warning! The API is still in flux. Added support for GivenNone, ThenNone, Facts, and NUnit integration</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource" version="0.0.78" />
+        <dependency id="AggregateSource" version="0.0.116" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.78" />
+        <dependency id="AggregateSource" version="0.0.116" />
       </group>
     </dependencies>
   </metadata>
@@ -43,6 +43,10 @@ using this tokenized nuspec file.
     <file src="output\net45\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
     <file src="output\net45\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
     <file src="..\src\AggregateSource.Testing\*.cs" target="src\AggregateSource.Testing" />
+    <file src="..\src\AggregateSource.Testing\Command\*.cs" target="src\AggregateSource.Testing\Command" />
+    <file src="..\src\AggregateSource.Testing\Constructor\*.cs" target="src\AggregateSource.Testing\Constructor" />
+    <file src="..\src\AggregateSource.Testing\Factory\*.cs" target="src\AggregateSource.Testing\Factory" />
+    <file src="..\src\AggregateSource.Testing\Query\*.cs" target="src\AggregateSource.Testing\Query" />
     <file src="..\src\AggregateSource.Testing\Properties\*.cs" target="src\AggregateSource.Testing\Properties" />
   </files>
 </package>

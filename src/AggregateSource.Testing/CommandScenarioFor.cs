@@ -1,4 +1,5 @@
 ﻿using System;
+using AggregateSource.Testing.Command;
 
 namespace AggregateSource.Testing
 {
@@ -6,7 +7,7 @@ namespace AggregateSource.Testing
     /// A given-when-then test specification bootstrapper for testing an aggregate command, i.e. a method on the aggregate that returns void.
     /// </summary>
     /// <typeparam name="TAggregateRoot">The type of aggregate root entity under test.</typeparam>
-    public class CommandScenarioFor<TAggregateRoot> : IAggregateCommandGivenStateBuilder<TAggregateRoot>
+    public class CommandScenarioFor<TAggregateRoot> : IAggregateCommandInitialStateBuilder<TAggregateRoot>
         where TAggregateRoot : IAggregateRootEntity
     {
         readonly Func<IAggregateRootEntity> _sutFactory;
@@ -22,8 +23,10 @@ namespace AggregateSource.Testing
         /// Initializes a new instance of the <see cref="CommandScenarioFor{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="sutFactory">The sut factory.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="sutFactory"/> is <c>null</c>.</exception>
         public CommandScenarioFor(Func<TAggregateRoot> sutFactory)
         {
+            if (sutFactory == null) throw new ArgumentNullException("sutFactory");
             _sutFactory = () => sutFactory();
         }
 
@@ -37,6 +40,15 @@ namespace AggregateSource.Testing
         {
             if (events == null) throw new ArgumentNullException("events");
             return new AggregateCommandGivenStateBuilder<TAggregateRoot>(_sutFactory, events);
+        }
+
+        /// <summary>
+        /// Given no events occured.
+        /// </summary>
+        /// <returns>A builder continuation.</returns>
+        public IAggregateCommandGivenNoneStateBuilder<TAggregateRoot> GivenNone()
+        {
+            return new AggregateCommandGivenNoneStateBuilder<TAggregateRoot>(_sutFactory);
         }
 
         /// <summary>
