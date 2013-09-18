@@ -25,19 +25,19 @@ namespace AggregateSource.GEventStore
                 Assert.Throws<ArgumentNullException>(() => { var _ = _sut.Read(null, 0); });
             }
 
-            [Test]
+            [Test, Ignore("Need to figure out if we're gonna throw if the version is <= 0")]
             public void ReadVersionCanNotBeNegative()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = _sut.Read(_model.KnownIdentifier, -1); });
             }
 
-            [Test]
+            [Test, Ignore("Need to figure out if we're gonna throw if the version is <= 0")]
             public void ReadVersionCanNotBeZero()
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => { var _ = _sut.Read(_model.KnownIdentifier, 0); });
             }
 
-            [Test]
+            [Test, Ignore("Need to figure out if we're gonna throw if the version is <= 0")]
             public void ReadVersionCanBePositive()
             {
                 Assert.That(_sut.Read(_model.KnownIdentifier, 1), Is.Empty);

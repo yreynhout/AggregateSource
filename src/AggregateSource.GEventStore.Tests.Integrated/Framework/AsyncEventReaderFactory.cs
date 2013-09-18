@@ -4,7 +4,7 @@
     {
         public static AsyncEventReader Create()
         {
-            return new AsyncEventReader(EmbeddedEventStore.Instance.Connection, EventReaderConfigurationFactory.Create());
+            return new AsyncEventReader(EmbeddedEventStore.Connection, EventReaderConfigurationFactory.Create());
         }
     }
 }
