@@ -11,7 +11,7 @@ namespace AggregateSource
         public class WithAnyInstance
         {
             [Test]
-            public void IsObservableAggregateRootEntity()
+            public void IsAggregateRootEntity()
             {
                 Assert.IsInstanceOf<IAggregateRootEntity>(new AnyAggregateRootEntity());
             }
