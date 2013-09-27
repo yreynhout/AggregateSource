@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AggregateSource
 {
-    namespace AggregateRootEntityTests
+    namespace AggregateRootEntityOfTAggregateStateTests
     {
         [TestFixture]
         public class WithAnyInstance
@@ -42,23 +42,15 @@ namespace AggregateSource
                 var sut = new ApplyInterceptorAggregateRootEntity();
                 Assert.That(sut.AfterApplyWasCalled, Is.True);
             }
-
-            [Test]
-            public void RegisterHandlerCanNotBeNull()
-            {
-                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
-            }
-
-            [Test]
-            public void RegisterHandlerCanOnlyBeCalledOncePerEventType()
-            {
-                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceAggregateRootEntity());
-            }
         }
 
-        class AnyAggregateRootEntity : AggregateRootEntity {}
+        class AnyState : AggregateState
+        {
+        }
 
-        class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity
+        class AnyAggregateRootEntity : AggregateRootEntity<AnyState> { }
+
+        class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity<AnyState>
         {
             public InitializeWithNullEventsAggregateRootEntity()
             {
@@ -66,7 +58,7 @@ namespace AggregateSource
             }
         }
 
-        class ApplyNullEventAggregateRootEntity : AggregateRootEntity
+        class ApplyNullEventAggregateRootEntity : AggregateRootEntity<AnyState>
         {
             public void ApplyNull()
             {
@@ -74,11 +66,10 @@ namespace AggregateSource
             }
         }
 
-        class ApplyInterceptorAggregateRootEntity : AggregateRootEntity
+        class ApplyInterceptorAggregateRootEntity : AggregateRootEntity<AnyState>
         {
             public ApplyInterceptorAggregateRootEntity()
             {
-                Register<object>(o => { });
                 Apply(new object());
             }
 
@@ -97,27 +88,10 @@ namespace AggregateSource
             public bool AfterApplyWasCalled { get; private set; }
         }
 
-        class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity
-        {
-            public RegisterNullHandlerAggregateRootEntity()
-            {
-                Register<object>(null);
-            }
-        }
-
-        class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity
-        {
-            public RegisterSameEventHandlerTwiceAggregateRootEntity()
-            {
-                Register<object>(o => { });
-                Register<object>(o => { });
-            }
-        }
-
         [TestFixture]
         public class WithPristineInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<PristineState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -146,16 +120,17 @@ namespace AggregateSource
             [Test]
             public void InitializeDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class PristineAggregateRootEntity : AggregateRootEntity {}
+        class PristineState : AggregateState {}
+        class PristineAggregateRootEntity : AggregateRootEntity<PristineState> { }
 
         [TestFixture]
         public class WithInitializedInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<InitializedState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -184,22 +159,23 @@ namespace AggregateSource
             [Test]
             public void InitializeDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class InitializedAggregateRootEntity : AggregateRootEntity
+        class InitializedState : AggregateState {}
+        class InitializedAggregateRootEntity : AggregateRootEntity<InitializedState>
         {
             public InitializedAggregateRootEntity()
             {
-                Initialize(new[] {new object(), new object()});
+                Initialize(new[] { new object(), new object() });
             }
         }
 
         [TestFixture]
         public class WithChangedInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<ChangedState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -229,13 +205,14 @@ namespace AggregateSource
             public void InitializeThrows()
             {
                 Assert.Throws<InvalidOperationException>(
-                    () => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                    () => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class ChangedAggregateRootEntity : AggregateRootEntity
+        class ChangedState : AggregateState {}
+        class ChangedAggregateRootEntity : AggregateRootEntity<ChangedState>
         {
-            public static readonly object[] AppliedChanges = new[] {new object(), new object()};
+            public static readonly object[] AppliedChanges = new[] { new object(), new object() };
 
             public ChangedAggregateRootEntity()
             {
@@ -249,7 +226,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInitializedThenChangedInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<InitializedThenChangedState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -279,17 +256,18 @@ namespace AggregateSource
             public void InitializeThrows()
             {
                 Assert.Throws<InvalidOperationException>(
-                    () => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                    () => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class InitializedThenChangedAggregateRootEntity : AggregateRootEntity
+        class InitializedThenChangedState : AggregateState {}
+        class InitializedThenChangedAggregateRootEntity : AggregateRootEntity<InitializedThenChangedState>
         {
-            public static readonly object[] AppliedChanges = new[] {new object(), new object()};
+            public static readonly object[] AppliedChanges = new[] { new object(), new object() };
 
             public InitializedThenChangedAggregateRootEntity()
             {
-                Initialize(new[] {new object(), new object()});
+                Initialize(new[] { new object(), new object() });
                 foreach (var change in AppliedChanges)
                 {
                     Apply(change);
@@ -300,7 +278,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithChangedThenClearedInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<ChangedThenClearedState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -329,15 +307,16 @@ namespace AggregateSource
             [Test]
             public void InitializeDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class ChangedThenClearedAggregateRootEntity : AggregateRootEntity
+        class ChangedThenClearedState : AggregateState {}
+        class ChangedThenClearedAggregateRootEntity : AggregateRootEntity<ChangedThenClearedState>
         {
             public ChangedThenClearedAggregateRootEntity()
             {
-                foreach (var change in new[] {new object(), new object()})
+                foreach (var change in new[] { new object(), new object() })
                 {
                     Apply(change);
                 }
@@ -348,7 +327,7 @@ namespace AggregateSource
         [TestFixture]
         public class WithInitializedThenChangedThenClearedInstance
         {
-            AggregateRootEntity _sut;
+            AggregateRootEntity<InitializedThenChangedThenClearedState> _sut;
 
             [SetUp]
             public void SetUp()
@@ -377,16 +356,18 @@ namespace AggregateSource
             [Test]
             public void InitializeDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object(), new object()}));
+                Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object(), new object() }));
             }
         }
 
-        class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity
+        class InitializedThenChangedThenClearedState : AggregateState { }
+
+        class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity<InitializedThenChangedThenClearedState>
         {
             public InitializedThenChangedThenClearedAggregateRootEntity()
             {
-                Initialize(new[] {new object(), new object()});
-                foreach (var change in new[] {new object(), new object()})
+                Initialize(new[] { new object(), new object() });
+                foreach (var change in new[] { new object(), new object() })
                 {
                     Apply(change);
                 }
@@ -408,12 +389,12 @@ namespace AggregateSource
             [Test]
             public void InitializeCallsHandlerForEachEvent()
             {
-                var expectedEvents = new[] {new object(), new object()};
+                var expectedEvents = new[] { new object(), new object() };
 
                 _sut.Initialize(expectedEvents);
 
-                Assert.That(_sut.HandlerCallCount, Is.EqualTo(2));
-                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(expectedEvents));
+                Assert.That(_sut.PublicState.HandlerCallCount, Is.EqualTo(2));
+                Assert.That(_sut.PublicState.RoutedEvents, Is.EquivalentTo(expectedEvents));
             }
 
             [Test]
@@ -423,14 +404,14 @@ namespace AggregateSource
 
                 _sut.DoApply(@event);
 
-                Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
-                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(new[] {@event}));
+                Assert.That(_sut.PublicState.HandlerCallCount, Is.EqualTo(1));
+                Assert.That(_sut.PublicState.RoutedEvents, Is.EquivalentTo(new[] { @event }));
             }
         }
 
-        class WithHandlersAggregateRootEntity : AggregateRootEntity
+        class WithHandlersState : AggregateState
         {
-            public WithHandlersAggregateRootEntity()
+            public WithHandlersState()
             {
                 RoutedEvents = new List<object>();
                 Register<object>(@event =>
@@ -440,13 +421,21 @@ namespace AggregateSource
                 });
             }
 
+            public int HandlerCallCount { get; private set; }
+            public List<object> RoutedEvents { get; private set; }
+        }
+
+        class WithHandlersAggregateRootEntity : AggregateRootEntity<WithHandlersState>
+        {
             public void DoApply(object @event)
             {
                 Apply(@event);
             }
 
-            public int HandlerCallCount { get; private set; }
-            public List<object> RoutedEvents { get; private set; }
+            public WithHandlersState PublicState
+            {
+                get { return State; }
+            }
         }
 
         [TestFixture]
@@ -463,7 +452,7 @@ namespace AggregateSource
             [Test]
             public void InitializeDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Initialize(new[] {new object(), new object()}));
+                Assert.DoesNotThrow(() => _sut.Initialize(new[] { new object(), new object() }));
             }
 
             [Test]
@@ -473,7 +462,8 @@ namespace AggregateSource
             }
         }
 
-        class WithoutHandlersAggregateRootEntity : AggregateRootEntity
+        class WithoutHandlersState : AggregateState {}
+        class WithoutHandlersAggregateRootEntity : AggregateRootEntity<WithoutHandlersState>
         {
             public void DoApply(object @event)
             {

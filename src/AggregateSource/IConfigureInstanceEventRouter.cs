@@ -13,7 +13,7 @@ namespace AggregateSource
         /// <param name="event">The event type the route is for.</param>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="event"/> or <paramref name="handler"/> is <c>null</c>.</exception>
-        void AddRoute(Type @event, Action<object> handler);
+        void ConfigureRoute(Type @event, Action<object> handler);
 
         /// <summary>
         /// Adds a route for the specified event type to the specified state handler.
@@ -21,6 +21,6 @@ namespace AggregateSource
         /// <typeparam name="TEvent">The event type the route is for.</typeparam>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="handler"/> is <c>null</c>.</exception>
-        void AddRoute<TEvent>(Action<TEvent> handler);
+        void ConfigureRoute<TEvent>(Action<TEvent> handler);
     }
 }

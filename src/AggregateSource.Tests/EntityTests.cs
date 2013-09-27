@@ -10,15 +10,21 @@ namespace AggregateSource
         public class WithAnyInstance
         {
             [Test]
+            public void IsInstanceEventRouter()
+            {
+                Assert.That(new AnyInstanceEntity(), Is.InstanceOf<IInstanceEventRouter>());
+            }
+
+            [Test]
             public void ApplierCanNotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new UseNullApplierEntity());
             }
 
             [Test]
-            public void PlayEventCanNotBeNull()
+            public void RouteEventCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new PlayWithNullEventEntity());
+                Assert.Throws<ArgumentNullException>(() => new RouteWithNullEventEntity());
             }
 
             [Test]
@@ -41,16 +47,22 @@ namespace AggregateSource
             }
         }
 
+        class AnyInstanceEntity : Entity {
+            public AnyInstanceEntity() : base(_ => { })
+            {
+            }
+        }
+
         class UseNullApplierEntity : Entity
         {
             public UseNullApplierEntity() : base(null) {}
         }
 
-        class PlayWithNullEventEntity : Entity
+        class RouteWithNullEventEntity : Entity
         {
-            public PlayWithNullEventEntity() : base(_ => { })
+            public RouteWithNullEventEntity() : base(_ => { })
             {
-                Play(null);
+                Route(null);
             }
         }
 
@@ -97,14 +109,14 @@ namespace AggregateSource
             }
 
             [Test]
-            public void PlayCallsHandlerOfEvent()
+            public void RouteCallsHandlerOfEvent()
             {
                 var expectedEvent = new object();
 
-                _sut.Play(expectedEvent);
+                _sut.Route(expectedEvent);
 
                 Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
-                Assert.That(_sut.PlayedEvents, Is.EquivalentTo(new[] {expectedEvent}));
+                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(new[] {expectedEvent}));
             }
 
             [Test]
@@ -123,11 +135,11 @@ namespace AggregateSource
             public WithHandlersEntity(Action<object> applier)
                 : base(applier)
             {
-                PlayedEvents = new List<object>();
+                RoutedEvents = new List<object>();
                 Register<object>(@event =>
                 {
                     HandlerCallCount++;
-                    PlayedEvents.Add(@event);
+                    RoutedEvents.Add(@event);
                 });
             }
 
@@ -137,7 +149,7 @@ namespace AggregateSource
             }
 
             public int HandlerCallCount { get; private set; }
-            public List<object> PlayedEvents { get; private set; }
+            public List<object> RoutedEvents { get; private set; }
         }
 
         [TestFixture]
@@ -156,9 +168,9 @@ namespace AggregateSource
             }
 
             [Test]
-            public void PlayDoesNotThrow()
+            public void RouteDoesNotThrow()
             {
-                Assert.DoesNotThrow(() => _sut.Play(new object()));
+                Assert.DoesNotThrow(() => _sut.Route(new object()));
             }
 
             [Test]

@@ -7,30 +7,30 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
     /// </summary>
-    public abstract class AggregateRootEntity : IAggregateRootEntity
+    public abstract class AggregateRootEntity<TAggregateState> : IAggregateRootEntity
+        where TAggregateState : IInstanceEventRouter, new()
     {
+        readonly TAggregateState _state;
         readonly EventRecorder _recorder;
-        readonly IConfigureInstanceEventRouter _router;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
+        /// Initializes a new instance of the <see cref="AggregateRootEntity{TAggregateState}"/> class.
         /// </summary>
         protected AggregateRootEntity()
         {
-            _router = new InstanceEventRouter();
+            _state = new TAggregateState();
             _recorder = new EventRecorder();
         }
 
         /// <summary>
-        /// Registers the state handler to be invoked when the specified event is applied.
+        /// Gets the aggregate state associated with this instance.
         /// </summary>
-        /// <typeparam name="TEvent">The type of the event to register the handler for.</typeparam>
-        /// <param name="handler">The handler.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
-        protected void Register<TEvent>(Action<TEvent> handler)
+        /// <value>
+        /// The aggregate state.
+        /// </value>
+        protected TAggregateState State
         {
-            if (handler == null) throw new ArgumentNullException("handler");
-            _router.ConfigureRoute(handler);
+            get { return _state; }
         }
 
         /// <summary>
@@ -44,9 +44,7 @@ namespace AggregateSource
             if (HasChanges())
                 throw new InvalidOperationException("Initialize cannot be called on an instance with changes.");
             foreach (var @event in events)
-            {
                 Play(@event);
-            }
         }
 
         /// <summary>
@@ -66,17 +64,17 @@ namespace AggregateSource
         /// Called before an event is applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that will be applied.</param>
-        protected virtual void BeforeApply(object @event) {}
+        protected virtual void BeforeApply(object @event) { }
 
         /// <summary>
         /// Called after an event has been applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that has been applied.</param>
-        protected virtual void AfterApply(object @event) {}
+        protected virtual void AfterApply(object @event) { }
 
         void Play(object @event)
         {
-            _router.Route(@event);
+            _state.Route(@event);
         }
 
         void Record(object @event)

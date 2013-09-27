@@ -413,7 +413,7 @@ namespace AggregateSource.Reactive
                 _sut.Initialize(expectedEvents);
 
                 Assert.That(_sut.HandlerCallCount, Is.EqualTo(2));
-                Assert.That(_sut.PlayedEvents, Is.EquivalentTo(expectedEvents));
+                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(expectedEvents));
             }
 
             [Test]
@@ -424,7 +424,7 @@ namespace AggregateSource.Reactive
                 _sut.DoApply(@event);
 
                 Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
-                Assert.That(_sut.PlayedEvents, Is.EquivalentTo(new[] {@event}));
+                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(new[] {@event}));
             }
         }
 
@@ -432,11 +432,11 @@ namespace AggregateSource.Reactive
         {
             public WithHandlersAggregateRootEntity()
             {
-                PlayedEvents = new List<object>();
+                RoutedEvents = new List<object>();
                 Register<object>(@event =>
                 {
                     HandlerCallCount++;
-                    PlayedEvents.Add(@event);
+                    RoutedEvents.Add(@event);
                 });
             }
 
@@ -446,7 +446,7 @@ namespace AggregateSource.Reactive
             }
 
             public int HandlerCallCount { get; private set; }
-            public List<object> PlayedEvents { get; private set; }
+            public List<object> RoutedEvents { get; private set; }
         }
 
         [TestFixture]

@@ -24,7 +24,7 @@ namespace AggregateSource
         /// <param name="event">The event type the route is for.</param>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="event"/> or <paramref name="handler"/> is <c>null</c>.</exception>
-        public void AddRoute(Type @event, Action<object> handler)
+        public void ConfigureRoute(Type @event, Action<object> handler)
         {
             if (@event == null) throw new ArgumentNullException("event");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -37,7 +37,7 @@ namespace AggregateSource
         /// <typeparam name="TEvent">The event type the route is for.</typeparam>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="handler"/> is <c>null</c>.</exception>
-        public void AddRoute<TEvent>(Action<TEvent> handler)
+        public void ConfigureRoute<TEvent>(Action<TEvent> handler)
         {
             if (handler == null) throw new ArgumentNullException("handler");
             _handlers.Add(typeof (TEvent), @event => handler((TEvent) @event));

@@ -68,7 +68,9 @@
     <Compile Include="Aggregate.cs" />
     <Compile Include="AggregateNotFoundException.cs" />
     <Compile Include="AggregateRootEntity.cs" />
+    <Compile Include="AggregateRootEntityOfTAggregateState.cs" />
     <Compile Include="AggregateSourceException.cs" />
+    <Compile Include="AggregateState.cs" />
     <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EventRecorder.cs" />

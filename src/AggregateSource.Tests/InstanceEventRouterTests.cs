@@ -27,35 +27,35 @@ namespace AggregateSource
         }
 
         [Test]
-        public void AddRouteGenericHandlerCanNotBeNull()
+        public void ConfigureRouteGenericHandlerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute<object>(null));
+            Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute<object>(null));
         }
 
         [Test]
         public void CanNotAddDuplicateRouteGenerically()
         {
-            _sut.AddRoute((object _) => { });
-            Assert.Throws<ArgumentException>(() => _sut.AddRoute((object _) => { }));
+            _sut.ConfigureRoute((object _) => { });
+            Assert.Throws<ArgumentException>(() => _sut.ConfigureRoute((object _) => { }));
         }
 
         [Test]
-        public void AddRouteEventCanNotBeNull()
+        public void ConfigureRouteEventCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(null, _ => { }));
+            Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute(null, _ => { }));
         }
 
         [Test]
-        public void AddRouteHandlerCanNotBeNull()
+        public void ConfigureRouteHandlerCanNotBeNull()
         {
-            Assert.Throws<ArgumentNullException>(() => _sut.AddRoute(typeof (object), null));
+            Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute(typeof (object), null));
         }
 
         [Test]
         public void CanNotAddDuplicateRoute()
         {
-            _sut.AddRoute(typeof (object), _ => { });
-            Assert.Throws<ArgumentException>(() => _sut.AddRoute(typeof (object), _ => { }));
+            _sut.ConfigureRoute(typeof (object), _ => { });
+            Assert.Throws<ArgumentException>(() => _sut.ConfigureRoute(typeof (object), _ => { }));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace AggregateSource
         public void RouteEventWithHandlerHasExpectedResult()
         {
             var called = false;
-            _sut.AddRoute((object _) => called = true);
+            _sut.ConfigureRoute((object _) => called = true);
 
             _sut.Route(new object());
 

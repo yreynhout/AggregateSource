@@ -16,22 +16,23 @@ namespace SampleSource.Testing
             public static readonly ConcertId ConcertId = new ConcertId(Guid.NewGuid());
             public static readonly TicketSaleId TicketSaleId = new TicketSaleId(Guid.NewGuid());
 
-			[Test]
-			public void ConcertIsPlannedWithIdAndValidCapacity()
-			{
-				var id = new ConcertId(Guid.NewGuid());
+            [Test]
+            public void ConcertIsPlannedWithIdAndValidCapacity()
+            {
+                var id = new ConcertId(Guid.NewGuid());
 
-				new ConstructorScenarioFor<Concert>(() => Concert.Plan(id, 100)).
-					Then(ConcertEvents.Planned(id)).
-					Assert();
-			}
+                new ConstructorScenarioFor<Concert>(() => Concert.Plan(id, 100)).
+                    Then(ConcertEvents.Planned(id)).
+                    Assert();
+            }
 
-			[Test]
-			public void PlanningConcertWithInvalidCapacityThrows()
-			{
+            [Test]
+            public void PlanningConcertWithInvalidCapacityThrows()
+            {
                 new ConstructorScenarioFor<Concert>(() => Concert.Plan(new ConcertId(Guid.NewGuid()), -4)).
-					AssertThrows(new ArgumentException("venueCapacity"));
-			}
+                    Throws(new ArgumentException("venueCapacity")).
+                    Assert();
+            }
 
             [Test]
             public void PlannedConcertCanHaveTicketSaleStarted()
@@ -53,8 +54,9 @@ namespace SampleSource.Testing
                         ConcertEvents.Planned(ConcertId),
                         ConcertEvents.Cancelled(ConcertId, "Lead singer OD'ed.")).
                     When(sut => sut.StartTicketSale(TicketSaleId, DateTimeOffset.UtcNow.Date)).
-                    AssertThrows(
-                        new InvalidOperationException("Starting a ticket sale for a cancelled concert is impossible."));
+                    Throws(
+                        new InvalidOperationException("Starting a ticket sale for a cancelled concert is impossible.")).
+                    Assert();
             }
 
             [Test]
@@ -77,7 +79,8 @@ namespace SampleSource.Testing
                         ConcertEvents.Planned(ConcertId),
                         ConcertEvents.Cancelled(ConcertId, "Guitars all smashed.")).
                     When(sut => sut.Cancel("Lead singer OD'ed.")).
-                    AssertThrows(new InvalidOperationException("The concert has already been cancelled."));
+                    Throws(new InvalidOperationException("The concert has already been cancelled.")).
+                    Assert();
             }
 
             [Test]
@@ -99,94 +102,8 @@ namespace SampleSource.Testing
                         TicketSaleEvents.Started(TicketSaleId, ConcertId, DateTimeOffset.UtcNow.Date, 100),
                         TicketSaleEvents.Ended(TicketSaleId, DateTimeOffset.UtcNow.Date)).
                     When(sut => sut.GetAvailability()).
-                    AssertThrows(new InvalidOperationException("The ticket sale has ended."));
-            }
-        }
-
-        public static class NUnitExtensions
-        {
-            public static void Assert(this IAggregateFactoryThenStateBuilder builder)
-            {
-                var specification = builder.Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                var result = specification.When(sut);
-                NUnit.Framework.Assert.That(
-                    result.GetChanges(),
-                    Is.EquivalentTo(specification.Thens));
-            }
-
-            public static void AssertThrows<TException>(this IAggregateFactoryWhenStateBuilder builder,
-                                                        TException exception) where TException : Exception
-            {
-                var specification = builder.Throws(exception).Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                NUnit.Framework.Assert.That(
-                    NUnit.Framework.Assert.Throws<TException>(() => specification.When(sut)).Message,
-                    Is.EqualTo(exception.Message));
-            }
-
-			public static void Assert(this IAggregateConstructorThenStateBuilder builder)
-			{
-				var specification = builder.Build();
-				var sut = specification.SutFactory();
-				NUnit.Framework.Assert.That(
-					sut.GetChanges(),
-					Is.EquivalentTo(specification.Thens));
-			}
-
-			public static void AssertThrows<TException>(this IAggregateConstructorWhenStateBuilder builder,
-			                                            TException exception) where TException : Exception
-			{
-				var specification = builder.Throws(exception).Build();
-				NUnit.Framework.Assert.That(
-					NUnit.Framework.Assert.Throws<TException>(() => specification.SutFactory()).Message,
-					Is.EqualTo(exception.Message));
-			}
-
-            public static void Assert(this IAggregateCommandThenStateBuilder builder)
-            {
-                var specification = builder.Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                specification.When(sut);
-                NUnit.Framework.Assert.That(
-                    sut.GetChanges(),
-                    Is.EquivalentTo(specification.Thens));
-            }
-
-            public static void AssertThrows<TException>(this IAggregateCommandWhenStateBuilder builder,
-                                                        TException exception) where TException : Exception
-            {
-                var specification = builder.Throws(exception).Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                NUnit.Framework.Assert.That(
-                    NUnit.Framework.Assert.Throws<TException>(() => specification.When(sut)).Message,
-                    Is.EqualTo(exception.Message));
-            }
-
-            public static void Assert(this IAggregateQueryThenStateBuilder builder)
-            {
-                var specification = builder.Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                var result = specification.When(sut);
-                NUnit.Framework.Assert.That(
-                    result,
-                    Is.EqualTo(specification.Then));
-            }
-
-            public static void AssertThrows<TResult, TException>(this IAggregateQueryWhenStateBuilder<TResult> builder,
-                                                                 TException exception) where TException : Exception
-            {
-                var specification = builder.Throws(exception).Build();
-                var sut = specification.SutFactory();
-                sut.Initialize(specification.Givens);
-                NUnit.Framework.Assert.That(
-                    NUnit.Framework.Assert.Throws<TException>(() => specification.When(sut)).Message,
-                    Is.EqualTo(exception.Message));
+                    Throws(new InvalidOperationException("The ticket sale has ended.")).
+                    Assert();
             }
         }
 
@@ -233,15 +150,15 @@ namespace SampleSource.Testing
                     Apply(ConcertEvents.Cancelled(_id, reason));
                 }
 
-	            public static Concert Plan(ConcertId id, int venueCapacity)
-	            {
-		            if (venueCapacity < 1)
-			            throw new ArgumentException("venueCapacity");
+                public static Concert Plan(ConcertId id, int venueCapacity)
+                {
+                    if (venueCapacity < 1)
+                        throw new ArgumentException("venueCapacity");
 
-		            var concert = Factory();
-					concert.Apply(ConcertEvents.Planned(id));
-		            return concert;
-	            }
+                    var concert = Factory();
+                    concert.Apply(ConcertEvents.Planned(id));
+                    return concert;
+                }
             }
 
             public class TicketSale : AggregateRootEntity
@@ -291,7 +208,7 @@ namespace SampleSource.Testing
                 public override bool Equals(object obj)
                 {
                     if (ReferenceEquals(null, obj)) return false;
-                    return obj is SeatCount && Equals((SeatCount) obj);
+                    return obj is SeatCount && Equals((SeatCount)obj);
                 }
 
                 public override int GetHashCode()
@@ -341,7 +258,7 @@ namespace SampleSource.Testing
                 public override bool Equals(object obj)
                 {
                     if (ReferenceEquals(null, obj)) return false;
-                    return obj is ConcertId && Equals((ConcertId) obj);
+                    return obj is ConcertId && Equals((ConcertId)obj);
                 }
 
                 public override int GetHashCode()
@@ -372,7 +289,7 @@ namespace SampleSource.Testing
                 public override bool Equals(object obj)
                 {
                     if (ReferenceEquals(null, obj)) return false;
-                    return obj is TicketSaleId && Equals((TicketSaleId) obj);
+                    return obj is TicketSaleId && Equals((TicketSaleId)obj);
                 }
 
                 public override int GetHashCode()
@@ -414,7 +331,7 @@ namespace SampleSource.Testing
                     if (ReferenceEquals(null, obj)) return false;
                     if (ReferenceEquals(this, obj)) return true;
                     if (obj.GetType() != GetType()) return false;
-                    return Equals((ConcertPlannedEvent) obj);
+                    return Equals((ConcertPlannedEvent)obj);
                 }
 
                 public override int GetHashCode()
@@ -442,14 +359,14 @@ namespace SampleSource.Testing
                     if (ReferenceEquals(null, obj)) return false;
                     if (ReferenceEquals(this, obj)) return true;
                     if (obj.GetType() != GetType()) return false;
-                    return Equals((ConcertCancelledEvent) obj);
+                    return Equals((ConcertCancelledEvent)obj);
                 }
 
                 public override int GetHashCode()
                 {
                     unchecked
                     {
-                        return (ConcertId.GetHashCode()*397) ^ Reason.GetHashCode();
+                        return (ConcertId.GetHashCode() * 397) ^ Reason.GetHashCode();
                     }
                 }
 
@@ -490,7 +407,7 @@ namespace SampleSource.Testing
                     if (ReferenceEquals(null, obj)) return false;
                     if (ReferenceEquals(this, obj)) return true;
                     if (obj.GetType() != GetType()) return false;
-                    return Equals((TicketSaleStartedEvent) obj);
+                    return Equals((TicketSaleStartedEvent)obj);
                 }
 
                 public override int GetHashCode()
@@ -498,8 +415,8 @@ namespace SampleSource.Testing
                     unchecked
                     {
                         var hashCode = TicketSaleId.GetHashCode();
-                        hashCode = (hashCode*397) ^ ConcertId.GetHashCode();
-                        hashCode = (hashCode*397) ^ Date.GetHashCode();
+                        hashCode = (hashCode * 397) ^ ConcertId.GetHashCode();
+                        hashCode = (hashCode * 397) ^ Date.GetHashCode();
                         return hashCode;
                     }
                 }
@@ -530,14 +447,14 @@ namespace SampleSource.Testing
                     if (ReferenceEquals(null, obj)) return false;
                     if (ReferenceEquals(this, obj)) return true;
                     if (obj.GetType() != GetType()) return false;
-                    return Equals((TicketSaleEndedEvent) obj);
+                    return Equals((TicketSaleEndedEvent)obj);
                 }
 
                 public override int GetHashCode()
                 {
                     unchecked
                     {
-                        return (TicketSaleId.GetHashCode()*397) ^ Date.GetHashCode();
+                        return (TicketSaleId.GetHashCode() * 397) ^ Date.GetHashCode();
                     }
                 }
 

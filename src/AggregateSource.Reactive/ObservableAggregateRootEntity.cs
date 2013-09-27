@@ -39,7 +39,7 @@ namespace AggregateSource.Reactive
         {
             if (handler == null) throw new ArgumentNullException("handler");
             //ThrowIfDisposed();
-            _router.AddRoute(handler);
+            _router.ConfigureRoute(handler);
         }
 
         /// <summary>
