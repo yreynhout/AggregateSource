@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B77C375-3883-40AD-B575-A18DB5E07C14}</ProjectGuid>
+    <ProjectGuid>{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleSource</RootNamespace>
-    <AssemblyName>SampleSource</AssemblyName>
+    <RootNamespace>AggregateSource</RootNamespace>
+    <AssemblyName>AggregateSource.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\AggregateSource\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -55,22 +55,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\net45</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.2.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -79,38 +64,37 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Testing\AggregateSource.Testing.NUnit\Content\NUnitAssertionExtensions.cs">
-      <Link>NUnitAssertionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\SharedVersionInfo.cs">
+    <Compile Include="..\..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Testing\AggregateAsSystemUnderTest.cs" />
-    <Compile Include="Testing\UsingIdFromIEvent.cs" />
-    <Compile Include="UsingDomainEvents.cs" />
-    <Compile Include="UsingEntities.cs" />
+    <Compile Include="AggregateRootEntityOfTAggregateStateTests.cs" />
+    <Compile Include="AggregateStateTests.cs" />
+    <Compile Include="AggregateStubs.cs" />
+    <Compile Include="AggregateNotFoundExceptionTests.cs" />
+    <Compile Include="AggregateRootEntityTests.cs" />
+    <Compile Include="AggregateSourceExceptionTests.cs" />
+    <Compile Include="AggregateTests.cs" />
+    <Compile Include="AggregateRootEntityStub.cs" />
+    <Compile Include="ConcurrentUnitOfWorkTests.cs" />
+    <Compile Include="EntityTests.cs" />
+    <Compile Include="EventRecorderTests.cs" />
+    <Compile Include="InstanceEventRouterTests.cs" />
+    <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsingObjectInheritance.cs" />
+    <Compile Include="StaticEventRouterTests.cs" />
+    <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj">
-      <Project>{ae4066f5-55f5-4d0d-9ac1-853666822682}</Project>
-      <Name>AggregateSource.Testing.NUnit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj">
-      <Project>{75427b80-a024-4b5e-a7ca-f2e4736d9f8c}</Project>
-      <Name>AggregateSource.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
+    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

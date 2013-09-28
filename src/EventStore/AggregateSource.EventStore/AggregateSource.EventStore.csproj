@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B77C375-3883-40AD-B575-A18DB5E07C14}</ProjectGuid>
+    <ProjectGuid>{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleSource</RootNamespace>
-    <AssemblyName>SampleSource</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>AggregateSource.EventStore</RootNamespace>
+    <AssemblyName>AggregateSource.EventStore</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\AggregateSource.EventStore.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,29 +33,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\net40</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\net45</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\AggregateSource.EventStore.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,57 +43,68 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\net45\AggregateSource.EventStore.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.2.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+    <Reference Include="EventStore.ClientAPI, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\EventStore.Client.2.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Testing\AggregateSource.Testing.NUnit\Content\NUnitAssertionExtensions.cs">
-      <Link>NUnitAssertionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\SharedVersionInfo.cs">
+    <Compile Include="..\..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Testing\AggregateAsSystemUnderTest.cs" />
-    <Compile Include="Testing\UsingIdFromIEvent.cs" />
-    <Compile Include="UsingDomainEvents.cs" />
-    <Compile Include="UsingEntities.cs" />
+    <Compile Include="AsyncRepository.cs" />
+    <Compile Include="EventReaderConfiguration.cs" />
+    <Compile Include="IEventDeserializer.cs" />
+    <Compile Include="IStreamNameResolver.cs" />
+    <Compile Include="IStreamUserCredentialsResolver.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsingObjectInheritance.cs" />
+    <Compile Include="Resolvers\FixedStreamUserCredentialsResolver.cs" />
+    <Compile Include="Resolvers\NoStreamUserCredentialsResolver.cs" />
+    <Compile Include="Resolvers\PassThroughStreamNameResolver.cs" />
+    <Compile Include="SliceSize.cs" />
+    <Compile Include="Snapshots\AsyncSnapshotableRepository.cs" />
+    <Compile Include="Snapshots\AsyncSnapshotReader.cs" />
+    <Compile Include="Snapshots\IAsyncSnapshotReader.cs" />
+    <Compile Include="Snapshots\SnapshotableRepository.cs" />
+    <Compile Include="Snapshots\ISnapshotDeserializer.cs" />
+    <Compile Include="Snapshots\ISnapshotReader.cs" />
+    <Compile Include="Snapshots\Snapshot.cs" />
+    <Compile Include="Snapshots\SnapshotReader.cs" />
+    <Compile Include="Snapshots\SnapshotReaderConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj">
-      <Project>{ae4066f5-55f5-4d0d-9ac1-853666822682}</Project>
-      <Name>AggregateSource.Testing.NUnit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj">
-      <Project>{75427b80-a024-4b5e-a7ca-f2e4736d9f8c}</Project>
-      <Name>AggregateSource.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
+    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,7 +8,6 @@
   <Target Name="Run">
     <CallTarget Targets="DownloadOrUpdateNuGet;RestorePackages" />
     <MSBuild Projects="$(RootPath)\lib\geteventstore_integration.proj" />
-    <MSBuild Projects="$(RootPath)\lib\firebird_integration.proj" />
   </Target>
 
   <Target Name="DownloadOrUpdateNuGet">
