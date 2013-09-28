@@ -23,12 +23,12 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource.GEventStore provides integration with GetEventStore (http://geteventstore.com/).</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>Warning! The API is still in flux. Added support for GivenNone, ThenNone, Facts, and NUnit integration</releaseNotes>
+    <releaseNotes>Warning! The API is still in flux. Added support for Lokad-style aggregates.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.132" />
+        <dependency id="AggregateSource" version="0.0.133" />
         <dependency id="EventStore.Client" version="2.0.0" />
       </group>
     </dependencies>
