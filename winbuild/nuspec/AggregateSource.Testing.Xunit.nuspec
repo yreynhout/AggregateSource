@@ -28,24 +28,24 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Testing" version="0.0.138" />
+        <dependency id="AggregateSource.Testing" version="0.0.140" />
         <dependency id="Xunit" version="1.9.2" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Testing" version="0.0.138" />
+        <dependency id="AggregateSource.Testing" version="0.0.140" />
         <dependency id="Xunit" version="1.9.2" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\src\AggregateSource.Testing.Xunit\Content\*.cs" target="content" />
-    <file src="output\net40\AggregateSource.Testing.Xunit.dll" target="lib\net40\AggregateSource.Testing.Xunit.dll" />
-    <file src="output\net40\AggregateSource.Testing.Xunit.pdb" target="lib\net40\AggregateSource.Testing.Xunit.pdb" />
-    <file src="output\net40\AggregateSource.Testing.Xunit.xml" target="lib\net40\AggregateSource.Testing.Xunit.xml" />
-    <file src="output\net45\AggregateSource.Testing.Xunit.dll" target="lib\net45\AggregateSource.Testing.Xunit.dll" />
-    <file src="output\net45\AggregateSource.Testing.Xunit.pdb" target="lib\net45\AggregateSource.Testing.Xunit.pdb" />
-    <file src="output\net45\AggregateSource.Testing.Xunit.xml" target="lib\net45\AggregateSource.Testing.Xunit.xml" />
-    <file src="..\src\AggregateSource.Testing.NUnit\*.cs" target="src\AggregateSource.Testing.Xunit" />
-    <file src="..\src\AggregateSource.Testing.Xunit\Properties\*.cs" target="src\AggregateSource.Testing.Xunit\Properties" />
+    <file src="..\..\src\AggregateSource.Testing.Xunit\Content\*.cs" target="content" />
+    <file src="..\output\net40\AggregateSource.Testing.Xunit.dll" target="lib\net40\AggregateSource.Testing.Xunit.dll" />
+    <file src="..\output\net40\AggregateSource.Testing.Xunit.pdb" target="lib\net40\AggregateSource.Testing.Xunit.pdb" />
+    <file src="..\output\net40\AggregateSource.Testing.Xunit.xml" target="lib\net40\AggregateSource.Testing.Xunit.xml" />
+    <file src="..\output\net45\AggregateSource.Testing.Xunit.dll" target="lib\net45\AggregateSource.Testing.Xunit.dll" />
+    <file src="..\output\net45\AggregateSource.Testing.Xunit.pdb" target="lib\net45\AggregateSource.Testing.Xunit.pdb" />
+    <file src="..\output\net45\AggregateSource.Testing.Xunit.xml" target="lib\net45\AggregateSource.Testing.Xunit.xml" />
+    <file src="..\..\src\AggregateSource.Testing.NUnit\*.cs" target="src\AggregateSource.Testing.Xunit" />
+    <file src="..\..\src\AggregateSource.Testing.Xunit\Properties\*.cs" target="src\AggregateSource.Testing.Xunit\Properties" />
   </files>
 </package>

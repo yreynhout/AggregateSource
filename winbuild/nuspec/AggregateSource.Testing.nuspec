@@ -28,28 +28,28 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource" version="0.0.138" />
+        <dependency id="AggregateSource" version="0.0.140" />
         <dependency id="CompareNETObjects" version="1.7.2.0" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.138" />
+        <dependency id="AggregateSource" version="0.0.140" />
         <dependency id="CompareNETObjects" version="1.7.2.0" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="output\net40\AggregateSource.Testing.dll" target="lib\net40\AggregateSource.Testing.dll" />
-    <file src="output\net40\AggregateSource.Testing.pdb" target="lib\net40\AggregateSource.Testing.pdb" />
-    <file src="output\net40\AggregateSource.Testing.xml" target="lib\net40\AggregateSource.Testing.xml" />
-    <file src="output\net45\AggregateSource.Testing.dll" target="lib\net45\AggregateSource.Testing.dll" />
-    <file src="output\net45\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
-    <file src="output\net45\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
-    <file src="..\src\AggregateSource.Testing\*.cs" target="src\AggregateSource.Testing" />
-    <file src="..\src\AggregateSource.Testing\Comparers\*.cs" target="src\AggregateSource.Testing\Comparers" />
-    <file src="..\src\AggregateSource.Testing\Command\*.cs" target="src\AggregateSource.Testing\Command" />
-    <file src="..\src\AggregateSource.Testing\Constructor\*.cs" target="src\AggregateSource.Testing\Constructor" />
-    <file src="..\src\AggregateSource.Testing\Factory\*.cs" target="src\AggregateSource.Testing\Factory" />
-    <file src="..\src\AggregateSource.Testing\Query\*.cs" target="src\AggregateSource.Testing\Query" />
-    <file src="..\src\AggregateSource.Testing\Properties\*.cs" target="src\AggregateSource.Testing\Properties" />
+    <file src="..\output\net40\AggregateSource.Testing.dll" target="lib\net40\AggregateSource.Testing.dll" />
+    <file src="..\output\net40\AggregateSource.Testing.pdb" target="lib\net40\AggregateSource.Testing.pdb" />
+    <file src="..\output\net40\AggregateSource.Testing.xml" target="lib\net40\AggregateSource.Testing.xml" />
+    <file src="..\output\net45\AggregateSource.Testing.dll" target="lib\net45\AggregateSource.Testing.dll" />
+    <file src="..\output\net45\AggregateSource.Testing.pdb" target="lib\net45\AggregateSource.Testing.pdb" />
+    <file src="..\output\net45\AggregateSource.Testing.xml" target="lib\net45\AggregateSource.Testing.xml" />
+    <file src="..\..\src\AggregateSource.Testing\*.cs" target="src\AggregateSource.Testing" />
+    <file src="..\..\src\AggregateSource.Testing\Comparers\*.cs" target="src\AggregateSource.Testing\Comparers" />
+    <file src="..\..\src\AggregateSource.Testing\Command\*.cs" target="src\AggregateSource.Testing\Command" />
+    <file src="..\..\src\AggregateSource.Testing\Constructor\*.cs" target="src\AggregateSource.Testing\Constructor" />
+    <file src="..\..\src\AggregateSource.Testing\Factory\*.cs" target="src\AggregateSource.Testing\Factory" />
+    <file src="..\..\src\AggregateSource.Testing\Query\*.cs" target="src\AggregateSource.Testing\Query" />
+    <file src="..\..\src\AggregateSource.Testing\Properties\*.cs" target="src\AggregateSource.Testing\Properties" />
   </files>
 </package>

@@ -28,18 +28,18 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.138" />
+        <dependency id="AggregateSource" version="0.0.140" />
         <dependency id="EventStore.Client" version="2.0.0" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="output\net45\AggregateSource.EventStore.dll" target="lib\net45\AggregateSource.EventStore.dll" />
-    <file src="output\net45\AggregateSource.EventStore.pdb" target="lib\net45\AggregateSource.EventStore.pdb" />
-    <file src="output\net45\AggregateSource.EventStore.xml" target="lib\net45\AggregateSource.EventStore.xml" />
-    <file src="..\src\AggregateSource.EventStore\*.cs" target="src\AggregateSource.EventStore" />
-    <file src="..\src\AggregateSource.EventStore\Resolvers\*.cs" target="src\AggregateSource.EventStore\Resolvers" />
-    <file src="..\src\AggregateSource.EventStore\Snapshots\*.cs" target="src\AggregateSource.EventStore\Snapshots" />
-    <file src="..\src\AggregateSource.EventStore\Properties\*.cs" target="src\AggregateSource.EventStore\Properties" />
+    <file src="..\output\net45\AggregateSource.EventStore.dll" target="lib\net45\AggregateSource.EventStore.dll" />
+    <file src="..\output\net45\AggregateSource.EventStore.pdb" target="lib\net45\AggregateSource.EventStore.pdb" />
+    <file src="..\output\net45\AggregateSource.EventStore.xml" target="lib\net45\AggregateSource.EventStore.xml" />
+    <file src="..\..\src\AggregateSource.EventStore\*.cs" target="src\AggregateSource.EventStore" />
+    <file src="..\..\src\AggregateSource.EventStore\Resolvers\*.cs" target="src\AggregateSource.EventStore\Resolvers" />
+    <file src="..\..\src\AggregateSource.EventStore\Snapshots\*.cs" target="src\AggregateSource.EventStore\Snapshots" />
+    <file src="..\..\src\AggregateSource.EventStore\Properties\*.cs" target="src\AggregateSource.EventStore\Properties" />
   </files>
 </package>

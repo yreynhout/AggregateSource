@@ -28,13 +28,13 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
   </metadata>
   <files>
-    <file src="output\net40\AggregateSource.dll" target="lib\net40\AggregateSource.dll" />
-    <file src="output\net40\AggregateSource.pdb" target="lib\net40\AggregateSource.pdb" />
-    <file src="output\net40\AggregateSource.xml" target="lib\net40\AggregateSource.xml" />
-    <file src="output\net45\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
-    <file src="output\net45\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
-    <file src="output\net45\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
-    <file src="..\src\AggregateSource\*.cs" target="src\AggregateSource" />
-    <file src="..\src\AggregateSource\Properties\*.cs" target="src\AggregateSource\Properties" />
+    <file src="..\output\net40\AggregateSource.dll" target="lib\net40\AggregateSource.dll" />
+    <file src="..\output\net40\AggregateSource.pdb" target="lib\net40\AggregateSource.pdb" />
+    <file src="..\output\net40\AggregateSource.xml" target="lib\net40\AggregateSource.xml" />
+    <file src="..\output\net45\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
+    <file src="..\output\net45\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
+    <file src="..\output\net45\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />
+    <file src="..\..\src\AggregateSource\*.cs" target="src\AggregateSource" />
+    <file src="..\..\src\AggregateSource\Properties\*.cs" target="src\AggregateSource\Properties" />
   </files>
 </package>
