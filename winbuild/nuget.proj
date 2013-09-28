@@ -45,10 +45,10 @@
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
-      XmlFileName="AggregateSource.GEventStore.nuspec"
+      XmlFileName="AggregateSource.EventStore.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
       Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack AggregateSource.GEventStore.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <Exec Command='$(NuGetExe) pack AggregateSource.EventStore.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
   </Target>
 
   <Target Name="Push">
@@ -71,7 +71,7 @@
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.GEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
   </Target>
 </Project>

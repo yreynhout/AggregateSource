@@ -29,9 +29,9 @@
         $(SourcePath)\StreamSource.Tests\StreamSource.Tests.csproj;
         $(SourcePath)\StreamSource.FirebirdClient\StreamSource.FirebirdClient.csproj;
         $(SourcePath)\StreamSource.FirebirdClient.Tests\StreamSource.FirebirdClient.Tests.csproj;
-        $(SourcePath)\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj;
-        $(SourcePath)\AggregateSource.GEventStore.Tests\AggregateSource.GEventStore.Tests.csproj;
-        $(SourcePath)\AggregateSource.GEventStore.Tests.Integrated\AggregateSource.GEventStore.Tests.Integrated.csproj"
+        $(SourcePath)\AggregateSource.EventStore\AggregateSource.EventStore.csproj;
+        $(SourcePath)\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj;
+        $(SourcePath)\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj"
       BuildInParallel="true" 
       Properties="Configuration=Release 4.5;OutputPath=$(MSBuildProjectDirectory)\output\net45"
       UnloadProjectsOnCompletion="true"/>
