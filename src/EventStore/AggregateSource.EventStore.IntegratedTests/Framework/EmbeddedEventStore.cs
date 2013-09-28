@@ -14,9 +14,7 @@ namespace AggregateSource.EventStore.Framework
             Node = node;
             Credentials = new UserCredentials("admin", "changeit");
             var connection = EventStoreConnection.Create(
-                ConnectionSettings.Create().EnableVerboseLogging().
-                    SetDefaultUserCredentials(Credentials).
-                    UseConsoleLogger(),
+                ConnectionSettings.Create().SetDefaultUserCredentials(Credentials),
                 node.TcpEndPoint);
             connection.Connect();
             Connection = connection;
