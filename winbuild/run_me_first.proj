@@ -19,11 +19,19 @@
     <ItemGroup>
       <BuildPackageConfigs Include="$(RootPath)\winbuild\packages.config" />
       <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
-      <SourcePackageConfigs Include="$(RootPath)\src\**\packages.config" />
+      <SourceCorePackageConfigs Include="$(RootPath)\src\Core\**\packages.config" />
+      <SourceEventStorePackageConfigs Include="$(RootPath)\src\EventStore\**\packages.config" />
+      <SourceTestingPackageConfigs Include="$(RootPath)\src\Testing\**\packages.config" />
+      <SourceSampleSourcePackageConfigs Include="$(RootPath)\src\SampleSource\packages.config" />
+      <SourceReactivePackageConfigs Include="$(RootPath)\src\Reactive\**\packages.config" />
     </ItemGroup>
     <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\winbuild\packages"' />
     <Exec Command='$(NuGetExe) install %(LibPackageConfigs.Identity) -o "$(RootPath)\lib\packages"' />
-    <Exec Command='$(NuGetExe) install %(SourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceCorePackageConfigs.Identity) -o "$(RootPath)\src\Core\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceEventStorePackageConfigs.Identity) -o "$(RootPath)\src\EventStore\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceTestingPackageConfigs.Identity) -o "$(RootPath)\src\Testing\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceReactivePackageConfigs.Identity) -o "$(RootPath)\src\Reactive\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceSampleSourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
   </Target>
 
   <!-- Copied from NuGet.targets -->
