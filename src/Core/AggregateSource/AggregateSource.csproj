@@ -66,6 +66,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Aggregate.cs" />
+    <Compile Include="AggregateBuilder.cs" />
     <Compile Include="AggregateNotFoundException.cs" />
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="AggregateRootEntityOfTAggregateState.cs" />

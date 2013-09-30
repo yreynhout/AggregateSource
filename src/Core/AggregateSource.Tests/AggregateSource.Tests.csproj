@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AggregateBuilderTests.cs" />
     <Compile Include="AggregateRootEntityOfTAggregateStateTests.cs" />
     <Compile Include="AggregateStateTests.cs" />
     <Compile Include="AggregateStubs.cs" />

@@ -36,6 +36,22 @@ namespace AggregateSource
                     () => new Aggregate(Guid.NewGuid().ToString(), 0, null));
         }
 
+        [Test]
+        public void ToBuilderReturnsExpectedResult()
+        {
+            const string identifier = "identifier";
+            const int expectedVersion = 123;
+            var root = AggregateRootEntityStub.Factory();
+            var sut = new Aggregate(identifier, expectedVersion, root);
+
+            var result = sut.ToBuilder();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Identifier, Is.EqualTo(identifier));
+            Assert.That(result.ExpectedVersion, Is.EqualTo(expectedVersion));
+            Assert.That(result.Root, Is.SameAs(root));
+        }
+
         static class AggregateTestsValueSource
         {
             public static IEnumerable<string> IdSource
