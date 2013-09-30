@@ -1,4 +1,4 @@
-﻿namespace AggregateSource.GEventStore.Framework
+﻿namespace AggregateSource.EventStore.Framework
 {
     public static class EventReaderFactory
     {

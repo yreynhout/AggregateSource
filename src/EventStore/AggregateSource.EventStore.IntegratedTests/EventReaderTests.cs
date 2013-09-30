@@ -1,8 +1,8 @@
 ﻿using System;
-using AggregateSource.GEventStore.Framework;
+using AggregateSource.EventStore.Framework;
 using NUnit.Framework;
 
-namespace AggregateSource.GEventStore
+namespace AggregateSource.EventStore
 {
     namespace EventReaderTests
     {

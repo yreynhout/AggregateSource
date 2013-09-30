@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EventStore.ClientAPI;
 
-namespace AggregateSource.GEventStore
+namespace AggregateSource.EventStore
 {
     /// <summary>
     /// Represents the reading of events associated with an aggregate's underlying stream.

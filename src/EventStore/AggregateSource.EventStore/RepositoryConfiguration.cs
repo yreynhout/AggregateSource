@@ -1,4 +1,4 @@
-﻿namespace AggregateSource.GEventStore
+﻿namespace AggregateSource.EventStore
 {
     /// <summary>
     /// Represents configuration settings used during reading from a repository.

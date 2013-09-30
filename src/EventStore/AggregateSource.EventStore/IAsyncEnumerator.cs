@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace AggregateSource.GEventStore
+namespace AggregateSource.EventStore
 {
     /// <summary>
     /// Supports a simple iteration over an asynchronous generic collection.

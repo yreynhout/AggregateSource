@@ -1,7 +1,7 @@
 ﻿using System;
 using EventStore.ClientAPI;
 
-namespace AggregateSource.GEventStore
+namespace AggregateSource.EventStore
 {
     public class EventsSlice
     {

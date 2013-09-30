@@ -1,4 +1,4 @@
-﻿namespace AggregateSource.GEventStore
+﻿namespace AggregateSource.EventStore
 {
     /// <summary>
     /// Represents the asynchronous reading of events associated with an aggregate's underlying stream.

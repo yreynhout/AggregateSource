@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 
-namespace AggregateSource.GEventStore
+namespace AggregateSource.EventStore
 {
     /// <summary>
     /// Represents the reading of events associated with an aggregate's underlying stream.
