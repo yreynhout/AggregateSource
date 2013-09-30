@@ -17,11 +17,11 @@ It's well suited for those scenarios where multiple aggregates need to collabora
 
 ## Core
 
-Contains the core types that you will want interact with when building your domain model. A more thorough explanation can be found [here](src/AggregateSource/README.md)
+Contains the core types that you will want interact with when building your domain model. A more thorough explanation can be found [here](src/Core/AggregateSource/README.md)
 
 ## Testing
 
-Helps you write test specifications, using a simple, codified statechart and a fluent syntax.  A more thorough explanation can be found [here](src/AggregateSource.Testing/README.md)
+Helps you write test specifications, using a simple, codified statechart and a fluent syntax.  A more thorough explanation can be found [here](src/Testing/AggregateSource.Testing/README.md)
 
 ## License
 
