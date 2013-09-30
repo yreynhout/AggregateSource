@@ -109,13 +109,13 @@ namespace SampleSource.Testing
             void When(AddedNewItemToTodoList @event)
             {
                 var item = new TodoListItem(Apply);
-                item.Play(@event);
+                item.Route(@event);
                 _items.Add(item);
             }
 
             void When(DescribedTodoListItem @event)
             {
-                _items.Find(item => item.Id == @event.Id).Play(@event);
+                _items.Find(item => item.Id == @event.Id).Route(@event);
             }
         }
 

@@ -18,30 +18,27 @@
     <MSBuild Projects="$(MSBuildProjectDirectory)\info.proj" />
     <MSBuild 
       Projects="
-        $(SourcePath)\AggregateSource\AggregateSource.csproj;
-        $(SourcePath)\AggregateSource.Testing\AggregateSource.Testing.csproj;
-        $(SourcePath)\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
-        $(SourcePath)\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
-        $(SourcePath)\AggregateSource.Tests\AggregateSource.Tests.csproj; 
+        $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
+        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj; 
         $(SourcePath)\SampleSource\SampleSource.csproj;
-        $(SourcePath)\StreamSource\StreamSource.csproj;
-        $(SourcePath)\StreamSource.Tests\StreamSource.Tests.csproj;
-        $(SourcePath)\StreamSource.FirebirdClient\StreamSource.FirebirdClient.csproj;
-        $(SourcePath)\StreamSource.FirebirdClient.Tests\StreamSource.FirebirdClient.Tests.csproj;
-        $(SourcePath)\AggregateSource.GEventStore\AggregateSource.GEventStore.csproj;
-        $(SourcePath)\AggregateSource.GEventStore.Tests\AggregateSource.GEventStore.Tests.csproj;
-        $(SourcePath)\AggregateSource.GEventStore.Tests.Integrated\AggregateSource.GEventStore.Tests.Integrated.csproj"
+        $(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.csproj;
+        $(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj;
+        $(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj"
       BuildInParallel="true" 
       Properties="Configuration=Release 4.5;OutputPath=$(MSBuildProjectDirectory)\output\net45"
       UnloadProjectsOnCompletion="true"/>
     <MSBuild 
       Projects="
-        $(SourcePath)\AggregateSource\AggregateSource.csproj;
-        $(SourcePath)\AggregateSource.Testing\AggregateSource.Testing.csproj;
-        $(SourcePath)\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
-        $(SourcePath)\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
-        $(SourcePath)\AggregateSource.Tests\AggregateSource.Tests.csproj; 
-        $(SourcePath)\SampleSource\SampleSource.csproj;"
+        $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
+        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj;"
       BuildInParallel="true" 
       Properties="Configuration=Release 4.0;OutputPath=$(MSBuildProjectDirectory)\output\net40"
       UnloadProjectsOnCompletion="true"/>

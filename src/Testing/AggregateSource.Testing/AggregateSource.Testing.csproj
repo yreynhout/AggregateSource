@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AggregateSource.Testing</RootNamespace>
+    <AssemblyName>AggregateSource.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\AggregateSource.Testing.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\AggregateSource.Testing.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\net40</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\net40\AggregateSource.Testing.xml</DocumentationFile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\net45</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\net45\AggregateSource.Testing.xml</DocumentationFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedVersionInfo.cs">
+      <Link>Properties\SharedVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Catch.cs" />
+    <Compile Include="CommandScenarioFor.cs" />
+    <Compile Include="Command\AggregateCommandGivenNoneStateBuilder.cs" />
+    <Compile Include="Command\AggregateCommandGivenStateBuilder.cs" />
+    <Compile Include="Command\AggregateCommandThenNoneStateBuilder.cs" />
+    <Compile Include="Command\AggregateCommandThenStateBuilder.cs" />
+    <Compile Include="Command\AggregateCommandThrowStateBuilder.cs" />
+    <Compile Include="Command\AggregateCommandWhenStateBuilder.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedEventComparer.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparer.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedResultComparer.cs" />
+    <Compile Include="ConstructorScenarioFor.cs" />
+    <Compile Include="Constructor\AggregateConstructorThenStateBuilder.cs" />
+    <Compile Include="Constructor\AggregateConstructorThrowStateBuilder.cs" />
+    <Compile Include="EventComparisonDifference.cs" />
+    <Compile Include="EventCentricAggregateCommandTestResult.cs" />
+    <Compile Include="EventCentricAggregateCommandTestRunner.cs" />
+    <Compile Include="EventCentricAggregateCommandTestSpecification.cs" />
+    <Compile Include="EventCentricAggregateConstructorTestResult.cs" />
+    <Compile Include="EventCentricAggregateConstructorTestRunner.cs" />
+    <Compile Include="EventCentricAggregateConstructorTestSpecification.cs" />
+    <Compile Include="EventCentricAggregateFactoryTestResult.cs" />
+    <Compile Include="EventCentricAggregateFactoryTestRunner.cs" />
+    <Compile Include="EventCentricAggregateFactoryTestSpecification.cs" />
+    <Compile Include="EventCentricAggregateQueryTestResult.cs" />
+    <Compile Include="WrappedEventComparerEqualityComparer.cs" />
+    <Compile Include="ExceptionCentricAggregateCommandTestResult.cs" />
+    <Compile Include="ExceptionCentricAggregateCommandTestRunner.cs" />
+    <Compile Include="ExceptionCentricAggregateCommandTestSpecification.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestResult.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestRunner.cs" />
+    <Compile Include="ExceptionCentricAggregateConstructorTestSpecification.cs" />
+    <Compile Include="ExceptionCentricAggregateFactoryTestResult.cs" />
+    <Compile Include="ExceptionCentricAggregateFactoryTestRunner.cs" />
+    <Compile Include="ExceptionCentricAggregateFactoryTestSpecification.cs" />
+    <Compile Include="ExceptionCentricAggregateQueryTestResult.cs" />
+    <Compile Include="ExceptionCentricAggregateQueryTestRunner.cs" />
+    <Compile Include="ExceptionCentricAggregateQueryTestSpecification.cs" />
+    <Compile Include="ExceptionComparisonDifference.cs" />
+    <Compile Include="FactoryScenarioFor.cs" />
+    <Compile Include="Factory\AggregateFactoryGivenNoneStateBuilder.cs" />
+    <Compile Include="Factory\AggregateFactoryGivenStateBuilder.cs" />
+    <Compile Include="Factory\AggregateFactoryThenNoneStateBuilder.cs" />
+    <Compile Include="Factory\AggregateFactoryThenStateBuilder.cs" />
+    <Compile Include="Factory\AggregateFactoryThrowStateBuilder.cs" />
+    <Compile Include="Factory\AggregateFactoryWhenStateBuilder.cs" />
+    <Compile Include="IAggregateCommandGivenNoneStateBuilder.cs" />
+    <Compile Include="IAggregateCommandGivenStateBuilder.cs" />
+    <Compile Include="IAggregateCommandInitialStateBuilder.cs" />
+    <Compile Include="IAggregateCommandThenNoneStateBuilder.cs" />
+    <Compile Include="IAggregateCommandThenStateBuilder.cs" />
+    <Compile Include="IAggregateCommandThrowStateBuilder.cs" />
+    <Compile Include="IAggregateCommandWhenStateBuilder.cs" />
+    <Compile Include="IAggregateConstructorThenStateBuilder.cs" />
+    <Compile Include="IAggregateConstructorThrowStateBuilder.cs" />
+    <Compile Include="IAggregateConstructorWhenStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryGivenNoneStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryGivenStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryInitialStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryThenNoneStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryThenStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryThrowStateBuilder.cs" />
+    <Compile Include="IAggregateFactoryWhenStateBuilder.cs" />
+    <Compile Include="IAggregateQueryGivenNoneStateBuilder.cs" />
+    <Compile Include="IAggregateQueryGivenStateBuilder.cs" />
+    <Compile Include="IAggregateQueryInitialStateBuilder.cs" />
+    <Compile Include="IAggregateQueryThenStateBuilder.cs" />
+    <Compile Include="IAggregateQueryThrowStateBuilder.cs" />
+    <Compile Include="IAggregateQueryWhenStateBuilder.cs" />
+    <Compile Include="IEventCentricAggregateCommandTestRunner.cs" />
+    <Compile Include="IEventCentricAggregateCommandTestSpecificationBuilder.cs" />
+    <Compile Include="IEventCentricAggregateConstructorTestRunner.cs" />
+    <Compile Include="IEventCentricAggregateConstructorTestSpecificationBuilder.cs" />
+    <Compile Include="IEventCentricAggregateFactoryTestRunner.cs" />
+    <Compile Include="IEventCentricAggregateFactoryTestSpecificationBuilder.cs" />
+    <Compile Include="IEventComparer.cs" />
+    <Compile Include="IExceptionCentricAggregateCommandTestRunner.cs" />
+    <Compile Include="IExceptionCentricAggregateCommandTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateConstructorTestRunner.cs" />
+    <Compile Include="IExceptionCentricAggregateConstructorTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateFactoryTestRunner.cs" />
+    <Compile Include="IExceptionCentricAggregateFactoryTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricAggregateQueryTestRunner.cs" />
+    <Compile Include="IExceptionCentricAggregateQueryTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionComparer.cs" />
+    <Compile Include="IResultCentricAggregateQueryTestRunner.cs" />
+    <Compile Include="IResultCentricAggregateQueryTestSpecificationBuilder.cs" />
+    <Compile Include="QueryScenarioFor.cs" />
+    <Compile Include="Query\AggregateQueryGivenNoneStateBuilder.cs" />
+    <Compile Include="Query\AggregateQueryGivenStateBuilder.cs" />
+    <Compile Include="Query\AggregateQueryThenStateBuilder.cs" />
+    <Compile Include="Query\AggregateQueryThrowStateBuilder.cs" />
+    <Compile Include="Query\AggregateQueryWhenStateBuilder.cs" />
+    <Compile Include="ResultCentricAggregateQueryTestRunner.cs" />
+    <Compile Include="ResultCentricAggregateQueryTestSpecification.cs" />
+    <Compile Include="ResultComparisonDifference.cs" />
+    <Compile Include="Fact.cs" />
+    <Compile Include="FactsBuilder.cs" />
+    <Compile Include="EventCentricTestResult.cs" />
+    <Compile Include="EventCentricTestSpecification.cs" />
+    <Compile Include="ExceptionCentricTestResult.cs" />
+    <Compile Include="ExceptionCentricTestSpecification.cs" />
+    <Compile Include="IEventCentricTestSpecificationBuilder.cs" />
+    <Compile Include="IEventCentricTestSpecificationRunner.cs" />
+    <Compile Include="IEventCentricTestSpecificationWriter.cs" />
+    <Compile Include="IExceptionCentricTestSpecificationBuilder.cs" />
+    <Compile Include="IExceptionCentricTestSpecificationRunner.cs" />
+    <Compile Include="IExceptionCentricTestSpecificationWriter.cs" />
+    <Compile Include="IScenarioGivenNoneStateBuilder.cs" />
+    <Compile Include="IScenarioGivenStateBuilder.cs" />
+    <Compile Include="IScenarioInitialStateBuilder.cs" />
+    <Compile Include="IScenarioThenNoneStateBuilder.cs" />
+    <Compile Include="IScenarioThenStateBuilder.cs" />
+    <Compile Include="IScenarioThrowStateBuilder.cs" />
+    <Compile Include="IScenarioWhenStateBuilder.cs" />
+    <Compile Include="Scenario.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="TestSpecificationBuilder.cs" />
+    <Compile Include="TestSpecificationBuilderContext.cs" />
+    <Compile Include="TestSpecificationTextWriter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestResultState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
