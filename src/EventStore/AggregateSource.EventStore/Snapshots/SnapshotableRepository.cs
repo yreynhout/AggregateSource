@@ -18,7 +18,7 @@ namespace AggregateSource.EventStore.Snapshots
         readonly ISnapshotReader _reader;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
+        /// Initializes a new instance of the <see cref="SnapshotableRepository{TAggregateRoot}"/> class.
         /// </summary>
         /// <param name="rootFactory">The aggregate root entity factory.</param>
         /// <param name="unitOfWork">The unit of work to interact with.</param>
