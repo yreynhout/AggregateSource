@@ -3,7 +3,7 @@ AggregateSource Testing
 
 Helps you write test specifications, using a simple, codified statechart and a fluent syntax.
 
-![Test specification - Statechart](../../docs/images/TestSpecificationStatechart.png)
+![Test specification - Statechart](../../../docs/images/TestSpecificationStatechart.png)
 
 This fluent syntax comes in two flavors (for now). One is targetted at writing collaborating aggregate test specifications, the other at writing single aggregate test specifications. This begs the question: "Which one should I use?". The simple answer is: "Whichever one is more appropriate for the situation.". "What kind of shitty answer is that?", you may wonder. If you have a "command messaging" layer sitting on top of your aggregates, I would urge you to use the collaborating approach. If you feel that the test permutations are getting too high, or that testing closer to the aggregate surface feels more natural, or you simply don't have any command messages (e.g. disconnected client or client-side domain model), you can use the single aggregate test specifications.
 
