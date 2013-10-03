@@ -21,7 +21,7 @@
       <LibPackageConfigs Include="$(RootPath)\lib\packages.config" />
       <SourceCorePackageConfigs Include="$(RootPath)\src\Core\**\packages.config" />
       <SourceEventStorePackageConfigs Include="$(RootPath)\src\EventStore\**\packages.config" />
-      <SourceEventStorePackageConfigs Include="$(RootPath)\src\NEventStore\**\packages.config" />
+      <SourceNEventStorePackageConfigs Include="$(RootPath)\src\NEventStore\**\packages.config" />
       <SourceTestingPackageConfigs Include="$(RootPath)\src\Testing\**\packages.config" />
       <SourceSampleSourcePackageConfigs Include="$(RootPath)\src\SampleSource\packages.config" />
       <SourceReactivePackageConfigs Include="$(RootPath)\src\Reactive\**\packages.config" />
