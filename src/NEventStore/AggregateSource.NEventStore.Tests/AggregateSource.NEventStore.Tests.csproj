@@ -61,11 +61,11 @@
     <Compile Include="Framework\Catch.cs" />
     <Compile Include="Framework\EventStub.cs" />
     <Compile Include="Framework\RepositoryScenarioBuilder.cs" />
+    <Compile Include="Framework\Snapshots\SnapshotableAggregateRootEntityStub.cs" />
     <Compile Include="Framework\Snapshots\SnapshotStateStub.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests.cs" />
-    <Compile Include="Snapshots\SnapshotableAggregateRootEntityStub.cs" />
     <Compile Include="Snapshots\SnapshotableRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>

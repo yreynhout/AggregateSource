@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AggregateSource.NEventStore.Framework.Snapshots;
+using AggregateSource.NEventStore.Snapshots;
 using NEventStore;
 
 namespace AggregateSource.NEventStore.Framework
@@ -9,7 +11,7 @@ namespace AggregateSource.NEventStore.Framework
         readonly IStoreEvents _eventStore;
         readonly List<Action<IStoreEvents>> _eventStoreSchedule;
         readonly List<Action<UnitOfWork>> _unitOfWorkSchedule;
-        readonly UnitOfWork _unitOfWork;
+        UnitOfWork _unitOfWork;
 
         public RepositoryScenarioBuilder()
         {
@@ -17,6 +19,12 @@ namespace AggregateSource.NEventStore.Framework
             _unitOfWork = new UnitOfWork();
             _eventStoreSchedule = new List<Action<IStoreEvents>>();
             _unitOfWorkSchedule = new List<Action<UnitOfWork>>();
+        }
+
+        public RepositoryScenarioBuilder WithUnitOfWork(UnitOfWork value)
+        {
+            _unitOfWork = value;
+            return this;
         }
 
         public RepositoryScenarioBuilder ScheduleAppendToStream(string stream, params object[] events)
@@ -32,6 +40,18 @@ namespace AggregateSource.NEventStore.Framework
                             _.Add(new EventMessage {Body = @event});
                         _.CommitChanges(Guid.NewGuid());
                     }
+                });
+            return this;
+        }
+
+        public RepositoryScenarioBuilder ScheduleSnapshots(params Snapshot[] snapshots)
+        {
+            if (snapshots == null) throw new ArgumentNullException("snapshots");
+            _eventStoreSchedule.Add(
+                store =>
+                {
+                    foreach (var snapshot in snapshots)
+                        store.Advanced.AddSnapshot(snapshot);
                 });
             return this;
         }
@@ -55,6 +75,15 @@ namespace AggregateSource.NEventStore.Framework
             ExecuteScheduledActions();
             return new Repository<AggregateRootEntityStub>(
                 AggregateRootEntityStub.Factory,
+                _unitOfWork,
+                _eventStore);
+        }
+
+        public SnapshotableRepository<SnapshotableAggregateRootEntityStub> BuildForSnapshotableRepository()
+        {
+            ExecuteScheduledActions();
+            return new SnapshotableRepository<SnapshotableAggregateRootEntityStub>(
+                SnapshotableAggregateRootEntityStub.Factory,
                 _unitOfWork,
                 _eventStore);
         }

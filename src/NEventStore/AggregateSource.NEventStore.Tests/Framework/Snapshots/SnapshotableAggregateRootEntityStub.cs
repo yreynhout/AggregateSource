@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using AggregateSource.NEventStore.Framework;
 
-namespace AggregateSource.NEventStore.Snapshots
+namespace AggregateSource.NEventStore.Framework.Snapshots
 {
     public class SnapshotableAggregateRootEntityStub : AggregateRootEntity, ISnapshotable
     {

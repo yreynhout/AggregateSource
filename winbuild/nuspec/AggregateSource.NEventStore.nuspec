@@ -14,14 +14,14 @@ using this tokenized nuspec file.
 -->
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>AggregateSource.EventStore</id>
+    <id>AggregateSource.NEventStore</id>
     <version>0.0.0</version>
     <authors>Yves Reynhout</authors>
     <owners>Yves Reynhout</owners>
-    <title>AggregateSource.EventStore</title>
+    <title>AggregateSource.NEventStore</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
-    <description>AggregateSource.EventStore provides integration with GetEventStore (http://geteventstore.com/).</description>
+    <description>AggregateSource.NEventStore provides integration with NEventStore (http://geteventstore.com/).</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
     <releaseNotes>Warning! The API is still in flux. Added support for NEventStore.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
@@ -29,17 +29,19 @@ using this tokenized nuspec file.
     <dependencies>
       <group targetFramework=".NETFramework4.5">
         <dependency id="AggregateSource" version="0.0.156" />
-        <dependency id="EventStore.Client" version="2.0.0" />
+        <dependency id="NEventStore" version="5.0.0.24" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\output\net45\AggregateSource.EventStore.dll" target="lib\net45\AggregateSource.EventStore.dll" />
-    <file src="..\output\net45\AggregateSource.EventStore.pdb" target="lib\net45\AggregateSource.EventStore.pdb" />
-    <file src="..\output\net45\AggregateSource.EventStore.xml" target="lib\net45\AggregateSource.EventStore.xml" />
-    <file src="..\..\src\EventStore\AggregateSource.EventStore\*.cs" target="src\AggregateSource.EventStore" />
-    <file src="..\..\src\EventStore\AggregateSource.EventStore\Resolvers\*.cs" target="src\AggregateSource.EventStore\Resolvers" />
-    <file src="..\..\src\EventStore\AggregateSource.EventStore\Snapshots\*.cs" target="src\AggregateSource.EventStore\Snapshots" />
-    <file src="..\..\src\EventStore\AggregateSource.EventStore\Properties\*.cs" target="src\AggregateSource.EventStore\Properties" />
+    <file src="..\output\net40\AggregateSource.NEventStore.dll" target="lib\net40\AggregateSource.NEventStore.dll" />
+    <file src="..\output\net40\AggregateSource.NEventStore.pdb" target="lib\net40\AggregateSource.NEventStore.pdb" />
+    <file src="..\output\net40\AggregateSource.NEventStore.xml" target="lib\net40\AggregateSource.NEventStore.xml" />
+    <file src="..\output\net45\AggregateSource.NEventStore.dll" target="lib\net45\AggregateSource.NEventStore.dll" />
+    <file src="..\output\net45\AggregateSource.NEventStore.pdb" target="lib\net45\AggregateSource.NEventStore.pdb" />
+    <file src="..\output\net45\AggregateSource.NEventStore.xml" target="lib\net45\AggregateSource.NEventStore.xml" />
+    <file src="..\..\src\NEventStore\AggregateSource.NEventStore\*.cs" target="src\AggregateSource.NEventStore" />
+    <file src="..\..\src\NEventStore\AggregateSource.NEventStore\Snapshots\*.cs" target="src\AggregateSource.NEventStore\Snapshots" />
+    <file src="..\..\src\NEventStore\AggregateSource.NEventStore\Properties\*.cs" target="src\AggregateSource.NEventStore\Properties" />
   </files>
 </package>

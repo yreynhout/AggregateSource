@@ -27,7 +27,9 @@
         $(SourcePath)\SampleSource\SampleSource.csproj;
         $(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.csproj;
         $(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj;
-        $(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj"
+        $(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;"
       BuildInParallel="true" 
       Properties="Configuration=Release 4.5;OutputPath=$(MSBuildProjectDirectory)\output\net45"
       UnloadProjectsOnCompletion="true"/>
@@ -38,7 +40,9 @@
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
-        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj;"
+        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;"
       BuildInParallel="true" 
       Properties="Configuration=Release 4.0;OutputPath=$(MSBuildProjectDirectory)\output\net40"
       UnloadProjectsOnCompletion="true"/>
