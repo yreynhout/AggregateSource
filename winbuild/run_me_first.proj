@@ -26,6 +26,9 @@
       <SourceSampleSourcePackageConfigs Include="$(RootPath)\src\SampleSource\packages.config" />
       <SourceReactivePackageConfigs Include="$(RootPath)\src\Reactive\**\packages.config" />
     </ItemGroup>
+    <Exec Command='$(NuGetExe) sources Remove -Name "NEventStore CI package source"' ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) sources Add -Name "NEventStore CI package source" -Source "https://www.myget.org/F/neventstore-ci/"'
+          ContinueOnError="True" />
     <Exec Command='$(NuGetExe) install %(BuildPackageConfigs.Identity) -o "$(RootPath)\winbuild\packages"' />
     <Exec Command='$(NuGetExe) install %(LibPackageConfigs.Identity) -o "$(RootPath)\lib\packages"' />
     <Exec Command='$(NuGetExe) install %(SourceCorePackageConfigs.Identity) -o "$(RootPath)\src\Core\packages"' />
