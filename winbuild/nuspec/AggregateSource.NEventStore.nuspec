@@ -21,14 +21,14 @@ using this tokenized nuspec file.
     <title>AggregateSource.NEventStore</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
-    <description>AggregateSource.NEventStore provides integration with NEventStore (http://geteventstore.com/).</description>
+    <description>AggregateSource.NEventStore provides integration with NEventStore (https://github.com/NEventStore/NEventStore).</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
     <releaseNotes>Warning! The API is still in flux. Added support for NEventStore.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource" version="0.0.161" />
+        <dependency id="AggregateSource" version="0.0.162" />
         <dependency id="NEventStore" version="5.0.0.24" />
       </group>
     </dependencies>
