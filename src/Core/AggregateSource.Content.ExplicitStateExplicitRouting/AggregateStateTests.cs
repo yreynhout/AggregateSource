@@ -12,49 +12,49 @@ namespace AggregateSource
             [Test]
             public void IsInstanceEventRouter()
             {
-                Assert.That(new AnyInstanceAggregateState(), Is.InstanceOf<IInstanceEventRouter>());
+                Assert.That(new AnyInstanceEntityState(), Is.InstanceOf<IInstanceEventRouter>());
             }
 
             [Test]
             public void RouteEventCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new RouteWithNullEventAggregateState());
+                Assert.Throws<ArgumentNullException>(() => new RouteWithNullEventEntityState());
             }
 
             [Test]
             public void RegisterHandlerCanNotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateState());
+                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerEntityState());
             }
 
             [Test]
             public void RegisterHandlerCanOnlyBeCalledOncePerEventType()
             {
-                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceAggregateState());
+                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceEntityState());
             }
         }
 
-        class AnyInstanceAggregateState : AggregateState {}
+        class AnyInstanceEntityState : EntityState {}
 
-        class RouteWithNullEventAggregateState : AggregateState
+        class RouteWithNullEventEntityState : EntityState
         {
-            public RouteWithNullEventAggregateState()
+            public RouteWithNullEventEntityState()
             {
                 Route(null);
             }
         }
 
-        class RegisterNullHandlerAggregateState : AggregateState
+        class RegisterNullHandlerEntityState : EntityState
         {
-            public RegisterNullHandlerAggregateState()
+            public RegisterNullHandlerEntityState()
             {
                 Register<object>(null);
             }
         }
 
-        class RegisterSameEventHandlerTwiceAggregateState : AggregateState
+        class RegisterSameEventHandlerTwiceEntityState : EntityState
         {
-            public RegisterSameEventHandlerTwiceAggregateState()
+            public RegisterSameEventHandlerTwiceEntityState()
             {
                 Register<object>(o => { });
                 Register<object>(o => { });
@@ -64,12 +64,12 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithHandlers
         {
-            private WithHandlersAggregateState _sut;
+            private WithHandlersEntityState _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new WithHandlersAggregateState();
+                _sut = new WithHandlersEntityState();
             }
 
             [Test]
@@ -84,9 +84,9 @@ namespace AggregateSource
             }
         }
 
-        class WithHandlersAggregateState : AggregateState
+        class WithHandlersEntityState : EntityState
         {
-            public WithHandlersAggregateState()
+            public WithHandlersEntityState()
             {
                 RoutedEvents = new List<object>();
                 Register<object>(@event =>
@@ -103,12 +103,12 @@ namespace AggregateSource
         [TestFixture]
         public class WithInstanceWithoutHandlers
         {
-            private WithoutHandlersAggregateState _sut;
+            private WithoutHandlersEntityState _sut;
 
             [SetUp]
             public void SetUp()
             {
-                _sut = new WithoutHandlersAggregateState();
+                _sut = new WithoutHandlersEntityState();
             }
 
             [Test]
@@ -118,7 +118,7 @@ namespace AggregateSource
             }
         }
 
-        class WithoutHandlersAggregateState : AggregateState
+        class WithoutHandlersEntityState : EntityState
         {
         }
     }

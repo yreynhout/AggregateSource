@@ -3,17 +3,22 @@
 namespace AggregateSource
 {
     /// <summary>
-    /// Base class for aggregate state objects that need some basic infrastructure for routing events to handlers.
+    /// Base class for aggregate entities that need some basic infrastructure for tracking state changes on their aggregate root entity.
     /// </summary>
-    public abstract class AggregateState : IInstanceEventRouter
+    public abstract class Entity : IInstanceEventRouter
     {
+        readonly Action<object> _applier;
         readonly InstanceEventRouter _router;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateState"/> class.
+        /// Initializes a new instance of the <see cref="Entity"/> class.
         /// </summary>
-        protected AggregateState()
+        /// <param name="applier">The event player and recorder.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="applier"/> is null.</exception>
+        protected Entity(Action<object> applier)
         {
+            if (applier == null) throw new ArgumentNullException("applier");
+            _applier = applier;
             _router = new InstanceEventRouter();
         }
 
@@ -21,7 +26,7 @@ namespace AggregateSource
         /// Registers the state handler to be invoked when the specified event is applied.
         /// </summary>
         /// <typeparam name="TEvent">The type of the event to register the handler for.</typeparam>
-        /// <param name="handler">The handler.</param>
+        /// <param name="handler">The state handler.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
         protected void Register<TEvent>(Action<TEvent> handler)
         {
@@ -38,6 +43,16 @@ namespace AggregateSource
         {
             if (@event == null) throw new ArgumentNullException("event");
             _router.Route(@event);
+        }
+
+        /// <summary>
+        /// Applies the specified event to this instance and invokes the associated state handler.
+        /// </summary>
+        /// <param name="event">The event to apply.</param>
+        protected void Apply(object @event)
+        {
+            if (@event == null) throw new ArgumentNullException("event");
+            _applier(@event);
         }
     }
 }
