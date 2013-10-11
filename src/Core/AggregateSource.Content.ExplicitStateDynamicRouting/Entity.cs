@@ -5,13 +5,14 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate entities that need some basic infrastructure for tracking state changes on their aggregate root entity.
     /// </summary>
-    public abstract class Entity : IInstanceEventRouter
+    public abstract class Entity<TEntityState> : IInstanceEventRouter
+        where TEntityState : new()
     {
         readonly Action<object> _applier;
-        readonly InstanceEventRouter _router;
+        readonly TEntityState _state;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Entity"/> class.
+        /// Initializes a new instance of the <see cref="Entity{TEntityState}"/> class.
         /// </summary>
         /// <param name="applier">The event player and recorder.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="applier"/> is null.</exception>
@@ -19,19 +20,18 @@ namespace AggregateSource
         {
             if (applier == null) throw new ArgumentNullException("applier");
             _applier = applier;
-            _router = new InstanceEventRouter();
+            _state = new TEntityState();
         }
 
         /// <summary>
-        /// Registers the state handler to be invoked when the specified event is applied.
+        /// Gets the entity state associated with this instance.
         /// </summary>
-        /// <typeparam name="TEvent">The type of the event to register the handler for.</typeparam>
-        /// <param name="handler">The state handler.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
-        protected void Register<TEvent>(Action<TEvent> handler)
+        /// <value>
+        /// The entity state.
+        /// </value>
+        protected TEntityState State 
         {
-            if (handler == null) throw new ArgumentNullException("handler");
-            _router.ConfigureRoute(handler);
+          get { return _state; }
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace AggregateSource
         public void Route(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
-            _router.Route(@event);
+            ((dynamic)_state).When((dynamic)@event);
         }
 
         /// <summary>

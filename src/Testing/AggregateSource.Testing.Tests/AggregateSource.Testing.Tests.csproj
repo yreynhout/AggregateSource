@@ -53,17 +53,22 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects">
-      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.3.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CompareNETObjects.1.7.3.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Core\AggregateSource.Content.ExplicitRouting\AggregateRootEntity.cs">
+      <Link>AggregateRootEntity.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>

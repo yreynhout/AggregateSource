@@ -42,27 +42,24 @@ namespace AggregateSource
                 var sut = new ApplyInterceptorAggregateRootEntity();
                 Assert.That(sut.AfterApplyWasCalled, Is.True);
             }
-
-            [Test]
-            public void RegisterHandlerCanNotBeNull()
-            {
-                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
-            }
-
-            [Test]
-            public void RegisterHandlerCanOnlyBeCalledOncePerEventType()
-            {
-                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceAggregateRootEntity());
-            }
         }
 
-        class AnyAggregateRootEntity : AggregateRootEntity {}
+        class AnyAggregateRootEntity : AggregateRootEntity
+        {
+            protected override void Play(object @event)
+            {
+            }
+        }
 
         class InitializeWithNullEventsAggregateRootEntity : AggregateRootEntity
         {
             public InitializeWithNullEventsAggregateRootEntity()
             {
                 Initialize(null);
+            }
+
+            protected override void Play(object @event)
+            {
             }
         }
 
@@ -72,14 +69,26 @@ namespace AggregateSource
             {
                 Apply(null);
             }
+
+            protected override void Play(object @event)
+            {
+            }
         }
 
         class ApplyInterceptorAggregateRootEntity : AggregateRootEntity
         {
             public ApplyInterceptorAggregateRootEntity()
             {
-                Register<object>(o => { });
                 Apply(new object());
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic) this).When((dynamic) @event);
+            }
+
+            void When(object @event)
+            {
             }
 
             protected override void BeforeApply(object @event)
@@ -95,23 +104,6 @@ namespace AggregateSource
             }
 
             public bool AfterApplyWasCalled { get; private set; }
-        }
-
-        class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity
-        {
-            public RegisterNullHandlerAggregateRootEntity()
-            {
-                Register<object>(null);
-            }
-        }
-
-        class RegisterSameEventHandlerTwiceAggregateRootEntity : AggregateRootEntity
-        {
-            public RegisterSameEventHandlerTwiceAggregateRootEntity()
-            {
-                Register<object>(o => { });
-                Register<object>(o => { });
-            }
         }
 
         [TestFixture]
@@ -150,7 +142,17 @@ namespace AggregateSource
             }
         }
 
-        class PristineAggregateRootEntity : AggregateRootEntity {}
+        class PristineAggregateRootEntity : AggregateRootEntity
+        {
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+            }
+        }
 
         [TestFixture]
         public class WithInitializedInstance
@@ -193,6 +195,15 @@ namespace AggregateSource
             public InitializedAggregateRootEntity()
             {
                 Initialize(new[] {new object(), new object()});
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
 
@@ -243,6 +254,15 @@ namespace AggregateSource
                 {
                     Apply(change);
                 }
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
 
@@ -295,6 +315,15 @@ namespace AggregateSource
                     Apply(change);
                 }
             }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+            }
         }
 
         [TestFixture]
@@ -342,6 +371,15 @@ namespace AggregateSource
                     Apply(change);
                 }
                 ClearChanges();
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
 
@@ -392,6 +430,15 @@ namespace AggregateSource
                 }
                 ClearChanges();
             }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+            }
         }
 
         [TestFixture]
@@ -433,16 +480,22 @@ namespace AggregateSource
             public WithHandlersAggregateRootEntity()
             {
                 RoutedEvents = new List<object>();
-                Register<object>(@event =>
-                {
-                    HandlerCallCount++;
-                    RoutedEvents.Add(@event);
-                });
             }
 
             public void DoApply(object @event)
             {
                 Apply(@event);
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+                HandlerCallCount++;
+                RoutedEvents.Add(@event);
             }
 
             public int HandlerCallCount { get; private set; }
@@ -478,6 +531,15 @@ namespace AggregateSource
             public void DoApply(object @event)
             {
                 Apply(@event);
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
     }

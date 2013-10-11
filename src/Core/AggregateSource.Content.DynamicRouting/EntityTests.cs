@@ -33,22 +33,19 @@ namespace AggregateSource
                 var sut = new ApplyNullEventEntity();
                 Assert.Throws<ArgumentNullException>(sut.ApplyNull);
             }
-
-            [Test]
-            public void RegisterHandlerCanNotBeNull()
-            {
-                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerEntity());
-            }
-
-            [Test]
-            public void RegisterHandlerCanOnlyBeCalledOncePerEventType()
-            {
-                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceEntity());
-            }
         }
 
         class AnyInstanceEntity : Entity {
             public AnyInstanceEntity() : base(_ => { })
+            {
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
             {
             }
         }
@@ -56,6 +53,15 @@ namespace AggregateSource
         class UseNullApplierEntity : Entity
         {
             public UseNullApplierEntity() : base(null) {}
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+            }
         }
 
         class RouteWithNullEventEntity : Entity
@@ -63,6 +69,15 @@ namespace AggregateSource
             public RouteWithNullEventEntity() : base(_ => { })
             {
                 Route(null);
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
 
@@ -74,22 +89,14 @@ namespace AggregateSource
             {
                 Apply(null);
             }
-        }
 
-        class RegisterNullHandlerEntity : Entity
-        {
-            public RegisterNullHandlerEntity() : base(_ => { })
+            protected override void Play(object @event)
             {
-                Register<object>(null);
+                ((dynamic)this).When((dynamic)@event);
             }
-        }
 
-        class RegisterSameEventHandlerTwiceEntity : Entity
-        {
-            public RegisterSameEventHandlerTwiceEntity() : base(_ => { })
+            void When(object @event)
             {
-                Register<object>(o => { });
-                Register<object>(o => { });
             }
         }
 
@@ -136,16 +143,22 @@ namespace AggregateSource
                 : base(applier)
             {
                 RoutedEvents = new List<object>();
-                Register<object>(@event =>
-                {
-                    HandlerCallCount++;
-                    RoutedEvents.Add(@event);
-                });
             }
 
             public void DoApply(object @event)
             {
                 Apply(@event);
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
+                HandlerCallCount++;
+                RoutedEvents.Add(@event);
             }
 
             public int HandlerCallCount { get; private set; }
@@ -191,6 +204,15 @@ namespace AggregateSource
             public void DoApply(object @event)
             {
                 Apply(@event);
+            }
+
+            protected override void Play(object @event)
+            {
+                ((dynamic)this).When((dynamic)@event);
+            }
+
+            void When(object @event)
+            {
             }
         }
     }

@@ -56,8 +56,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,10 +71,14 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateRootEntityOfTAggregateStateTests.cs" />
+    <Compile Include="..\AggregateSource.Content.ExplicitRouting\AggregateRootEntity.cs">
+      <Link>AggregateRootEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\AggregateSource.Content.ExplicitRouting\Entity.cs">
+      <Link>Entity.cs</Link>
+    </Compile>
     <Compile Include="AggregateStubs.cs" />
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
-    <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="AggregateSourceExceptionTests.cs" />
     <Compile Include="AggregateTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
@@ -95,7 +100,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

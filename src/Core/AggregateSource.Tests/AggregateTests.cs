@@ -44,8 +44,8 @@ namespace AggregateSource
                 {
                     yield return Guid.Empty.ToString();
                     yield return Guid.NewGuid().ToString();
-                    yield return "Aggregate/" + Guid.Empty.ToString();
-                    yield return "Aggregate/" + Guid.NewGuid().ToString();
+                    yield return "Aggregate/" + Guid.Empty;
+                    yield return "Aggregate/" + Guid.NewGuid();
                 }
             }
         }

@@ -3,7 +3,7 @@
 namespace AggregateSource
 {
     /// <summary>
-    /// Base class for tracking aggregate meta data and its <see cref="AggregateRootEntity"/>.
+    /// Base class for tracking aggregate meta data and its <see cref="IAggregateRootEntity"/>.
     /// </summary>
     public class Aggregate
     {

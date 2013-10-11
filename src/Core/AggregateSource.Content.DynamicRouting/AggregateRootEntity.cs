@@ -60,10 +60,11 @@ namespace AggregateSource
         /// <param name="event">The event that has been applied.</param>
         protected virtual void AfterApply(object @event) {}
 
-        void Play(object @event)
-        {
-            ((dynamic)this).When((dynamic)@event);
-        }
+        /// <summary>
+        /// Hook that allows a dynamic dispatch of an event to a state handler.
+        /// </summary>
+        /// <param name="event">The event to re-/play.</param>
+        protected abstract void Play(object @event);
 
         void Record(object @event)
         {

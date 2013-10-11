@@ -47,9 +47,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EventStore.ClientAPI, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EventStore.ClientAPI, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EventStore.Client.2.0.0\lib\net40\EventStore.ClientAPI.dll</HintPath>
+      <HintPath>..\packages\EventStore.Client.2.0.2\lib\net40\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="EventStore.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,12 +62,13 @@
     <Reference Include="EventStore.Core.Tests">
       <HintPath>..\..\..\lib\eventstore2\EventStore.Core.Tests.dll</HintPath>
     </Reference>
-    <Reference Include="FakeItEasy, Version=1.13.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+    <Reference Include="FakeItEasy, Version=1.13.1.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FakeItEasy.1.13.0\lib\net40\FakeItEasy.dll</HintPath>
+      <HintPath>..\packages\FakeItEasy.1.13.1\lib\net40\FakeItEasy.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -76,6 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Core\AggregateSource.Content.ExplicitRouting\AggregateRootEntity.cs">
+      <Link>Framework\AggregateRootEntity.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>

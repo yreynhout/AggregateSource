@@ -13,6 +13,10 @@
 
     <CreateItem 
       Include="
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.DynamicRouting.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitRouting.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitStateDynamicRouting.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitStateExplicitRouting.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Testing.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.EventStore.Tests.dll;
@@ -25,9 +29,10 @@
 
     <NUnit
         Assemblies="@(AssembliesToTest)"
-        ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
+        ToolPath="$(PackagesPath)\NUnit.Runners.2.6.3\tools"
         Force32Bit="true"
         ContinueOnError="false"
+        Framework="4.0"
         OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult.xml"/>
   </Target>
 </Project>

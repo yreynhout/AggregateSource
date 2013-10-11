@@ -13,13 +13,13 @@ namespace AggregateSource
             Create("Stub/456", AggregateRootEntityStub.Factory());
 
         public static Aggregate Create<TAggregateRoot>(TAggregateRoot root)
-            where TAggregateRoot : AggregateRootEntity
+            where TAggregateRoot : IAggregateRootEntity
         {
             return new Aggregate("Stub/" + Random.Next(), 0, root);
         }
 
         public static Aggregate Create<TAggregateRoot>(string identifier, TAggregateRoot root)
-            where TAggregateRoot : AggregateRootEntity
+            where TAggregateRoot : IAggregateRootEntity
         {
             return new Aggregate(identifier, 0, root);
         }

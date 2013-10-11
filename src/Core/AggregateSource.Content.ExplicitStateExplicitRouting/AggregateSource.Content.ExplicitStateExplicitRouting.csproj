@@ -67,7 +67,7 @@
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="EntityState.cs" />
-    <Compile Include="AggregateStateTests.cs" />
+    <Compile Include="EntityStateTests.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityTests.cs" />
   </ItemGroup>

@@ -1,5 +1,4 @@
-﻿#pragma warning disable 1591
-using System;
+﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -196,4 +195,3 @@ namespace AggregateSource
         }
     }
 }
-#pragma warning restore 1591

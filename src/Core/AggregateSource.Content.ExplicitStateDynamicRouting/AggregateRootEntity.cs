@@ -7,10 +7,10 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
     /// </summary>
-    public abstract class AggregateRootEntity<TAggregateState> : IAggregateRootEntity
-        where TAggregateState : IInstanceEventRouter, new()
+    public abstract class AggregateRootEntity<TEntityState> : IAggregateRootEntity
+        where TEntityState : new()
     {
-        readonly TAggregateState _state;
+        readonly TEntityState _state;
         readonly EventRecorder _recorder;
 
         /// <summary>
@@ -18,17 +18,17 @@ namespace AggregateSource
         /// </summary>
         protected AggregateRootEntity()
         {
-            _state = new TAggregateState();
+            _state = new TEntityState();
             _recorder = new EventRecorder();
         }
 
         /// <summary>
-        /// Gets the aggregate state associated with this instance.
+        /// Gets the entity state associated with this instance.
         /// </summary>
         /// <value>
-        /// The aggregate state.
+        /// The entity state.
         /// </value>
-        protected TAggregateState State
+        protected TEntityState State
         {
             get { return _state; }
         }
@@ -74,7 +74,7 @@ namespace AggregateSource
 
         void Play(object @event)
         {
-            _state.Route(@event);
+            ((dynamic)_state).When((dynamic)@event);
         }
 
         void Record(object @event)

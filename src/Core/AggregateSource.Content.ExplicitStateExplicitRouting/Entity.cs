@@ -9,10 +9,10 @@ namespace AggregateSource
         where TEntityState : IInstanceEventRouter, new()
     {
         readonly Action<object> _applier;
-        readonly InstanceEventRouter _router;
+        readonly TEntityState _state;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Entity"/> class.
+        /// Initializes a new instance of the <see cref="Entity{TEntityState}"/> class.
         /// </summary>
         /// <param name="applier">The event player and recorder.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="applier"/> is null.</exception>
@@ -20,7 +20,7 @@ namespace AggregateSource
         {
             if (applier == null) throw new ArgumentNullException("applier");
             _applier = applier;
-            _router = new InstanceEventRouter();
+            _state = new TEntityState();
         }
 
         /// <summary>
@@ -35,18 +35,6 @@ namespace AggregateSource
         }
 
         /// <summary>
-        /// Registers the state handler to be invoked when the specified event is applied.
-        /// </summary>
-        /// <typeparam name="TEvent">The type of the event to register the handler for.</typeparam>
-        /// <param name="handler">The state handler.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
-        protected void Register<TEvent>(Action<TEvent> handler)
-        {
-            if (handler == null) throw new ArgumentNullException("handler");
-            _router.ConfigureRoute(handler);
-        }
-
-        /// <summary>
         /// Routes the specified <paramref name="event"/> to a configured state handler, if any.
         /// </summary>
         /// <param name="event">The event to route.</param>
@@ -54,7 +42,7 @@ namespace AggregateSource
         public void Route(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
-            _router.Route(@event);
+            _state.Route(@event);
         }
 
         /// <summary>

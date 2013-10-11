@@ -33,32 +33,22 @@ namespace AggregateSource
                 var sut = new ApplyNullEventEntity();
                 Assert.Throws<ArgumentNullException>(sut.ApplyNull);
             }
-
-            [Test]
-            public void RegisterHandlerCanNotBeNull()
-            {
-                Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerEntity());
-            }
-
-            [Test]
-            public void RegisterHandlerCanOnlyBeCalledOncePerEventType()
-            {
-                Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceEntity());
-            }
         }
 
-        class AnyInstanceEntity : Entity {
+        class AnyState : EntityState {}
+
+        class AnyInstanceEntity : Entity<AnyState> {
             public AnyInstanceEntity() : base(_ => { })
             {
             }
         }
 
-        class UseNullApplierEntity : Entity
+        class UseNullApplierEntity : Entity<AnyState>
         {
             public UseNullApplierEntity() : base(null) {}
         }
 
-        class RouteWithNullEventEntity : Entity
+        class RouteWithNullEventEntity : Entity<AnyState>
         {
             public RouteWithNullEventEntity() : base(_ => { })
             {
@@ -66,30 +56,13 @@ namespace AggregateSource
             }
         }
 
-        class ApplyNullEventEntity : Entity
+        class ApplyNullEventEntity : Entity<AnyState>
         {
             public ApplyNullEventEntity() : base(_ => { }) {}
 
             public void ApplyNull()
             {
                 Apply(null);
-            }
-        }
-
-        class RegisterNullHandlerEntity : Entity
-        {
-            public RegisterNullHandlerEntity() : base(_ => { })
-            {
-                Register<object>(null);
-            }
-        }
-
-        class RegisterSameEventHandlerTwiceEntity : Entity
-        {
-            public RegisterSameEventHandlerTwiceEntity() : base(_ => { })
-            {
-                Register<object>(o => { });
-                Register<object>(o => { });
             }
         }
 
@@ -115,8 +88,8 @@ namespace AggregateSource
 
                 _sut.Route(expectedEvent);
 
-                Assert.That(_sut.HandlerCallCount, Is.EqualTo(1));
-                Assert.That(_sut.RoutedEvents, Is.EquivalentTo(new[] {expectedEvent}));
+                Assert.That(_sut.RevealedState.HandlerCallCount, Is.EqualTo(1));
+                Assert.That(_sut.RevealedState.RoutedEvents, Is.EquivalentTo(new[] { expectedEvent }));
             }
 
             [Test]
@@ -130,10 +103,9 @@ namespace AggregateSource
             }
         }
 
-        class WithHandlersEntity : Entity
+        class WithHandlersState : EntityState
         {
-            public WithHandlersEntity(Action<object> applier)
-                : base(applier)
+            public WithHandlersState()
             {
                 RoutedEvents = new List<object>();
                 Register<object>(@event =>
@@ -143,13 +115,23 @@ namespace AggregateSource
                 });
             }
 
+            public int HandlerCallCount { get; private set; }
+            public List<object> RoutedEvents { get; private set; } 
+        }
+
+        class WithHandlersEntity : Entity<WithHandlersState>
+        {
+            public WithHandlersEntity(Action<object> applier)
+                : base(applier)
+            {
+            }
+
             public void DoApply(object @event)
             {
                 Apply(@event);
             }
 
-            public int HandlerCallCount { get; private set; }
-            public List<object> RoutedEvents { get; private set; }
+            public WithHandlersState RevealedState { get { return State; } }
         }
 
         [TestFixture]
@@ -184,7 +166,8 @@ namespace AggregateSource
             }
         }
 
-        class WithoutHandlersEntity : Entity
+        class WithoutHandlersState : EntityState {}
+        class WithoutHandlersEntity : Entity<WithoutHandlersState>
         {
             public WithoutHandlersEntity(Action<object> applier) : base(applier) {}
 

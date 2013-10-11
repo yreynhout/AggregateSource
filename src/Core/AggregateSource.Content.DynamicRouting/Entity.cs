@@ -8,7 +8,6 @@ namespace AggregateSource
     public abstract class Entity : IInstanceEventRouter
     {
         readonly Action<object> _applier;
-        readonly InstanceEventRouter _router;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class.
@@ -19,19 +18,6 @@ namespace AggregateSource
         {
             if (applier == null) throw new ArgumentNullException("applier");
             _applier = applier;
-            _router = new InstanceEventRouter();
-        }
-
-        /// <summary>
-        /// Registers the state handler to be invoked when the specified event is applied.
-        /// </summary>
-        /// <typeparam name="TEvent">The type of the event to register the handler for.</typeparam>
-        /// <param name="handler">The state handler.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="handler"/> is null.</exception>
-        protected void Register<TEvent>(Action<TEvent> handler)
-        {
-            if (handler == null) throw new ArgumentNullException("handler");
-            _router.ConfigureRoute(handler);
         }
 
         /// <summary>
@@ -42,8 +28,14 @@ namespace AggregateSource
         public void Route(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
-            _router.Route(@event);
+            Play(@event);
         }
+
+        /// <summary>
+        /// Hook that allows a dynamic dispatch of an event to a state handler.
+        /// </summary>
+        /// <param name="event">The event to re-/play.</param>
+        protected abstract void Play(object @event);
 
         /// <summary>
         /// Applies the specified event to this instance and invokes the associated state handler.

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace AggregateSource
 {
-    namespace AggregateStateTests
+    namespace EntityStateTests
     {
         [TestFixture]
         public class WithAnyInstance
