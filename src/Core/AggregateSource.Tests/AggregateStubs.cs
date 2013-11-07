@@ -7,10 +7,10 @@ namespace AggregateSource
         static readonly Random Random = new Random();
 
         public static readonly Aggregate Stub1 =
-            Create("Stub/123", AggregateRootEntityStub.Factory());
+            Create("Stub/123", new AggregateRootEntityStub());
 
         public static readonly Aggregate Stub2 =
-            Create("Stub/456", AggregateRootEntityStub.Factory());
+            Create("Stub/456", new AggregateRootEntityStub());
 
         public static Aggregate Create<TAggregateRoot>(TAggregateRoot root)
             where TAggregateRoot : AggregateRootEntity

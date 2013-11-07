@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NUnit.Framework;
 
 namespace AggregateSource
@@ -74,7 +73,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<Aggregate>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Aggregate[0]));
             }
         }
 
@@ -134,7 +133,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<Aggregate>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Aggregate[0]));
             }
         }
 

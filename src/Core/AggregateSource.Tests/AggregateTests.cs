@@ -12,7 +12,7 @@ namespace AggregateSource
             [ValueSource(typeof (AggregateTestsValueSource), "IdSource")] string identifier,
             [Values(Int32.MinValue, -1, 0, 1, Int32.MaxValue)] int version)
         {
-            var root = AggregateRootEntityStub.Factory();
+            var root = new AggregateRootEntityStub();
             var sut = new Aggregate(identifier, version, root);
 
             Assert.That(sut.Identifier, Is.EqualTo(identifier));
@@ -25,7 +25,7 @@ namespace AggregateSource
         {
             Assert.
                 Throws<ArgumentNullException>(
-                    () => new Aggregate(null, 0, AggregateRootEntityStub.Factory()));
+                    () => new Aggregate(null, 0, new AggregateRootEntityStub()));
         }
 
         [Test]

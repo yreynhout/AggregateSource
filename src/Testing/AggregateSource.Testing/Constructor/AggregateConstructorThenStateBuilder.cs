@@ -1,5 +1,10 @@
 ﻿using System;
+#if NET20
+using System.Collections.Generic;
+#endif
+#if !NET20
 using System.Linq;
+#endif
 
 namespace AggregateSource.Testing.Constructor
 {
@@ -17,7 +22,13 @@ namespace AggregateSource.Testing.Constructor
 		public IAggregateConstructorThenStateBuilder Then(params object[] events)
 		{
 			if (events == null) throw new ArgumentNullException("events");
-			return new AggregateConstructorThenStateBuilder(_sutFactory, _thens.Concat(events).ToArray());
+#if NET20
+            var thens = new List<object>(_thens);
+            thens.AddRange(events);
+            return new AggregateConstructorThenStateBuilder(_sutFactory, thens.ToArray());
+#else
+            return new AggregateConstructorThenStateBuilder(_sutFactory, _thens.Concat(events).ToArray());
+#endif
 		}
 
 		public EventCentricAggregateConstructorTestSpecification Build()

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !NET20
 using System.Linq;
+#endif
 
 namespace AggregateSource.Testing
 {
@@ -30,7 +32,13 @@ namespace AggregateSource.Testing
 
         public TestSpecificationBuilderContext AppendGivens(IEnumerable<Fact> facts)
         {
+#if NET20
+            var givens = new List<Fact>(_givens);
+            givens.AddRange(facts);
+            return new TestSpecificationBuilderContext(givens.ToArray(), _when, _thens, _throws);
+#else
             return new TestSpecificationBuilderContext(_givens.Concat(facts).ToArray(), _when, _thens, _throws);
+#endif
         }
 
         public TestSpecificationBuilderContext SetWhen(object message)
@@ -40,7 +48,13 @@ namespace AggregateSource.Testing
 
         public TestSpecificationBuilderContext AppendThens(IEnumerable<Fact> facts)
         {
+#if NET20
+            var thens = new List<Fact>(_thens);
+            thens.AddRange(facts);
+            return new TestSpecificationBuilderContext(_givens, _when, thens.ToArray(), _throws);
+#else
             return new TestSpecificationBuilderContext(_givens, _when, _thens.Concat(facts).ToArray(), _throws);
+#endif
         }
 
         public TestSpecificationBuilderContext SetThrows(Exception exception)

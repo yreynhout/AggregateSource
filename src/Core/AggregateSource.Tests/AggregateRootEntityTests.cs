@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace AggregateSource
@@ -140,7 +139,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Object[0]));
             }
 
             [Test]
@@ -178,7 +177,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Object[0]));
             }
 
             [Test]
@@ -235,7 +234,7 @@ namespace AggregateSource
 
         class ChangedAggregateRootEntity : AggregateRootEntity
         {
-            public static readonly object[] AppliedChanges = new[] {new object(), new object()};
+            public static readonly object[] AppliedChanges = {new object(), new object()};
 
             public ChangedAggregateRootEntity()
             {
@@ -285,7 +284,7 @@ namespace AggregateSource
 
         class InitializedThenChangedAggregateRootEntity : AggregateRootEntity
         {
-            public static readonly object[] AppliedChanges = new[] {new object(), new object()};
+            public static readonly object[] AppliedChanges = {new object(), new object()};
 
             public InitializedThenChangedAggregateRootEntity()
             {
@@ -323,7 +322,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Object[0]));
             }
 
             [Test]
@@ -371,7 +370,7 @@ namespace AggregateSource
             [Test]
             public void GetChangesReturnsEmpty()
             {
-                Assert.That(_sut.GetChanges(), Is.EquivalentTo(Enumerable.Empty<object>()));
+                Assert.That(_sut.GetChanges(), Is.EquivalentTo(new Object[0]));
             }
 
             [Test]

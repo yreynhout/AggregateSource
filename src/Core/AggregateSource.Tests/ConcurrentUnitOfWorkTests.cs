@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET35
+using System;
 using System.Linq;
 using NUnit.Framework;
 
@@ -177,3 +178,4 @@ namespace AggregateSource
         }
     }
 }
+#endif

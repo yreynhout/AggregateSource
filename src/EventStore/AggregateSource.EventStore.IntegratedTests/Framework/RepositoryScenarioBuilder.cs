@@ -120,6 +120,7 @@ namespace AggregateSource.EventStore.Framework
             return this;
         }
 
+#if !NET40
         public AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> BuildForAsyncSnapshotableRepository()
         {
             ExecuteScheduledActions();
@@ -140,6 +141,7 @@ namespace AggregateSource.EventStore.Framework
                 _connection,
                 _eventReaderConfiguration);
         }
+#endif
 
         public SnapshotableRepository<SnapshotableAggregateRootEntityStub> BuildForSnapshotableRepository()
         {

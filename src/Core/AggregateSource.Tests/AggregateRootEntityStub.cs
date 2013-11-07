@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace AggregateSource
+﻿namespace AggregateSource
 {
     public class AggregateRootEntityStub : AggregateRootEntity
     {
-        public static readonly Func<AggregateRootEntityStub> Factory = () => new AggregateRootEntityStub();
     }
 }

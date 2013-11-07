@@ -3,7 +3,11 @@
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <SourcePath>$(RootPath)\src</SourcePath>
+    <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.61\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
+
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 
   <Target Name="NonInteractiveBuild">
     <MSBuild Projects="$(MSBuildProjectDirectory)\run_me_first.proj" />
@@ -16,6 +20,11 @@
       Directories="$(MSBuildProjectDirectory)\output" />
     <MSBuild Projects="$(MSBuildProjectDirectory)\version.proj" />
     <MSBuild Projects="$(MSBuildProjectDirectory)\info.proj" />
+    
+    <CallTarget Targets="BuildNET40;BuildNET45" RunEachTargetSeparately="True" />
+  </Target>
+
+  <Target Name="BuildNET45">
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
@@ -31,20 +40,87 @@
         $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj;
         $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;"
       BuildInParallel="true" 
-      Properties="Configuration=Release 4.5;OutputPath=$(MSBuildProjectDirectory)\output\net45"
+      Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output\net45"
       UnloadProjectsOnCompletion="true"/>
+  </Target>
+
+  <Target Name="BuildNET40">
+    <Xslt 
+      Inputs="$(SourcePath)\Core\AggregateSource\AggregateSource.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\SampleSource\SampleSource.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\SampleSource\SampleSource.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.NET40.csproj" />
+
     <MSBuild 
       Projects="
-        $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
-        $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
-        $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
-        $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
-        $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
-        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj;
-        $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj;
-        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;"
+        $(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj;
+        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.NET40.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.NET40.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.NET40.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.NET40.csproj;
+        $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.NET40.csproj;
+        $(SourcePath)\SampleSource\SampleSource.NET40.csproj;
+        $(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.NET40.csproj;
+        $(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.NET40.csproj;
+        $(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.NET40.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.NET40.csproj;
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.NET40.csproj;"
       BuildInParallel="true" 
-      Properties="Configuration=Release 4.0;OutputPath=$(MSBuildProjectDirectory)\output\net40"
+      Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output\net40"
       UnloadProjectsOnCompletion="true"/>
   </Target>
 </Project>

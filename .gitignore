@@ -13,6 +13,7 @@ lib/packages/*
 src/packages/*
 *.log
 src/NDependOut*
+*.NET40.csproj
 
 #################
 ## Eclipse

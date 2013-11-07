@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using NUnit.Framework;
 
 namespace AggregateSource
@@ -87,7 +86,7 @@ namespace AggregateSource
             [Test]
             public void TypedEnumerationIsEmpty()
             {
-                Assert.That(_sut, Is.EquivalentTo(Enumerable.Empty<T>()));
+                Assert.That(_sut, Is.EquivalentTo(new T[0]));
             }
 
             [Test]
@@ -95,7 +94,7 @@ namespace AggregateSource
             {
                 var sut = (IEnumerable) _sut;
 
-                Assert.That(sut, Is.EquivalentTo(Enumerable.Empty<T>()));
+                Assert.That(sut, Is.EquivalentTo(new T[0]));
             }
 
             [Test]

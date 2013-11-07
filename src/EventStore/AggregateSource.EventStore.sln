@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "..\Core\AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.EventStore", "AggregateSource.EventStore\AggregateSource.EventStore.csproj", "{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}"
@@ -19,34 +21,34 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.ActiveCfg = Release 4.0|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.Build.0 = Release 4.0|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.Build.0 = Release 4.5|Any CPU
+		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.0|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.0|Any CPU.Build.0 = Release 4.5|Any CPU
-		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.5|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.5|Any CPU.Build.0 = Release 4.5|Any CPU
+		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEA0D300-F1A2-4A43-A7EE-75D2DCD6BC7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.0|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.0|Any CPU.Build.0 = Release 4.5|Any CPU
-		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.5|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.5|Any CPU.Build.0 = Release 4.5|Any CPU
+		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B35C66B-0D16-4330-8A90-E8DFDE5EB987}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.0|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.0|Any CPU.Build.0 = Release 4.5|Any CPU
-		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.5|Any CPU.ActiveCfg = Release 4.5|Any CPU
-		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.5|Any CPU.Build.0 = Release 4.5|Any CPU
+		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A480AF10-FEE9-4FDD-B787-102B2D07F14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

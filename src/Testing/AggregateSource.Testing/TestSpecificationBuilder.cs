@@ -1,5 +1,10 @@
 ﻿using System;
+#if NET20
+using System.Collections.Generic;
+#endif
+#if !NET20
 using System.Linq;
+#endif
 
 namespace AggregateSource.Testing
 {
@@ -27,9 +32,18 @@ namespace AggregateSource.Testing
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
             if (events == null) throw new ArgumentNullException("events");
+#if NET20
+            var facts = new List<Fact>();
+            foreach (var @event in events)
+            {
+                facts.Add(new Fact(identifier, @event));
+            }
+            return new TestSpecificationBuilder(_context.AppendGivens(facts));
+#else
             return
                 new TestSpecificationBuilder(
                     _context.AppendGivens(events.Select(@event => new Fact(identifier, @event))));
+#endif
         }
 
         public IScenarioGivenNoneStateBuilder GivenNone()
@@ -53,9 +67,18 @@ namespace AggregateSource.Testing
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
             if (events == null) throw new ArgumentNullException("events");
+#if NET20
+            var facts = new List<Fact>();
+            foreach (var @event in events)
+            {
+                facts.Add(new Fact(identifier, @event));
+            }
+            return new TestSpecificationBuilder(_context.AppendThens(facts));
+#else
             return
                 new TestSpecificationBuilder(
                     _context.AppendThens(events.Select(@event => new Fact(identifier, @event))));
+#endif
         }
 
         public IScenarioThenNoneStateBuilder ThenNone()

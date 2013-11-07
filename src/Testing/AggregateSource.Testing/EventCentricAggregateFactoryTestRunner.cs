@@ -1,5 +1,10 @@
 ﻿using System;
+#if NET20
+using System.Collections.Generic;
+#endif
+#if !NET20
 using System.Linq;
+#endif
 
 namespace AggregateSource.Testing
 {
@@ -40,11 +45,19 @@ namespace AggregateSource.Testing
             {
                 return specification.Fail(result.Value);
             }
+#if NET20
+            var actualEvents = new List<object>(factoryResult.GetChanges()).ToArray();
+            if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
+            {
+                return specification.Fail(actualEvents);
+            }
+#else
             var actualEvents = factoryResult.GetChanges().ToArray();
             if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
             {
                 return specification.Fail(actualEvents);
             }
+#endif
             return specification.Pass();
         }
     }
