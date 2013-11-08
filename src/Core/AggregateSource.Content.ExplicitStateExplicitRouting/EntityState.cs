@@ -5,14 +5,14 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate state objects that need some basic infrastructure for routing events to handlers.
     /// </summary>
-    public abstract class AggregateState : IInstanceEventRouter
+    public abstract class EntityState : IInstanceEventRouter
     {
         readonly InstanceEventRouter _router;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateState"/> class.
+        /// Initializes a new instance of the <see cref="EntityState"/> class.
         /// </summary>
-        protected AggregateState()
+        protected EntityState()
         {
             _router = new InstanceEventRouter();
         }

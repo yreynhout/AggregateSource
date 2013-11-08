@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace AggregateSource
 {
-    namespace AggregateRootEntityOfTAggregateStateTests
+    namespace AggregateRootEntityTests
     {
         [TestFixture]
         public class WithAnyInstance
@@ -43,7 +43,7 @@ namespace AggregateSource
             }
         }
 
-        class AnyState : AggregateState
+        class AnyState : EntityState
         {
         }
 
@@ -123,7 +123,7 @@ namespace AggregateSource
             }
         }
 
-        class PristineState : AggregateState {}
+        class PristineState : EntityState {}
         class PristineAggregateRootEntity : AggregateRootEntity<PristineState> { }
 
         [TestFixture]
@@ -162,7 +162,7 @@ namespace AggregateSource
             }
         }
 
-        class InitializedState : AggregateState {}
+        class InitializedState : EntityState {}
         class InitializedAggregateRootEntity : AggregateRootEntity<InitializedState>
         {
             public InitializedAggregateRootEntity()
@@ -208,7 +208,7 @@ namespace AggregateSource
             }
         }
 
-        class ChangedState : AggregateState {}
+        class ChangedState : EntityState {}
         class ChangedAggregateRootEntity : AggregateRootEntity<ChangedState>
         {
             public static readonly object[] AppliedChanges = { new object(), new object() };
@@ -259,7 +259,7 @@ namespace AggregateSource
             }
         }
 
-        class InitializedThenChangedState : AggregateState {}
+        class InitializedThenChangedState : EntityState {}
         class InitializedThenChangedAggregateRootEntity : AggregateRootEntity<InitializedThenChangedState>
         {
             public static readonly object[] AppliedChanges = { new object(), new object() };
@@ -310,7 +310,7 @@ namespace AggregateSource
             }
         }
 
-        class ChangedThenClearedState : AggregateState {}
+        class ChangedThenClearedState : EntityState {}
         class ChangedThenClearedAggregateRootEntity : AggregateRootEntity<ChangedThenClearedState>
         {
             public ChangedThenClearedAggregateRootEntity()
@@ -359,7 +359,7 @@ namespace AggregateSource
             }
         }
 
-        class InitializedThenChangedThenClearedState : AggregateState { }
+        class InitializedThenChangedThenClearedState : EntityState { }
 
         class InitializedThenChangedThenClearedAggregateRootEntity : AggregateRootEntity<InitializedThenChangedThenClearedState>
         {
@@ -408,7 +408,7 @@ namespace AggregateSource
             }
         }
 
-        class WithHandlersState : AggregateState
+        class WithHandlersState : EntityState
         {
             public WithHandlersState()
             {
@@ -461,7 +461,7 @@ namespace AggregateSource
             }
         }
 
-        class WithoutHandlersState : AggregateState {}
+        class WithoutHandlersState : EntityState {}
         class WithoutHandlersAggregateRootEntity : AggregateRootEntity<WithoutHandlersState>
         {
             public void DoApply(object @event)

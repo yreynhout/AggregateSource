@@ -7,30 +7,16 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate root entities that need some basic infrastructure for tracking state changes.
     /// </summary>
-    public abstract class AggregateRootEntity<TAggregateState> : IAggregateRootEntity
-        where TAggregateState : IInstanceEventRouter, new()
+    public abstract class AggregateRootEntity : IAggregateRootEntity
     {
-        readonly TAggregateState _state;
         readonly EventRecorder _recorder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateRootEntity{TAggregateState}"/> class.
+        /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
         /// </summary>
         protected AggregateRootEntity()
         {
-            _state = new TAggregateState();
             _recorder = new EventRecorder();
-        }
-
-        /// <summary>
-        /// Gets the aggregate state associated with this instance.
-        /// </summary>
-        /// <value>
-        /// The aggregate state.
-        /// </value>
-        protected TAggregateState State
-        {
-            get { return _state; }
         }
 
         /// <summary>
@@ -44,7 +30,9 @@ namespace AggregateSource
             if (HasChanges())
                 throw new InvalidOperationException("Initialize cannot be called on an instance with changes.");
             foreach (var @event in events)
+            {
                 Play(@event);
+            }
         }
 
         /// <summary>
@@ -64,18 +52,19 @@ namespace AggregateSource
         /// Called before an event is applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that will be applied.</param>
-        protected virtual void BeforeApply(object @event) { }
+        protected virtual void BeforeApply(object @event) {}
 
         /// <summary>
         /// Called after an event has been applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that has been applied.</param>
-        protected virtual void AfterApply(object @event) { }
+        protected virtual void AfterApply(object @event) {}
 
-        void Play(object @event)
-        {
-            _state.Route(@event);
-        }
+        /// <summary>
+        /// Hook that allows a dynamic dispatch of an event to a state handler.
+        /// </summary>
+        /// <param name="event">The event to re-/play.</param>
+        protected abstract void Play(object @event);
 
         void Record(object @event)
         {

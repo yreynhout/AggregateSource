@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace AggregateSource
 {
     /// <summary>
-    /// Records events applied to an <see cref="IAggregateRootEntity"/> or <see cref="Entity"/>.
+    /// Records events applied to an aggregate's root entity or entity.
     /// </summary>
     public class EventRecorder : IEnumerable<object>
     {

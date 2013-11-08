@@ -38,18 +38,25 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.2.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.3.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CompareNETObjects.1.7.2.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+      <HintPath>packages\CompareNETObjects.1.7.3.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Core\AggregateSource.Content.ExplicitRouting\AggregateRootEntity.cs">
+      <Link>AggregateRootEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\AggregateSource.Content.ExplicitRouting\Entity.cs">
+      <Link>Entity.cs</Link>
+    </Compile>
     <Compile Include="..\Testing\AggregateSource.Testing.NUnit\Content\NUnitAssertionExtensions.cs">
       <Link>NUnitAssertionExtensions.cs</Link>
     </Compile>
@@ -70,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj">
       <Project>{ae4066f5-55f5-4d0d-9ac1-853666822682}</Project>
       <Name>AggregateSource.Testing.NUnit</Name>
@@ -78,12 +89,7 @@
       <Project>{75427b80-a024-4b5e-a7ca-f2e4736d9f8c}</Project>
       <Name>AggregateSource.Testing</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

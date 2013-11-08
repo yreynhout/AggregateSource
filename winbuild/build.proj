@@ -28,6 +28,10 @@
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
+        $(SourcePath)\Core\AggregateSource.Content.DynamicRouting\AggregateSource.Content.DynamicRouting.csproj;
+        $(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj;
+        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateSource.Content.ExplicitStateDynamicRouting.csproj;
+        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;

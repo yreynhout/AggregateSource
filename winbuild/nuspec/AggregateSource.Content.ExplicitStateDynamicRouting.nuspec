@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This tokenized .nuspec manifest file is targeting the latest NuGet namespace,
+which ensures you can benefit from the latest packaging features.
+
+If desired, you can change the XML-namespace and target the original XSD.
+To do so, replace the current package declaration by the following:
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+
+Run "nuget.exe pack <project>" to build a nuget package for this project
+using this tokenized nuspec file.
+
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AggregateSource.Content.ExplicitStateDynamicRouting</id>
+    <version>0.0.0</version>
+    <authors>Yves Reynhout</authors>
+    <owners>Yves Reynhout</owners>
+    <title>AggregateSource.Content.ExplicitStateDynamicRouting</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
+    <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model. Root &amp; entity with explicit state &amp; dynamic routing.</description>
+    <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
+    <releaseNotes>Warning! The API is still in flux. Added support for NEventStore.</releaseNotes>
+    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <tags>eventsourcing DDDesign</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="AggregateSource" version="0.0.174" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="AggregateSource" version="0.0.174" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateRootEntity.cs" target="content" />
+    <file src="..\..\src\Core\AggregateSource.Content.ExplicitStateDynamicRouting\Entity.cs" target="content" />
+  </files>
+</package>

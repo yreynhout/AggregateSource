@@ -24,6 +24,34 @@
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="nuspec\AggregateSource.Content.ExplicitRouting.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="nuspec\AggregateSource.Content.DynamicRouting.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.DynamicRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="nuspec\AggregateSource.Content.ExplicitStateExplicitRouting.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitStateExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
+      XmlFileName="nuspec\AggregateSource.Content.ExplicitStateDynamicRouting.nuspec"
+      XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
+      Value="$(Major).$(Minor).$(Build)" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitStateDynamicRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <XmlUpdate
+      Prefix="ns"
+      Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Testing.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
       Value="$(Major).$(Minor).$(Build)" />
@@ -71,6 +99,14 @@
     </Version>
 
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.DynamicRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitStateExplicitRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitStateDynamicRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />

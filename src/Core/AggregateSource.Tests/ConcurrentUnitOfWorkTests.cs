@@ -169,7 +169,7 @@ namespace AggregateSource
             }
         }
 
-        class ChangedAggregateRootEntityStub : AggregateRootEntity
+        class ChangedAggregateRootEntityStub : AggregateRootEntityStub
         {
             public ChangedAggregateRootEntityStub()
             {
