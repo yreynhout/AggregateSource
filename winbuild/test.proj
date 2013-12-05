@@ -17,9 +17,7 @@
   <Target Name="TestNET45">
     <CreateItem 
       Include="
-      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.DynamicRouting.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitStateDynamicRouting.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitStateExplicitRouting.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Testing.Tests.dll;
@@ -43,9 +41,7 @@
   <Target Name="TestNET40">
     <CreateItem 
       Include="
-      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.DynamicRouting.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.ExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.ExplicitStateDynamicRouting.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.ExplicitStateExplicitRouting.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.Tests.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.Testing.Tests.dll;
