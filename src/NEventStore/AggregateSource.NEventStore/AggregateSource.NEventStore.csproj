@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NEventStore">
-      <HintPath>..\packages\NEventStore.5.0.0.24\lib\net40\NEventStore.dll</HintPath>
+      <HintPath>..\packages\NEventStore.5.0.0.55\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

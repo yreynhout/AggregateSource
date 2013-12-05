@@ -29,16 +29,11 @@ using this tokenized nuspec file.
     <dependencies>
       <group targetFramework=".NETFramework4.0">
         <dependency id="AggregateSource" version="0.0.263" />
-        <dependency id="EventStore.Client" version="2.0.0" />
+        <dependency id="EventStore.Client" version="2.0.2" />
       </group>
       <group targetFramework=".NETFramework4.5">
-<<<<<<< HEAD
         <dependency id="AggregateSource" version="0.0.263" />
-        <dependency id="EventStore.Client" version="2.0.0" />
-=======
-        <dependency id="AggregateSource" version="0.0.174" />
         <dependency id="EventStore.Client" version="2.0.2" />
->>>>>>> origin/master
       </group>
     </dependencies>
   </metadata>

@@ -35,9 +35,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.3.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.4.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CompareNETObjects.1.7.3.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+      <HintPath>..\packages\CompareNETObjects.1.7.4.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
