@@ -59,7 +59,7 @@
 
     <NUnit
         Assemblies="@(AssembliesToTest)"
-        ToolPath="$(PackagesPath)\NUnit.Runners.2.6.2\tools"
+        ToolPath="$(PackagesPath)\NUnit.Runners.2.6.3\tools"
         Force32Bit="true"
         ContinueOnError="false"
         Framework="4.0"
