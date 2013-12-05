@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET40
+using System;
 using System.IO;
 using AggregateSource.EventStore.Framework;
 using AggregateSource.EventStore.Framework.Snapshots;
@@ -221,3 +222,4 @@ namespace AggregateSource.EventStore.Snapshots
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET40
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using EventStore.ClientAPI;
@@ -144,3 +145,4 @@ namespace AggregateSource.EventStore
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET40
+using System;
 using AggregateSource.EventStore.Framework;
 using NUnit.Framework;
 
@@ -269,3 +270,4 @@ namespace AggregateSource.EventStore
         }
     }
 }
+#endif

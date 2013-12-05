@@ -1,3 +1,4 @@
+#if !NET40
 using System.Threading.Tasks;
 
 namespace AggregateSource.EventStore.Snapshots
@@ -15,3 +16,4 @@ namespace AggregateSource.EventStore.Snapshots
         Task<Optional<Snapshot>> ReadOptionalAsync(string identifier);
     }
 }
+#endif
