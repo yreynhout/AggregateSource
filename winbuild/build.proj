@@ -28,9 +28,7 @@
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.DynamicRouting\AggregateSource.Content.DynamicRouting.csproj;
         $(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateSource.Content.ExplicitStateDynamicRouting.csproj;
         $(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
@@ -55,19 +53,9 @@
       Output="$(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj" />
 
     <Xslt 
-      Inputs="$(SourcePath)\Core\AggregateSource.Content.DynamicRouting\AggregateSource.Content.DynamicRouting.csproj"
-      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
-      Output="$(SourcePath)\Core\AggregateSource.Content.DynamicRouting\AggregateSource.Content.DynamicRouting.NET40.csproj" />
-
-    <Xslt 
       Inputs="$(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj"
       Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
       Output="$(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.NET40.csproj" />
-
-    <Xslt 
-      Inputs="$(SourcePath)\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateSource.Content.ExplicitStateDynamicRouting.csproj"
-      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
-      Output="$(SourcePath)\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateSource.Content.ExplicitStateDynamicRouting.NET40.csproj" />
 
     <Xslt 
       Inputs="$(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj"
@@ -132,9 +120,7 @@
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.DynamicRouting\AggregateSource.Content.DynamicRouting.NET40.csproj;
         $(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.NET40.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateDynamicRouting\AggregateSource.Content.ExplicitStateDynamicRouting.NET40.csproj;
         $(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.NET40.csproj;
         $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.NET40.csproj;
