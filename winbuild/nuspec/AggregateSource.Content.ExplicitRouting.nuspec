@@ -23,7 +23,7 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model. Root &amp; entity with explicit routing.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>Warning! The API is still in flux. Added support for NEventStore.</releaseNotes>
+    <releaseNotes>Warning! The API is still in flux. NET40 and NET45 support.</releaseNotes>
     <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
