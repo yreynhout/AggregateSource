@@ -57,6 +57,7 @@
     <Compile Include="AggregateRootEntityTests.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityTests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
