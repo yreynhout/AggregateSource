@@ -39,7 +39,7 @@ namespace AggregateSource.EventStore.Snapshots
         [Test]
         public void DoesNotEqualNull()
         {
-            Assert.That(CreateSut(), Is.Not.EqualTo(null));
+            Assert.IsFalse(CreateSut().Equals(null));
         }
 
         [Test]
