@@ -1,4 +1,5 @@
-﻿using EventStore.ClientAPI;
+﻿using System.Collections.Generic;
+using EventStore.ClientAPI;
 
 namespace AggregateSource.EventStore
 {
@@ -8,10 +9,10 @@ namespace AggregateSource.EventStore
     public interface IEventDeserializer
     {
         /// <summary>
-        /// Deserializes a resolved event into an event consumable by the aggregate root entity.
+        /// Deserializes a resolved event into zero, one or more events consumable by the aggregate root entity.
         /// </summary>
         /// <param name="resolvedEvent">The resolved event to deserialize.</param>
-        /// <returns>The deserialized event.</returns>
-        object Deserialize(ResolvedEvent resolvedEvent);
+        /// <returns>An enumeration of deserialized events.</returns>
+        IEnumerable<object> Deserialize(ResolvedEvent resolvedEvent);
     }
 }

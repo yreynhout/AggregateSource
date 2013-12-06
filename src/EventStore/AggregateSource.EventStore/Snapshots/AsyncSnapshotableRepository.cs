@@ -91,14 +91,14 @@ namespace AggregateSource.EventStore.Snapshots
             {
                 root.RestoreSnapshot(snapshot.Value.State);
             }
-            root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+            root.Initialize(slice.Events.SelectMany(resolved => _configuration.Deserializer.Deserialize(resolved)));
             while (!slice.IsEndOfStream)
             {
                 slice =
                     await
                     _connection.ReadStreamEventsForwardAsync(streamName, slice.NextEventNumber, _configuration.SliceSize,
                                                              false, streamUserCredentials);
-                root.Initialize(slice.Events.Select(resolved => _configuration.Deserializer.Deserialize(resolved)));
+                root.Initialize(slice.Events.SelectMany(resolved => _configuration.Deserializer.Deserialize(resolved)));
             }
             aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
             _unitOfWork.Attach(aggregate);

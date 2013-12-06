@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using EventStore.ClientAPI;
 
@@ -6,7 +7,7 @@ namespace AggregateSource.EventStore.Framework
 {
     public class EventDeserializer : IEventDeserializer
     {
-        public object Deserialize(ResolvedEvent resolvedEvent)
+        public IEnumerable<object> Deserialize(ResolvedEvent resolvedEvent)
         {
             var instance =
                 (IBinaryDeserializer)
@@ -18,7 +19,7 @@ namespace AggregateSource.EventStore.Framework
                     instance.Read(reader);
                 }
             }
-            return instance;
+            yield return instance;
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.EventStore.Stubs
@@ -8,9 +10,9 @@ namespace AggregateSource.EventStore.Stubs
 
         StubbedEventDeserializer() {}
 
-        public object Deserialize(ResolvedEvent resolvedEvent)
+        public IEnumerable<object> Deserialize(ResolvedEvent resolvedEvent)
         {
-            return null;
+            return Enumerable.Empty<object>();
         }
     }
 }
