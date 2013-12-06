@@ -24,7 +24,7 @@ namespace AggregateSource
             var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType);
 
             Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
-            Assert.That(sut.Type, Is.EqualTo(AggregateType));
+            Assert.That(sut.ClrType, Is.EqualTo(AggregateType));
             Assert.That(sut.Message, Is.EqualTo(
                 "The Object aggregate with identifier " + AggregateIdentifier +
                 " could not be found. Please make sure the callsite is indeed passing in an identifier for an Object aggregate."));
@@ -46,7 +46,7 @@ namespace AggregateSource
             Assert.That(
                 Assert.Throws<ArgumentNullException>(() => new AggregateNotFoundException(AggregateIdentifier, null))
                       .ParamName,
-                Is.EqualTo("type"));
+                Is.EqualTo("clrType"));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace AggregateSource
             var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType, "Message");
 
             Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
-            Assert.That(sut.Type, Is.EqualTo(AggregateType));
+            Assert.That(sut.ClrType, Is.EqualTo(AggregateType));
             Assert.That(sut.Message, Is.EqualTo("Message"));
             Assert.That(sut.InnerException, Is.Null);
         }
@@ -77,7 +77,7 @@ namespace AggregateSource
                 Assert.Throws<ArgumentNullException>(
                     () => new AggregateNotFoundException(AggregateIdentifier, null, "Message"))
                       .ParamName,
-                Is.EqualTo("type"));
+                Is.EqualTo("clrType"));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace AggregateSource
             var sut = new AggregateNotFoundException(AggregateIdentifier, AggregateType, "Message", innerException);
 
             Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
-            Assert.That(sut.Type, Is.EqualTo(AggregateType));
+            Assert.That(sut.ClrType, Is.EqualTo(AggregateType));
             Assert.That(sut.Message, Is.EqualTo("Message"));
             Assert.That(sut.InnerException, Is.EqualTo(innerException));
         }
@@ -108,7 +108,7 @@ namespace AggregateSource
                 Assert.Throws<ArgumentNullException>(
                     () => new AggregateNotFoundException(AggregateIdentifier, null, "Message", new Exception()))
                       .ParamName,
-                Is.EqualTo("type"));
+                Is.EqualTo("clrType"));
         }
 
         [Test]
@@ -124,10 +124,10 @@ namespace AggregateSource
                 stream.Position = 0;
                 var result = (AggregateNotFoundException) formatter.Deserialize(stream);
 
-                Assert.That(sut.Identifier, Is.EqualTo(AggregateIdentifier));
-                Assert.That(sut.Type, Is.EqualTo(AggregateType));
-                Assert.That(sut.Message, Is.EqualTo(result.Message));
-                Assert.That(sut.InnerException.Message, Is.EqualTo(result.InnerException.Message));
+                Assert.That(result.Identifier, Is.EqualTo(AggregateIdentifier));
+                Assert.That(result.ClrType, Is.EqualTo(AggregateType));
+                Assert.That(result.Message, Is.EqualTo(result.Message));
+                Assert.That(result.InnerException.Message, Is.EqualTo(result.InnerException.Message));
             }
         }
 

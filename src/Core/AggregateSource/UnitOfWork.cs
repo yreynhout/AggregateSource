@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -30,8 +32,8 @@ namespace AggregateSource
                 throw new ArgumentNullException("aggregate");
             if (_aggregates.ContainsKey(aggregate.Identifier))
                 throw new ArgumentException(
-                    string.Format(
-                        "The aggregate of type '{0}' with identifier '{1}' was already added. This indicates could indicate there's a race condition, i.e. the same aggregate gets attached multiple times.",
+                    string.Format(CultureInfo.InvariantCulture,
+                        Resources.UnitOfWork_AttachAlreadyAdded,
                         aggregate.Root.GetType().Name, aggregate.Identifier));
             _aggregates.Add(aggregate.Identifier, aggregate);
         }
@@ -62,6 +64,7 @@ namespace AggregateSource
         /// Gets the aggregates with state changes.
         /// </summary>
         /// <returns>An enumeration of <see cref="Aggregate"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public IEnumerable<Aggregate> GetChanges()
         {
             return _aggregates.Values.Where(aggregate => aggregate.Root.HasChanges());

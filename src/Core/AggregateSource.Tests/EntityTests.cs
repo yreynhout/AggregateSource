@@ -34,7 +34,6 @@ namespace AggregateSource
                 Assert.Throws<ArgumentNullException>(sut.ApplyNull);
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "AggregateSource.EntityTests.RegisterNullHandlerEntity")]
             [Test]
             public void RegisterHandlerCannotBeNull()
             {

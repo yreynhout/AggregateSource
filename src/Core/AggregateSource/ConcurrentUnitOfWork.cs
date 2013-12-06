@@ -1,8 +1,9 @@
-﻿#if NET40 || NET45
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -32,8 +33,8 @@ namespace AggregateSource
                 throw new ArgumentNullException("aggregate");
             if (!_aggregates.TryAdd(aggregate.Identifier, aggregate))
                 throw new ArgumentException(
-                    string.Format(
-                        "The aggregate of type '{0}' with identifier '{1}' was already added. This could indicate there's a race condition, i.e. the same aggregate getting attached multiple times.",
+                    string.Format(CultureInfo.InvariantCulture,
+                        Resources.ConcurrentUnitOfWork_AttachAlreadyAdded,
                         aggregate.Root.GetType().Name, aggregate.Identifier));
         }
 
@@ -63,10 +64,10 @@ namespace AggregateSource
         /// Gets the aggregates with state changes.
         /// </summary>
         /// <returns>An enumeration of <see cref="Aggregate"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public IEnumerable<Aggregate> GetChanges()
         {
             return _aggregates.Values.Where(aggregate => aggregate.Root.HasChanges());
         }
     }
 }
-#endif

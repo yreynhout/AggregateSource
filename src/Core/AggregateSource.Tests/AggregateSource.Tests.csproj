@@ -66,6 +66,7 @@
     <Compile Include="ConcurrentUnitOfWorkTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceEventRouterTests.cs" />
     <Compile Include="OptionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

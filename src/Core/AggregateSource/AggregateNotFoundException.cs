@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using AggregateSource.Properties;
 
@@ -7,61 +8,62 @@ namespace AggregateSource
     /// <summary>
     /// Exception that tells callers an aggregate was not found.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
     [Serializable]
     public class AggregateNotFoundException : AggregateSourceException
     {
         readonly string _identifier;
-        readonly Type _type;
+        readonly Type _clrType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
         /// </summary>
         /// <param name="identifier">The aggregate identifier.</param>
-        /// <param name="type">Type of the aggregate root entity.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
-        public AggregateNotFoundException(string identifier, Type type)
+        /// <param name="clrType">ClrType of the aggregate root entity.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="clrType"/> is null.</exception>
+        public AggregateNotFoundException(string identifier, Type clrType)
             : base(
-                type != null && identifier != null
-                    ? string.Format(Resources.AggregateNotFoundException_DefaultMessage, type.Name, identifier)
+                clrType != null && identifier != null
+                    ? string.Format(CultureInfo.InvariantCulture, Resources.AggregateNotFoundException_DefaultMessage, clrType.Name, identifier)
                     : null)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
-            if (type == null) throw new ArgumentNullException("type");
+            if (clrType == null) throw new ArgumentNullException("clrType");
             _identifier = identifier;
-            _type = type;
+            _clrType = clrType;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
         /// </summary>
         /// <param name="identifier">The aggregate identifier.</param>
-        /// <param name="type">Type of the aggregate root entity.</param>
+        /// <param name="clrType">ClrType of the aggregate root entity.</param>
         /// <param name="message">The message.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
-        public AggregateNotFoundException(string identifier, Type type, string message)
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="clrType"/> is null.</exception>
+        public AggregateNotFoundException(string identifier, Type clrType, string message)
             : base(message)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
-            if (type == null) throw new ArgumentNullException("type");
+            if (clrType == null) throw new ArgumentNullException("clrType");
             _identifier = identifier;
-            _type = type;
+            _clrType = clrType;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateNotFoundException"/> class.
         /// </summary>
         /// <param name="identifier">The aggregate identifier.</param>
-        /// <param name="type">Type of the aggregate root entity.</param>
+        /// <param name="clrType">ClrType of the aggregate root entity.</param>
         /// <param name="message">The message.</param>
         /// <param name="innerException">The inner exception.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="type"/> is null.</exception>
-        public AggregateNotFoundException(string identifier, Type type, string message, Exception innerException)
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="clrType"/> is null.</exception>
+        public AggregateNotFoundException(string identifier, Type clrType, string message, Exception innerException)
             : base(message, innerException)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");
-            if (type == null) throw new ArgumentNullException("type");
+            if (clrType == null) throw new ArgumentNullException("clrType");
             _identifier = identifier;
-            _type = type;
+            _clrType = clrType;
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace AggregateSource
             : base(info, context)
         {
             _identifier = info.GetString("identifier");
-            _type = Type.GetType(info.GetString("type"), false);
+            _clrType = Type.GetType(info.GetString("clrType"), false);
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace AggregateSource
         {
             base.GetObjectData(info, context);
             info.AddValue("identifier", _identifier);
-            info.AddValue("type", _type.AssemblyQualifiedName);
+            info.AddValue("clrType", _clrType.AssemblyQualifiedName);
         }
 
         /// <summary>
@@ -104,14 +106,14 @@ namespace AggregateSource
         }
 
         /// <summary>
-        /// Gets the type of the aggregate root entity.
+        /// Gets the <see cref="System.Type">ClrType</see> of the aggregate root entity.
         /// </summary>
         /// <value>
-        /// The type of the aggregate root entity.
+        /// The ClrType of the aggregate root entity, or <c>null</c> if type not found.
         /// </value>
-        public Type Type
+        public Type ClrType
         {
-            get { return _type; }
+            get { return _clrType; }
         }
     }
 }

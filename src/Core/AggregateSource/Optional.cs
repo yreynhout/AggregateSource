@@ -16,6 +16,7 @@ namespace AggregateSource
         /// <summary>
         /// The empty instance.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static readonly Optional<T> Empty = new Optional<T>();
 
         readonly bool _hasValue;
@@ -101,6 +102,28 @@ namespace AggregateSource
         {
             return _hasValue.Equals(other._hasValue) &&
                    EqualityComparer<T>.Default.Equals(_value, other._value);
+        }
+
+        /// <summary>
+        /// Determines whether <see cref="Optional{T}">instance 1</see> is equal to <see cref="Optional{T}">instance 2</see>.
+        /// </summary>
+        /// <param name="instance1">The first instance.</param>
+        /// <param name="instance2">The second instance.</param>
+        /// <returns><c>true</c> if <see cref="Optional{T}">instance 1</see> is equal to <see cref="Optional{T}">instance 2</see>; otherwise, <c>false</c>.</returns>
+        public static bool operator ==(Optional<T> instance1, Optional<T> instance2)
+        {
+            return instance1.Equals(instance2);
+        }
+
+        /// <summary>
+        /// Determines whether <see cref="Optional{T}">instance 1</see> is not equal to <see cref="Optional{T}">instance 2</see>.
+        /// </summary>
+        /// <param name="instance1">The first instance.</param>
+        /// <param name="instance2">The second instance.</param>
+        /// <returns><c>true</c> if <see cref="Optional{T}">instance 1</see> is not equal to <see cref="Optional{T}">instance 2</see>; otherwise, <c>false</c>.</returns>
+        public static bool operator !=(Optional<T> instance1, Optional<T> instance2)
+        {
+            return !instance1.Equals(instance2);
         }
 
         /// <summary>

@@ -6,8 +6,6 @@ namespace AggregateSource
 {
     namespace OptionalTests
     {
-        //We need test for reference and value type optionals separately.
-
         [TestFixture]
         public class WithAnyInstance
         {
@@ -94,21 +92,35 @@ namespace AggregateSource
             [Test]
             public void ObjectEnumerationIsEmpty()
             {
-                var sut = (IEnumerable) _sut;
+                var sut = (IEnumerable)_sut;
 
                 Assert.That(sut, Is.EquivalentTo(new T[0]));
             }
 
             [Test]
-            public void DoesNotEqualNull()
+            public void DoesNotEqualNullUsingEquals()
             {
                 Assert.IsFalse(_sut.Equals(null));
             }
 
             [Test]
+            public void DoesNotEqualNullUsingEqualityOperator()
+            {
+                Assert.IsFalse(_sut == null);
+            }
+
+            [Test]
+            public void DiffersFromNullUsingInequalityOperator()
+            {
+                Assert.IsTrue(_sut != null);
+            }
+
+            [Test]
             public void DoesNotObjectEqualNull()
             {
-                Assert.IsFalse(_sut.Equals((object) null));
+                // ReSharper disable RedundantCast
+                Assert.IsFalse(_sut.Equals((object)null));
+                // ReSharper restore RedundantCast
             }
 
             [Test]
@@ -120,7 +132,7 @@ namespace AggregateSource
             [Test]
             public void DoesObjectEqualItself()
             {
-                Assert.IsTrue(_sut.Equals((object) _sut));
+                Assert.IsTrue(_sut.Equals((object)_sut));
             }
 
             [Test]
@@ -130,15 +142,55 @@ namespace AggregateSource
             }
 
             [Test]
+            public void DoesEqualItselfUsingEqualityOperator()
+            {
+                // ReSharper disable EqualExpressionComparison
+                Assert.IsTrue(_sut == _sut);
+                // ReSharper restore EqualExpressionComparison
+            }
+
+            [Test]
+            public void DoesNotDifferFromItselfUsingInequalityOperator()
+            {
+                // ReSharper disable EqualExpressionComparison
+                Assert.IsFalse(_sut != _sut);
+                // ReSharper restore EqualExpressionComparison
+            }
+
+            [Test]
             public void TwoInstancesAreEqualIfTheyBothDoNotHaveAValueAndAreOfTheSameValueType()
             {
                 Assert.IsTrue(_sut.Equals(Optional<T>.Empty));
             }
 
             [Test]
+            public void TwoInstancesAreEqualUsingTheEqualityOperatorIfTheyBothDoNotHaveAValue()
+            {
+                Assert.IsTrue(_sut == Optional<T>.Empty);
+            }
+
+            [Test]
+            public void TwoInstancesDoNotDifferUsingTheInequalityOperatorIfTheyBothDoNotHaveAValue()
+            {
+                Assert.IsFalse(_sut != Optional<T>.Empty);
+            }
+
+            [Test]
             public void TwoInstancesAreNotEqualIfTheOtherHasAValueAndIsOfTheSameValueType()
             {
                 Assert.IsFalse(_sut.Equals(WithValueFactory()));
+            }
+
+            [Test]
+            public void TwoInstancesAreNotEqualUsingTheEqualityOperatorIfTheOtherHasAValue()
+            {
+                Assert.IsFalse(_sut == WithValueFactory());
+            }
+
+            [Test]
+            public void TwoInstancesDifferUsingTheEqualityOperatorIfTheOtherHasAValue()
+            {
+                Assert.IsTrue(_sut != WithValueFactory());
             }
 
             [Test]
@@ -240,27 +292,39 @@ namespace AggregateSource
             [Test]
             public void TypedEnumerationReturnsInitializationValue()
             {
-                Assert.That(_sut, Is.EquivalentTo(new[] {_value}));
+                Assert.That(_sut, Is.EquivalentTo(new[] { _value }));
             }
 
             [Test]
             public void ObjectEnumerationReturnsInitializationValue()
             {
-                var sut = (IEnumerable) _sut;
+                var sut = (IEnumerable)_sut;
 
-                Assert.That(sut, Is.EquivalentTo(new object[] {_value}));
+                Assert.That(sut, Is.EquivalentTo(new object[] { _value }));
             }
 
             [Test]
-            public void DoesNotEqualNull()
+            public void DoesNotEqualNullUsingEquals()
             {
                 Assert.IsFalse(_sut.Equals(null));
             }
 
             [Test]
+            public void DoesNotEqualNullUsingEqualityOperator()
+            {
+                Assert.IsFalse(_sut == null);
+            }
+
+            [Test]
+            public void DoesDifferFromNullUsingInequalityOperator()
+            {
+                Assert.IsTrue(_sut != null);
+            }
+
+            [Test]
             public void DoesNotObjectEqualNull()
             {
-                Assert.IsFalse(_sut.Equals((object) null));
+                Assert.IsFalse(_sut.Equals((object)null));
             }
 
             [Test]
@@ -270,15 +334,31 @@ namespace AggregateSource
             }
 
             [Test]
-            public void DoesEqualItself()
+            public void DoesEqualItselfUsingEquals()
             {
                 Assert.IsTrue(_sut.Equals(_sut));
             }
 
             [Test]
+            public void DoesEqualItselfUsingEqualityOperator()
+            {
+                // ReSharper disable EqualExpressionComparison
+                Assert.IsTrue(_sut == _sut);
+                // ReSharper restore EqualExpressionComparison
+            }
+
+            [Test]
+            public void DoesNotDifferFromItselfUsingInequalityOperator()
+            {
+                // ReSharper disable EqualExpressionComparison
+                Assert.IsFalse(_sut != _sut);
+                // ReSharper restore EqualExpressionComparison
+            }
+
+            [Test]
             public void DoesObjectEqualItself()
             {
-                Assert.IsTrue(_sut.Equals((object) _sut));
+                Assert.IsTrue(_sut.Equals((object)_sut));
             }
 
             [Test]
@@ -288,15 +368,51 @@ namespace AggregateSource
             }
 
             [Test]
+            public void TwoInstancesAreEqualUsingEqualityOperatorIfTheyBothHaveTheSameValue()
+            {
+                Assert.IsTrue(_sut == InstanceFactory(_value));
+            }
+
+            [Test]
+            public void TwoInstancesDoNotDifferUsingInequalityOperatorIfTheyBothHaveTheSameValue()
+            {
+                Assert.IsFalse(_sut != InstanceFactory(_value));
+            }
+
+            [Test]
             public void TwoInstancesAreNotEqualIfTheOtherHasNoValue()
             {
                 Assert.IsFalse(_sut.Equals(Optional<T>.Empty));
             }
 
             [Test]
+            public void TwoInstancesAreNotEqualUsingEqualityOperatorIfTheOtherHasNoValue()
+            {
+                Assert.IsFalse(_sut == Optional<T>.Empty);
+            }
+
+            [Test]
+            public void TwoInstancesDoDifferUsingInequalityOperatorIfTheOtherHasNoValue()
+            {
+                Assert.IsTrue(_sut != Optional<T>.Empty);
+            }
+
+            [Test]
             public void TwoInstancesAreNotEqualIfTheOtherHasDifferentValue()
             {
                 Assert.IsFalse(_sut.Equals(InstanceFactory(ValueFactory())));
+            }
+
+            [Test]
+            public void TwoInstancesAreNotEqualUsingEqualityOperatorIfTheOtherHasDifferentValue()
+            {
+                Assert.IsFalse(_sut == InstanceFactory(ValueFactory()));
+            }
+
+            [Test]
+            public void TwoInstancesDifferUsingTheInequalityOperatorIfTheOtherHasDifferentValue()
+            {
+                Assert.IsTrue(_sut != InstanceFactory(ValueFactory()));
             }
 
             [Test]
@@ -343,6 +459,6 @@ namespace AggregateSource
             }
         }
 
-        class MismatchObject {}
+        class MismatchObject { }
     }
 }
