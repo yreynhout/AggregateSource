@@ -30,3 +30,13 @@
 - Extend SampleSource with an async sample.
 - DRY up those repos, there's a SlicedEventStreamReader in them (bonus, we can test this thing separately).
 - Build a realistic app on top of this API that shows off entities, aggregates, testing, bulk loading.
+
+## Ideas
+
+AggregateSource.Repositories
+
+AggregateSource.CollectionRepositories.EventStore
+AggregateSource.CollectionRepositories.NEventStore
+
+AggregateSource.PersistenceRepositories.EventStore
+AggregateSource.PersistenceRepositories.NEventStore
