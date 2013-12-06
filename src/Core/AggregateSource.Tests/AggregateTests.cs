@@ -21,7 +21,7 @@ namespace AggregateSource
         }
 
         [Test]
-        public void IdentifierCanNotBeNull()
+        public void IdentifierCannotBeNull()
         {
             Assert.
                 Throws<ArgumentNullException>(
@@ -29,11 +29,27 @@ namespace AggregateSource
         }
 
         [Test]
-        public void RootCanNotBeNull()
+        public void RootCannotBeNull()
         {
             Assert.
                 Throws<ArgumentNullException>(
                     () => new Aggregate(Guid.NewGuid().ToString(), 0, null));
+        }
+
+        [Test]
+        public void ToBuilderReturnsExpectedResult()
+        {
+            const string identifier = "identifier";
+            const int expectedVersion = 123;
+            var root = new AggregateRootEntityStub();
+            var sut = new Aggregate(identifier, expectedVersion, root);
+
+            var result = sut.ToBuilder();
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Identifier, Is.EqualTo(identifier));
+            Assert.That(result.ExpectedVersion, Is.EqualTo(expectedVersion));
+            Assert.That(result.Root, Is.SameAs(root));
         }
 
         static class AggregateTestsValueSource

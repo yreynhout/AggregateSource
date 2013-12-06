@@ -17,7 +17,7 @@ namespace AggregateSource
             UnitOfWork _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new UnitOfWork();
             }
@@ -29,7 +29,7 @@ namespace AggregateSource
             }
 
             [Test]
-            public void TryGetIdentifierCanNotBeNull()
+            public void TryGetIdentifierCannotBeNull()
             {
                 Aggregate aggregate;
                 Assert.Throws<ArgumentNullException>(() => _sut.TryGet(null, out aggregate));
@@ -42,7 +42,7 @@ namespace AggregateSource
             UnitOfWork _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new UnitOfWork();
             }
@@ -84,7 +84,7 @@ namespace AggregateSource
             Aggregate _aggregate;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _aggregate = AggregateStubs.Stub1;
                 _sut = new UnitOfWork();
@@ -145,7 +145,7 @@ namespace AggregateSource
             Aggregate _aggregate2;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _aggregate1 = AggregateStubs.Create(new ChangedAggregateRootEntityStub());
                 _aggregate2 = AggregateStubs.Create(new ChangedAggregateRootEntityStub());

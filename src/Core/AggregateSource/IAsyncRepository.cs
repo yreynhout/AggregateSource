@@ -21,6 +21,7 @@ namespace AggregateSource
         /// </summary>
         /// <param name="identifier">The aggregate identifier.</param>
         /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         Task<Optional<TAggregateRoot>> GetOptionalAsync(string identifier);
 
         /// <summary>

@@ -16,13 +16,13 @@ namespace AggregateSource
             }
 
             [Test]
-            public void RouteEventCanNotBeNull()
+            public void RouteEventCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new RouteWithNullEventEntityState());
             }
 
             [Test]
-            public void RegisterHandlerCanNotBeNull()
+            public void RegisterHandlerCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerEntityState());
             }
@@ -67,7 +67,7 @@ namespace AggregateSource
             private WithHandlersEntityState _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new WithHandlersEntityState();
             }
@@ -106,7 +106,7 @@ namespace AggregateSource
             private WithoutHandlersEntityState _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new WithoutHandlersEntityState();
             }

@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +57,7 @@
     <Compile Include="..\AggregateSource.Content.ExplicitRouting\Entity.cs">
       <Link>Entity.cs</Link>
     </Compile>
+    <Compile Include="AggregateBuilderTests.cs" />
     <Compile Include="AggregateStubs.cs" />
     <Compile Include="AggregateNotFoundExceptionTests.cs" />
     <Compile Include="AggregateSourceExceptionTests.cs" />

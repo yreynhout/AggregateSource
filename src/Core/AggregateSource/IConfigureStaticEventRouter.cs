@@ -23,6 +23,7 @@ namespace AggregateSource
         /// <param name="event">The event type the route is for.</param>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="instance"/> or <paramref name="event"/> or <paramref name="handler"/> is <c>null</c>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "event")]
         void ConfigureRoute(Type instance, Type @event, Action<object, object> handler);
     }
 }

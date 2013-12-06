@@ -16,13 +16,13 @@ namespace AggregateSource
             }
 
             [Test]
-            public void InitializeEventsCanNotBeNull()
+            public void InitializeEventsCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new InitializeWithNullEventsAggregateRootEntity());
             }
 
             [Test]
-            public void ApplyEventCanNotBeNull()
+            public void ApplyEventCannotBeNull()
             {
                 var sut = new ApplyNullEventAggregateRootEntity();
                 Assert.Throws<ArgumentNullException>(sut.ApplyNull);
@@ -43,7 +43,7 @@ namespace AggregateSource
             }
 
             [Test]
-            public void RegisterHandlerCanNotBeNull()
+            public void RegisterHandlerCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
             }
@@ -119,7 +119,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new PristineAggregateRootEntity();
             }
@@ -157,7 +157,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new InitializedAggregateRootEntity();
             }
@@ -201,7 +201,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new ChangedAggregateRootEntity();
             }
@@ -251,7 +251,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new InitializedThenChangedAggregateRootEntity();
             }
@@ -302,7 +302,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new ChangedThenClearedAggregateRootEntity();
             }
@@ -350,7 +350,7 @@ namespace AggregateSource
             AggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new InitializedThenChangedThenClearedAggregateRootEntity();
             }
@@ -399,7 +399,7 @@ namespace AggregateSource
             WithHandlersAggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new WithHandlersAggregateRootEntity();
             }
@@ -454,7 +454,7 @@ namespace AggregateSource
             WithoutHandlersAggregateRootEntity _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new WithoutHandlersAggregateRootEntity();
             }

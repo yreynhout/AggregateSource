@@ -12,7 +12,7 @@ namespace AggregateSource
             EventRecorder _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new EventRecorder();
             }
@@ -24,7 +24,7 @@ namespace AggregateSource
             }
 
             [Test]
-            public void RecordEventCanNotBeNull()
+            public void RecordEventCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => _sut.Record(null));
             }
@@ -36,7 +36,7 @@ namespace AggregateSource
             EventRecorder _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new EventRecorder();
             }
@@ -82,7 +82,7 @@ namespace AggregateSource
             object _initialEvent;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = new EventRecorder();
                 _initialEvent = new object();

@@ -16,19 +16,19 @@ namespace AggregateSource
             }
 
             [Test]
-            public void ApplierCanNotBeNull()
+            public void ApplierCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new UseNullApplierEntity());
             }
 
             [Test]
-            public void RouteEventCanNotBeNull()
+            public void RouteEventCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new RouteWithNullEventEntity());
             }
 
             [Test]
-            public void ApplyEventCanNotBeNull()
+            public void ApplyEventCannotBeNull()
             {
                 var sut = new ApplyNullEventEntity();
                 Assert.Throws<ArgumentNullException>(sut.ApplyNull);
@@ -74,7 +74,7 @@ namespace AggregateSource
             List<object> _appliedEvents;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _appliedEvents = new List<object>();
                 _applier = _ => _appliedEvents.Add(_);
@@ -142,7 +142,7 @@ namespace AggregateSource
             List<object> _appliedEvents;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _appliedEvents = new List<object>();
                 _applier = _ => _appliedEvents.Add(_);

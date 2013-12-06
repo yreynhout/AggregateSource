@@ -14,7 +14,7 @@ namespace AggregateSource
             Optional<AggregateRootEntityStub> _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = Optional<AggregateRootEntityStub>.Empty;
             }
@@ -61,11 +61,12 @@ namespace AggregateSource
             Optional<T> _sut;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _sut = SutFactory();
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sut")]
             protected abstract Optional<T> SutFactory();
             protected abstract Optional<T> WithValueFactory();
 
@@ -75,6 +76,7 @@ namespace AggregateSource
                 Assert.That(_sut.HasValue, Is.False);
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "_")]
             [Test]
             public void ValueThrows()
             {
@@ -214,7 +216,7 @@ namespace AggregateSource
             T _value;
 
             [SetUp]
-            public void SetUp()
+            public void Setup()
             {
                 _value = ValueFactory();
                 _sut = InstanceFactory(_value);

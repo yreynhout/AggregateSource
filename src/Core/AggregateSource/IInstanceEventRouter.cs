@@ -12,6 +12,7 @@ namespace AggregateSource
         /// </summary>
         /// <param name="event">The event to route.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="event"/> is null.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "event")]
         void Route(object @event);
     }
 }

@@ -9,7 +9,7 @@ namespace AggregateSource
         StaticEventRouter _sut;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
             _sut = new StaticEventRouter();
         }
@@ -27,51 +27,51 @@ namespace AggregateSource
         }
 
         [Test]
-        public void ConfigureRouteGenericHandlerCanNotBeNull()
+        public void ConfigureRouteGenericHandlerCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute<object, object>(null));
         }
 
         [Test]
-        public void CanNotAddDuplicateRouteGenerically()
+        public void CannotAddDuplicateRouteGenerically()
         {
             _sut.ConfigureRoute((object instance, object @event) => { });
             Assert.Throws<ArgumentException>(() => _sut.ConfigureRoute((object instance, object @event) => { }));
         }
 
         [Test]
-        public void CanConfigureRouteGenericallyForSameEventTypeOnDifferentInstanceType()
+        public void CanConfigureRouteGenericallyForSameInstanceTypeButDifferentEventType()
         {
             _sut.ConfigureRoute((object instance, Event1 @event) => { });
             Assert.DoesNotThrow(() => _sut.ConfigureRoute((object instance, Event2 @event) => { }));
         }
 
-        class Event1
+        private abstract class Event1
         {}
 
-        class Event2
+        private abstract class Event2
         {}
 
         [Test]
-        public void ConfigureRouteInstanceCanNotBeNull()
+        public void ConfigureRouteInstanceCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute(null, typeof (object), (instance, @event) => { }));
         }
 
         [Test]
-        public void ConfigureRouteEventCanNotBeNull()
+        public void ConfigureRouteEventCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute(typeof (object), null, (instance, @event) => { }));
         }
 
         [Test]
-        public void ConfigureRouteHandlerCanNotBeNull()
+        public void ConfigureRouteHandlerCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.ConfigureRoute(typeof (object), typeof (object), null));
         }
 
         [Test]
-        public void CanNotAddDuplicateRoute()
+        public void CannotAddDuplicateRoute()
         {
             _sut.ConfigureRoute(typeof (object), typeof (object), (instance, @event) => { });
             Assert.Throws<ArgumentException>(
@@ -79,13 +79,13 @@ namespace AggregateSource
         }
 
         [Test]
-        public void RouteInstanceCanNotBeNull()
+        public void RouteInstanceCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.Route(null, new object()));
         }
 
         [Test]
-        public void RouteEventCanNotBeNull()
+        public void RouteEventCannotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => _sut.Route(new object(), null));
         }

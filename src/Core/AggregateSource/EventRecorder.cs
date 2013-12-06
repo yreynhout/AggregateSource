@@ -7,6 +7,7 @@ namespace AggregateSource
     /// <summary>
     /// Records events applied to an aggregate's root entity or entity.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
     public class EventRecorder : IEnumerable<object>
     {
         readonly List<object> _recorded;

@@ -3,7 +3,7 @@
 namespace AggregateSource
 {
     /// <summary>
-    /// Base class for tracking aggregate meta data and its <see cref="IAggregateRootEntity"/>.
+    /// Class for tracking aggregate meta data and its <see cref="IAggregateRootEntity"/>.
     /// </summary>
     public class Aggregate
     {
@@ -58,6 +58,15 @@ namespace AggregateSource
         public IAggregateRootEntity Root
         {
             get { return _root; }
+        }
+
+        /// <summary>
+        /// Creates a mutable builder with the same contents as this instance.
+        /// </summary>
+        /// <returns>An <see cref="AggregateBuilder"/>.</returns>
+        public AggregateBuilder ToBuilder()
+        {
+            return new AggregateBuilder(this);
         }
     }
 }

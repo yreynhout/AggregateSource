@@ -12,6 +12,7 @@
         /// <param name="identifier">The aggregate identifier.</param>
         /// <returns>An instance of <typeparamref name="TAggregateRoot"/>.</returns>
         /// <exception cref="AggregateNotFoundException">Thrown when an aggregate is not found.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         TAggregateRoot Get(string identifier);
 
         /// <summary>
