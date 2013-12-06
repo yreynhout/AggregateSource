@@ -7,6 +7,7 @@ namespace AggregateSource.EventStore
 {
     namespace AsyncRepositoryTests
     {
+        // ReSharper disable UnusedVariable
         [TestFixture]
         public class Construction
         {
@@ -50,7 +51,7 @@ namespace AggregateSource.EventStore
             }
 
             [Ignore("TODO after merge - requires setup")]
-            public void UsingCtorReturnsInstanceWithExpectedProperties() {}
+            public void UsingCtorReturnsInstanceWithExpectedProperties() { }
         }
 
         [TestFixture]
@@ -74,9 +75,9 @@ namespace AggregateSource.EventStore
                     Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
                 Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
+                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (AggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -127,9 +128,9 @@ namespace AggregateSource.EventStore
                     Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
                 Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
+                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (AggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -180,9 +181,9 @@ namespace AggregateSource.EventStore
                     Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
                 Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
+                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (AggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -190,7 +191,7 @@ namespace AggregateSource.EventStore
             {
                 var result = _sut.GetAsync(_model.KnownIdentifier).Result;
 
-                Assert.That(result.RecordedEvents, Is.EquivalentTo(new[] {new EventStub(1)}));
+                Assert.That(result.RecordedEvents, Is.EquivalentTo(new[] { new EventStub(1) }));
             }
 
             [Test]
@@ -207,7 +208,7 @@ namespace AggregateSource.EventStore
                 var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
 
                 Assert.That(result.HasValue, Is.True);
-                Assert.That(result.Value.RecordedEvents, Is.EquivalentTo(new[] {new EventStub(1)}));
+                Assert.That(result.Value.RecordedEvents, Is.EquivalentTo(new[] { new EventStub(1) }));
             }
         }
 
@@ -235,9 +236,9 @@ namespace AggregateSource.EventStore
                     Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
                 Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
+                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (AggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -247,9 +248,9 @@ namespace AggregateSource.EventStore
                     Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.KnownIdentifier).Result; });
                 Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
+                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (AggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -268,6 +269,7 @@ namespace AggregateSource.EventStore
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }
         }
+        // ReSharper restore UnusedVariable
     }
 }
 #endif

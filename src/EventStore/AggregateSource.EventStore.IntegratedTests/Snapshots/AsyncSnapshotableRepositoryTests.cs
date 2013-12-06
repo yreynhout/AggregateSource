@@ -12,6 +12,7 @@ namespace AggregateSource.EventStore.Snapshots
 {
     namespace AsyncSnapshotableRepositoryTests
     {
+        // ReSharper disable UnusedVariable
         [TestFixture]
         public class Construction
         {
@@ -122,7 +123,7 @@ namespace AggregateSource.EventStore.Snapshots
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
                 var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -220,7 +221,7 @@ namespace AggregateSource.EventStore.Snapshots
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
                 var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -321,7 +322,7 @@ namespace AggregateSource.EventStore.Snapshots
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
                 var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -456,7 +457,7 @@ namespace AggregateSource.EventStore.Snapshots
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
                 var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -616,7 +617,7 @@ namespace AggregateSource.EventStore.Snapshots
                 Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
                 var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
                 Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.Type, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -723,6 +724,7 @@ namespace AggregateSource.EventStore.Snapshots
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
             }
         }
+        // ReSharper restore UnusedVariable
     }
 }
 #endif

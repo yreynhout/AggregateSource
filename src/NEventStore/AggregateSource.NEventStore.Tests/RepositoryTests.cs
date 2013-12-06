@@ -72,7 +72,7 @@ namespace AggregateSource.NEventStore
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -121,7 +121,7 @@ namespace AggregateSource.NEventStore
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -170,7 +170,7 @@ namespace AggregateSource.NEventStore
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -221,7 +221,7 @@ namespace AggregateSource.NEventStore
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
@@ -230,7 +230,7 @@ namespace AggregateSource.NEventStore
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.KnownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]

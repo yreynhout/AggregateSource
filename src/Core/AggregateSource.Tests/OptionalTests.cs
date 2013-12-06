@@ -144,17 +144,15 @@ namespace AggregateSource
             [Test]
             public void DoesEqualItselfUsingEqualityOperator()
             {
-                // ReSharper disable EqualExpressionComparison
-                Assert.IsTrue(_sut == _sut);
-                // ReSharper restore EqualExpressionComparison
+                var @ref = _sut;
+                Assert.IsTrue(_sut == @ref);
             }
 
             [Test]
             public void DoesNotDifferFromItselfUsingInequalityOperator()
             {
-                // ReSharper disable EqualExpressionComparison
-                Assert.IsFalse(_sut != _sut);
-                // ReSharper restore EqualExpressionComparison
+                var @ref = _sut;
+                Assert.IsFalse(_sut != @ref);
             }
 
             [Test]
@@ -342,17 +340,15 @@ namespace AggregateSource
             [Test]
             public void DoesEqualItselfUsingEqualityOperator()
             {
-                // ReSharper disable EqualExpressionComparison
-                Assert.IsTrue(_sut == _sut);
-                // ReSharper restore EqualExpressionComparison
+                var @ref = _sut;
+                Assert.IsTrue(_sut == @ref);
             }
 
             [Test]
             public void DoesNotDifferFromItselfUsingInequalityOperator()
             {
-                // ReSharper disable EqualExpressionComparison
-                Assert.IsFalse(_sut != _sut);
-                // ReSharper restore EqualExpressionComparison
+                var @ref = _sut;
+                Assert.IsFalse(_sut != @ref);
             }
 
             [Test]

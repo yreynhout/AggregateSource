@@ -68,7 +68,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -119,7 +119,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -169,7 +169,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -224,7 +224,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -292,7 +292,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
@@ -347,7 +347,7 @@ namespace AggregateSource.NEventStore.Snapshots
                 var exception =
                     Assert.Throws<AggregateNotFoundException>(() => _sut.Get(_model.UnknownIdentifier));
                 Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(exception.Type, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]

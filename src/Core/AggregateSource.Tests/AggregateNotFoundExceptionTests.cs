@@ -27,7 +27,7 @@ namespace AggregateSource
             Assert.That(sut.ClrType, Is.EqualTo(AggregateType));
             Assert.That(sut.Message, Is.EqualTo(
                 "The Object aggregate with identifier " + AggregateIdentifier +
-                " could not be found. Please make sure the callsite is indeed passing in an identifier for an Object aggregate."));
+                " could not be found. Please make sure the call site is indeed passing in an identifier for an Object aggregate."));
             Assert.That(sut.InnerException, Is.Null);
         }
 
