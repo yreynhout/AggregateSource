@@ -53,26 +53,26 @@ namespace AggregateSource
         /// Applies the specified event to this instance and invokes the associated state handler.
         /// </summary>
         /// <param name="event">The event to apply.</param>
-        protected void Apply(object @event)
+        protected void ApplyChange(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
-            BeforeApply(@event);
+            BeforeApplyChange(@event);
             Play(@event);
             Record(@event);
-            AfterApply(@event);
+            AfterApplyChange(@event);
         }
 
         /// <summary>
         /// Called before an event is applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that will be applied.</param>
-        protected virtual void BeforeApply(object @event) {}
+        protected virtual void BeforeApplyChange(object @event) {}
 
         /// <summary>
         /// Called after an event has been applied, exposed as a point of interception.
         /// </summary>
         /// <param name="event">The event that has been applied.</param>
-        protected virtual void AfterApply(object @event) {}
+        protected virtual void AfterApplyChange(object @event) {}
 
         void Play(object @event)
         {

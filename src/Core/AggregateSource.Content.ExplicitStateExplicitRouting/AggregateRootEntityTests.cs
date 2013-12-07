@@ -61,7 +61,7 @@ namespace AggregateSource
         {
             public void ApplyNull()
             {
-                Apply(null);
+                ApplyChange(null);
             }
         }
 
@@ -69,17 +69,17 @@ namespace AggregateSource
         {
             public ApplyInterceptorAggregateRootEntity()
             {
-                Apply(new object());
+                ApplyChange(new object());
             }
 
-            protected override void BeforeApply(object @event)
+            protected override void BeforeApplyChange(object @event)
             {
                 BeforeApplyWasCalled = true;
             }
 
             public bool BeforeApplyWasCalled { get; private set; }
 
-            protected override void AfterApply(object @event)
+            protected override void AfterApplyChange(object @event)
             {
                 AfterApplyWasCalled = true;
             }
@@ -217,7 +217,7 @@ namespace AggregateSource
             {
                 foreach (var change in AppliedChanges)
                 {
-                    Apply(change);
+                    ApplyChange(change);
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace AggregateSource
                 Initialize(new[] { new object(), new object() });
                 foreach (var change in AppliedChanges)
                 {
-                    Apply(change);
+                    ApplyChange(change);
                 }
             }
         }
@@ -317,7 +317,7 @@ namespace AggregateSource
             {
                 foreach (var change in new[] { new object(), new object() })
                 {
-                    Apply(change);
+                    ApplyChange(change);
                 }
                 ClearChanges();
             }
@@ -368,7 +368,7 @@ namespace AggregateSource
                 Initialize(new[] { new object(), new object() });
                 foreach (var change in new[] { new object(), new object() })
                 {
-                    Apply(change);
+                    ApplyChange(change);
                 }
                 ClearChanges();
             }
@@ -428,7 +428,7 @@ namespace AggregateSource
         {
             public void DoApply(object @event)
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
 
             public WithHandlersState PublicState
@@ -466,7 +466,7 @@ namespace AggregateSource
         {
             public void DoApply(object @event)
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
         }
     }

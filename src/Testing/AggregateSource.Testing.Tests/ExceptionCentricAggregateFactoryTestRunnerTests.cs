@@ -108,7 +108,7 @@ namespace AggregateSource.Testing
             {
                 foreach (var @event in events)
                 {
-                    Apply(@event);
+                    ApplyChange(@event);
                 }
             }
         }

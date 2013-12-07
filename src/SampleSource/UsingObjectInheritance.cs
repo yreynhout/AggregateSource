@@ -48,7 +48,7 @@ namespace SampleSource
 
             VideoTitle(VideoTitleRegistered @event) : this()
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
 
             VideoTitle()
@@ -81,7 +81,7 @@ namespace SampleSource
 
             public void CorrectTitle(string correction)
             {
-                Apply(new CorrectedVideoTitle(Id, correction));
+                ApplyChange(new CorrectedVideoTitle(Id, correction));
             }
         }
 
@@ -106,12 +106,12 @@ namespace SampleSource
             internal VideoTape(IVideoTitleProfile title, ScannedNewVideoTape @event)
                 : this(title)
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
 
             public void Rent(VideoStoreMemberId memberId, RentalPeriod period)
             {
-                Apply(
+                ApplyChange(
                     new RentedVideoTape(
                         Id, _title.Id, _title.Title,
                         memberId, period.FromDate, period.ToDate));

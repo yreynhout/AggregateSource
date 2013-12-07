@@ -61,17 +61,17 @@ namespace SampleSource
             public TodoList(TodoListId id, string name)
                 : this()
             {
-                Apply(new AddedNewTodoList(id, name));
+                ApplyChange(new AddedNewTodoList(id, name));
             }
 
             public void AddNewItem(TodoListItemId itemId, string description)
             {
-                Apply(new AddedNewItemToTodoList(Id, itemId, description));
+                ApplyChange(new AddedNewItemToTodoList(Id, itemId, description));
             }
 
             public void DescribeItem(TodoListItemId itemId, string description)
             {
-                Apply(new DescribedTodoListItem(itemId, description));
+                ApplyChange(new DescribedTodoListItem(itemId, description));
             }
 
             public TodoListItem FindById(TodoListItemId itemId)
@@ -92,7 +92,7 @@ namespace SampleSource
 
             void When(AddedNewItemToTodoList @event)
             {
-                var item = new TodoListItem(Apply);
+                var item = new TodoListItem(ApplyChange);
                 item.Route(@event);
                 _items.Add(item);
             }

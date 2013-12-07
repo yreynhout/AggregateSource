@@ -142,7 +142,7 @@ namespace AggregateSource.Testing
             {
                 foreach (var theEvent in TheEvents)
                 {
-                    Apply(theEvent);
+                    ApplyChange(theEvent);
                 }
             }
         }
@@ -155,7 +155,7 @@ namespace AggregateSource.Testing
             {
                 foreach (var theEvent in TheEvents)
                 {
-                    Apply(theEvent);
+                    ApplyChange(theEvent);
                 }
             }
         }

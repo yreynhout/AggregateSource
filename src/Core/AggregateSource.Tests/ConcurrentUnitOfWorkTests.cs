@@ -173,7 +173,7 @@ namespace AggregateSource
         {
             public ChangedAggregateRootEntityStub()
             {
-                Apply(new object());
+                ApplyChange(new object());
             }
         }
     }

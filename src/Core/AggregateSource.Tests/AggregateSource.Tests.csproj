@@ -64,7 +64,6 @@
     <Compile Include="AggregateTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="ConcurrentUnitOfWorkTests.cs" />
-    <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceEventRouterTests.cs" />

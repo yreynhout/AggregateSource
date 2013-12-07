@@ -147,7 +147,7 @@ namespace SampleSource.Testing
                 {
                     if (_cancelled)
                         throw new InvalidOperationException("The concert has already been cancelled.");
-                    Apply(ConcertEvents.Cancelled(_id, reason));
+                    ApplyChange(ConcertEvents.Cancelled(_id, reason));
                 }
 
                 public static Concert Plan(ConcertId id, int venueCapacity)
@@ -156,7 +156,7 @@ namespace SampleSource.Testing
                         throw new ArgumentException("venueCapacity");
 
                     var concert = Factory();
-                    concert.Apply(ConcertEvents.Planned(id));
+                    concert.ApplyChange(ConcertEvents.Planned(id));
                     return concert;
                 }
             }
@@ -187,7 +187,7 @@ namespace SampleSource.Testing
 
                 internal TicketSale(TicketSaleStartedEvent @event)
                 {
-                    Apply(@event);
+                    ApplyChange(@event);
                 }
 
                 public SeatCount GetAvailability()

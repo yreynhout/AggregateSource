@@ -27,7 +27,7 @@ namespace SampleSource
 
         public class DomainEventAwareAggregateRootEntity : AggregateRootEntity
         {
-            protected override void BeforeApply(object @event)
+            protected override void BeforeApplyChange(object @event)
             {
                 DomainEventDispatcher.Publish(@event);
             }
@@ -91,7 +91,7 @@ namespace SampleSource
             public TodoList(TodoListId id, string name)
                 : this()
             {
-                Apply(new AddedNewTodoList(id, name));
+                ApplyChange(new AddedNewTodoList(id, name));
             }
 
             // state

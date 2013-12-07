@@ -113,7 +113,7 @@ namespace AggregateSource.Testing
                 {
                     foreach (var theEvent in TheEvents)
                     {
-                        Apply(theEvent);
+                        ApplyChange(theEvent);
                     }
                     return TheResult;
                 }
@@ -265,7 +265,7 @@ namespace AggregateSource.Testing
                 {
                     foreach (var theEvent in TheEvents)
                     {
-                        Apply(theEvent);
+                        ApplyChange(theEvent);
                     }
 
                     return TheResult;
@@ -287,7 +287,7 @@ namespace AggregateSource.Testing
                 {
                     foreach (var theEvent in TheEvents)
                     {
-                        Apply(theEvent);
+                        ApplyChange(theEvent);
                     }
 
                     throw TheExpectedException;
