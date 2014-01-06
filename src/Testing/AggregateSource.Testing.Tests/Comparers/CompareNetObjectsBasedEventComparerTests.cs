@@ -9,6 +9,13 @@ namespace AggregateSource.Testing.Comparers
     public class CompareNetObjectsBasedEventComparerTests
     {
         [Test]
+        public void IsEventComparer()
+        {
+            var sut = new CompareNetObjectsBasedEventComparer(new CompareObjects());
+            Assert.IsInstanceOf<IEventComparer>(sut);
+        }
+
+        [Test]
         public void CompareObjectsCanNotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => new CompareNetObjectsBasedEventComparer(null));

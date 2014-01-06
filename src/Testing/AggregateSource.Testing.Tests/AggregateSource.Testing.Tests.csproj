@@ -60,6 +60,7 @@
     <Compile Include="CommandScenarioForTests.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedEventComparerTests.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparerTests.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedFactComparerTests.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedResultComparerTests.cs" />
     <Compile Include="ConstructorScenarioForTests.cs" />
     <Compile Include="EventCentricAggregateCommandTestRunnerTests.cs" />

@@ -60,7 +60,10 @@
     <Compile Include="Command\AggregateCommandWhenStateBuilder.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedEventComparer.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparer.cs" />
+    <Compile Include="Comparers\CompareNetObjectsBasedFactComparer.cs" />
     <Compile Include="Comparers\CompareNetObjectsBasedResultComparer.cs" />
+    <Compile Include="FactComparisonDifference.cs" />
+    <Compile Include="IFactComparer.cs" />
     <Compile Include="ConstructorScenarioFor.cs" />
     <Compile Include="Constructor\AggregateConstructorThenStateBuilder.cs" />
     <Compile Include="Constructor\AggregateConstructorThrowStateBuilder.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="EventCentricAggregateFactoryTestRunner.cs" />
     <Compile Include="EventCentricAggregateFactoryTestSpecification.cs" />
     <Compile Include="EventCentricAggregateQueryTestResult.cs" />
+    <Compile Include="IResultComparer.cs" />
     <Compile Include="WrappedEventComparerEqualityComparer.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestResult.cs" />
     <Compile Include="ExceptionCentricAggregateCommandTestRunner.cs" />
