@@ -25,6 +25,7 @@
       <SourceTestingPackageConfigs Include="$(RootPath)\src\Testing\**\packages.config" />
       <SourceSampleSourcePackageConfigs Include="$(RootPath)\src\SampleSource\packages.config" />
       <SourceReactivePackageConfigs Include="$(RootPath)\src\Reactive\**\packages.config" />
+      <SourceRecipesPackageConfigs Include="$(RootPath)\src\Recipes\EventStoreShopping\**\packages.config" />
     </ItemGroup>
     <Exec Command='$(NuGetExe) sources Remove -Name "NEventStore CI package source"' ContinueOnError="True" />
     <Exec Command='$(NuGetExe) sources Add -Name "NEventStore CI package source" -Source "https://www.myget.org/F/neventstore-ci/"'
@@ -37,6 +38,7 @@
     <Exec Command='$(NuGetExe) install %(SourceTestingPackageConfigs.Identity) -o "$(RootPath)\src\Testing\packages"' />
     <Exec Command='$(NuGetExe) install %(SourceReactivePackageConfigs.Identity) -o "$(RootPath)\src\Reactive\packages"' />
     <Exec Command='$(NuGetExe) install %(SourceSampleSourcePackageConfigs.Identity) -o "$(RootPath)\src\packages"' />
+    <Exec Command='$(NuGetExe) install %(SourceRecipesPackageConfigs.Identity) -o "$(RootPath)\src\Recipes\EventStoreShopping\packages"' />
   </Target>
 
   <!-- Copied from NuGet.targets -->
