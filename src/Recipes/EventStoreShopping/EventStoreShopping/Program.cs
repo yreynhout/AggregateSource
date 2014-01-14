@@ -52,11 +52,11 @@ namespace EventStoreShopping
             var cart2 = repository.Get(id);
             cart2.AddItem(new ItemId("pair_of_shirts"), 4);
 
-            //Handle Add Item command
+            //Handle Remove Item command
             var cart3 = repository.Get(id);
             cart3.RemoveItem(new ItemId("pair_of_socks"));
 
-            //Handle Add Item command
+            //Handle Increment Item Count command
             var cart4 = repository.Get(id);
             cart4.IncrementItemCount(new ItemId("pair_of_shirts"));
 
