@@ -50,12 +50,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core\AggregateSource.Content.ExplicitRouting\AggregateRootEntity.cs">
-      <Link>AggregateRootEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\AggregateSource.Content.ExplicitRouting\Entity.cs">
-      <Link>Entity.cs</Link>
-    </Compile>
     <Compile Include="..\Testing\AggregateSource.Testing.NUnit\Content\NUnitAssertionExtensions.cs">
       <Link>NUnitAssertionExtensions.cs</Link>
     </Compile>
@@ -78,8 +72,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
+    <ProjectReference Include="..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\AggregateSource\AggregateSource.csproj">
+      <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
       <Name>AggregateSource</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj">

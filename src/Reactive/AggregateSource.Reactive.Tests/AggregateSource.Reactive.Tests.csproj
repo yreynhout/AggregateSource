@@ -77,13 +77,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AggregateSource.Reactive\AggregateSource.Reactive.csproj">
       <Project>{37cf3852-c21e-465c-97b9-cc21298e3a40}</Project>
       <Name>AggregateSource.Reactive</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

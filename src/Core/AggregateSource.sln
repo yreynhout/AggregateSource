@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "AggregateSource.Core\AggregateSource.Core.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Tests", "AggregateSource.Tests\AggregateSource.Tests.csproj", "{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Tests", "AggregateSource.Core.Tests\AggregateSource.Core.Tests.csproj", "{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Content.ExplicitRouting", "AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj", "{E464D623-2A99-4C39-A500-898FF36074C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Content.ExplicitStateExplicitRouting", "AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj", "{AEED1E3D-BA45-4C81-9996-CE327815D6B7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{3FB3D2C4-928B-4047-9CF1-25588F57E5D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Content.ExplicitRouting", "AggregateSource\AggregateSource.csproj", "{E464D623-2A99-4C39-A500-898FF36074C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

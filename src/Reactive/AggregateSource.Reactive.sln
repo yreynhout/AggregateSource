@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Reactive", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Reactive.Tests", "AggregateSource.Reactive.Tests\AggregateSource.Reactive.Tests.csproj", "{1D472BCC-306A-45C1-9B4E-4F32B0C47232}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "..\Core\AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Core", "..\Core\AggregateSource.Core\AggregateSource.Core.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E464D623-2A99-4C39-A500-898FF36074C6}</ProjectGuid>
+    <ProjectGuid>{CDF2E95E-0BEB-4C91-A3E9-C91CBC499C2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AggregateSource</RootNamespace>
-    <AssemblyName>AggregateSource.Content.ExplicitRouting</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AssemblyName>AggregateSource.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\AggregateSource\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,8 +23,6 @@
     <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -34,12 +33,11 @@
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -53,20 +51,37 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateRootEntity.cs" />
+    <Compile Include="AggregateBuilderTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
-    <Compile Include="Entity.cs" />
+    <Compile Include="AggregateStubs.cs" />
+    <Compile Include="AggregateNotFoundExceptionTests.cs" />
+    <Compile Include="AggregateSourceExceptionTests.cs" />
+    <Compile Include="AggregateTests.cs" />
+    <Compile Include="AggregateRootEntityStub.cs" />
+    <Compile Include="ConcurrentUnitOfWorkTests.cs" />
     <Compile Include="EntityTests.cs" />
+    <Compile Include="EventRecorderTests.cs" />
+    <Compile Include="FactTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
-    </ProjectReference>
+    <Compile Include="InstanceEventRouterTests.cs" />
+    <Compile Include="OptionalTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticEventRouterTests.cs" />
+    <Compile Include="TestFactBuilder.cs" />
+    <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AggregateSource.Core\AggregateSource.Core.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
+      <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
+      <Name>AggregateSource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

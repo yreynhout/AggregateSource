@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSource", "SampleSource.csproj", "{9B77C375-3883-40AD-B575-A18DB5E07C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "..\Core\AggregateSource\AggregateSource.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Core", "..\Core\AggregateSource.Core\AggregateSource.Core.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing", "..\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj", "{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing.NUnit", "..\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj", "{AE4066F5-55F5-4D0D-9AC1-853666822682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "..\Core\AggregateSource\AggregateSource.csproj", "{E464D623-2A99-4C39-A500-898FF36074C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE4066F5-55F5-4D0D-9AC1-853666822682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E464D623-2A99-4C39-A500-898FF36074C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

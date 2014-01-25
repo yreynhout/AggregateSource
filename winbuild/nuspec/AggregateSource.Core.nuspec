@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AggregateSource.Core</id>
+    <version>0.0.0</version>
+    <authors>Yves Reynhout</authors>
+    <owners>Yves Reynhout</owners>
+    <title>AggregateSource.Core</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
+    <description>AggregateSource.Core contains common types used when building an eventsourced, aggregate based domain model.</description>
+    <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
+    <releaseNotes>Warning! The API is still in flux. NET40 and NET45 support.</releaseNotes>
+    <copyright>Copyright 2014, BitTacklr. All rights reserved.</copyright>
+    <tags>eventsourcing DDDesign</tags>
+  </metadata>
+  <files>
+    <file src="..\output\net40\AggregateSource.Core.dll" target="lib\net40\AggregateSource.Core.dll" />
+    <file src="..\output\net40\AggregateSource.Core.pdb" target="lib\net40\AggregateSource.Core.pdb" />
+    <file src="..\output\net40\AggregateSource.Core.xml" target="lib\net40\AggregateSource.Core.xml" />
+    <file src="..\output\net45\AggregateSource.Core.dll" target="lib\net45\AggregateSource.Core.dll" />
+    <file src="..\output\net45\AggregateSource.Core.pdb" target="lib\net45\AggregateSource.Core.pdb" />
+    <file src="..\output\net45\AggregateSource.Core.xml" target="lib\net45\AggregateSource.Core.xml" />
+    <file src="..\..\src\Core\AggregateSource.Core\*.cs" target="src\AggregateSource.Core" />
+    <file src="..\..\src\Core\AggregateSource.Core\Properties\*.cs" target="src\AggregateSource.Core\Properties" />
+  </files>
+</package>

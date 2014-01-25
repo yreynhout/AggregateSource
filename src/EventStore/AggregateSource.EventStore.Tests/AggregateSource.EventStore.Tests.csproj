@@ -76,13 +76,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AggregateSource.EventStore\AggregateSource.EventStore.csproj">
       <Project>{dea0d300-f1a2-4a43-a7ee-75d2dcd6bc7f}</Project>
       <Name>AggregateSource.EventStore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

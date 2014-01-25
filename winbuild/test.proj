@@ -17,9 +17,7 @@
   <Target Name="TestNET45">
     <CreateItem 
       Include="
-      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Content.ExplicitStateExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.Core.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.Testing.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.EventStore.Tests.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.EventStore.IntegratedTests.dll;
@@ -35,15 +33,13 @@
         Force32Bit="true"
         ContinueOnError="false"
         Framework="4.0"
-        OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult45.xml"/>
+        OutputXmlFile="$(MSBuildProjectDirectory)\test_run_result_net45.xml"/>
   </Target>
 
   <Target Name="TestNET40">
     <CreateItem 
       Include="
-      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.ExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Content.ExplicitStateExplicitRouting.dll;
-      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net40\AggregateSource.Core.Tests.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.Testing.Tests.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.EventStore.Tests.dll;
       $(MSBuildProjectDirectory)\output\net40\AggregateSource.EventStore.IntegratedTests.dll;
@@ -59,6 +55,6 @@
         Force32Bit="true"
         ContinueOnError="false"
         Framework="4.0"
-        OutputXmlFile="$(MSBuildProjectDirectory)\TestRunResult40.xml"/>
+        OutputXmlFile="$(MSBuildProjectDirectory)\test_run_result_net40.xml"/>
   </Target>
 </Project>

@@ -24,15 +24,15 @@ using this tokenized nuspec file.
     <description>AggregateSource.Testing.NUnit provides lightweight infrastructure for building eventsourced, aggregate based test specifications that integrate with NUnit.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
     <releaseNotes>Warning! The API is still in flux. NET40 and NET45 support.</releaseNotes>
-    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <copyright>Copyright 2014, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Testing" version="0.0.286" />
+        <dependency id="AggregateSource.Testing" version="0.0.292" />
         <dependency id="NUnit" version="2.6.3" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Testing" version="0.0.286" />
+        <dependency id="AggregateSource.Testing" version="0.0.292" />
         <dependency id="NUnit" version="2.6.3" />
       </group>
     </dependencies>

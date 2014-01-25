@@ -28,13 +28,12 @@
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj;
+        $(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.csproj;
+        $(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.csproj; 
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj;
-        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj; 
         $(SourcePath)\SampleSource\SampleSource.csproj;
         $(SourcePath)\EventStore\AggregateSource.EventStore\AggregateSource.EventStore.csproj;
         $(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj;
@@ -48,24 +47,19 @@
 
   <Target Name="BuildNET40">
     <Xslt 
+      Inputs="$(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.NET40.csproj" />
+
+    <Xslt 
       Inputs="$(SourcePath)\Core\AggregateSource\AggregateSource.csproj"
       Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
       Output="$(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj" />
 
     <Xslt 
-      Inputs="$(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.csproj"
+      Inputs="$(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.csproj"
       Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
-      Output="$(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.NET40.csproj" />
-
-    <Xslt 
-      Inputs="$(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.csproj"
-      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
-      Output="$(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.NET40.csproj" />
-
-    <Xslt 
-      Inputs="$(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.csproj"
-      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
-      Output="$(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.NET40.csproj" />
+      Output="$(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.NET40.csproj" />
 
     <Xslt 
       Inputs="$(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj"
@@ -120,9 +114,8 @@
     <MSBuild 
       Projects="
         $(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitRouting\AggregateSource.Content.ExplicitRouting.NET40.csproj;
-        $(SourcePath)\Core\AggregateSource.Content.ExplicitStateExplicitRouting\AggregateSource.Content.ExplicitStateExplicitRouting.NET40.csproj;
-        $(SourcePath)\Core\AggregateSource.Tests\AggregateSource.Tests.NET40.csproj;
+        $(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.NET40.csproj;
+        $(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.NET40.csproj;

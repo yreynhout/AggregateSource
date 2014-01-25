@@ -4,11 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC3FCC99-9E18-45DE-9B39-76031D45624D}</ProjectGuid>
+    <ProjectGuid>{E464D623-2A99-4C39-A500-898FF36074C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AggregateSource</RootNamespace>
     <AssemblyName>AggregateSource</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -24,7 +25,6 @@
     <DocumentationFile>bin\Debug\net45\AggregateSource.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,6 @@
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\net45\AggregateSource.xml</DocumentationFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -49,40 +48,16 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Aggregate.cs" />
-    <Compile Include="AggregateBuilder.cs" />
-    <Compile Include="AggregateNotFoundException.cs" />
-    <Compile Include="AggregateSourceException.cs" />
-    <Compile Include="ConcurrentUnitOfWork.cs" />
-    <Compile Include="EventRecorder.cs" />
-    <Compile Include="Fact.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IAggregateChangeTracker.cs" />
-    <Compile Include="IAggregateInitializer.cs" />
-    <Compile Include="IAggregateRootEntity.cs" />
-    <Compile Include="IAsyncRepository.cs" />
-    <Compile Include="IConfigureInstanceEventRouter.cs" />
-    <Compile Include="IConfigureStaticEventRouter.cs" />
-    <Compile Include="IInstanceEventRouter.cs" />
-    <Compile Include="InstanceEventRouter.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="ISnapshotable.cs" />
-    <Compile Include="IStaticEventRouter.cs" />
-    <Compile Include="Optional.cs" />
+    <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="StaticEventRouter.cs" />
-    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\AggregateSource.Core\AggregateSource.Core.csproj">
+      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
+      <Name>AggregateSource.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
