@@ -68,6 +68,8 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="ISnapshotable.cs" />
     <Compile Include="IStaticEventRouter.cs" />
+    <Compile Include="ITenantAsyncRepository.cs" />
+    <Compile Include="ITenantRepository.cs" />
     <Compile Include="Optional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
