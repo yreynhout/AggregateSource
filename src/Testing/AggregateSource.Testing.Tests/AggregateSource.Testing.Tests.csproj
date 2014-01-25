@@ -88,7 +88,6 @@
     <Compile Include="EventCentricTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricTestSpecificationTests.cs" />
     <Compile Include="FactsBuilderTests.cs" />
-    <Compile Include="FactTests.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ResultCentricAggregateQueryTestRunnerTests.cs" />
     <Compile Include="ScenarioGivenStateBuilderTests.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="ScenarioThenStateBuilderTests.cs" />
     <Compile Include="ScenarioThrowStateBuilderTests.cs" />
     <Compile Include="ScenarioWhenStateBuilderTests.cs" />
-    <Compile Include="TestFactBuilder.cs" />
     <Compile Include="TestSpecificationDataPointFixture.cs" />
     <Compile Include="TestSpecificationTextWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource
 {
     [TestFixture]
     public class FactTests

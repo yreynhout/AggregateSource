@@ -55,6 +55,7 @@
     <Compile Include="AggregateSourceException.cs" />
     <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="EventRecorder.cs" />
+    <Compile Include="Fact.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateChangeTracker.cs" />
     <Compile Include="IAggregateInitializer.cs" />

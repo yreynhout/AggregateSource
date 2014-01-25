@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource.Testing
+namespace AggregateSource
 {
     /// <summary>
     /// Represents the fact that an event happened to what is identified by the identifier.
