@@ -65,5 +65,114 @@ namespace AggregateSource
                 }
             }
         }
+
+        [Test]
+        public void DoesEqualItSelf()
+        {
+            var sut = SutFactory();
+            var self = sut;
+            Assert.That(sut.Equals(self), Is.True);
+        }
+
+        [Test]
+        public void DoesNotEqualNull()
+        {
+            var sut = SutFactory();
+            Assert.That(sut.Equals(null), Is.False);
+        }
+
+        [Test]
+        public void DoesNotEqualObjectOfAnotherType()
+        {
+            var sut = SutFactory();
+            Assert.That(sut.Equals(new object()), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesAreEqualIfTheirValuesAreEqual()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("123", 123, root);
+            Assert.That(instance1.Equals(instance2), Is.True);
+        }
+
+        [Test]
+        public void TwoInstancesAreNotEqualIfTheirIdentifierDiffers()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("456", 123, root);
+            Assert.That(instance1.Equals(instance2), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesAreNotEqualIfTheirExpectedVersionDiffers()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("123", 456, root);
+            Assert.That(instance1.Equals(instance2), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesAreNotEqualIfTheirRootDiffers()
+        {
+            var root1 = new AggregateRootEntityStub();
+            var root2 = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root1);
+            var instance2 = SutFactory("123", 123, root2);
+            Assert.That(instance1.Equals(instance2), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesHaveTheSameHashCodeIfTheirValuesAreEqual()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("123", 123, root);
+            Assert.That(instance1.GetHashCode().Equals(instance2.GetHashCode()), Is.True);
+        }
+
+        [Test]
+        public void TwoInstancesDoNotHaveTheSameHashCodeIfTheirIdentifierDiffers()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("456", 123, root);
+            Assert.That(instance1.GetHashCode().Equals(instance2.GetHashCode()), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesDoNotHaveTheSameHashCodeIfTheirExpectedVersionDiffers()
+        {
+            var root = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root);
+            var instance2 = SutFactory("123", 456, root);
+            Assert.That(instance1.GetHashCode().Equals(instance2.GetHashCode()), Is.False);
+        }
+
+        [Test]
+        public void TwoInstancesDoNotHaveTheSameHashCodeIfTheirRootDiffers()
+        {
+            var root1 = new AggregateRootEntityStub();
+            var root2 = new AggregateRootEntityStub();
+            var instance1 = SutFactory("123", 123, root1);
+            var instance2 = SutFactory("123", 123, root2);
+            Assert.That(instance1.GetHashCode().Equals(instance2.GetHashCode()), Is.False);
+        }
+
+        private static Aggregate SutFactory()
+        {
+            const string identifier = "identifier";
+            const int expectedVersion = 123;
+            var root = new AggregateRootEntityStub();
+            return SutFactory(identifier, expectedVersion, root);
+        }
+
+        private static Aggregate SutFactory(string identifier, int expectedVersion, IAggregateRootEntity root)
+        {
+            return new Aggregate(identifier, expectedVersion, root);
+        }
     }
 }

@@ -85,10 +85,10 @@ namespace AggregateSource.NEventStore
         /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
         public Optional<TAggregateRoot> GetOptional(string identifier)
         {
-            Aggregate aggregate;
-            if (_unitOfWork.TryGet(identifier, out aggregate))
+            var aggregate = _unitOfWork.GetOptional(identifier);
+            if (aggregate.HasValue)
             {
-                return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
+                return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Value.Root);
             }
             using (var stream = _eventStore.OpenStream(identifier, minRevision: 0))
             {

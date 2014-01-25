@@ -86,11 +86,8 @@ namespace AggregateSource.NEventStore.Snapshots
 
                 _sut.Add(_model.KnownIdentifier, root);
 
-                Aggregate aggregate;
-                var result = _unitOfWork.TryGet(_model.KnownIdentifier, out aggregate);
-                Assert.That(result, Is.True);
-                Assert.That(aggregate.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(aggregate.Root, Is.SameAs(root));
+                var result = _unitOfWork.GetOptional(_model.KnownIdentifier);
+                Assert.That(result, Is.EqualTo(new Optional<Aggregate>(new Aggregate(_model.KnownIdentifier, 0, root))));
             }
         }
 
@@ -137,11 +134,8 @@ namespace AggregateSource.NEventStore.Snapshots
 
                 _sut.Add(_model.KnownIdentifier, root);
 
-                Aggregate aggregate;
-                var result = _unitOfWork.TryGet(_model.KnownIdentifier, out aggregate);
-                Assert.That(result, Is.True);
-                Assert.That(aggregate.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(aggregate.Root, Is.SameAs(root));
+                var result = _unitOfWork.GetOptional(_model.KnownIdentifier);
+                Assert.That(result, Is.EqualTo(new Optional<Aggregate>(new Aggregate(_model.KnownIdentifier, 0, root))));
             }
         }
 

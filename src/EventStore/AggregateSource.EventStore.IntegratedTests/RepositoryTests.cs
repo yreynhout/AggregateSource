@@ -106,11 +106,8 @@ namespace AggregateSource.EventStore
 
                 _sut.Add(_model.KnownIdentifier, root);
 
-                Aggregate aggregate;
-                var result = _sut.UnitOfWork.TryGet(_model.KnownIdentifier, out aggregate);
-                Assert.That(result, Is.True);
-                Assert.That(aggregate.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(aggregate.Root, Is.SameAs(root));
+                var result = _sut.UnitOfWork.GetOptional(_model.KnownIdentifier);
+                Assert.That(result, Is.EqualTo(new Optional<Aggregate>(new Aggregate(_model.KnownIdentifier, ExpectedVersion.NoStream, root))));
             }
         }
 

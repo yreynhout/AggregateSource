@@ -63,10 +63,10 @@ namespace AggregateSource.EventStore.Snapshots
         /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
         public Optional<TAggregateRoot> GetOptional(string identifier)
         {
-            Aggregate aggregate;
-            if (_unitOfWork.TryGet(identifier, out aggregate))
+            var aggregate = _unitOfWork.GetOptional(identifier);
+            if (aggregate.HasValue)
             {
-                return new Optional<TAggregateRoot>((TAggregateRoot) aggregate.Root);
+                return new Optional<TAggregateRoot>((TAggregateRoot) aggregate.Value.Root);
             }
             var snapshot = _reader.ReadOptional(identifier);
             var version = 1;
@@ -94,8 +94,7 @@ namespace AggregateSource.EventStore.Snapshots
                                                             false, streamUserCredentials);
                 root.Initialize(slice.Events.SelectMany(resolved => _configuration.Deserializer.Deserialize(resolved)));
             }
-            aggregate = new Aggregate(identifier, slice.LastEventNumber, root);
-            _unitOfWork.Attach(aggregate);
+            _unitOfWork.Attach(new Aggregate(identifier, slice.LastEventNumber, root));
             return new Optional<TAggregateRoot>(root);
         }
 

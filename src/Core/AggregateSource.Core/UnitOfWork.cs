@@ -42,11 +42,13 @@ namespace AggregateSource
         /// Attempts to get the <see cref="Aggregate"/> using the specified aggregate identifier.
         /// </summary>
         /// <param name="identifier">The aggregate identifier.</param>
-        /// <param name="aggregate">The aggregate if found, otherwise <c>null</c>.</param>
-        /// <returns><c>true</c> if the aggregate was found, otherwise <c>false</c>.</returns>
-        public bool TryGet(string identifier, out Aggregate aggregate)
+        /// <returns>The found <see cref="Aggregate"/>, or empty if not found.</returns>
+        public Optional<Aggregate> GetOptional(string identifier)
         {
-            return _aggregates.TryGetValue(identifier, out aggregate);
+            Aggregate aggregate;
+            return !_aggregates.TryGetValue(identifier, out aggregate) ? 
+                Optional<Aggregate>.Empty : 
+                new Optional<Aggregate>(aggregate);
         }
 
         /// <summary>

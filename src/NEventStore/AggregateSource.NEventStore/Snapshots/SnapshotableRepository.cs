@@ -86,10 +86,10 @@ namespace AggregateSource.NEventStore.Snapshots
         /// <returns>The found <typeparamref name="TAggregateRoot"/>, or empty if not found.</returns>
         public Optional<TAggregateRoot> GetOptional(string identifier)
         {
-            Aggregate aggregate;
-            if (_unitOfWork.TryGet(identifier, out aggregate))
+            var aggregate = _unitOfWork.GetOptional(identifier);
+            if (aggregate.HasValue)
             {
-                return new Optional<TAggregateRoot>((TAggregateRoot) aggregate.Root);
+                return new Optional<TAggregateRoot>((TAggregateRoot) aggregate.Value.Root);
             }
             var snapshot = _eventStore.Advanced.GetSnapshot(identifier, Int32.MaxValue);
             if (snapshot != null)

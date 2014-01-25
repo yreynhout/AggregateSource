@@ -29,10 +29,9 @@ namespace AggregateSource
             }
 
             [Test]
-            public void TryGetIdentifierCannotBeNull()
+            public void GetOptionalIdentifierCannotBeNull()
             {
-                Aggregate aggregate;
-                Assert.Throws<ArgumentNullException>(() => _sut.TryGet(null, out aggregate));
+                Assert.Throws<ArgumentNullException>(() => _sut.GetOptional(null));
             }
         }
 
@@ -55,13 +54,11 @@ namespace AggregateSource
             }
 
             [Test]
-            public void TryGetReturnsFalseAndNullAsAggregate()
+            public void GetOptionalReturnsEmpty()
             {
-                Aggregate aggregate;
-                var result = _sut.TryGet(Model.UnknownIdentifier, out aggregate);
+                var result = _sut.GetOptional(Model.UnknownIdentifier);
 
-                Assert.That(result, Is.False);
-                Assert.That(aggregate, Is.Null);
+                Assert.That(result, Is.EqualTo(Optional<Aggregate>.Empty));
             }
 
             [Test]
@@ -105,23 +102,19 @@ namespace AggregateSource
             }
 
             [Test]
-            public void TryGetReturnsFalseAndNullAsAggregateForUnknownId()
+            public void GetOptionalReturnsEmptyForUnknownId()
             {
-                Aggregate aggregate;
-                var result = _sut.TryGet(Model.UnknownIdentifier, out aggregate);
+                var result = _sut.GetOptional(Model.UnknownIdentifier);
 
-                Assert.That(result, Is.False);
-                Assert.That(aggregate, Is.Null);
+                Assert.That(result, Is.EqualTo(Optional<Aggregate>.Empty));
             }
 
             [Test]
-            public void TryGetReturnsTrueAndAggregateForKnownId()
+            public void GetOptionalReturnsAggregateForKnownId()
             {
-                Aggregate aggregate;
-                var result = _sut.TryGet(_aggregate.Identifier, out aggregate);
+                var result = _sut.GetOptional(_aggregate.Identifier);
 
-                Assert.That(result, Is.True);
-                Assert.That(aggregate, Is.SameAs(_aggregate));
+                Assert.That(result, Is.EqualTo(new Optional<Aggregate>(_aggregate)));
             }
 
             [Test]
