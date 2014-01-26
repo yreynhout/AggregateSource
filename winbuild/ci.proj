@@ -11,6 +11,6 @@
 		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult40.xml']" />
 		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult45.xml']" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Pack" />
-		<!-- <MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Push" Properties="NuGetApiKey=$(NuGetApiKey)" Condition="$(NuGetApiKey) != ''" /> -->
+		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="PushCI" Properties="NuGetApiKey=$(NuGetApiKey)" Condition="$(NuGetApiKey) != ''" />
 	</Target>
 </Project>

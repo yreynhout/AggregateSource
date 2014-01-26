@@ -27,7 +27,7 @@
       XmlFileName="nuspec\AggregateSource.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Core']/@version"
       Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
@@ -42,7 +42,7 @@
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
       Value="$(Major).$(Minor).$(Build)" />
     <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.NUnit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
-        <XmlUpdate
+    <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Testing.Xunit.nuspec"
@@ -90,6 +90,49 @@
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
     <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.NEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+  </Target>
+
+  <Target Name="PushCI">
+    <Version 
+      VersionFile="$(RootPath)\winbuild\master_version.txt" 
+      MajorType="None" 
+      MinorType="None" 
+      BuildType="None" 
+      RevisionType="None">
+      <Output TaskParameter="Major" PropertyName="Major"/>
+      <Output TaskParameter="Minor" PropertyName="Minor"/>
+      <Output TaskParameter="Build" PropertyName="Build"/>
+    </Version>
+
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.Core.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://www.myget.org/F/aggregatesource-ci/api/v2/package "$(MSBuildProjectDirectory)\output\AggregateSource.NEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.Core.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
+          ContinueOnError="True" />
+    <Exec Command='$(NuGetExe) push -Source https://nuget.symbolsource.org/MyGet/aggregatesource-ci "$(MSBuildProjectDirectory)\output\AggregateSource.NEventStore.$(Major).$(Minor).$(Build).symbols.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
   </Target>
 </Project>

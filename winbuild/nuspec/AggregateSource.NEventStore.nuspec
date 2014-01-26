@@ -15,11 +15,11 @@
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Core" version="0.0.292" />
+        <dependency id="AggregateSource.Core" version="0.0.294" />
         <dependency id="NEventStore" version="5.0.0.55" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Core" version="0.0.292" />
+        <dependency id="AggregateSource.Core" version="0.0.294" />
         <dependency id="NEventStore" version="5.0.0.55" />
       </group>
     </dependencies>
