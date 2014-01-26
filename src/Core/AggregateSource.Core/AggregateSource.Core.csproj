@@ -67,6 +67,10 @@
     <Compile Include="InstanceEventRouter.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ISnapshotable.cs" />
+    <Compile Include="IStatelessAsyncRepository.cs" />
+    <Compile Include="IStatelessRepository.cs" />
+    <Compile Include="IStatelessTenantAsyncRepository.cs" />
+    <Compile Include="IStatelessTenantRepository.cs" />
     <Compile Include="IStaticEventRouter.cs" />
     <Compile Include="ITenantAsyncRepository.cs" />
     <Compile Include="ITenantRepository.cs" />
