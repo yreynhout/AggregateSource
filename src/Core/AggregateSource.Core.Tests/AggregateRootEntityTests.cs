@@ -53,6 +53,20 @@ namespace AggregateSource
             {
                 Assert.Throws<ArgumentException>(() => new RegisterSameEventHandlerTwiceAggregateRootEntity());
             }
+
+            [Test]
+            public void InstanceEventRouterCannotBeNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => new NullInstanceEventRouterAggregateRootEntity());
+            }
+        }
+
+        class NullInstanceEventRouterAggregateRootEntity : AggregateRootEntity
+        {
+            public NullInstanceEventRouterAggregateRootEntity() :
+                base(null)
+            {
+            }
         }
 
         class AnyAggregateRootEntity : AggregateRootEntity {}

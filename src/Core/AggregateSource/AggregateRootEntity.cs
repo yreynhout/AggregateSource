@@ -15,9 +15,20 @@ namespace AggregateSource
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
         /// </summary>
-        protected AggregateRootEntity()
+        protected AggregateRootEntity() : 
+            this(new InstanceEventRouter())
         {
-            _router = new InstanceEventRouter();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
+        /// </summary>
+        /// <param name="router">The event router.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="router"/> is <c>null</c></exception>
+        protected AggregateRootEntity(IConfigureInstanceEventRouter router)
+        {
+            if (router == null) throw new ArgumentNullException("router");
+            _router = router;
             _recorder = new EventRecorder();
         }
 
