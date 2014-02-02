@@ -34,8 +34,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NEventStore">
-      <HintPath>..\packages\NEventStore.5.0.0.55\lib\net40\NEventStore.dll</HintPath>
+    <Reference Include="NEventStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NEventStore.5.0.0.71\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,13 +54,13 @@
     <Compile Include="Snapshots\SnapshotableRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
