@@ -20,56 +20,56 @@
       <Output TaskParameter="Minor" PropertyName="Minor"/>
       <Output TaskParameter="Build" PropertyName="Build"/>
     </Version>
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Content.ExplicitRouting.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Content.ExplicitStateExplicitRouting.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitStateExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build) -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Content.ExplicitStateExplicitRouting.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Testing.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Testing.NUnit.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.NUnit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.NUnit.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
         <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.Testing.Xunit.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource.Testing']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.Xunit.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.Testing.Xunit.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.EventStore.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.EventStore.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.EventStore.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
     <XmlUpdate
       Prefix="ns"
       Namespace="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"
       XmlFileName="nuspec\AggregateSource.NEventStore.nuspec"
       XPath="/ns:package/ns:metadata/ns:dependencies/ns:group/ns:dependency[@id='AggregateSource']/@version"
-      Value="$(Major).$(Minor).$(Build)" />
-    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.NEventStore.nuspec -Version $(Major).$(Minor).$(Build) -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
+      Value="$(Major).$(Minor).$(Build)-RC2" />
+    <Exec Command='$(NuGetExe) pack nuspec\AggregateSource.NEventStore.nuspec -Version $(Major).$(Minor).$(Build)-RC2 -Symbols -NonInteractive -o "$(MSBuildProjectDirectory)\output"' />
   </Target>
 
   <Target Name="Push">
@@ -84,21 +84,21 @@
       <Output TaskParameter="Build" PropertyName="Build"/>
     </Version>
 
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitRouting.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitStateExplicitRouting.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Content.ExplicitStateExplicitRouting.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.NUnit.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.Testing.Xunit.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.EventStore.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
-    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.NEventStore.$(Major).$(Minor).$(Build).nupkg" $(NuGetApiKey) -NonInteractive'
+    <Exec Command='$(NuGetExe) push "$(MSBuildProjectDirectory)\output\AggregateSource.NEventStore.$(Major).$(Minor).$(Build)-RC2.nupkg" $(NuGetApiKey) -NonInteractive'
           ContinueOnError="True" />
   </Target>
 </Project>
