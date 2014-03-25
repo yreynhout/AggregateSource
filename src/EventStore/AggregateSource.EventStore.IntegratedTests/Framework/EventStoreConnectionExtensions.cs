@@ -31,7 +31,7 @@ namespace AggregateSource.EventStore.Framework
             if (streamName.StartsWith("$$$"))
                 return false;
             if (streamName.StartsWith("$$"))
-                return true;
+                return false;
             if (streamName.StartsWith("$"))
                 return false;
             return true;

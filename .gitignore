@@ -5,6 +5,7 @@ winbuild/storage/*
 winbuild/test_run_result*.xml
 lib/eventstore/*
 lib/eventstore2/*
+lib/eventstore3/*
 lib/eventstore-net-*.zip
 lib/eventstore_license.txt
 lib/firebird*
