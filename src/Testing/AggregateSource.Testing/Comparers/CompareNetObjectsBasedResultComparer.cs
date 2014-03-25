@@ -1,5 +1,4 @@
-﻿#if !NET20
-using System;
+﻿using System;
 using System.Collections.Generic;
 using KellermanSoftware.CompareNetObjects;
 
@@ -46,4 +45,3 @@ namespace AggregateSource.Testing.Comparers
         }
     }
 }
-#endif

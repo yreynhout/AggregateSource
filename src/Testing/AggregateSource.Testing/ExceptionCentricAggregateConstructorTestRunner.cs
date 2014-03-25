@@ -1,10 +1,5 @@
 ﻿using System;
-#if NET20
-using System.Collections.Generic;
-#endif
-#if !NET20
 using System.Linq;
-#endif
 
 namespace AggregateSource.Testing
 {
@@ -43,29 +38,15 @@ namespace AggregateSource.Testing
             {
                 if (sut.HasChanges())
                 {
-#if NET20
-                    return specification.Fail(new List<object>(sut.GetChanges()).ToArray());
-#else
                     return specification.Fail(sut.GetChanges().ToArray());
-#endif
                 }
                 return specification.Fail();
             }
             var actualException = result.Value;
-#if NET20
-            using (var enumerator = _comparer.Compare(actualException, specification.Throws).GetEnumerator())
-            {
-                if (enumerator.MoveNext())
-                {
-                    return specification.Fail(actualException);
-                }
-            }
-#else
             if (_comparer.Compare(actualException, specification.Throws).Any())
             {
                 return specification.Fail(actualException);
             }
-#endif
             return specification.Pass();
         }
     }

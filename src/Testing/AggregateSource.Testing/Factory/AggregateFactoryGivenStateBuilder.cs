@@ -1,10 +1,5 @@
 ﻿using System;
-#if NET20
-using System.Collections.Generic;
-#endif
-#if !NET20
 using System.Linq;
-#endif
 
 namespace AggregateSource.Testing.Factory
 {
@@ -23,13 +18,7 @@ namespace AggregateSource.Testing.Factory
         public IAggregateFactoryGivenStateBuilder<TAggregateRoot> Given(params object[] events)
         {
             if (events == null) throw new ArgumentNullException("events");
-#if NET20
-            var givens = new List<object>(_givens);
-            givens.AddRange(events);
-            return new AggregateFactoryGivenStateBuilder<TAggregateRoot>(_sutFactory, givens.ToArray());
-#else
             return new AggregateFactoryGivenStateBuilder<TAggregateRoot>(_sutFactory, _givens.Concat(events).ToArray());
-#endif
         }
 
         public IAggregateFactoryWhenStateBuilder When<TAggregateRootResult>(

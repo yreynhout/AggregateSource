@@ -1,10 +1,5 @@
 ﻿using System;
-#if NET20
-using System.Collections.Generic;
-#endif
-#if !NET20
 using System.Linq;
-#endif
 
 namespace AggregateSource.Testing
 {
@@ -44,11 +39,7 @@ namespace AggregateSource.Testing
             {
                 return specification.Fail(result.Value);
             }
-#if NET20
-            var actualEvents = new List<object>(sut.GetChanges()).ToArray();
-#else
             var actualEvents = sut.GetChanges().ToArray();
-#endif
             if (!actualEvents.SequenceEqual(specification.Thens, new WrappedEventComparerEqualityComparer(_comparer)))
             {
                 return specification.Fail(actualEvents);
