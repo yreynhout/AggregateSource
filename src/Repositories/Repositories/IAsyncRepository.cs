@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Represents an asynchronous, virtual collection of <typeparamref name="TAggregateRoot"/>.

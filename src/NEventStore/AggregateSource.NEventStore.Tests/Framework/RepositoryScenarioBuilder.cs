@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AggregateSource.NEventStore.Framework.Snapshots;
 using AggregateSource.NEventStore.Snapshots;
+using AggregateSource.Repositories;
 using NEventStore;
 
 namespace AggregateSource.NEventStore.Framework

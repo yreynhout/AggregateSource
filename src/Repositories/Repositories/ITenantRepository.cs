@@ -1,4 +1,4 @@
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Represents a virtual collection of <typeparamref name="TAggregateRoot"/> for a particular tenant.

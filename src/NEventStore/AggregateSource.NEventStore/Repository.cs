@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AggregateSource.Repositories;
 using NEventStore;
 
 namespace AggregateSource.NEventStore

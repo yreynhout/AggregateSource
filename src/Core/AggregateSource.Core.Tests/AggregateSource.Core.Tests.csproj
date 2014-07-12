@@ -58,7 +58,6 @@
     <Compile Include="AggregateSourceExceptionTests.cs" />
     <Compile Include="AggregateTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
-    <Compile Include="ConcurrentUnitOfWorkTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />
     <Compile Include="FactTests.cs" />
@@ -69,7 +68,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticEventRouterTests.cs" />
     <Compile Include="TestFactBuilder.cs" />
-    <Compile Include="UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

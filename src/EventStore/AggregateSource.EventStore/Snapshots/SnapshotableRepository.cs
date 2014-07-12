@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AggregateSource.Repositories;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.EventStore.Snapshots

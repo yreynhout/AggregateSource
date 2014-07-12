@@ -30,6 +30,8 @@
         $(SourcePath)\Core\AggregateSource\AggregateSource.csproj;
         $(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.csproj;
         $(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.csproj; 
+        $(SourcePath)\Repositories\Repositories\AggregateSource.Repositories.csproj;
+        $(SourcePath)\Repositories\Repositories.Tests\AggregateSource.Repositories.Tests.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj;
@@ -60,6 +62,16 @@
       Inputs="$(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.csproj"
       Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
       Output="$(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Repositories\Repositories\AggregateSource.Repositories.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Repositories\Repositories\AggregateSource.Repositories.NET40.csproj" />
+
+    <Xslt 
+      Inputs="$(SourcePath)\Repositories\Repositories.Tests\AggregateSource.Repositories.Tests.csproj"
+      Xsl="$(MSBuildProjectDirectory)\TransformProjectToNET40.xslt"
+      Output="$(SourcePath)\Repositories\Repositories.Tests\AggregateSource.Repositories.Tests.NET40.csproj" />
 
     <Xslt 
       Inputs="$(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.csproj"
@@ -116,6 +128,8 @@
         $(SourcePath)\Core\AggregateSource\AggregateSource.NET40.csproj;
         $(SourcePath)\Core\AggregateSource.Core\AggregateSource.Core.NET40.csproj;
         $(SourcePath)\Core\AggregateSource.Core.Tests\AggregateSource.Core.Tests.NET40.csproj;
+        $(SourcePath)\Repositories\Repositories\AggregateSource.Repositories.NET40.csproj;
+        $(SourcePath)\Repositories\Repositories.Tests\AggregateSource.Repositories.Tests.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing\AggregateSource.Testing.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.Tests\AggregateSource.Testing.Tests.NET40.csproj;
         $(SourcePath)\Testing\AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.NET40.csproj;

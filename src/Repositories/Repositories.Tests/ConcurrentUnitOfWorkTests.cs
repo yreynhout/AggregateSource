@@ -1,9 +1,8 @@
-﻿#if !NET35
-using System;
+﻿using System;
 using System.Linq;
 using NUnit.Framework;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     namespace ConcurrentUnitOfWorkTests
     {
@@ -178,4 +177,3 @@ namespace AggregateSource
         }
     }
 }
-#endif

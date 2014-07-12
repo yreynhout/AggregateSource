@@ -2,6 +2,7 @@
 using System.IO;
 using AggregateSource.EventStore.Framework;
 using AggregateSource.EventStore.Framework.Snapshots;
+using AggregateSource.Repositories;
 using EventStore.ClientAPI;
 using FakeItEasy;
 using NUnit.Framework;

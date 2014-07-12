@@ -53,27 +53,18 @@
     <Compile Include="AggregateBuilder.cs" />
     <Compile Include="AggregateNotFoundException.cs" />
     <Compile Include="AggregateSourceException.cs" />
-    <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="EventRecorder.cs" />
     <Compile Include="Fact.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IAggregateChangeTracker.cs" />
     <Compile Include="IAggregateInitializer.cs" />
     <Compile Include="IAggregateRootEntity.cs" />
-    <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IConfigureInstanceEventRouter.cs" />
     <Compile Include="IConfigureStaticEventRouter.cs" />
     <Compile Include="IInstanceEventRouter.cs" />
     <Compile Include="InstanceEventRouter.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="ISnapshotable.cs" />
-    <Compile Include="IStatelessAsyncRepository.cs" />
-    <Compile Include="IStatelessRepository.cs" />
-    <Compile Include="IStatelessTenantAsyncRepository.cs" />
-    <Compile Include="IStatelessTenantRepository.cs" />
     <Compile Include="IStaticEventRouter.cs" />
-    <Compile Include="ITenantAsyncRepository.cs" />
-    <Compile Include="ITenantRepository.cs" />
     <Compile Include="Optional.cs" />
     <Compile Include="PolymorphicInstanceEventRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,7 +74,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StaticEventRouter.cs" />
-    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

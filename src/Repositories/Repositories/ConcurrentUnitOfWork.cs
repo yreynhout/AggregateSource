@@ -3,9 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using AggregateSource.Properties;
+using AggregateSource.Repositories.Properties;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Tracks changes of attached aggregates.

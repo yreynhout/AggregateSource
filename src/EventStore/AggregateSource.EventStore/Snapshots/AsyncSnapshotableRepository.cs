@@ -1,4 +1,5 @@
-﻿#if !NET40
+﻿using AggregateSource.Repositories;
+#if !NET40
 using System;
 using System.Linq;
 using System.Threading.Tasks;

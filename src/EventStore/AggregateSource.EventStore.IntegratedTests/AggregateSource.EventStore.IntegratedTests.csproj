@@ -111,6 +111,10 @@
       <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
       <Name>AggregateSource</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Repositories\Repositories\AggregateSource.Repositories.csproj">
+      <Project>{c7d9ecab-9c54-4a14-89d6-984df0b0f7c8}</Project>
+      <Name>AggregateSource.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AggregateSource.EventStore\AggregateSource.EventStore.csproj">
       <Project>{dea0d300-f1a2-4a43-a7ee-75d2dcd6bc7f}</Project>
       <Name>AggregateSource.EventStore</Name>

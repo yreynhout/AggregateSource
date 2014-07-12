@@ -1,6 +1,7 @@
 ﻿using System;
 using AggregateSource.NEventStore.Framework;
 using AggregateSource.NEventStore.Framework.Snapshots;
+using AggregateSource.Repositories;
 using NEventStore;
 using NUnit.Framework;
 

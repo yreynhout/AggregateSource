@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     namespace UnitOfWorkTests
     {

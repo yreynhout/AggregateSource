@@ -1,5 +1,6 @@
 ﻿using System;
 using AggregateSource.EventStore.Framework;
+using AggregateSource.Repositories;
 using EventStore.ClientAPI;
 using NUnit.Framework;
 

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AggregateSource.EventStore.Framework.Snapshots;
 using AggregateSource.EventStore.Snapshots;
+using AggregateSource.Repositories;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.EventStore.Framework

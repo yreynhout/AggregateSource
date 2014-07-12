@@ -1,5 +1,6 @@
 ﻿using System;
 using AggregateSource.NEventStore.Framework;
+using AggregateSource.Repositories;
 using NEventStore;
 using NUnit.Framework;
 
