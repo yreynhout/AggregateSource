@@ -30,8 +30,8 @@ namespace AggregateSource
             [Test]
             public void ApplyEventCannotBeNull()
             {
-                var sut = new ApplyNullEventEntity();
-                Assert.Throws<ArgumentNullException>(sut.ApplyNull);
+                var sut = new ApplyChangeNullEventEntity();
+                Assert.Throws<ArgumentNullException>(sut.ApplyChangeNull);
             }
 
             [Test]
@@ -66,13 +66,13 @@ namespace AggregateSource
             }
         }
 
-        class ApplyNullEventEntity : Entity
+        class ApplyChangeNullEventEntity : Entity
         {
-            public ApplyNullEventEntity() : base(_ => { }) {}
+            public ApplyChangeNullEventEntity() : base(_ => { }) { }
 
-            public void ApplyNull()
+            public void ApplyChangeNull()
             {
-                Apply(null);
+                ApplyChange(null);
             }
         }
 
@@ -145,7 +145,7 @@ namespace AggregateSource
 
             public void DoApply(object @event)
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
 
             public int HandlerCallCount { get; private set; }
@@ -190,7 +190,7 @@ namespace AggregateSource
 
             public void DoApply(object @event)
             {
-                Apply(@event);
+                ApplyChange(@event);
             }
         }
     }

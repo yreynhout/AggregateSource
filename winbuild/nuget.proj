@@ -5,7 +5,7 @@
     <NuGetExe Condition="$(NuGetExe) == ''">$(RootPath)\.nuget\nuget.exe</NuGetExe>
     <NuGetApiKey Condition="$(NuGetApiKey) == ''"></NuGetApiKey>
     <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
-    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.65\tools</MSBuildCommunityTasksPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.74\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
 

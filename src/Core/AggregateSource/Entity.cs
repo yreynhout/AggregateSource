@@ -49,7 +49,7 @@ namespace AggregateSource
         /// Applies the specified event to this instance and invokes the associated state handler.
         /// </summary>
         /// <param name="event">The event to apply.</param>
-        protected void Apply(object @event)
+        protected void ApplyChange(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
             _applier(@event);

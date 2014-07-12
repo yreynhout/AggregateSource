@@ -130,7 +130,7 @@ namespace SampleSource.Testing
 
             public void Describe(string description)
             {
-                Apply(new DescribedTodoListItem(Id, description));
+                ApplyChange(new DescribedTodoListItem(Id, description));
             }
 
             public TodoListItemId Id { get; private set; }
