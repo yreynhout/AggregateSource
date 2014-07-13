@@ -51,12 +51,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AggregateBuilderTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
-    <Compile Include="AggregateStubs.cs" />
-    <Compile Include="AggregateNotFoundExceptionTests.cs" />
-    <Compile Include="AggregateSourceExceptionTests.cs" />
-    <Compile Include="AggregateTests.cs" />
     <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />

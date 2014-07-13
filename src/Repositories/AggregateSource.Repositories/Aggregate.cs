@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Class for tracking aggregate meta data and its <see cref="IAggregateRootEntity"/>.

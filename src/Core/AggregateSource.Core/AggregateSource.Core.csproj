@@ -49,10 +49,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Aggregate.cs" />
-    <Compile Include="AggregateBuilder.cs" />
-    <Compile Include="AggregateNotFoundException.cs" />
-    <Compile Include="AggregateSourceException.cs" />
     <Compile Include="EventRecorder.cs" />
     <Compile Include="Fact.cs" />
     <Compile Include="GlobalSuppressions.cs" />

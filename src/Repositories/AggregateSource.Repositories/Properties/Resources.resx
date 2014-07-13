@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AggregateNotFoundException_DefaultMessage" xml:space="preserve">
+    <value>The {0} aggregate with identifier {1} could not be found. Please make sure the call site is indeed passing in an identifier for an {0} aggregate.</value>
+  </data>
+  <data name="Optional_NoValue" xml:space="preserve">
+    <value>Optional object must have a value.</value>
+  </data>
   <data name="UnitOfWork_AttachAlreadyAdded" xml:space="preserve">
     <value>The aggregate of type '{0}' with identifier '{1}' was already added. This could indicate there's a race condition, i.e. the same aggregate gets attached multiple times.</value>
   </data>

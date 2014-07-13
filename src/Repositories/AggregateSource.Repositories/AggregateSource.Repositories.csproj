@@ -44,6 +44,10 @@
     <Compile Include="..\..\SharedVersionInfo.cs">
       <Link>Properties\SharedVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Aggregate.cs" />
+    <Compile Include="AggregateBuilder.cs" />
+    <Compile Include="AggregateNotFoundException.cs" />
+    <Compile Include="AggregateSourceException.cs" />
     <Compile Include="ConcurrentUnitOfWork.cs" />
     <Compile Include="IAsyncRepository.cs" />
     <Compile Include="IRepository.cs" />

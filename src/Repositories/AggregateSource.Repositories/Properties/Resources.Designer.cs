@@ -61,11 +61,29 @@ namespace AggregateSource.Repositories.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} aggregate with identifier {1} could not be found. Please make sure the call site is indeed passing in an identifier for an {0} aggregate..
+        /// </summary>
+        internal static string AggregateNotFoundException_DefaultMessage {
+            get {
+                return ResourceManager.GetString("AggregateNotFoundException_DefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The aggregate of type &apos;{0}&apos; with identifier &apos;{1}&apos; was already added. This could indicate there&apos;s a race condition, i.e. the same aggregate getting attached multiple times..
         /// </summary>
         internal static string ConcurrentUnitOfWork_AttachAlreadyAdded {
             get {
                 return ResourceManager.GetString("ConcurrentUnitOfWork_AttachAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optional object must have a value..
+        /// </summary>
+        internal static string Optional_NoValue {
+            get {
+                return ResourceManager.GetString("Optional_NoValue", resourceCulture);
             }
         }
         

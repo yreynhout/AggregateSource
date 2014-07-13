@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-using AggregateSource.Properties;
+using AggregateSource.Repositories.Properties;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Exception that tells callers an aggregate was not found.

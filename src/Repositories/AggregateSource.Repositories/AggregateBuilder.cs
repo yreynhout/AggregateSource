@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource
+namespace AggregateSource.Repositories
 {
     /// <summary>
     /// Mutable class that builds up an <see cref="Aggregate"/>.
