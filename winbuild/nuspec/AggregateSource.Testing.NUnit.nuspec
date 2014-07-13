@@ -1,17 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- 
-This tokenized .nuspec manifest file is targeting the latest NuGet namespace,
-which ensures you can benefit from the latest packaging features.
-
-If desired, you can change the XML-namespace and target the original XSD.
-To do so, replace the current package declaration by the following:
-
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-
-Run "nuget.exe pack <project>" to build a nuget package for this project
-using this tokenized nuspec file.
-
--->
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>AggregateSource.Testing.NUnit</id>
@@ -28,11 +15,11 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Testing" version="0.0.294" />
+        <dependency id="AggregateSource.Testing" version="0.0.310-RC2" />
         <dependency id="NUnit" version="2.6.3" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Testing" version="0.0.294" />
+        <dependency id="AggregateSource.Testing" version="0.0.310-RC2" />
         <dependency id="NUnit" version="2.6.3" />
       </group>
     </dependencies>

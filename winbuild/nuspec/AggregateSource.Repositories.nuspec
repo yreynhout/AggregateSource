@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AggregateSource.Repositories</id>
+    <version>0.0.0</version>
+    <authors>Yves Reynhout</authors>
+    <owners>Yves Reynhout</owners>
+    <title>AggregateSource.Repositories</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
+    <description>AggregateSource.Repositories provides types for collection oriented repositories.</description>
+    <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
+    <releaseNotes>Warning! The API is still in flux. NET40 and NET45 support.</releaseNotes>
+    <copyright>Copyright 2014, BitTacklr. All rights reserved.</copyright>
+    <tags>eventsourcing DDDesign</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0">
+        <dependency id="AggregateSource.Core" version="0.0.310-RC2" />
+      </group>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="AggregateSource.Core" version="0.0.310-RC2" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\output\net40\AggregateSource.Repositories.dll" target="lib\net40\AggregateSource.Repositories.dll" />
+    <file src="..\output\net40\AggregateSource.Repositories.pdb" target="lib\net40\AggregateSource.Repositories.pdb" />
+    <file src="..\output\net40\AggregateSource.Repositories.xml" target="lib\net40\AggregateSource.Repositories.xml" />
+    <file src="..\output\net45\AggregateSource.Repositories.dll" target="lib\net45\AggregateSource.Repositories.dll" />
+    <file src="..\output\net45\AggregateSource.Repositories.pdb" target="lib\net45\AggregateSource.Repositories.pdb" />
+    <file src="..\output\net45\AggregateSource.Repositories.xml" target="lib\net45\AggregateSource.Repositories.xml" />
+    <file src="..\..\src\Repositories\AggregateSource.Repositories\*.cs" target="src\AggregateSource.Repositories" />
+    <file src="..\..\src\Repositories\AggregateSource.Repositories\Properties\*.cs" target="src\AggregateSource.Repositories\Properties" />
+  </files>
+</package>

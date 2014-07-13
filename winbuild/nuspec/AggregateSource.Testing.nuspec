@@ -15,11 +15,11 @@
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource.Core" version="0.0.294" />
+        <dependency id="AggregateSource.Core" version="0.0.310-RC2" />
         <dependency id="CompareNETObjects" version="1.7.4.0" />
       </group>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Core" version="0.0.294" />
+        <dependency id="AggregateSource.Core" version="0.0.310-RC2" />
         <dependency id="CompareNETObjects" version="1.7.4.0" />
       </group>
     </dependencies>

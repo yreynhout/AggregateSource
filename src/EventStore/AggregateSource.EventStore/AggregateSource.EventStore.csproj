@@ -95,7 +95,7 @@
       <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
       <Name>AggregateSource.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Repositories\Repositories\AggregateSource.Repositories.csproj">
+    <ProjectReference Include="..\..\Repositories\AggregateSource.Repositories\AggregateSource.Repositories.csproj">
       <Project>{c7d9ecab-9c54-4a14-89d6-984df0b0f7c8}</Project>
       <Name>AggregateSource.Repositories</Name>
     </ProjectReference>
