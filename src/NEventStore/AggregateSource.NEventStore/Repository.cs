@@ -13,6 +13,7 @@ namespace AggregateSource.NEventStore
         readonly Func<TAggregateRoot> _rootFactory;
         readonly UnitOfWork _unitOfWork;
         readonly IStoreEvents _eventStore;
+        readonly string _bucketId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository{TAggregateRoot}"/> class.
@@ -20,15 +21,18 @@ namespace AggregateSource.NEventStore
         /// <param name="rootFactory">The aggregate root entity factory.</param>
         /// <param name="unitOfWork">The unit of work to interact with.</param>
         /// <param name="eventStore">The event store to use.</param>
+        /// <param name="bucketId">The bucket in NEventStore to use</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="rootFactory"/> or <paramref name="unitOfWork"/> or <paramref name="eventStore"/> is null.</exception>
-        public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, IStoreEvents eventStore)
+        public Repository(Func<TAggregateRoot> rootFactory, UnitOfWork unitOfWork, IStoreEvents eventStore, string bucketId = "default")
         {
             if (rootFactory == null) throw new ArgumentNullException("rootFactory");
             if (unitOfWork == null) throw new ArgumentNullException("unitOfWork");
             if (eventStore == null) throw new ArgumentNullException("eventStore");
+            if (bucketId == null) throw new ArgumentNullException("bucketId");
             _rootFactory = rootFactory;
             _unitOfWork = unitOfWork;
             _eventStore = eventStore;
+            _bucketId = bucketId;
         }
 
         /// <summary>
@@ -90,7 +94,7 @@ namespace AggregateSource.NEventStore
             {
                 return new Optional<TAggregateRoot>((TAggregateRoot)aggregate.Root);
             }
-            using (var stream = _eventStore.OpenStream(identifier, minRevision: 0))
+            using (var stream = _eventStore.OpenStream(_bucketId, identifier, minRevision: 0, maxRevision: int.MaxValue))
             {
                 if (stream.StreamRevision == 0)
                     return Optional<TAggregateRoot>.Empty;
