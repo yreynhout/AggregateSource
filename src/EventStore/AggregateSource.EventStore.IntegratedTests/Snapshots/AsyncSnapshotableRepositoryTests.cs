@@ -570,7 +570,7 @@ namespace AggregateSource.EventStore.Snapshots
                     {
                         new EventStub(1).Write(writer);
                     }
-                    EmbeddedEventStore.Connection.AppendToStream(
+                    EmbeddedEventStore.Connection.AppendToStreamAsync(
                         _model.KnownIdentifier,
                         ExpectedVersion.NoStream,
                         new EventData(
@@ -578,8 +578,8 @@ namespace AggregateSource.EventStore.Snapshots
                             typeof (EventStub).AssemblyQualifiedName,
                             false,
                             stream.ToArray(),
-                            new byte[0]));
-                    EmbeddedEventStore.Connection.AppendToStream(
+                            new byte[0])).Wait();
+                    EmbeddedEventStore.Connection.AppendToStreamAsync(
                         _model.KnownIdentifier,
                         ExpectedVersion.Any,
                         new EventData(
@@ -587,7 +587,7 @@ namespace AggregateSource.EventStore.Snapshots
                             typeof (EventStub).AssemblyQualifiedName,
                             false,
                             stream.ToArray(),
-                            new byte[0]));
+                            new byte[0])).Wait();
                 }
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _state = new object();

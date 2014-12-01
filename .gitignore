@@ -7,6 +7,7 @@ lib/eventstore/*
 lib/eventstore2/*
 lib/eventstore3/*
 lib/eventstore-net-*.zip
+lib/eventstore-oss-win-*.zip
 lib/eventstore_license.txt
 lib/firebird*
 lib/firebird*.zip

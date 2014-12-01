@@ -85,7 +85,7 @@ namespace AggregateSource.EventStore.Snapshots
                     {
                         new SnapshotStateStub(1).Write(writer);
                     }
-                    EmbeddedEventStore.Connection.AppendToStream(
+                    EmbeddedEventStore.Connection.AppendToStreamAsync(
                         snapshotStreamName,
                         ExpectedVersion.NoStream,
                         new EventData(
@@ -93,7 +93,7 @@ namespace AggregateSource.EventStore.Snapshots
                             typeof (SnapshotStateStub).AssemblyQualifiedName,
                             false,
                             stream.ToArray(),
-                            BitConverter.GetBytes(100)));
+                            BitConverter.GetBytes(100))).Wait();
                 }
             }
 
@@ -152,10 +152,10 @@ namespace AggregateSource.EventStore.Snapshots
 
             static void CreateEmptySnapshotStream(string snapshotStreamName)
             {
-                EmbeddedEventStore.Connection.AppendToStream(
+                EmbeddedEventStore.Connection.AppendToStreamAsync(
                     snapshotStreamName,
                     ExpectedVersion.Any,
-                    new EventData[0]);
+                    new EventData[0]).Wait();
             }
 
             [Test]
@@ -191,13 +191,13 @@ namespace AggregateSource.EventStore.Snapshots
 
             static void CreateDeletedSnapshotStream(string snapshotStreamName)
             {
-                EmbeddedEventStore.Connection.AppendToStream(
+                EmbeddedEventStore.Connection.AppendToStreamAsync(
                     snapshotStreamName,
                     ExpectedVersion.Any,
-                    new EventData[0]);
-                EmbeddedEventStore.Connection.DeleteStream(
+                    new EventData[0]).Wait();
+                EmbeddedEventStore.Connection.DeleteStreamAsync(
                     snapshotStreamName,
-                    ExpectedVersion.EmptyStream);
+                    ExpectedVersion.EmptyStream).Wait();
             }
 
             [Test]

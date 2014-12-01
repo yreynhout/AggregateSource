@@ -9,6 +9,7 @@ namespace AggregateSource.EventStore.Framework
         public void BeforeTest(TestDetails testDetails)
         {
             EmbeddedEventStore.Start();
+            
         }
 
         public void AfterTest(TestDetails testDetails)

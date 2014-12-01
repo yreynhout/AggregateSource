@@ -34,9 +34,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NEventStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NEventStore, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NEventStore.5.0.0.100\lib\net40\NEventStore.dll</HintPath>
+      <HintPath>..\packages\NEventStore.5.1.0\lib\net40\NEventStore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AggregateSource.EventStore.Framework;
 using EventStore.ClientAPI;
 using NUnit.Framework;

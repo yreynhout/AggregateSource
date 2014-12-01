@@ -8,15 +8,15 @@
   <Target Name="Run">
     <WebDownload 
       Condition="!Exists('$(MSBuildProjectDirectory)\eventstore_license.txt')"
-      FileUri="https://raw.github.com/EventStore/EventStore/master/LICENSE" 
+      FileUri="https://raw.githubusercontent.com/EventStore/EventStore/master/LICENSE.md" 
       FileName="$(MSBuildProjectDirectory)\eventstore_license.txt" />
     <WebDownload 
-      Condition="!Exists('$(MSBuildProjectDirectory)\eventstore-net-3.0.0rc2.zip')"
-      FileUri="http://download.geteventstore.com/binaries/eventstore-net-v3.0.0rc2.zip" 
-      FileName="$(MSBuildProjectDirectory)\eventstore-net-3.0.0rc2.zip" />
+      Condition="!Exists('$(MSBuildProjectDirectory)\EventStore-OSS-Win-v3.0.1.zip')"
+      FileUri="http://download.geteventstore.com/binaries/EventStore-OSS-Win-v3.0.1.zip" 
+      FileName="$(MSBuildProjectDirectory)\EventStore-OSS-Win-v3.0.1.zip" />
     <Unzip 
       Condition="!Exists('$(MSBuildProjectDirectory)\eventstore3')"
-      ZipFileName="$(MSBuildProjectDirectory)\eventstore-net-3.0.0rc2.zip" 
+      ZipFileName="$(MSBuildProjectDirectory)\EventStore-OSS-Win-v3.0.1.zip" 
       TargetDirectory="$(MSBuildProjectDirectory)\eventstore3"/>
   </Target>
 </Project>

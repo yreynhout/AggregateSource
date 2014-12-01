@@ -8,21 +8,24 @@ namespace AggregateSource.EventStore.Framework
     {
         public static void DeleteAllStreams(this IEventStoreConnection connection)
         {
-            var slice = connection.ReadAllEventsForward(Position.Start, Int32.MaxValue, false,
-                                                        EmbeddedEventStore.Credentials);
-            var streams = slice.
+            var slice = connection.
+                ReadAllEventsForwardAsync(
+                    Position.Start, Int32.MaxValue, false, EmbeddedEventStore.Credentials);
+            slice.Wait();
+            var streams = slice.Result.
                 Events.
                 Select(_ => _.OriginalStreamId).
                 Where(StreamNameIsNotReserved).
                 Distinct();
-            foreach (var stream in 
-                from _ in streams
-                let streamStatusSlice = connection.ReadStreamEventsForward(_, 0, 1, false)
-                where streamStatusSlice.Status != SliceReadStatus.StreamDeleted &&
-                      streamStatusSlice.Status != SliceReadStatus.StreamNotFound
-                select _)
+            foreach (var stream in streams)
             {
-                connection.DeleteStream(stream, ExpectedVersion.Any, EmbeddedEventStore.Credentials);
+                var streamStatusSlice = connection.ReadStreamEventsForwardAsync(stream, 0, 1, false);
+                streamStatusSlice.Wait();
+                if (streamStatusSlice.Result.Status != SliceReadStatus.StreamDeleted &&
+                    streamStatusSlice.Result.Status != SliceReadStatus.StreamNotFound)
+                {
+                    connection.DeleteStreamAsync(stream, ExpectedVersion.Any, EmbeddedEventStore.Credentials).Wait();
+                }
             }
         }
 

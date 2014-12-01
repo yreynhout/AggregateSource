@@ -1,4 +1,5 @@
-﻿#if !NET40
+﻿using System.Threading.Tasks;
+#if !NET40
 using System;
 using AggregateSource.EventStore.Framework;
 using NUnit.Framework;

@@ -60,7 +60,7 @@ namespace AggregateSource.EventStore.Framework
             if (stream == null) throw new ArgumentNullException("stream");
             if (events == null) throw new ArgumentNullException("events");
             _eventStoreSchedule.Add(connection =>
-                                    connection.AppendToStream(
+                                    connection.AppendToStreamAsync(
                                         stream,
                                         ExpectedVersion.Any,
                                         events.Select(_ =>
@@ -69,7 +69,7 @@ namespace AggregateSource.EventStore.Framework
                                                           _.GetType().AssemblyQualifiedName,
                                                           false,
                                                           ToByteArray(_),
-                                                          new byte[0]))));
+                                                          new byte[0]))).Wait());
             return this;
         }
 
@@ -79,7 +79,7 @@ namespace AggregateSource.EventStore.Framework
             if (stream == null) throw new ArgumentNullException("stream");
             if (snapshots == null) throw new ArgumentNullException("snapshots");
             _eventStoreSchedule.Add(connection =>
-                                    connection.AppendToStream(
+                                    connection.AppendToStreamAsync(
                                         stream,
                                         ExpectedVersion.Any,
                                         snapshots.Select(_ =>
@@ -88,14 +88,14 @@ namespace AggregateSource.EventStore.Framework
                                                              _.State.GetType().AssemblyQualifiedName,
                                                              false,
                                                              ToByteArray(_.State),
-                                                             BitConverter.GetBytes(_.Version)))));
+                                                             BitConverter.GetBytes(_.Version)))).Wait());
             return this;
         }
 
         public RepositoryScenarioBuilder ScheduleDeleteStream(string stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            _eventStoreSchedule.Add(connection => connection.DeleteStream(stream, ExpectedVersion.Any));
+            _eventStoreSchedule.Add(connection => connection.DeleteStreamAsync(stream, ExpectedVersion.Any).Wait());
             return this;
         }
 

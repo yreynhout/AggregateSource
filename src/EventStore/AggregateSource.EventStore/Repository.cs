@@ -108,8 +108,10 @@ namespace AggregateSource.EventStore
             }
             var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
             var streamName = _configuration.StreamNameResolver.Resolve(identifier);
-            var slice = _connection.ReadStreamEventsForward(streamName, StreamPosition.Start, _configuration.SliceSize,
-                                                            false, streamUserCredentials);
+            var slice = _connection.
+                ReadStreamEventsForwardAsync(
+                    streamName, StreamPosition.Start, _configuration.SliceSize, false, streamUserCredentials).
+                Result;
             if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound)
             {
                 return Optional<TAggregateRoot>.Empty;
@@ -118,8 +120,10 @@ namespace AggregateSource.EventStore
             root.Initialize(slice.Events.SelectMany(resolved => _configuration.Deserializer.Deserialize(resolved)));
             while (!slice.IsEndOfStream)
             {
-                slice = _connection.ReadStreamEventsForward(streamName, slice.NextEventNumber, _configuration.SliceSize,
-                                                            false, streamUserCredentials);
+                slice = _connection.
+                    ReadStreamEventsForwardAsync(
+                        streamName, slice.NextEventNumber, _configuration.SliceSize, false, streamUserCredentials).
+                    Result;
                 root.Initialize(slice.Events.SelectMany(resolved => _configuration.Deserializer.Deserialize(resolved)));
             }
             aggregate = new Aggregate(identifier, slice.LastEventNumber, root);

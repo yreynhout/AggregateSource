@@ -60,8 +60,10 @@ namespace AggregateSource.EventStore.Snapshots
             if (identifier == null) throw new ArgumentNullException("identifier");
             var streamUserCredentials = _configuration.StreamUserCredentialsResolver.Resolve(identifier);
             var streamName = Configuration.StreamNameResolver.Resolve(identifier);
-            var slice = Connection.ReadStreamEventsBackward(streamName, StreamPosition.End, 1, false,
-                                                            streamUserCredentials);
+            var slice = Connection.
+                ReadStreamEventsBackwardAsync(
+                    streamName, StreamPosition.End, 1, false, streamUserCredentials).
+                Result;
             if (slice.Status == SliceReadStatus.StreamDeleted || slice.Status == SliceReadStatus.StreamNotFound ||
                 (slice.Events.Length == 0 && slice.NextEventNumber == -1))
             {
