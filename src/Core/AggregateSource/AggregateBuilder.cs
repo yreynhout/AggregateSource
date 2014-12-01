@@ -7,7 +7,6 @@ namespace AggregateSource
     /// </summary>
     public class AggregateBuilder
     {
-        private string _partition;
         private string _identifier;
         private int _expectedVersion;
         private IAggregateRootEntity _root;
@@ -17,7 +16,6 @@ namespace AggregateSource
         /// </summary>
         public AggregateBuilder()
         {
-            _partition = Aggregate.DefaultPartition;
             _identifier = null;
             _expectedVersion = Int32.MinValue;
             _root = null;
@@ -32,18 +30,6 @@ namespace AggregateSource
             _identifier = instance.Identifier;
             _expectedVersion = instance.ExpectedVersion;
             _root = instance.Root;
-            _partition = instance.Partition;
-        }
-
-        /// <summary>
-        /// Gets the partition the aggregate belongs to.
-        /// </summary>
-        /// <value>
-        /// The aggregate partition.
-        /// </value>
-        public string Partition
-        {
-            get { return _partition; }
         }
 
         /// <summary>
@@ -110,23 +96,12 @@ namespace AggregateSource
         }
 
         /// <summary>
-        /// Captures the partition the aggregate is in.
-        /// </summary>
-        /// <param name="value">The partition value.</param>
-        /// <returns>An <see cref="AggregateBuilder"/> instance.</returns>
-        public AggregateBuilder InPartition(string value)
-        {
-            _partition = value;
-            return this;
-        }
-
-        /// <summary>
         /// Builds the immutable <see cref="Aggregate"/> based on captured information.
         /// </summary>
         /// <returns>An <see cref="Aggregate"/>.</returns>
         public Aggregate Build()
         {
-            return new Aggregate(Partition, Identifier, ExpectedVersion, Root);
+            return new Aggregate(Identifier, ExpectedVersion, Root);
         }
     }
 }
