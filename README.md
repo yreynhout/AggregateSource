@@ -37,7 +37,7 @@ Have questions? Head on over to the discussion group: https://groups.google.com/
 
 ### Continuous integration
 
-The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure, courtesy of [JetBrains](http://www.jetbrains.com/). In the future, NDepend will be used to analyze the assemblies.
+The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure, courtesy of [JetBrains](http://www.jetbrains.com/). In the future, [NDepend](http://www.ndepend.com) will be used to analyze the assemblies.
 
 |  | Status of last build |
 | :------ | :------: |
