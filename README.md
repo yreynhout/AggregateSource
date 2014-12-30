@@ -50,7 +50,7 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
 
 ![YouTrack and TeamCity](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
 
-![NDepend](http://nlog-project.org/images/PoweredByNDepend.png)
+[![NDepend](http://nlog-project.org/images/PoweredByNDepend.png)](http://www.ndepend.com)
 
 ## Contributors
 
