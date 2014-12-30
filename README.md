@@ -37,7 +37,7 @@ Have questions? Head on over to the discussion group: https://groups.google.com/
 
 ### Continuous integration
 
-The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure, courtesy of [JetBrains](http://www.jetbrains.com/).
+The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infrastructure, courtesy of [JetBrains](http://www.jetbrains.com/). In the future, NDepend will be used to analyze the assemblies.
 
 |  | Status of last build |
 | :------ | :------: |
@@ -49,6 +49,8 @@ The [build][1] is generously hosted and run on the [CodeBetter TeamCity][2] infr
  [4]: http://teamcity.codebetter.com/viewType.html?buildTypeId=bt977&guest=1
 
 ![YouTrack and TeamCity](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
+
+![NDepend](http://nlog-project.org/images/PoweredByNDepend.png)
 
 ## Contributors
 
