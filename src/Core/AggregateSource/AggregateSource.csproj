@@ -54,6 +54,7 @@
     <Compile Include="EventRecorder.cs" />
     <Compile Include="EventRouter.cs" />
     <Compile Include="Fact.cs" />
+    <Compile Include="FactsBuilder.cs" />
     <Compile Include="IAggregateRootEntity.cs" />
     <Compile Include="IEventRecorder.cs" />
     <Compile Include="IEventRouter.cs" />
@@ -67,6 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="State.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

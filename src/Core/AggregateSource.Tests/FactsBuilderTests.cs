@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace AggregateSource.Testing
+namespace AggregateSource
 {
     namespace FactsBuilderTests
     {
@@ -26,7 +26,8 @@ namespace AggregateSource.Testing
         }
 
         [TestFixture]
-        public class StateThatEventsTests : ThatEventsFixture {
+        public class StateThatEventsTests : ThatEventsFixture
+        {
             public override FactsBuilder Fact(string identifier, params object[] events)
             {
                 return State.That(identifier, events);
@@ -43,6 +44,9 @@ namespace AggregateSource.Testing
 
         public abstract class ThatEventsFixture
         {
+            private static readonly string Identifier1 = Guid.NewGuid().ToString("N");
+            private static readonly string Identifier2 = Guid.NewGuid().ToString("N");
+
             public abstract FactsBuilder Fact(string identifier, params object[] events);
 
             [Test]
@@ -54,13 +58,13 @@ namespace AggregateSource.Testing
             [Test]
             public void EventsCannotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => Fact(Model.Identifier1, null));
+                Assert.Throws<ArgumentNullException>(() => Fact(Identifier1, null));
             }
 
             [Test]
             public void WhenNoEventsAreSpecifiedThenReturnsEmpty()
             {
-                Fact[] result = Fact(Model.Identifier1, new object[0]);
+                Fact[] result = Fact(Identifier1, new object[0]);
 
                 Assert.That(result, Is.Empty);
             }
@@ -71,13 +75,13 @@ namespace AggregateSource.Testing
                 var event1 = new object();
                 var event2 = new object();
 
-                Fact[] result = Fact(Model.Identifier1, event1, event2);
+                Fact[] result = Fact(Identifier1, event1, event2);
 
                 Assert.That(result, Is.EquivalentTo(
                     new[]
                     {
-                        new Fact(Model.Identifier1, event1),
-                        new Fact(Model.Identifier1, event2)
+                        new Fact(Identifier1, event1),
+                        new Fact(Identifier1, event2)
                     }));
             }
 
@@ -87,20 +91,20 @@ namespace AggregateSource.Testing
                 var event1 = new object();
                 var event2 = new object();
 
-                var sut = Fact(Model.Identifier1, event1, event2);
+                var sut = Fact(Identifier1, event1, event2);
 
                 var event3 = new object();
                 var event4 = new object();
 
-                Fact[] result = sut.That(Model.Identifier2, event3, event4);
+                Fact[] result = sut.That(Identifier2, event3, event4);
 
                 Assert.That(result, Is.EquivalentTo(
                     new[]
                     {
-                        new Fact(Model.Identifier1, event1),
-                        new Fact(Model.Identifier1, event2),
-                        new Fact(Model.Identifier2, event3),
-                        new Fact(Model.Identifier2, event4)
+                        new Fact(Identifier1, event1),
+                        new Fact(Identifier1, event2),
+                        new Fact(Identifier2, event3),
+                        new Fact(Identifier2, event4)
                     }));
             }
         }
@@ -125,6 +129,9 @@ namespace AggregateSource.Testing
 
         public abstract class ThatFactsFixture
         {
+            private static readonly string Identifier1 = Guid.NewGuid().ToString("N");
+            private static readonly string Identifier2 = Guid.NewGuid().ToString("N");
+            
             public abstract FactsBuilder Facts(params Fact[] facts);
 
             [Test]
@@ -144,8 +151,8 @@ namespace AggregateSource.Testing
             [Test]
             public void WhenFactsAreSpecifiedThenReturnsExpectedResult()
             {
-                var fact1 = new Fact(Model.Identifier1, new object());
-                var fact2 = new Fact(Model.Identifier2, new object());
+                var fact1 = new Fact(Identifier1, new object());
+                var fact2 = new Fact(Identifier2, new object());
 
                 Fact[] result = Facts(fact1, fact2);
 
@@ -160,13 +167,13 @@ namespace AggregateSource.Testing
             [Test]
             public void WhenNewFactsAreSpecifiedThenReturnsCombinedExpectedResult()
             {
-                var fact1 = new Fact(Model.Identifier1, new object());
-                var fact2 = new Fact(Model.Identifier2, new object());
+                var fact1 = new Fact(Identifier1, new object());
+                var fact2 = new Fact(Identifier2, new object());
 
                 var sut = Facts(fact1, fact2);
 
-                var fact3 = new Fact(Model.Identifier1, new object());
-                var fact4 = new Fact(Model.Identifier2, new object());
+                var fact3 = new Fact(Identifier1, new object());
+                var fact4 = new Fact(Identifier2, new object());
 
                 Fact[] result = sut.That(fact3, fact4);
 

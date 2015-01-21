@@ -76,7 +76,6 @@
     <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="EventCentricTestSpecificationTests.cs" />
     <Compile Include="ExceptionCentricTestSpecificationTests.cs" />
-    <Compile Include="FactsBuilderTests.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ResultCentricAggregateQueryTestRunnerTests.cs" />
     <Compile Include="ScenarioGivenStateBuilderTests.cs" />

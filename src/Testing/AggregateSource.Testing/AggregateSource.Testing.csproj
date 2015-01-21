@@ -142,7 +142,6 @@
     <Compile Include="ResultCentricAggregateQueryTestRunner.cs" />
     <Compile Include="ResultCentricAggregateQueryTestSpecification.cs" />
     <Compile Include="ResultComparisonDifference.cs" />
-    <Compile Include="FactsBuilder.cs" />
     <Compile Include="EventCentricTestResult.cs" />
     <Compile Include="EventCentricTestSpecification.cs" />
     <Compile Include="ExceptionCentricTestResult.cs" />
@@ -161,7 +160,6 @@
     <Compile Include="IScenarioThrowStateBuilder.cs" />
     <Compile Include="IScenarioWhenStateBuilder.cs" />
     <Compile Include="Scenario.cs" />
-    <Compile Include="State.cs" />
     <Compile Include="TestSpecificationBuilder.cs" />
     <Compile Include="TestSpecificationBuilderContext.cs" />
     <Compile Include="TestSpecificationTextWriter.cs" />
@@ -172,9 +170,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">

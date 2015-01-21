@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AggregateSource.Testing
+namespace AggregateSource
 {
     /// <summary>
     /// Represents syntactic sugar to compose facts for use in the testing API.

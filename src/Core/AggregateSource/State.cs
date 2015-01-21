@@ -1,4 +1,4 @@
-﻿namespace AggregateSource.Testing
+﻿namespace AggregateSource
 {
     /// <summary>
     /// Represents a syntactic sugar bootstrapper to compose facts for use in the testing API.
