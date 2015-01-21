@@ -57,9 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource.Core</Name>
+    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
+      <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
+      <Name>AggregateSource</Name>
     </ProjectReference>
     <ProjectReference Include="..\AggregateSource.Testing\AggregateSource.Testing.csproj">
       <Project>{75427b80-a024-4b5e-a7ca-f2e4736d9f8c}</Project>

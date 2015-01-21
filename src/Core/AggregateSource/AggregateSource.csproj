@@ -48,6 +48,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Aggregate.cs" />
+    <Compile Include="AggregateBuilder.cs" />
     <Compile Include="AggregateRootEntity.cs" />
     <Compile Include="EventRecorder.cs" />
     <Compile Include="EventRouter.cs" />

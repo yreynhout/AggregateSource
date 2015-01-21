@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing", "AggregateSource.Testing\AggregateSource.Testing.csproj", "{75427B80-A024-4B5E-A7CA-F2E4736D9F8C}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing.NUnit", "AggregateSource.Testing.NUnit\AggregateSource.Testing.NUnit.csproj", "{AE4066F5-55F5-4D0D-9AC1-853666822682}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Testing.Xunit", "AggregateSource.Testing.Xunit\AggregateSource.Testing.Xunit.csproj", "{980841AD-A683-48E4-A1A9-89003F15CACA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource.Core", "..\Core\AggregateSource.Core\AggregateSource.Core.csproj", "{CC3FCC99-9E18-45DE-9B39-76031D45624D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AggregateSource", "..\Core\AggregateSource\AggregateSource.csproj", "{E464D623-2A99-4C39-A500-898FF36074C6}"
 EndProject
@@ -55,14 +53,6 @@ Global
 		{980841AD-A683-48E4-A1A9-89003F15CACA}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
 		{980841AD-A683-48E4-A1A9-89003F15CACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{980841AD-A683-48E4-A1A9-89003F15CACA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC3FCC99-9E18-45DE-9B39-76031D45624D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E464D623-2A99-4C39-A500-898FF36074C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E464D623-2A99-4C39-A500-898FF36074C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E464D623-2A99-4C39-A500-898FF36074C6}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU

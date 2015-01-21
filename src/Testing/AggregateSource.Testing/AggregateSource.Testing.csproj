@@ -35,10 +35,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=1.7.4.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CompareNETObjects.1.7.4.0\lib\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,10 +54,6 @@
     <Compile Include="Command\AggregateCommandThenStateBuilder.cs" />
     <Compile Include="Command\AggregateCommandThrowStateBuilder.cs" />
     <Compile Include="Command\AggregateCommandWhenStateBuilder.cs" />
-    <Compile Include="Comparers\CompareNetObjectsBasedEventComparer.cs" />
-    <Compile Include="Comparers\CompareNetObjectsBasedExceptionComparer.cs" />
-    <Compile Include="Comparers\CompareNetObjectsBasedFactComparer.cs" />
-    <Compile Include="Comparers\CompareNetObjectsBasedResultComparer.cs" />
     <Compile Include="FactComparisonDifference.cs" />
     <Compile Include="IFactComparer.cs" />
     <Compile Include="ConstructorScenarioFor.cs" />
@@ -180,18 +172,14 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\AggregateSource.Core\AggregateSource.Core.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource.Core</Name>
+    <ProjectReference Include="..\..\Core\AggregateSource\AggregateSource.csproj">
+      <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
+      <Name>AggregateSource</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

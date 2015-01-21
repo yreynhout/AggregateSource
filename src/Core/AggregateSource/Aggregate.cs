@@ -1,18 +1,12 @@
 ﻿using System;
 
-namespace AggregateSource.Repositories
+namespace AggregateSource
 {
     /// <summary>
     /// Class for tracking aggregate meta data and its <see cref="IAggregateRootEntity"/>.
     /// </summary>
     public class Aggregate
     {
-        /// <summary>
-        /// The default partition an aggregate belongs to if none is specified.
-        /// </summary>
-        public static readonly string DefaultPartition = "Default";
-
-        readonly string _partition;
         readonly string _identifier;
         readonly IAggregateRootEntity _root;
         readonly int _expectedVersion;
@@ -26,43 +20,14 @@ namespace AggregateSource.Repositories
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="identifier"/> is null.</exception>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="root"/> is null.</exception>
         public Aggregate(string identifier, int expectedVersion, IAggregateRootEntity root)
-            : this(DefaultPartition, identifier, expectedVersion, root)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Aggregate"/> class.
-        /// </summary>
-        /// <param name="partition">The aggregate partition.</param>
-        /// <param name="identifier">The aggregate identifier.</param>
-        /// <param name="expectedVersion">The expected aggregate version.</param>
-        /// <param name="root">The aggregate root entity.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="partition"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="identifier"/> is null.</exception>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="root"/> is null.</exception>
-        public Aggregate(string partition, string identifier, int expectedVersion, IAggregateRootEntity root)
-        {
-            if (partition == null) 
-                throw new ArgumentNullException("partition");
             if (identifier == null)
                 throw new ArgumentNullException("identifier");
             if (root == null)
                 throw new ArgumentNullException("root");
-            _partition = partition;
             _identifier = identifier;
             _expectedVersion = expectedVersion;
             _root = root;
-        }
-
-        /// <summary>
-        /// Gets the partition the aggregate belongs to.
-        /// </summary>
-        /// <value>
-        /// The aggregate partition.
-        /// </value>
-        public string Partition
-        {
-            get { return _partition; }
         }
 
         /// <summary>

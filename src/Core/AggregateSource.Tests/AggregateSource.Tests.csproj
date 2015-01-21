@@ -51,7 +51,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AggregateBuilderTests.cs" />
     <Compile Include="AggregateRootEntityTests.cs" />
+    <Compile Include="AggregateTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />
     <Compile Include="FactTests.cs" />
