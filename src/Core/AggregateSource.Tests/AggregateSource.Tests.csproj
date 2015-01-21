@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AggregateSource</RootNamespace>
-    <AssemblyName>AggregateSource.Core.Tests</AssemblyName>
+    <AssemblyName>AggregateSource.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\AggregateSource\</SolutionDir>
@@ -52,26 +52,18 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateRootEntityTests.cs" />
-    <Compile Include="AggregateRootEntityStub.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="EventRecorderTests.cs" />
     <Compile Include="FactTests.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InstanceEventRouterTests.cs" />
+    <Compile Include="EventRouterTests.cs" />
     <Compile Include="OptionalTests.cs" />
-    <Compile Include="PolymorphicInstanceEventRouterTests.cs" />
+    <Compile Include="PolymorphicEventRouterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticEventRouterTests.cs" />
-    <Compile Include="TestFactBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AggregateSource.Core\AggregateSource.Core.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AggregateSource\AggregateSource.csproj">
       <Project>{e464d623-2a99-4c39-a500-898ff36074c6}</Project>
       <Name>AggregateSource</Name>

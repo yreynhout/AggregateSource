@@ -9,14 +9,11 @@ namespace AggregateSource
     /// Represents an optional value.
     /// </summary>
     /// <typeparam name="T">The type of the optional value.</typeparam>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Optional")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
     public struct Optional<T> : IEnumerable<T>, IEquatable<Optional<T>>
     {
         /// <summary>
         /// The empty instance.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static readonly Optional<T> Empty = new Optional<T>();
 
         readonly bool _hasValue;

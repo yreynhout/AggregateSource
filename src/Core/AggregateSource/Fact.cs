@@ -82,15 +82,5 @@ namespace AggregateSource
         {
             return _identifier.GetHashCode() ^ _event.GetHashCode();
         }
-
-        /// <summary>
-        /// Implicitly converts a fact into a tuple.
-        /// </summary>
-        /// <param name="fact">The fact.</param>
-        /// <returns>An tuple containing the fact data.</returns>
-        public static implicit operator Tuple<string, object>(Fact fact)
-        {
-            return new Tuple<string, object>(fact.Identifier, fact.Event);
-        }
     }
 }

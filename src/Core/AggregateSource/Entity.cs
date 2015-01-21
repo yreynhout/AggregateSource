@@ -5,21 +5,33 @@ namespace AggregateSource
     /// <summary>
     /// Base class for aggregate entities that need some basic infrastructure for tracking state changes on their aggregate root entity.
     /// </summary>
-    public abstract class Entity : IInstanceEventRouter
+    public abstract class Entity
     {
         readonly Action<object> _applier;
-        readonly InstanceEventRouter _router;
+        readonly IEventRouter _router;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Entity"/> class.
         /// </summary>
-        /// <param name="applier">The event player and recorder.</param>
+        /// <param name="applier">The aggregate root event player and recorder.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="applier"/> is null.</exception>
-        protected Entity(Action<object> applier)
+        protected Entity(Action<object> applier) : 
+            this(applier, new EventRouter())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entity"/> class.
+        /// </summary>
+        /// <param name="applier">The aggregate root event player and recorder.</param>
+        /// <param name="router">The event router.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="applier"/> or <paramref name="router"/> is null.</exception>
+        protected Entity(Action<object> applier, IEventRouter router)
         {
             if (applier == null) throw new ArgumentNullException("applier");
+            if (router == null) throw new ArgumentNullException("router");
             _applier = applier;
-            _router = new InstanceEventRouter();
+            _router = router;
         }
 
         /// <summary>

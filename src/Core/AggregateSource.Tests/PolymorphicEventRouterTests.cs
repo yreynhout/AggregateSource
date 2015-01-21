@@ -4,26 +4,20 @@ using NUnit.Framework;
 namespace AggregateSource
 {
     [TestFixture]
-    public class PolymorphicInstanceEventRouterTests
+    public class PolymorphicEventRouterTests
     {
-        PolymorphicInstanceEventRouter _sut;
+        PolymorphicEventRouter _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new PolymorphicInstanceEventRouter();
+            _sut = new PolymorphicEventRouter();
         }
 
         [Test]
-        public void IsInstanceEventRouter()
+        public void IsEventRouter()
         {
-            Assert.That(_sut, Is.InstanceOf<IInstanceEventRouter>());
-        }
-
-        [Test]
-        public void IsConfigureInstanceEventRouter()
-        {
-            Assert.That(_sut, Is.InstanceOf<IConfigureInstanceEventRouter>());
+            Assert.That(_sut, Is.InstanceOf<IEventRouter>());
         }
 
         [Test]

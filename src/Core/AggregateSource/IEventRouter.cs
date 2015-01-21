@@ -3,9 +3,9 @@
 namespace AggregateSource
 {
     /// <summary>
-    /// Configures an instance event router with state handlers events can be routed to.
+    /// Routes an event to a configured state handler.
     /// </summary>
-    public interface IConfigureInstanceEventRouter : IInstanceEventRouter
+    public interface IEventRouter
     {
         /// <summary>
         /// Adds a route for the specified event type to the specified state handler.
@@ -13,7 +13,6 @@ namespace AggregateSource
         /// <param name="event">The event type the route is for.</param>
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="event"/> or <paramref name="handler"/> is <c>null</c>.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "event")]
         void ConfigureRoute(Type @event, Action<object> handler);
 
         /// <summary>
@@ -23,5 +22,12 @@ namespace AggregateSource
         /// <param name="handler">The state handler that should be invoked when an event of the specified type is routed.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="handler"/> is <c>null</c>.</exception>
         void ConfigureRoute<TEvent>(Action<TEvent> handler);
+
+        /// <summary>
+        /// Routes the specified <paramref name="event"/> to a configured state handler, if any.
+        /// </summary>
+        /// <param name="event">The event to route.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="event"/> is null.</exception>
+        void Route(object @event);
     }
 }

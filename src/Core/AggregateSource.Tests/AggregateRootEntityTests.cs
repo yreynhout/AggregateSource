@@ -29,20 +29,6 @@ namespace AggregateSource
             }
 
             [Test]
-            public void ApplyCanBeInterceptedBeforeApplication()
-            {
-                var sut = new ApplyInterceptorAggregateRootEntity();
-                Assert.That(sut.BeforeApplyWasCalled, Is.True);
-            }
-
-            [Test]
-            public void ApplyCanBeInterceptedAfterApplication()
-            {
-                var sut = new ApplyInterceptorAggregateRootEntity();
-                Assert.That(sut.AfterApplyWasCalled, Is.True);
-            }
-
-            [Test]
             public void RegisterHandlerCannotBeNull()
             {
                 Assert.Throws<ArgumentNullException>(() => new RegisterNullHandlerAggregateRootEntity());
@@ -59,12 +45,26 @@ namespace AggregateSource
             {
                 Assert.Throws<ArgumentNullException>(() => new NullInstanceEventRouterAggregateRootEntity());
             }
+
+            [Test]
+            public void InstanceEventRecorderCannotBeNull()
+            {
+                Assert.Throws<ArgumentNullException>(() => new NullInstanceEventRecorderAggregateRootEntity());
+            }
         }
 
         class NullInstanceEventRouterAggregateRootEntity : AggregateRootEntity
         {
             public NullInstanceEventRouterAggregateRootEntity() :
-                base(null)
+                base(null, new EventRecorder())
+            {
+            }
+        }
+
+        class NullInstanceEventRecorderAggregateRootEntity : AggregateRootEntity
+        {
+            public NullInstanceEventRecorderAggregateRootEntity() :
+                base(null, new EventRecorder())
             {
             }
         }
@@ -85,29 +85,6 @@ namespace AggregateSource
             {
                 ApplyChange(null);
             }
-        }
-
-        class ApplyInterceptorAggregateRootEntity : AggregateRootEntity
-        {
-            public ApplyInterceptorAggregateRootEntity()
-            {
-                Register<object>(o => { });
-                ApplyChange(new object());
-            }
-
-            protected override void BeforeApplyChange(object @event)
-            {
-                BeforeApplyWasCalled = true;
-            }
-
-            public bool BeforeApplyWasCalled { get; private set; }
-
-            protected override void AfterApplyChange(object @event)
-            {
-                AfterApplyWasCalled = true;
-            }
-
-            public bool AfterApplyWasCalled { get; private set; }
         }
 
         class RegisterNullHandlerAggregateRootEntity : AggregateRootEntity

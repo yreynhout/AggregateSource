@@ -9,14 +9,14 @@ namespace AggregateSource
     /// </summary>
     public abstract class AggregateRootEntity : IAggregateRootEntity
     {
-        readonly EventRecorder _recorder;
-        readonly IConfigureInstanceEventRouter _router;
+        readonly IEventRecorder _recorder;
+        readonly IEventRouter _router;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
         /// </summary>
         protected AggregateRootEntity() : 
-            this(new InstanceEventRouter())
+            this(new EventRouter(), new EventRecorder())
         {
         }
 
@@ -24,12 +24,13 @@ namespace AggregateSource
         /// Initializes a new instance of the <see cref="AggregateRootEntity"/> class.
         /// </summary>
         /// <param name="router">The event router.</param>
+        /// <param name="recorder">The event recorder.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="router"/> is <c>null</c></exception>
-        protected AggregateRootEntity(IConfigureInstanceEventRouter router)
+        protected AggregateRootEntity(IEventRouter router, IEventRecorder recorder)
         {
             if (router == null) throw new ArgumentNullException("router");
             _router = router;
-            _recorder = new EventRecorder();
+            _recorder = recorder;
         }
 
         /// <summary>
@@ -67,23 +68,9 @@ namespace AggregateSource
         protected void ApplyChange(object @event)
         {
             if (@event == null) throw new ArgumentNullException("event");
-            BeforeApplyChange(@event);
             Play(@event);
             Record(@event);
-            AfterApplyChange(@event);
         }
-
-        /// <summary>
-        /// Called before an event is applied, exposed as a point of interception.
-        /// </summary>
-        /// <param name="event">The event that will be applied.</param>
-        protected virtual void BeforeApplyChange(object @event) {}
-
-        /// <summary>
-        /// Called after an event has been applied, exposed as a point of interception.
-        /// </summary>
-        /// <param name="event">The event that has been applied.</param>
-        protected virtual void AfterApplyChange(object @event) {}
 
         void Play(object @event)
         {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace AggregateSource
@@ -18,9 +17,9 @@ namespace AggregateSource
             }
 
             [Test]
-            public void IsEnumerable()
+            public void IsEventRecorder()
             {
-                Assert.IsInstanceOf<IEnumerable<object>>(_sut);
+                Assert.IsInstanceOf<IEventRecorder>(_sut);
             }
 
             [Test]

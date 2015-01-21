@@ -4,26 +4,20 @@ using NUnit.Framework;
 namespace AggregateSource
 {
     [TestFixture]
-    public class InstanceEventRouterTests
+    public class EventRouterTests
     {
-        InstanceEventRouter _sut;
+        EventRouter _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new InstanceEventRouter();
+            _sut = new EventRouter();
         }
 
         [Test]
-        public void IsInstanceEventRouter()
+        public void IsEventRouter()
         {
-            Assert.That(_sut, Is.InstanceOf<IInstanceEventRouter>());
-        }
-
-        [Test]
-        public void IsConfigureInstanceEventRouter()
-        {
-            Assert.That(_sut, Is.InstanceOf<IConfigureInstanceEventRouter>());
+            Assert.That(_sut, Is.InstanceOf<IEventRouter>());
         }
 
         [Test]

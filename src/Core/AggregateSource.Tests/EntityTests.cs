@@ -10,15 +10,16 @@ namespace AggregateSource
         public class WithAnyInstance
         {
             [Test]
-            public void IsInstanceEventRouter()
+            public void ApplierCannotBeNull()
             {
-                Assert.That(new AnyInstanceEntity(), Is.InstanceOf<IInstanceEventRouter>());
+                Assert.Throws<ArgumentNullException>(() => new UseNullApplierEntity1());
+                Assert.Throws<ArgumentNullException>(() => new UseNullApplierEntity2());
             }
 
             [Test]
-            public void ApplierCannotBeNull()
+            public void EventRouterCannotBeNull()
             {
-                Assert.Throws<ArgumentNullException>(() => new UseNullApplierEntity());
+                Assert.Throws<ArgumentNullException>(() => new UseNullRouterEntity());
             }
 
             [Test]
@@ -47,15 +48,19 @@ namespace AggregateSource
             }
         }
 
-        class AnyInstanceEntity : Entity {
-            public AnyInstanceEntity() : base(_ => { })
-            {
-            }
+        class UseNullApplierEntity1 : Entity
+        {
+            public UseNullApplierEntity1() : base(null) {}
         }
 
-        class UseNullApplierEntity : Entity
+        class UseNullApplierEntity2 : Entity
         {
-            public UseNullApplierEntity() : base(null) {}
+            public UseNullApplierEntity2() : base(null, new EventRouter()) { }
+        }
+
+        class UseNullRouterEntity : Entity
+        {
+            public UseNullRouterEntity() : base(_ => { }, null) { }
         }
 
         class RouteWithNullEventEntity : Entity

@@ -49,15 +49,29 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AggregateRootEntity.cs" />
+    <Compile Include="EventRecorder.cs" />
+    <Compile Include="EventRouter.cs" />
+    <Compile Include="Fact.cs" />
+    <Compile Include="IAggregateRootEntity.cs" />
+    <Compile Include="IEventRecorder.cs" />
+    <Compile Include="IEventRouter.cs" />
+    <Compile Include="ISnapshotable.cs" />
+    <Compile Include="Optional.cs" />
+    <Compile Include="PolymorphicEventRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AggregateSource.Core\AggregateSource.Core.csproj">
-      <Project>{cc3fcc99-9e18-45de-9b39-76031d45624d}</Project>
-      <Name>AggregateSource.Core</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

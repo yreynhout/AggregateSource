@@ -3,7 +3,6 @@
     /// <summary>
     /// Represents the snapshotting operations on an aggregate root entity.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Snapshotable")]
     public interface ISnapshotable
     {
         /// <summary>

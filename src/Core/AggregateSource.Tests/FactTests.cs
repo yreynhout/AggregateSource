@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NUnit.Framework;
 
 namespace AggregateSource
@@ -105,16 +106,37 @@ namespace AggregateSource
             Assert.That(sut.Event, Is.SameAs(@event));
         }
 
-        [Test]
-        public void ImplicitConversionToTupleReturnsExpectedResult()
+        class TestFactBuilder
         {
-            var @event = new object();
-            var sut = _sutBuilder.WithIdentifier("123").WithEvent(@event).Build();
+            readonly string _identifier;
+            readonly object _event;
 
-            Tuple<string, object> result = sut;
+            public TestFactBuilder()
+            {
+                _identifier = new Random().Next().ToString(CultureInfo.CurrentCulture);
+                _event = new object();
+            }
 
-            Assert.That(result.Item1, Is.EqualTo("123"));
-            Assert.That(result.Item2, Is.SameAs(@event));
+            TestFactBuilder(string identifier, object @event)
+            {
+                _identifier = identifier;
+                _event = @event;
+            }
+
+            public TestFactBuilder WithEvent(object @event)
+            {
+                return new TestFactBuilder(_identifier, @event);
+            }
+
+            public TestFactBuilder WithIdentifier(string identifier)
+            {
+                return new TestFactBuilder(identifier, _event);
+            }
+
+            public Fact Build()
+            {
+                return new Fact(_identifier, _event);
+            }
         }
     }
 }

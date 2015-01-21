@@ -3,10 +3,16 @@
 namespace AggregateSource
 {
     /// <summary>
-    /// Tracks changes that happen to an aggregate
+    /// Aggregate root entity marker interface.
     /// </summary>
-    public interface IAggregateChangeTracker
-    {
+    public interface IAggregateRootEntity {
+        /// <summary>
+        /// Initializes this instance using the specified events.
+        /// </summary>
+        /// <param name="events">The events to initialize with.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="events"/> are null.</exception>
+        void Initialize(IEnumerable<object> events);
+
         /// <summary>
         /// Determines whether this instance has state changes.
         /// </summary>
@@ -19,7 +25,6 @@ namespace AggregateSource
         /// Gets the state changes applied to this instance.
         /// </summary>
         /// <returns>A list of recorded state changes.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         IEnumerable<object> GetChanges();
 
         /// <summary>

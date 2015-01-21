@@ -23,6 +23,10 @@ namespace AggregateSource
                 Assert.That(_sut,
                             Is.InstanceOf<IEquatable<Optional<AggregateRootEntityStub>>>());
             }
+
+            class AggregateRootEntityStub : AggregateRootEntity
+            {
+            }
         }
 
         [TestFixture]
@@ -64,7 +68,6 @@ namespace AggregateSource
                 _sut = SutFactory();
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sut")]
             protected abstract Optional<T> SutFactory();
             protected abstract Optional<T> WithValueFactory();
 
@@ -74,7 +77,6 @@ namespace AggregateSource
                 Assert.That(_sut.HasValue, Is.False);
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "_")]
             [Test]
             public void ValueThrows()
             {

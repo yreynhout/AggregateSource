@@ -4,16 +4,16 @@ using System.Collections.Generic;
 namespace AggregateSource
 {
     /// <summary>
-    /// Routes an event to a configured state handler for the type of event.
+    /// Routes an event to a configured state handler for the type of event, one of its interfaces or base types.
     /// </summary>
-    public class InstanceEventRouter : IConfigureInstanceEventRouter
+    public class PolymorphicEventRouter : IEventRouter
     {
-        readonly Dictionary<Type, Action<object>> _handlers;
+        private readonly Dictionary<Type, Action<object>> _handlers;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InstanceEventRouter"/> class.
+        /// Initializes a new instance of the <see cref="PolymorphicEventRouter"/> class.
         /// </summary>
-        public InstanceEventRouter()
+        public PolymorphicEventRouter()
         {
             _handlers = new Dictionary<Type, Action<object>>();
         }
@@ -52,9 +52,21 @@ namespace AggregateSource
         {
             if (@event == null) throw new ArgumentNullException("event");
             Action<object> handler;
-            if (_handlers.TryGetValue(@event.GetType(), out handler))
+            var type = @event.GetType();
+            foreach (var @interface in type.GetInterfaces())
             {
-                handler(@event);
+                if (_handlers.TryGetValue(@interface, out handler))
+                {
+                    handler(@event);
+                }   
+            }
+            while (type != null)
+            {
+                if (_handlers.TryGetValue(type, out handler))
+                {
+                    handler(@event);
+                }
+                type = type.BaseType;
             }
         }
     }
