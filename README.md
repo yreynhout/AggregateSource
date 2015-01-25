@@ -1,6 +1,8 @@
 AggregateSource
 ===============
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yreynhout/AggregateSource?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This library/code provides lightweight infrastructure for doing eventsourcing using aggregates. It's not a framework, and it never will be. Period.
 
 The preferred way of using it, is copying it into your project and getting rid of all the cruft you don't need. That said, there are NuGet packages available for those of you that are pressed for time and don't mind following the prescribed recipe.
