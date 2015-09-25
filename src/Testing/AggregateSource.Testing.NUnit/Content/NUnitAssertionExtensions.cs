@@ -36,17 +36,19 @@ namespace AggregateSource.Testing {
     }
 
     static CompareNetObjectsBasedEventComparer CreateEventComparer() {
-      return new CompareNetObjectsBasedEventComparer(new CompareLogic());
+      return new CompareNetObjectsBasedEventComparer(new CompareObjects());
     }
 
     static IExceptionComparer CreateExceptionComparer() {
-      var comparer = new CompareLogic();
-      comparer.Config.MembersToIgnore.AddRange(new []{ "Source", "StackTrace", "TargetSite"});
+      var comparer = new CompareObjects();
+      comparer.ElementsToIgnore.Add("Source");
+      comparer.ElementsToIgnore.Add("StackTrace");
+      comparer.ElementsToIgnore.Add("TargetSite");
       return new CompareNetObjectsBasedExceptionComparer(comparer);
     }
 
     static CompareNetObjectsBasedResultComparer CreateResultComparer() {
-      return new CompareNetObjectsBasedResultComparer(new CompareLogic());
+      return new CompareNetObjectsBasedResultComparer(new CompareObjects());
     }
   }
 }

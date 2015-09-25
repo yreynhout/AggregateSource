@@ -17,7 +17,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedExceptionWhenObjectsDiffer()
         {
-            var comparer = new CompareLogic();
+            var comparer = new CompareObjects();
             var sut = new CompareNetObjectsBasedExceptionComparer(comparer);
 
             var expected = new Exception("1");
@@ -34,7 +34,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedExceptionWhenObjectsAreEqual()
         {
-            var comparer = new CompareLogic();
+            var comparer = new CompareObjects();
             var sut = new CompareNetObjectsBasedExceptionComparer(comparer);
 
             var expected = new Exception("1");

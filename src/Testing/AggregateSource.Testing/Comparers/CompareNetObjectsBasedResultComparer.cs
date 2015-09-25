@@ -6,18 +6,18 @@ using KellermanSoftware.CompareNetObjects;
 namespace AggregateSource.Testing.Comparers
 {
     /// <summary>
-    /// Compares results using a <see cref="ICompareLogic"/> object and reports the differences.
+    /// Compares results using a <see cref="ICompareObjects"/> object and reports the differences.
     /// </summary>
     public class CompareNetObjectsBasedResultComparer : IResultComparer
     {
-        private readonly ICompareLogic _comparer;
+        private readonly ICompareObjects _comparer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompareNetObjectsBasedResultComparer"/> class.
         /// </summary>
         /// <param name="comparer">The comparer.</param>
         /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="comparer"/> is <c>null</c>.</exception>
-        public CompareNetObjectsBasedResultComparer(ICompareLogic comparer)
+        public CompareNetObjectsBasedResultComparer(ICompareObjects comparer)
         {
             if (comparer == null) throw new ArgumentNullException("comparer");
             _comparer = comparer;
@@ -33,10 +33,9 @@ namespace AggregateSource.Testing.Comparers
         /// </returns>
         public IEnumerable<ResultComparisonDifference> Compare(object expected, object actual)
         {
-            var compareResult = _comparer.Compare(expected, actual);
-            if (!compareResult.AreEqual)
+            if (!_comparer.Compare(expected, actual))
             {
-                foreach (var difference in compareResult.Differences)
+                foreach (var difference in _comparer.Differences)
                 {
                     yield return new ResultComparisonDifference(
                         expected, 

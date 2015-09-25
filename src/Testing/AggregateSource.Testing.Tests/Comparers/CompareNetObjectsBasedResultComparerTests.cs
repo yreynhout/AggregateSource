@@ -17,7 +17,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedResultWhenObjectsDiffer()
         {
-            var comparer = new CompareLogic();
+            var comparer = new CompareObjects();
             var sut = new CompareNetObjectsBasedResultComparer(comparer);
 
             const int expected = 1;
@@ -34,7 +34,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedResultWhenObjectsAreEqual()
         {
-            var comparer = new CompareLogic();
+            var comparer = new CompareObjects();
             var sut = new CompareNetObjectsBasedResultComparer(comparer);
 
             const int expected = 1;

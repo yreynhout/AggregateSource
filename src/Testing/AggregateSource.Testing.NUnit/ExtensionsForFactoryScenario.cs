@@ -41,7 +41,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                        throw new Xunit.Sdk.XunitException(writer.ToString());
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                     }
                 }
@@ -61,7 +61,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                             throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                            throw new Xunit.Sdk.XunitException(writer.ToString());
+                            throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                         }
                     }
@@ -83,7 +83,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                        throw new Xunit.Sdk.XunitException(writer.ToString());
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                     }
                 }
@@ -117,7 +117,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                             throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                            throw new Xunit.Sdk.XunitException(writer.ToString());
+                            throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                         }
                     }
@@ -133,7 +133,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                        throw new Xunit.Sdk.XunitException(writer.ToString());
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                     }
                 }
@@ -149,7 +149,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                         throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                        throw new Xunit.Sdk.XunitException(writer.ToString());
+                        throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                     }
                 }
@@ -161,7 +161,7 @@ namespace AggregateSource.Testing
 #if NUNIT
                     throw new NUnit.Framework.AssertionException(writer.ToString());
 #elif XUNIT
-                    throw new Xunit.Sdk.XunitException(writer.ToString());
+                    throw new Xunit.Sdk.AssertException(writer.ToString());
 #endif
                 }
             }
