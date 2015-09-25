@@ -11,7 +11,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void IsEventComparer()
         {
-            var sut = new CompareNetObjectsBasedEventComparer(new CompareObjects());
+            var sut = new CompareNetObjectsBasedEventComparer(new CompareLogic());
             Assert.IsInstanceOf<IEventComparer>(sut);
         }
 
@@ -24,7 +24,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedEventWhenObjectsDiffer()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedEventComparer(comparer);
 
             var expected = new Event { Value = "1" };
@@ -41,7 +41,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedEventWhenObjectsAreEqual()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedEventComparer(comparer);
 
             var expected = new Event { Value = "1" };

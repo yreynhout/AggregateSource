@@ -11,7 +11,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void IsFactComparer()
         {
-            var sut = new CompareNetObjectsBasedFactComparer(new CompareObjects());
+            var sut = new CompareNetObjectsBasedFactComparer(new CompareLogic());
             Assert.IsInstanceOf<IFactComparer>(sut);
         }
 
@@ -24,7 +24,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedFactWhenIdentifiersDiffer()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedFactComparer(comparer);
 
             var @event = new Event { Value = "1" };
@@ -42,7 +42,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedFactWhenEventsDiffer()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedFactComparer(comparer);
 
             var expected = new Fact("123", new Event { Value = "1" });
