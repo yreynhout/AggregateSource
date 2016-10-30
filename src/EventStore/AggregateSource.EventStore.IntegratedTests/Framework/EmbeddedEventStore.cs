@@ -17,21 +17,16 @@ namespace AggregateSource.EventStore.Framework
                 RunInMemory().
                 Build();
             node.Start();
-            var tcs = new TaskCompletionSource<object>();
-            node.NodeStatusChanged += (sender, args) =>
-            {
-                if (args.NewVNodeState == VNodeState.Master)
-                    tcs.SetResult(null);
-            };
-            tcs.Task.Wait();
+            node.StartAndWaitUntilReady().Wait();
             Node = node;
             Credentials = new UserCredentials("admin", "changeit");
-            var connection = EmbeddedEventStoreConnection.Create(Node);
-
-            // This does not work, because ... ††† JEZUS †††
-            //var connection = EventStoreConnection.Create(
-            //    ConnectionSettings.Create().SetDefaultUserCredentials(Credentials).UseDebugLogger(),
-            //    new IPEndPoint(Opts.InternalIpDefault, Opts.ExternalTcpPortDefault));
+            var settings = ConnectionSettings.Create()
+                .SetDefaultUserCredentials(Credentials)
+                .KeepReconnecting()
+                .KeepRetrying()
+                .UseConsoleLogger()
+                .Build();
+            var connection = EmbeddedEventStoreConnection.Create(Node, settings);
             connection.ConnectAsync().Wait();
             Connection = connection;
         }

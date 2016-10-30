@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AggregateSource.EventStore.Framework
 {
@@ -12,6 +13,17 @@ namespace AggregateSource.EventStore.Framework
                 action();
             }
             catch {}
+            // ReSharper restore EmptyGeneralCatchClause
+        }
+
+        public static async Task ExceptionOf(Func<Task> action)
+        {
+            // ReSharper disable EmptyGeneralCatchClause
+            try
+            {
+                await action();
+            }
+            catch { }
             // ReSharper restore EmptyGeneralCatchClause
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
+using static System.Int32;
 
 namespace AggregateSource
 {
@@ -231,7 +233,22 @@ namespace AggregateSource
         }
 
         [TestFixture]
-        public class WithFilledReferenceTypeInstance : WithFilledInstance<Object>
+        public class WithFilledObjectArray : WithFilledInstance<object[]>
+        {
+            protected override object[] ValueFactory()
+            {
+                return new [] { new object(), new object() };
+            }
+
+            protected override Optional<object[]> InstanceFactory(object[] value)
+            {
+                return new Optional<object[]>(value);
+            }
+        }
+
+
+        [TestFixture]
+        public class WithFilledReferenceTypeInstance : WithFilledInstance<object>
         {
             protected override object ValueFactory()
             {
@@ -247,10 +264,18 @@ namespace AggregateSource
         [TestFixture]
         public class WithFilledValueTypeInstance : WithFilledInstance<Int32>
         {
+            private readonly HashSet<int> _taken = new HashSet<int>();
+
             protected override int ValueFactory()
             {
-                return new Randomizer(Randomizer.RandomSeed).
-                    GetInts(Int32.MinValue, Int32.MaxValue, 1)[0];
+                var next = 
+                    new Random().
+                        Next(MinValue, MaxValue);
+                while(_taken.Contains(next))
+                    next = new Random().
+                        Next(MinValue, MaxValue);
+                _taken.Add(next);
+                return next;
             }
 
             protected override Optional<int> InstanceFactory(int value)

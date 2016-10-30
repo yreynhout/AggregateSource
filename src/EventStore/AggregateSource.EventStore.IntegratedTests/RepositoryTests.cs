@@ -9,7 +9,7 @@ namespace AggregateSource.EventStore
     namespace RepositoryTests
     {
         // ReSharper disable UnusedVariable
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class Construction
         {
             EventReaderConfiguration _configuration;
@@ -69,16 +69,16 @@ namespace AggregateSource.EventStore
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWork
         {
             Repository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().BuildForRepository();
             }
@@ -115,7 +115,7 @@ namespace AggregateSource.EventStore
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWork
         {
             Repository<AggregateRootEntityStub> _sut;
@@ -123,9 +123,9 @@ namespace AggregateSource.EventStore
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = AggregateRootEntityStub.Factory();
                 _sut = new RepositoryScenarioBuilder().
@@ -167,16 +167,16 @@ namespace AggregateSource.EventStore
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithStreamPresentInStore
         {
             Repository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
@@ -218,16 +218,16 @@ namespace AggregateSource.EventStore
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithDeletedStreamInStore
         {
             Repository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).

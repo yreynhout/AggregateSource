@@ -9,6 +9,13 @@ namespace AggregateSource.Testing.Comparers
     public class CompareNetObjectsBasedResultComparerTests
     {
         [Test]
+        public void IsResultComparer()
+        {
+            var sut = new CompareNetObjectsBasedResultComparer(new CompareLogic());
+            Assert.IsInstanceOf<IResultComparer>(sut);
+        }
+
+        [Test]
         public void CompareObjectsCanNotBeNull()
         {
             Assert.Throws<ArgumentNullException>(() => new CompareNetObjectsBasedResultComparer(null));
@@ -17,7 +24,7 @@ namespace AggregateSource.Testing.Comparers
         [Test]
         public void CompareReturnsExpectedResultWhenObjectsDiffer()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedResultComparer(comparer);
 
             const int expected = 1;
@@ -27,14 +34,14 @@ namespace AggregateSource.Testing.Comparers
             Assert.That(result,
                 Is.EquivalentTo(new[]
                 {
-                    new ResultComparisonDifference(expected, actual, "Expected != Actual (1,2)")
+                    new ResultComparisonDifference(expected, actual, "Types [Int32,Int32], Item Expected != Actual, Values (1,2)")
                 }).Using(ResultComparisonDifferenceComparer.Instance));
         }
 
         [Test]
         public void CompareReturnsExpectedResultWhenObjectsAreEqual()
         {
-            var comparer = new CompareObjects();
+            var comparer = new CompareLogic();
             var sut = new CompareNetObjectsBasedResultComparer(comparer);
 
             const int expected = 1;

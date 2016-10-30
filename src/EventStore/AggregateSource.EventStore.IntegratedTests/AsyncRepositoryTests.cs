@@ -9,7 +9,7 @@ namespace AggregateSource.EventStore
     namespace AsyncRepositoryTests
     {
         // ReSharper disable UnusedVariable
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class Construction
         {
             [Test]
@@ -55,16 +55,16 @@ namespace AggregateSource.EventStore
             public void UsingCtorReturnsInstanceWithExpectedProperties() { }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWork
         {
             AsyncRepository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().BuildForAsyncRepository();
             }
@@ -73,18 +73,15 @@ namespace AggregateSource.EventStore
             public void GetAsyncThrows()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmpty()
+            public async Task GetOptionalAsyncReturnsEmpty()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }
@@ -104,7 +101,7 @@ namespace AggregateSource.EventStore
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWork
         {
             AsyncRepository<AggregateRootEntityStub> _sut;
@@ -112,9 +109,9 @@ namespace AggregateSource.EventStore
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = AggregateRootEntityStub.Factory();
                 _sut = new RepositoryScenarioBuilder().
@@ -126,49 +123,46 @@ namespace AggregateSource.EventStore
             public void GetAsyncThrowsForUnknownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetAsyncReturnsRootOfKnownId()
+            public async Task GetAsyncReturnsRootOfKnownId()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.SameAs(_root));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsRootForKnownId()
+            public async Task GetOptionalAsyncReturnsRootForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.EqualTo(new Optional<AggregateRootEntityStub>(_root)));
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithStreamPresentInStore
         {
             AsyncRepository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
@@ -179,50 +173,47 @@ namespace AggregateSource.EventStore
             public void GetAsyncThrowsForUnknownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetReturnsRootOfKnownId()
+            public async Task GetReturnsRootOfKnownId()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result.RecordedEvents, Is.EquivalentTo(new[] { new EventStub(1) }));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsRootForKnownId()
+            public async Task GetOptionalAsyncReturnsRootForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result.HasValue, Is.True);
                 Assert.That(result.Value.RecordedEvents, Is.EquivalentTo(new[] { new EventStub(1) }));
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithDeletedStreamInStore
         {
             AsyncRepository<AggregateRootEntityStub> _sut;
             Model _model;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _sut = new RepositoryScenarioBuilder().
                     ScheduleAppendToStream(_model.KnownIdentifier, new EventStub(1)).
@@ -234,38 +225,32 @@ namespace AggregateSource.EventStore
             public void GetAsyncThrowsForUnknownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
             public void GetAsyncThrowsForKnownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.KnownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException)exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.KnownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.KnownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.KnownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof(AggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForKnownId()
+            public async Task GetOptionalAsyncReturnsEmptyForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<AggregateRootEntityStub>.Empty));
             }

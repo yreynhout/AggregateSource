@@ -5,21 +5,21 @@ using KellermanSoftware.CompareNetObjects;
 namespace AggregateSource.Testing.Comparers
 {
     /// <summary>
-    /// Compares facts using a <see cref="ICompareObjects"/> object and reports the differences.
+    /// Compares facts using a <see cref="ICompareLogic"/> object and reports the differences.
     /// </summary>
     public class CompareNetObjectsBasedFactComparer : IFactComparer
     {
-        private readonly ICompareObjects _comparer;
+        private readonly ICompareLogic _logic;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompareNetObjectsBasedFactComparer"/> class.
         /// </summary>
-        /// <param name="comparer">The comparer.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="comparer">comparer</paramref> is <c>null</c>.</exception>
-        public CompareNetObjectsBasedFactComparer(ICompareObjects comparer)
+        /// <param name="logic">The comparer.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="logic">comparer</paramref> is <c>null</c>.</exception>
+        public CompareNetObjectsBasedFactComparer(ICompareLogic logic)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
-            _comparer = comparer;
+            if (logic == null) throw new ArgumentNullException("logic");
+            _logic = logic;
         }
 
         /// <summary>
@@ -40,9 +40,10 @@ namespace AggregateSource.Testing.Comparers
                     string.Format("Expected.Identifier != Actual.Identifier ({0},{1})", expected.Identifier, actual.Identifier));
             }
 
-            if (!_comparer.Compare(expected.Event, actual.Event))
+            var result = _logic.Compare(expected.Event, actual.Event);
+            if (!result.AreEqual)
             {
-                foreach (var difference in _comparer.Differences)
+                foreach (var difference in result.Differences)
                 {
                     yield return new FactComparisonDifference(
                         expected,

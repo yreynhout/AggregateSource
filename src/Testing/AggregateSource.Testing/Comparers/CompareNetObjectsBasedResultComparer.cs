@@ -6,21 +6,21 @@ using KellermanSoftware.CompareNetObjects;
 namespace AggregateSource.Testing.Comparers
 {
     /// <summary>
-    /// Compares results using a <see cref="ICompareObjects"/> object and reports the differences.
+    /// Compares results using a <see cref="ICompareLogic"/> object and reports the differences.
     /// </summary>
     public class CompareNetObjectsBasedResultComparer : IResultComparer
     {
-        private readonly ICompareObjects _comparer;
+        private readonly ICompareLogic _logic;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompareNetObjectsBasedResultComparer"/> class.
         /// </summary>
-        /// <param name="comparer">The comparer.</param>
-        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="comparer"/> is <c>null</c>.</exception>
-        public CompareNetObjectsBasedResultComparer(ICompareObjects comparer)
+        /// <param name="logic">The comparer.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the <paramref name="logic"/> is <c>null</c>.</exception>
+        public CompareNetObjectsBasedResultComparer(ICompareLogic logic)
         {
-            if (comparer == null) throw new ArgumentNullException("comparer");
-            _comparer = comparer;
+            if (logic == null) throw new ArgumentNullException("logic");
+            _logic = logic;
         }
 
         /// <summary>
@@ -33,9 +33,10 @@ namespace AggregateSource.Testing.Comparers
         /// </returns>
         public IEnumerable<ResultComparisonDifference> Compare(object expected, object actual)
         {
-            if (!_comparer.Compare(expected, actual))
+            var result = _logic.Compare(expected, actual);
+            if (!result.AreEqual)
             {
-                foreach (var difference in _comparer.Differences)
+                foreach (var difference in result.Differences)
                 {
                     yield return new ResultComparisonDifference(
                         expected, 

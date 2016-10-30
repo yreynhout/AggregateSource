@@ -32,18 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AggregateSource">
-      <HintPath>..\packages\AggregateSource.0.0.285\lib\net45\AggregateSource.dll</HintPath>
+    <Reference Include="AggregateSource, Version=0.0.300.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AggregateSource.0.0.300\lib\net45\AggregateSource.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="AggregateSource.EventStore">
-      <HintPath>..\packages\AggregateSource.EventStore.0.0.285\lib\net45\AggregateSource.EventStore.dll</HintPath>
+    <Reference Include="AggregateSource.EventStore, Version=0.0.300.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AggregateSource.EventStore.0.0.300\lib\net45\AggregateSource.EventStore.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EventStore.ClientAPI">
-      <HintPath>..\packages\EventStore.Client.2.0.2\lib\net40\EventStore.ClientAPI.dll</HintPath>
+    <Reference Include="EventStore.ClientAPI, Version=3.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EventStore.Client.3.9.2\lib\net40\EventStore.ClientAPI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

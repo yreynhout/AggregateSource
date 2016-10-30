@@ -1,32 +1,38 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using EventStore.ClientAPI;
 
 namespace AggregateSource.EventStore.Framework
 {
     public static class EventStoreConnectionExtensions
     {
-        public static void DeleteAllStreams(this IEventStoreConnection connection)
+        public static Task DeleteAllStreamsAsync(this IEventStoreConnection connection)
         {
-            var slice = connection.
-                ReadAllEventsForwardAsync(
-                    Position.Start, Int32.MaxValue, false, EmbeddedEventStore.Credentials);
-            slice.Wait();
-            var streams = slice.Result.
-                Events.
-                Select(_ => _.OriginalStreamId).
-                Where(StreamNameIsNotReserved).
-                Distinct();
-            foreach (var stream in streams)
-            {
-                var streamStatusSlice = connection.ReadStreamEventsForwardAsync(stream, 0, 1, false);
-                streamStatusSlice.Wait();
-                if (streamStatusSlice.Result.Status != SliceReadStatus.StreamDeleted &&
-                    streamStatusSlice.Result.Status != SliceReadStatus.StreamNotFound)
-                {
-                    connection.DeleteStreamAsync(stream, ExpectedVersion.Any, EmbeddedEventStore.Credentials).Wait();
-                }
-            }
+            return Task.FromResult<object>(null);
+            //AllEventsSlice slice;
+            //var position = Position.Start;
+            //do
+            //{
+            //    slice = await connection.
+            //        ReadAllEventsForwardAsync(
+            //            position, 4096, false, EmbeddedEventStore.Credentials);
+            //    var streams = slice.
+            //        Events.
+            //        Select(_ => _.OriginalStreamId).
+            //        Where(StreamNameIsNotReserved).
+            //        Distinct();
+            //    //foreach (var stream in streams)
+            //    //{ 
+            //    //    var streamStatusSlice = await connection.ReadStreamEventsForwardAsync(stream, 0, 1, false, EmbeddedEventStore.Credentials);
+            //    //    if (streamStatusSlice.Status != SliceReadStatus.StreamDeleted &&
+            //    //        streamStatusSlice.Status != SliceReadStatus.StreamNotFound)
+            //    //    {
+            //    //        await connection.DeleteStreamAsync(stream, ExpectedVersion.Any, EmbeddedEventStore.Credentials);
+            //    //    }
+            //    //}
+            //    position = slice.NextPosition;
+            //} while (!slice.IsEndOfStream);
         }
 
         static bool StreamNameIsNotReserved(string streamName)

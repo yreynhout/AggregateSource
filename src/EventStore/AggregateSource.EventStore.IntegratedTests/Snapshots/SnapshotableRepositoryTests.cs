@@ -12,7 +12,7 @@ namespace AggregateSource.EventStore.Snapshots
     namespace SnapshotableRepositoryTests
     {
         // ReSharper disable UnusedVariable
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class Construction
         {
             ISnapshotReader _reader;
@@ -72,7 +72,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWorkAndNoSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -82,9 +82,9 @@ namespace AggregateSource.EventStore.Snapshots
             ISnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _unitOfWork = new UnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -165,8 +165,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWorkAndSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -176,9 +175,9 @@ namespace AggregateSource.EventStore.Snapshots
             ISnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _unitOfWork = new UnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -261,7 +260,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWorkAndNoSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -272,9 +271,9 @@ namespace AggregateSource.EventStore.Snapshots
             ISnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new UnitOfWork();
@@ -391,7 +390,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWorkAndSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -403,9 +402,9 @@ namespace AggregateSource.EventStore.Snapshots
             object _state;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new UnitOfWork();
@@ -541,7 +540,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithFilledStoreAndNoSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -685,7 +684,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithFilledStoreAndSnapshot
         {
             SnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;

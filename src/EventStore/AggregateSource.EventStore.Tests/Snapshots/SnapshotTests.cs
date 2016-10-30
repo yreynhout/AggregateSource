@@ -27,7 +27,7 @@ namespace AggregateSource.EventStore.Snapshots
             Assert.That(sut.State, Is.EqualTo(state));
         }
 
-        IEnumerable<object> StateObjects
+        private static IEnumerable<object> StateObjects
         {
             get
             {

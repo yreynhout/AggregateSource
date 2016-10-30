@@ -28,7 +28,7 @@ namespace AggregateSource.Testing
             }
         }
 
-        public IEnumerable<TestCaseData> ExceptionCentricTestSpecificationCases
+        public static IEnumerable<TestCaseData> ExceptionCentricTestSpecificationCases
         {
             get
             {
@@ -63,7 +63,7 @@ namespace AggregateSource.Testing
             }
         }
 
-        public IEnumerable<TestCaseData> EventCentricTestSpecificationCases
+        public static IEnumerable<TestCaseData> EventCentricTestSpecificationCases
         {
             get
             {

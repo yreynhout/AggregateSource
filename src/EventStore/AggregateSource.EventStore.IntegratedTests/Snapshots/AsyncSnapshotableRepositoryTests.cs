@@ -13,7 +13,7 @@ namespace AggregateSource.EventStore.Snapshots
     namespace AsyncSnapshotableRepositoryTests
     {
         // ReSharper disable UnusedVariable
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class Construction
         {
             IAsyncSnapshotReader _reader;
@@ -83,7 +83,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWorkAndNoSnapshot
         {
             AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -93,9 +93,9 @@ namespace AggregateSource.EventStore.Snapshots
             IAsyncSnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _unitOfWork = new ConcurrentUnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -118,50 +118,47 @@ namespace AggregateSource.EventStore.Snapshots
             public void GetAsyncThrows()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetAsyncReadsSnapshot()
+            public async Task GetAsyncReadsSnapshot()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetAsyncResolvesStreamName()
+            public async Task GetAsyncResolvesStreamName()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmpty()
+            public async Task GetOptionalAsyncReturnsEmpty()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<SnapshotableAggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshot()
+            public async Task GetOptionalAsyncReadsSnapshot()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesStreamName()
+            public async Task GetOptionalAsyncResolvesStreamName()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
@@ -181,7 +178,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndEmptyUnitOfWorkAndSnapshot
         {
             AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -191,9 +188,9 @@ namespace AggregateSource.EventStore.Snapshots
             IAsyncSnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _unitOfWork = new ConcurrentUnitOfWork();
                 _resolver = A.Fake<IStreamNameResolver>();
@@ -216,50 +213,47 @@ namespace AggregateSource.EventStore.Snapshots
             public void GetAsyncThrows()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetAsyncReadsSnapshot()
+            public async Task GetAsyncReadsSnapshot()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetAsyncResolvesStreamName()
+            public async Task GetAsyncResolvesStreamName()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmpty()
+            public async Task GetOptionalAsyncReturnsEmpty()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier); 
 
                 Assert.That(result, Is.EqualTo(Optional<SnapshotableAggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshot()
+            public async Task GetOptionalAsyncReadsSnapshot()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesStreamName()
+            public async Task GetOptionalAsyncResolvesStreamName()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
@@ -279,7 +273,7 @@ namespace AggregateSource.EventStore.Snapshots
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWorkAndNoSnapshot
         {
             AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -290,9 +284,9 @@ namespace AggregateSource.EventStore.Snapshots
             IAsyncSnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new ConcurrentUnitOfWork();
@@ -326,95 +320,95 @@ namespace AggregateSource.EventStore.Snapshots
             }
 
             [Test]
-            public void GetReadsSnapshotOfUnknownId()
+            public async Task GetReadsSnapshotOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier); });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetResolvesNameOfUnknownId()
+            public async Task GetResolvesNameOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier); });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetAsyncReturnsRootOfKnownId()
+            public async Task GetAsyncReturnsRootOfKnownId()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.SameAs(_root));
             }
 
             [Test]
-            public void GetAsyncDoesNotReadSnapshotOfKnownId()
+            public async Task GetAsyncDoesNotReadSnapshotOfKnownId()
             {
-                var _ = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetAsyncDoesNotResolveNameOfKnownId()
+            public async Task GetAsyncDoesNotResolveNameOfKnownId()
             {
-                var _ = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<SnapshotableAggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshotOfUnknownId()
+            public async Task GetOptionalAsyncReadsSnapshotOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesNameOfUnknownId()
+            public async Task GetOptionalAsyncResolvesNameOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsRootForKnownId()
+            public async Task GetOptionalAsyncReturnsRootForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
             }
 
             [Test]
-            public void GetOptionalAsyncDoesNotReadSnapshotOfKnownId()
+            public async Task GetOptionalAsyncDoesNotReadSnapshotOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncDoesNotResolveNameOfKnownId()
+            public async Task GetOptionalAsyncDoesNotResolveNameOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustNotHaveHappened();
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithEmptyStoreAndFilledUnitOfWorkAndSnapshot
         {
             AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -425,9 +419,9 @@ namespace AggregateSource.EventStore.Snapshots
             IAsyncSnapshotReader _reader;
 
             [SetUp]
-            public void SetUp()
+            public async Task SetUp()
             {
-                EmbeddedEventStore.Connection.DeleteAllStreams();
+                await EmbeddedEventStore.Connection.DeleteAllStreamsAsync();
                 _model = new Model();
                 _root = SnapshotableAggregateRootEntityStub.Factory();
                 _unitOfWork = new ConcurrentUnitOfWork();
@@ -452,104 +446,101 @@ namespace AggregateSource.EventStore.Snapshots
             public void GetAsyncThrowsForUnknownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetReadsSnapshotOfUnknownId()
+            public async Task GetReadsSnapshotOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier); });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetResolvesNameOfUnknownId()
+            public async Task GetResolvesNameOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier); });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetAsyncReturnsRootOfKnownId()
+            public async Task GetAsyncReturnsRootOfKnownId()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.SameAs(_root));
             }
 
             [Test]
-            public void GetAsyncDoesNotReadSnapshotOfKnownId()
+            public async Task GetAsyncDoesNotReadSnapshotOfKnownId()
             {
-                var _ = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetAsyncDoesNotResolveNameOfKnownId()
+            public async Task GetAsyncDoesNotResolveNameOfKnownId()
             {
-                var _ = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<SnapshotableAggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshotOfUnknownId()
+            public async Task GetOptionalAsyncReadsSnapshotOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesNameOfUnknownId()
+            public async Task GetOptionalAsyncResolvesNameOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsRootForKnownId()
+            public async Task GetOptionalAsyncReturnsRootForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
             }
 
             [Test]
-            public void GetOptionalAsyncDoesNotReadSnapshotOfKnownId()
+            public async Task GetOptionalAsyncDoesNotReadSnapshotOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.KnownIdentifier)).MustNotHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncDoesNotResolveNameOfKnownId()
+            public async Task GetOptionalAsyncDoesNotResolveNameOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustNotHaveHappened();
             }
         }
 
-        [TestFixture]
+        [TestFixture, SingleThreaded]
         public class WithFilledStore
         {
             AsyncSnapshotableRepository<SnapshotableAggregateRootEntityStub> _sut;
@@ -612,42 +603,39 @@ namespace AggregateSource.EventStore.Snapshots
             public void GetAsyncThrowsForUnknownId()
             {
                 var exception =
-                    Assert.Throws<AggregateException>(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
-                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(1));
-                Assert.That(exception.InnerExceptions[0], Is.InstanceOf<AggregateNotFoundException>());
-                var actualException = (AggregateNotFoundException) exception.InnerExceptions[0];
-                Assert.That(actualException.Identifier, Is.EqualTo(_model.UnknownIdentifier));
-                Assert.That(actualException.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
+                    Assert.ThrowsAsync<AggregateNotFoundException>(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
+                Assert.That(exception.Identifier, Is.EqualTo(_model.UnknownIdentifier));
+                Assert.That(exception.ClrType, Is.EqualTo(typeof (SnapshotableAggregateRootEntityStub)));
             }
 
             [Test]
-            public void GetAsyncReadsSnapshotOfUnknownId()
+            public async Task GetAsyncReadsSnapshotOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetAsyncResolvesNameOfUnknownId()
+            public async Task GetAsyncResolvesNameOfUnknownId()
             {
-                Catch.ExceptionOf(() => { var _ = _sut.GetAsync(_model.UnknownIdentifier).Result; });
+                await Catch.ExceptionOf(async () => { var _ = await _sut.GetAsync(_model.UnknownIdentifier); });
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetReturnsRootOfKnownId()
+            public async Task GetReturnsRootOfKnownId()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.SameAs(_root));
             }
 
             [Test]
-            public void GetReturnsRootRestoredFromSnapshot()
+            public async Task GetReturnsRootRestoredFromSnapshot()
             {
-                var result = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetAsync(_model.KnownIdentifier);
 
                 Assert.That(result.RecordedSnapshot, Is.SameAs(_state));
             }
@@ -661,65 +649,65 @@ namespace AggregateSource.EventStore.Snapshots
             }
 
             [Test]
-            public void GetResolvesNameOfKnownId()
+            public async Task GetResolvesNameOfKnownId()
             {
-                var _ = _sut.GetAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsEmptyForUnknownId()
+            public async Task GetOptionalAsyncReturnsEmptyForUnknownId()
             {
-                var result = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 Assert.That(result, Is.EqualTo(Optional<SnapshotableAggregateRootEntityStub>.Empty));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshotOfUnknownId()
+            public async Task GetOptionalAsyncReadsSnapshotOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesNameOfUnknownId()
+            public async Task GetOptionalAsyncResolvesNameOfUnknownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.UnknownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.UnknownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.UnknownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncReturnsRootForKnownId()
+            public async Task GetOptionalAsyncReturnsRootForKnownId()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result, Is.EqualTo(new Optional<SnapshotableAggregateRootEntityStub>(_root)));
             }
 
             [Test]
-            public void GetOptionalReturnsRootForKnownIdRestoredFromSnapshot()
+            public async Task GetOptionalReturnsRootForKnownIdRestoredFromSnapshot()
             {
-                var result = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var result = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 Assert.That(result.Value.RecordedSnapshot, Is.SameAs(_state));
             }
 
             [Test]
-            public void GetOptionalAsyncReadsSnapshotOfKnownId()
+            public async Task GetOptionalAsyncReadsSnapshotOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _reader.ReadOptionalAsync(_model.KnownIdentifier)).MustHaveHappened();
             }
 
             [Test]
-            public void GetOptionalAsyncResolvesNameOfKnownId()
+            public async Task GetOptionalAsyncResolvesNameOfKnownId()
             {
-                var _ = _sut.GetOptionalAsync(_model.KnownIdentifier).Result;
+                var _ = await _sut.GetOptionalAsync(_model.KnownIdentifier);
 
                 A.CallTo(() => _resolver.Resolve(_model.KnownIdentifier)).MustHaveHappened();
             }
