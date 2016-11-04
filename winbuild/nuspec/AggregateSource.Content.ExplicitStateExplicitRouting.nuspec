@@ -23,13 +23,10 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model. Root &amp; entity with explicit state &amp; routing.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>Warning! The API is still in flux. GES 3.0.1 support.</releaseNotes>
-    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <releaseNotes>Upgrade all the dependencies.</releaseNotes>
+    <copyright>Copyright 2016, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.0">
-        <dependency id="AggregateSource" version="0.0.301" />
-      </group>
       <group targetFramework=".NETFramework4.5">
         <dependency id="AggregateSource" version="0.0.301" />
       </group>

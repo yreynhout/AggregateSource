@@ -8,7 +8,6 @@
 	<Target Name="TeamCityCodeBetter">
 		<MSBuild Projects="$(MSBuildProjectDirectory)\run_me_first.proj" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\test.proj" Targets="Test" />
-		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult40.xml']" />
 		<Message Text="##teamcity[importData type='nunit' path='$(MSBuildProjectDirectory)\TestRunResult45.xml']" />
 		<MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Pack" />
 		<!-- <MSBuild Projects="$(MSBuildProjectDirectory)\nuget.proj" Targets="Push" Properties="NuGetApiKey=$(NuGetApiKey)" Condition="$(NuGetApiKey) != ''" /> -->

@@ -23,14 +23,11 @@ using this tokenized nuspec file.
     <licenseUrl>https://raw.github.com/yreynhout/AggregateSource/master/LICENSE.txt</licenseUrl>
     <description>AggregateSource provides lightweight infrastructure for building an eventsourced, aggregate based domain model.</description>
     <projectUrl>https://github.com/yreynhout/AggregateSource</projectUrl>
-    <releaseNotes>Warning! The API is still in flux. GES 3.0.1 support.</releaseNotes>
-    <copyright>Copyright 2013, BitTacklr. All rights reserved.</copyright>
+    <releaseNotes>Upgrade all the dependencies.</releaseNotes>
+    <copyright>Copyright 2016, BitTacklr. All rights reserved.</copyright>
     <tags>eventsourcing DDDesign</tags>
   </metadata>
   <files>
-    <file src="..\output\net40\AggregateSource.dll" target="lib\net40\AggregateSource.dll" />
-    <file src="..\output\net40\AggregateSource.pdb" target="lib\net40\AggregateSource.pdb" />
-    <file src="..\output\net40\AggregateSource.xml" target="lib\net40\AggregateSource.xml" />
     <file src="..\output\net45\AggregateSource.dll" target="lib\net45\AggregateSource.dll" />
     <file src="..\output\net45\AggregateSource.pdb" target="lib\net45\AggregateSource.pdb" />
     <file src="..\output\net45\AggregateSource.xml" target="lib\net45\AggregateSource.xml" />

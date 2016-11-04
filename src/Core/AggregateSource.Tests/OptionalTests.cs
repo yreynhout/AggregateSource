@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using static System.Int32;
 
 namespace AggregateSource
 {
@@ -244,8 +243,33 @@ namespace AggregateSource
             {
                 return new Optional<object[]>(value);
             }
-        }
 
+            [Test]
+            public void TwoInstancesAreEqualIfTheirValuesAreDifferentArrayInstancesWithTheSameArrayElements()
+            {
+                var element1 = new object();
+                var element2 = new object();
+                var value1 = new [] {element1, element2};
+                var value2 = new [] {element1, element2};
+                var sut = InstanceFactory(value1);
+                var other = InstanceFactory(value2);
+
+                Assert.That(sut, Is.EqualTo(other));
+            }
+
+            [Test]
+            public void TwoInstancesHaveTheSameHashCodeIfTheirValuesAreDifferentArrayInstancesWithTheSameArrayElements()
+            {
+                var element1 = new object();
+                var element2 = new object();
+                var value1 = new[] { element1, element2 };
+                var value2 = new[] { element1, element2 };
+                var sut = InstanceFactory(value1);
+                var other = InstanceFactory(value2);
+
+                Assert.That(sut.GetHashCode(), Is.EqualTo(other.GetHashCode()));
+            }
+        }
 
         [TestFixture]
         public class WithFilledReferenceTypeInstance : WithFilledInstance<object>
@@ -270,10 +294,10 @@ namespace AggregateSource
             {
                 var next = 
                     new Random().
-                        Next(MinValue, MaxValue);
+                        Next(Int32.MinValue, Int32.MaxValue);
                 while(_taken.Contains(next))
                     next = new Random().
-                        Next(MinValue, MaxValue);
+                        Next(Int32.MinValue, Int32.MaxValue);
                 _taken.Add(next);
                 return next;
             }

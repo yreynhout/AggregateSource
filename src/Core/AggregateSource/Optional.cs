@@ -100,8 +100,29 @@ namespace AggregateSource
         /// </returns>
         public bool Equals(Optional<T> other)
         {
-            return _hasValue.Equals(other._hasValue) &&
-                   EqualityComparer<T>.Default.Equals(_value, other._value);
+            if (_hasValue.Equals(other._hasValue))
+            {
+                if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+                {
+                    var enumerable1 = (IEnumerable) _value;
+                    var enumerable2 = (IEnumerable) other._value;
+                    if (enumerable1 == null && enumerable2 == null) return true;
+                    if (enumerable1 == null || enumerable2 == null) return false;
+                    var enumerator1 = enumerable1.GetEnumerator();
+                    var enumerator2 = enumerable2.GetEnumerator();
+                    while (enumerator1.MoveNext())
+                    {
+                        if (!(enumerator2.MoveNext() &&
+                              EqualityComparer<object>.Default.Equals(enumerator1.Current, enumerator2.Current)))
+                        {
+                            return false;
+                        }
+                    }
+                    return !enumerator2.MoveNext();
+                }
+                return EqualityComparer<T>.Default.Equals(_value, other._value);
+            }
+            return false;
         }
 
         /// <summary>
@@ -134,6 +155,20 @@ namespace AggregateSource
         /// </returns>
         public override int GetHashCode()
         {
+            if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+            {
+                var enumerable = (IEnumerable)_value;
+                if (enumerable != null)
+                {
+                    var enumerator = enumerable.GetEnumerator();
+                    var hashCode = _hasValue.GetHashCode();
+                    while (enumerator.MoveNext())
+                    {
+                        hashCode ^= EqualityComparer<object>.Default.GetHashCode(enumerator.Current);
+                    }
+                    return hashCode ^ typeof(T).GetHashCode();
+                }
+            }
             return _hasValue.GetHashCode() ^ EqualityComparer<T>.Default.GetHashCode(_value) ^ typeof (T).GetHashCode();
         }
     }

@@ -17,6 +17,9 @@ namespace AggregateSource.EventStore.Framework
             EmbeddedEventStore.Stop();
         }
 
-        public ActionTargets Targets => ActionTargets.Suite;
+        public ActionTargets Targets
+        {
+            get { return ActionTargets.Suite; }
+        }
     }
 }
