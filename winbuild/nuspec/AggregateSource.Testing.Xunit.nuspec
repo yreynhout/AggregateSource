@@ -28,7 +28,7 @@ using this tokenized nuspec file.
     <tags>eventsourcing DDDesign</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="AggregateSource.Testing" version="0.0.301" />
+        <dependency id="AggregateSource.Testing" version="0.0.308" />
         <dependency id="Xunit" version="2.1.0" />
       </group>
     </dependencies>
