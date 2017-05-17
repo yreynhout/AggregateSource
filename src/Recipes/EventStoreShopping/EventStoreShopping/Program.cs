@@ -27,7 +27,7 @@ namespace EventStoreShopping
                         credentials),
                 new IPEndPoint(IPAddress.Loopback, 1113),
                 "EventStoreShopping");
-            connection.Connect();
+            connection.ConnectAsync().Wait();
 
             var unitOfWork = new UnitOfWork();
             var repository = new Repository<ShoppingCart>(
@@ -66,7 +66,7 @@ namespace EventStoreShopping
 
             //Append to stream
             var affected = unitOfWork.GetChanges().Single();
-            connection.AppendToStream(
+            connection.AppendToStreamAsync(
                 affected.Identifier,
                 affected.ExpectedVersion,
                 affected.Root.GetChanges().
@@ -77,7 +77,7 @@ namespace EventStoreShopping
                             true,
                             ToJsonByteArray(_),
                             new byte[0])),
-                credentials);
+                credentials).Wait();
         }
 
         class JsonDeserializer : IEventDeserializer
