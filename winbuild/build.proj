@@ -35,7 +35,9 @@
         $(SourcePath)\EventStore\AggregateSource.EventStore.Tests\AggregateSource.EventStore.Tests.csproj;
         $(SourcePath)\EventStore\AggregateSource.EventStore.IntegratedTests\AggregateSource.EventStore.IntegratedTests.csproj;
         $(SourcePath)\NEventStore\AggregateSource.NEventStore\AggregateSource.NEventStore.csproj;
-        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;"
+        $(SourcePath)\NEventStore\AggregateSource.NEventStore.Tests\AggregateSource.NEventStore.Tests.csproj;
+        $(SourcePath)\SqlStreamStore\AggregateSource.SqlStreamStore\AggregateSource.SqlStreamStore.csproj;
+        $(SourcePath)\SqlStreamStore\AggregateSource.SqlStreamStore.Tests\AggregateSource.SqlStreamStore.Tests.csproj;"
       BuildInParallel="true" 
       Properties="Configuration=Release;OutputPath=$(MSBuildProjectDirectory)\output\net45"
       UnloadProjectsOnCompletion="true"/>

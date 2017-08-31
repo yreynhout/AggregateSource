@@ -20,6 +20,7 @@
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.EventStore.IntegratedTests.dll;
       $(MSBuildProjectDirectory)\output\net45\SampleSource.dll;
       $(MSBuildProjectDirectory)\output\net45\AggregateSource.NEventStore.Tests.dll;
+      $(MSBuildProjectDirectory)\output\net45\AggregateSource.SqlStreamStore.Tests.dll;
       ">
       <Output TaskParameter="Include" ItemName="AssembliesToTest" />
     </CreateItem>
