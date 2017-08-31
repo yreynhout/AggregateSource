@@ -41,7 +41,7 @@ namespace SSS.Framework
                         .Select(o =>
                             new NewStreamMessage(
                                 messageId: Guid.NewGuid(),
-                                type: o.GetType().AssemblyQualifiedName,
+                                type: o.GetType().AssemblyQualifiedName, // Uses AssemblyQualifiedName for simplicity, use a map instead.
                                 jsonData: SimpleJson.SerializeObject(o)))
                         .ToList();
 

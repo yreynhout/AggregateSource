@@ -109,7 +109,7 @@ namespace SSS
             var root = RootFactory();
             var eventObjects = events.Select(message =>
             {
-                var eventType = Type.GetType(message.Type);
+                var eventType = Type.GetType(message.Type); // Uses AssemblyQualifiedName for simplicity, use a map instead.
                 var eventData = message.GetJsonData().GetAwaiter().GetResult();
                 return SimpleJson.DeserializeObject(eventData, eventType);
             });
