@@ -50,18 +50,6 @@ namespace SSS.Framework
             return this;
         }
 
-        //public RepositoryScenarioBuilder ScheduleSnapshots(params Snapshot[] snapshots)
-        //{
-        //    if (snapshots == null) throw new ArgumentNullException("snapshots");
-        //    _eventStoreSchedule.Add(
-        //        store =>
-        //        {
-        //            foreach (var snapshot in snapshots)
-        //                store.Advanced.AddSnapshot(snapshot);
-        //        });
-        //    return this;
-        //}
-
         public RepositoryScenarioBuilder ScheduleDeleteStream(string stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
@@ -84,15 +72,6 @@ namespace SSS.Framework
                 _unitOfWork,
                 _eventStore);
         }
-
-        //public SnapshotableRepository<SnapshotableAggregateRootEntityStub> BuildForSnapshotableRepository()
-        //{
-        //    ExecuteScheduledActions();
-        //    return new SnapshotableRepository<SnapshotableAggregateRootEntityStub>(
-        //        SnapshotableAggregateRootEntityStub.Factory,
-        //        _unitOfWork,
-        //        _eventStore);
-        //}
 
         void ExecuteScheduledActions()
         {
