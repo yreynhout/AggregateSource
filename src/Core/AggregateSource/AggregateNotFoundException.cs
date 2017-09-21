@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -24,7 +23,7 @@ namespace AggregateSource
         public AggregateNotFoundException(string identifier, Type clrType)
             : base(
                 clrType != null && identifier != null
-                    ? string.Format(CultureInfo.InvariantCulture, Resources.AggregateNotFoundException_DefaultMessage, clrType.Name, identifier)
+                    ? string.Format(CultureInfo.InvariantCulture, $@"The {clrType.Name} aggregate with identifier {identifier} could not be found. Please make sure the call site is indeed passing in an identifier for an {clrType.Name} aggregate.")
                     : null)
         {
             if (identifier == null) throw new ArgumentNullException("identifier");

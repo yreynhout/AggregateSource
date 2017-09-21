@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -49,7 +48,7 @@ namespace AggregateSource
             get
             {
                 if (!HasValue)
-                    throw new InvalidOperationException(Resources.Optional_NoValue);
+                    throw new InvalidOperationException("Optional object must have a value.");
                 return _value;
             }
         }

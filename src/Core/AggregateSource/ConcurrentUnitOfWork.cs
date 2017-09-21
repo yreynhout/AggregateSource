@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -34,8 +33,7 @@ namespace AggregateSource
             if (!_aggregates.TryAdd(aggregate.Identifier, aggregate))
                 throw new ArgumentException(
                     string.Format(CultureInfo.InvariantCulture,
-                        Resources.ConcurrentUnitOfWork_AttachAlreadyAdded,
-                        aggregate.Root.GetType().Name, aggregate.Identifier));
+                        $@"The aggregate of type '{aggregate.Root.GetType().Name}' with identifier '{aggregate.Identifier}' was already added. This could indicate there's a race condition, i.e. the same aggregate getting attached multiple times."));
         }
 
         /// <summary>
