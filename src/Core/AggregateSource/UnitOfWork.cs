@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using AggregateSource.Properties;
 
 namespace AggregateSource
 {
@@ -33,8 +32,7 @@ namespace AggregateSource
             if (_aggregates.ContainsKey(aggregate.Identifier))
                 throw new ArgumentException(
                     string.Format(CultureInfo.InvariantCulture,
-                        Resources.UnitOfWork_AttachAlreadyAdded,
-                        aggregate.Root.GetType().Name, aggregate.Identifier));
+                        $@"The aggregate of type '{ aggregate.Root.GetType().Name}' with identifier '{aggregate.Identifier}' was already added. This could indicate there's a race condition, i.e. the same aggregate gets attached multiple times."));
             _aggregates.Add(aggregate.Identifier, aggregate);
         }
 
