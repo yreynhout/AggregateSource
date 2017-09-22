@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AggregateSource.NetCore\AggregateSource.NetCore.csproj" />
+    <ProjectReference Include="..\AggregateSource\AggregateSource.csproj" />
   </ItemGroup>
 
 </Project>
